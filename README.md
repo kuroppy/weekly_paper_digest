@@ -2,7 +2,7 @@
 
 Weekly Paper Digest は、ある研究分野における直近1週間の注目論文を収集し、音声で気軽に聞ける形へ変換するシステムです。
 
-配信はこちら👉 https://kuroppy.github.io/weekly-paper-digest/
+Weekly Paper Digest in Genome Microbiology 配信はこちら👉 https://kuroppy.github.io/weekly-paper-digest/
 
 ## Why?
 
