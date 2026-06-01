@@ -122,7 +122,3 @@ blockquote {
   text-decoration: none;
   background: #174b7d;
 }
-
-.markdown-body > h1:first-of-type {
-    display: none;
-}
