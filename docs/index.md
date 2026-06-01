@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="assets/style.css">
 
-# Weekly Paper Digest
+# Weekly Paper Digest in Genome Microbiology
 
 <div class="site-note">
 
