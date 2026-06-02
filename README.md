@@ -39,7 +39,7 @@ Weekly Paper Digest は、この状況に対する小さな実験です。
 3. LLMによる重要論文選定
 4. NotebookLMによる音声生成
 
-（ここにフローチャート図を掲載予定）
+![Workflow](assets/workflow.png)
 
 ## Customization
 
