@@ -13,12 +13,12 @@ weekly_microbe_papers.py
   - bioRxiv API
 
 出力:
-  - weekly_microbe_papers_YYYY-MM-DD.csv
-  - weekly_microbe_papers_YYYY-MM-DD.json
+  - papers_YYYY-MM-DD.csv
+  - papers_YYYY-MM-DD.json
 
 使い方:
-  python weekly_microbe_papers.py
-  python weekly_microbe_papers.py --days 7 --max-pubmed 1000 --max-biorxiv-pages 5
+  python papers.py
+  python papers.py --days 7 --max-pubmed 1000 --max-biorxiv-pages 5
 
 注意:
   - 「注目論文」はルールベースの簡易スコアです。
@@ -46,7 +46,7 @@ import requests
 # =========================
 
 EMAIL = "email@example.com"   # NCBI/OpenAlex等に礼儀として入れておくとよい
-TOOL_NAME = "weekly_microbe_paper_collector"
+TOOL_NAME = "paper_collector"
 REQUEST_TIMEOUT = 60
 
 PUBMED_QUERY = r'''
@@ -537,8 +537,8 @@ def main() -> int:
         all_papers = all_papers[:args.top]
 
     today = dt.date.today().isoformat()
-    csv_path = f"weekly_microbe_papers_{today}.csv"
-    json_path = f"weekly_microbe_papers_{today}.json"
+    csv_path = f"papers_{today}.csv"
+    json_path = f"papers_{today}.json"
 
     save_csv(all_papers, csv_path)
     save_json(all_papers, json_path)
