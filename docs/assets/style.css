@@ -61,6 +61,12 @@ blockquote {
   color: #444;
 }
 
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
 .site-note {
   padding: 1rem 1.2rem;
   margin: 1.5rem 0;
@@ -121,4 +127,43 @@ blockquote {
 .episode-button:hover {
   text-decoration: none;
   background: #174b7d;
+}
+
+.topic-heading {
+  margin-top: 3rem;
+  padding-left: 0.8rem;
+  border-left: 5px solid #1f5f9f;
+}
+
+.paper-list {
+  margin-top: 1.5rem;
+}
+
+.paper-card {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 14px;
+  padding: 1.3rem 1.5rem;
+  margin: 1.2rem 0;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.04);
+}
+
+.paper-card h3 {
+  margin-top: 0;
+  margin-bottom: 0.7rem;
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+.paper-card p {
+  margin: 0.7rem 0;
+}
+
+.journal {
+  font-weight: 700;
+  color: #333;
+}
+
+.paper-card a {
+  word-break: break-all;
 }
