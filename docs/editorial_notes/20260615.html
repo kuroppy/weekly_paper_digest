@@ -7,50 +7,97 @@
     <link rel="stylesheet" href="../assets/style.css">
 
     <style>
+        .site-nav {
+            margin: 1.2rem 0 2rem;
+        }
+
+        .site-home-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.45rem 0.85rem;
+            border: 1px solid #d0d0d0;
+            border-radius: 999px;
+            text-decoration: none;
+            font-size: 0.92rem;
+            font-weight: 600;
+            color: #333;
+            background: #fafafa;
+        }
+
+        .site-home-link:hover {
+            background: #f0f0f0;
+            text-decoration: none;
+        }
+
         .page-header {
-            margin-bottom: 1.5rem;
+            margin-bottom: 2.2rem;
+        }
+
+        .page-header h1 {
+            margin-bottom: 0.4rem;
         }
 
         .page-meta {
             color: #666;
             font-size: 0.95rem;
-            margin-top: -0.5rem;
-        }
-
-        .back-link {
-            margin: 1.5rem 0;
-            font-size: 0.95rem;
-        }
-
-        .back-link a {
-            text-decoration: none;
+            font-weight: 600;
+            margin: 0;
         }
 
         .markdown-body {
-            line-height: 1.8;
+            line-height: 1.85;
         }
 
         .markdown-body h1 {
-            margin-top: 1.2rem;
-            margin-bottom: 1rem;
+            display: none;
         }
 
         .markdown-body h2 {
-            margin-top: 2.2rem;
-            padding-top: 0.4rem;
-            border-top: 1px solid #ddd;
+            margin-top: 2.4rem;
+            margin-bottom: 0.8rem;
+            font-size: 1.45rem;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+        }
+
+        .markdown-body h2::before {
+            content: "";
+            display: inline-block;
+            width: 0.45rem;
+            height: 1.05rem;
+            margin-right: 0.55rem;
+            vertical-align: -0.12rem;
+            border-radius: 4px;
+            background: currentColor;
+            opacity: 0.35;
         }
 
         .markdown-body h3 {
-            margin-top: 1.6rem;
+            margin-top: 1.8rem;
+            margin-bottom: 0.5rem;
+            font-size: 1.15rem;
+            font-weight: 700;
+        }
+
+        .markdown-body h4 {
+            margin-top: 1.4rem;
+            margin-bottom: 0.4rem;
+            font-size: 1.02rem;
+            font-weight: 700;
         }
 
         .markdown-body p {
             margin: 0.9rem 0;
         }
 
+        .markdown-body strong {
+            font-weight: 700;
+        }
+
         .markdown-body ul {
             padding-left: 1.5rem;
+            margin: 0.8rem 0 1.1rem;
         }
 
         .markdown-body li {
@@ -76,43 +123,24 @@
             background: transparent;
         }
 
-        .page-toc {
-            margin: 1.5rem 0 2rem 0;
-            padding: 1rem 1.2rem;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            background: #fafafa;
-        }
-
-        .page-toc h2 {
-            margin-top: 0;
-            border-top: none;
-            padding-top: 0;
-            font-size: 1.1rem;
-        }
-
-        .page-toc ul {
-            margin-bottom: 0;
-            padding-left: 1.2rem;
-        }
-
-        .page-toc li {
-            margin: 0.25rem 0;
-        }
-
-        .page-toc .toc-level-3 {
-            margin-left: 1rem;
-            font-size: 0.95rem;
-        }
-
-        .page-toc .toc-level-4 {
-            margin-left: 2rem;
-            font-size: 0.9rem;
+        .markdown-body blockquote {
+            margin: 1.2rem 0;
+            padding: 0.2rem 1rem;
+            border-left: 4px solid #ddd;
+            color: #555;
         }
 
         @media (max-width: 700px) {
-            .page-toc {
-                padding: 0.9rem;
+            .site-nav {
+                margin-top: 0.8rem;
+            }
+
+            .page-header {
+                margin-bottom: 1.8rem;
+            }
+
+            .markdown-body h2 {
+                font-size: 1.3rem;
             }
         }
     </style>
@@ -132,15 +160,24 @@
 
 <div class="container">
 
+<nav class="site-nav" aria-label="Site navigation">
+    <a class="site-home-link"
+       href="https://kuroppy.github.io/weekly_paper_digest/">
+        ← Weekly Paper Digest Home
+    </a>
+</nav>
+
+<header class="page-header">
+    <h1>編集会議議事録</h1>
+    <p class="page-meta">2026-06-16</p>
+</header>
+
 <main class="markdown-body">
-<h1>編集会議議事録</h1>
 <p><strong>日付:</strong> 2026-06-16</p>
-<hr>
-<h2 id="背景">背景</h2>
+<h2>背景</h2>
 <p>Weekly Paper Digest の運用を続ける中で、単なる論文一覧ではなく、研究者同士の会話に近い形で論文を紹介したいという意識が強くなってきた。</p>
 <p>また、深掘り論文については、本文の要約だけでなく、論文中の Figure がどのような結果を示しているのかまで説明できると、より理解しやすくなると考えた。</p>
-<hr>
-<h2 id="問題点">問題点</h2>
+<h2>問題点</h2>
 <p>従来の構成では、</p>
 <ul>
 <li>深掘り論文も本文要約に近くなりやすい</li>
@@ -148,8 +185,7 @@
 <li>Figure と結論の対応関係が見えにくい</li>
 </ul>
 <p>という問題があった。</p>
-<hr>
-<h2 id="議論">議論</h2>
+<h2>議論</h2>
 <p>深掘り論文では、</p>
 <p>単に「何を示したか」だけでなく、</p>
 <p>「どのような実験によってそう結論づけたのか」</p>
@@ -161,15 +197,14 @@
 <li>そこから得られる結論</li>
 </ul>
 <p>を対応付けて説明する方針を導入した。</p>
-<hr>
-<h2 id="決定事項">決定事項</h2>
-<h3 id="notebooklm">NotebookLM</h3>
+<h2>決定事項</h2>
+<h3>NotebookLM</h3>
 <ul>
 <li>深掘り論文では PDF を積極的に利用する</li>
 <li>Figure番号と結果を対応付けて説明する</li>
 <li>「どのFigureが何を示しているか」を意識する</li>
 </ul>
-<h3 id="paper-curation">Paper Curation</h3>
+<h3>Paper Curation</h3>
 <ul>
 <li>深掘り論文に</li>
 </ul>
@@ -179,13 +214,11 @@
 <li>メカニズム・論理</li>
 </ul>
 <p>を追加する</p>
-<hr>
-<h2 id="得られた考え">得られた考え</h2>
+<h2>得られた考え</h2>
 <p>論文の面白さは、結論そのものだけでなく、</p>
 <p><strong>「どのような根拠によってその結論に至ったのか」</strong></p>
 <p>にある。</p>
 <p>そのため、深掘り部分では結果だけでなく、根拠との対応関係を重視する。</p>
-<hr>
 </main>
 
 </div>
