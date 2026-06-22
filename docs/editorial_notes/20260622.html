@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>編集会議議事録 | Weekly Paper Digest</title>
+    <link rel="stylesheet" href="../../assets/style.css">
+
+    <style>
+        .page-header {
+            margin-bottom: 1.5rem;
+        }
+
+        .page-meta {
+            color: #666;
+            font-size: 0.95rem;
+            margin-top: -0.5rem;
+        }
+
+        .back-link {
+            margin: 1.5rem 0;
+            font-size: 0.95rem;
+        }
+
+        .back-link a {
+            text-decoration: none;
+        }
+
+        .markdown-body {
+            line-height: 1.8;
+        }
+
+        .markdown-body h1 {
+            margin-top: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .markdown-body h2 {
+            margin-top: 2.2rem;
+            padding-top: 0.4rem;
+            border-top: 1px solid #ddd;
+        }
+
+        .markdown-body h3 {
+            margin-top: 1.6rem;
+        }
+
+        .markdown-body p {
+            margin: 0.9rem 0;
+        }
+
+        .markdown-body ul {
+            padding-left: 1.5rem;
+        }
+
+        .markdown-body li {
+            margin: 0.35rem 0;
+        }
+
+        .markdown-body code {
+            padding: 0.1rem 0.3rem;
+            border-radius: 4px;
+            background: #f3f3f3;
+            font-size: 0.95em;
+        }
+
+        .markdown-body pre {
+            padding: 1rem;
+            overflow-x: auto;
+            border-radius: 6px;
+            background: #f7f7f7;
+        }
+
+        .markdown-body pre code {
+            padding: 0;
+            background: transparent;
+        }
+
+        .page-toc {
+            margin: 1.5rem 0 2rem 0;
+            padding: 1rem 1.2rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: #fafafa;
+        }
+
+        .page-toc h2 {
+            margin-top: 0;
+            border-top: none;
+            padding-top: 0;
+            font-size: 1.1rem;
+        }
+
+        .page-toc ul {
+            margin-bottom: 0;
+            padding-left: 1.2rem;
+        }
+
+        .page-toc li {
+            margin: 0.25rem 0;
+        }
+
+        .page-toc .toc-level-3 {
+            margin-left: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .page-toc .toc-level-4 {
+            margin-left: 2rem;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 700px) {
+            .page-toc {
+                padding: 0.9rem;
+            }
+        }
+    </style>
+</head>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-N22XGSKTFW"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-N22XGSKTFW');
+</script>
+
+<body>
+
+<div class="container">
+
+<div class="back-link">
+<a href="./">Home</a>
+</div>
+
+<header class="page-header">
+    <h1>編集会議議事録</h1>
+    <p class="page-meta">2026-06-22</p>
+</header>
+
+<nav class="page-toc">
+<h2>目次</h2>
+<ul>
+<li class="toc-level-2"><a href="#背景">背景</a></li><li class="toc-level-2"><a href="#問題点">問題点</a></li><li class="toc-level-2"><a href="#議論">議論</a></li><li class="toc-level-2"><a href="#決定事項">決定事項</a></li><li class="toc-level-3"><a href="#paper-curation">Paper Curation</a></li><li class="toc-level-3"><a href="#notebooklm">NotebookLM</a></li><li class="toc-level-2"><a href="#得られた考え">得られた考え</a></li><li class="toc-level-2"><a href="#今後の課題">今後の課題</a></li>
+</ul>
+</nav>
+
+<hr>
+
+<main class="markdown-body">
+<h1>編集会議議事録</h1>
+<p><strong>日付:</strong> 2026-06-22</p>
+<hr>
+<h2 id="背景">背景</h2>
+<p>Weekly Paper Digest を継続して運用する中で、紹介されるテーマが毎週似通っていることに気付いた。</p>
+<p>実際の論文群は多様であるにもかかわらず、</p>
+<ul>
+<li>微生物進化</li>
+<li>微生物生態</li>
+<li>ファージ・感染</li>
+</ul>
+<p>のような固定的な3テーマに収束しやすくなっていた。</p>
+<hr>
+<h2 id="問題点">問題点</h2>
+<p>従来のプロンプトでは、</p>
+<p>「まずテーマを作り、その後で論文を配置する」</p>
+<p>という構造になっていた。</p>
+<p>その結果、</p>
+<ul>
+<li>毎週同じテーマになりやすい</li>
+<li>論文よりテーマが目立つ</li>
+<li>リスト的な印象が強くなる</li>
+</ul>
+<p>という問題が生じていた。</p>
+<hr>
+<h2 id="議論">議論</h2>
+<p>「今週の微生物学を説明する」のではなく、</p>
+<p>「今週、自分が誰かに話したい論文を紹介する」</p>
+<p>という考え方に変更することにした。</p>
+<p>テーマは主役ではなく、必要であれば後から付ける整理ラベルとする。</p>
+<hr>
+<h2 id="決定事項">決定事項</h2>
+<h3 id="paper-curation">Paper Curation</h3>
+<ul>
+<li>9本紹介 → 約5本紹介</li>
+<li>深掘り3本 → 深掘り2本</li>
+<li>ショートニュースを導入</li>
+<li>テーマは後付けに変更</li>
+</ul>
+<h3 id="notebooklm">NotebookLM</h3>
+<ul>
+<li>markdown を主役とする</li>
+<li>PDF は深掘り補助資料とする</li>
+<li>Figure番号の読み上げを必須としない</li>
+<li>一般論や未来予測を最小限にする</li>
+</ul>
+<hr>
+<h2 id="得られた考え">得られた考え</h2>
+<p>Weekly Paper Digest は「ニュース番組」ではなく、</p>
+<p><strong>「標本鑑賞」</strong></p>
+<p>に近い。</p>
+<p>分野全体を網羅することよりも、</p>
+<p>「今週面白いと思った論文を共有すること」</p>
+<p>を重視する。</p>
+<hr>
+<h2 id="今後の課題">今後の課題</h2>
+<p>実際に Podcast を生成し、</p>
+<ul>
+<li>5本構成が適切か</li>
+<li>深掘り2本が長すぎないか</li>
+<li>ショートニュースが機能するか</li>
+</ul>
+<p>を確認する。</p>
+</main>
+
+<div class="back-link">
+<a href="./">Home</a>
+</div>
+
+</div>
+
+</body>
+</html>
