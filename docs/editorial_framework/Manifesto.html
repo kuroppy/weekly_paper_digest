@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editorial Framework | Weekly Paper Digest</title>
+    <link rel="stylesheet" href="../assets/style.css">
+
+    <style>
+        .site-nav {
+            margin: 1.2rem 0 2rem;
+        }
+
+        .site-home-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.45rem 0.85rem;
+            border: 1px solid #d0d0d0;
+            border-radius: 999px;
+            text-decoration: none;
+            font-size: 0.92rem;
+            font-weight: 600;
+            color: #333;
+            background: #fafafa;
+        }
+
+        .site-home-link:hover {
+            background: #f0f0f0;
+            text-decoration: none;
+        }
+
+        .page-header {
+            margin-bottom: 2.2rem;
+        }
+
+        .page-header h1 {
+            margin-bottom: 0.4rem;
+        }
+
+        .page-meta {
+            color: #666;
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .markdown-body {
+            line-height: 1.85;
+        }
+
+        .markdown-body h1 {
+            display: none;
+        }
+
+        .markdown-body h2 {
+            margin-top: 2.4rem;
+            margin-bottom: 0.8rem;
+            font-size: 1.45rem;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+        }
+
+        .markdown-body h2::before {
+            content: "";
+            display: inline-block;
+            width: 0.45rem;
+            height: 1.05rem;
+            margin-right: 0.55rem;
+            vertical-align: -0.12rem;
+            border-radius: 4px;
+            background: currentColor;
+            opacity: 0.35;
+        }
+
+        .markdown-body h3 {
+            margin-top: 1.8rem;
+            margin-bottom: 0.5rem;
+            font-size: 1.15rem;
+            font-weight: 700;
+        }
+
+        .markdown-body h4 {
+            margin-top: 1.4rem;
+            margin-bottom: 0.4rem;
+            font-size: 1.02rem;
+            font-weight: 700;
+        }
+
+        .markdown-body p {
+            margin: 0.9rem 0;
+        }
+
+        .markdown-body strong {
+            font-weight: 700;
+        }
+
+        .markdown-body ul {
+            padding-left: 1.5rem;
+            margin: 0.8rem 0 1.1rem;
+        }
+
+        .markdown-body li {
+            margin: 0.35rem 0;
+        }
+
+        .markdown-body code {
+            padding: 0.1rem 0.3rem;
+            border-radius: 4px;
+            background: #f3f3f3;
+            font-size: 0.95em;
+        }
+
+        .markdown-body pre {
+            padding: 1rem;
+            overflow-x: auto;
+            border-radius: 6px;
+            background: #f7f7f7;
+        }
+
+        .markdown-body pre code {
+            padding: 0;
+            background: transparent;
+        }
+
+        .markdown-body blockquote {
+            margin: 1.2rem 0;
+            padding: 0.2rem 1rem;
+            border-left: 4px solid #ddd;
+            color: #555;
+        }
+
+        @media (max-width: 700px) {
+            .site-nav {
+                margin-top: 0.8rem;
+            }
+
+            .page-header {
+                margin-bottom: 1.8rem;
+            }
+
+            .markdown-body h2 {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-N22XGSKTFW"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-N22XGSKTFW');
+</script>
+
+<body>
+
+<div class="container">
+
+<nav class="site-nav" aria-label="Site navigation">
+    <a class="site-home-link"
+       href="https://kuroppy.github.io/weekly_paper_digest/">
+        ← Weekly Paper Digest Home
+    </a>
+</nav>
+
+<header class="page-header">
+    <h1>Editorial Framework</h1>
+    <p class="page-meta"></p>
+</header>
+
+<main class="markdown-body">
+<p><strong>Version:</strong> 0.0 <strong>Published:</strong> 2026-07-02</p>
+<blockquote><p>この文書は、プロジェクト開始当時（2026年5月）の考え方を、当時の視点を尊重しながら再構成したものです。</p></blockquote>
+<h1>Manifesto</h1>
+<h2>このプロジェクトについて</h2>
+<p>Weekly Paper Digest は、微生物学の最新論文を週ごとに紹介するPodcastです。</p>
+<p>毎週発表される論文の中から注目したものを紹介し、専門外の研究にも気軽に触れられる機会を作ることを目的としています。</p>
+<h2>なぜ作ったのか</h2>
+<p>研究の専門化は年々進んでいます。</p>
+<p>同じ学会に所属していても、少し分野が離れるだけで、研究内容を理解することが難しくなってきました。</p>
+<p>研究者同士の議論は、共有された知識や話題の上に成り立っています。</p>
+<p>しかし、論文数の増加と専門分化によって、その「共有された話題」を持つこと自体が難しくなっているように感じています。</p>
+<p>Weekly Paper Digestは、この状況に対する小さな実験です。</p>
+<p>少し離れた分野の研究も気軽に把握できるようにし、学会や研究会で異分野の研究者と会話するきっかけを作りたい。</p>
+<p>まずは、</p>
+<p><strong>「今週はこんな研究が出ていた。」</strong></p>
+<p>という感覚を共有できる場を目指します。</p>
+<h2>対象</h2>
+<p>専門家だけではなく、</p>
+<p>微生物学に興味を持つ学生や研究者が、</p>
+<p>新しい論文と出会うきっかけになればと思っています。</p>
+<p>興味を持った論文は、ぜひ原著論文を読んでください。</p>
+<h2>AIの利用</h2>
+<p>論文の整理や原稿作成には生成AIを利用しています。</p>
+<p>大量の論文を短時間で整理するための便利なツールとして活用しています。</p>
+<p>内容については、人が確認した上で公開します。</p>
+<h2>配信方針</h2>
+<p>毎週公開します。</p>
+<p>無理にすべての論文を紹介することは目指しません。</p>
+<p>今週面白かった論文を紹介します。</p>
+</main>
+
+</div>
+
+</body>
+</html>

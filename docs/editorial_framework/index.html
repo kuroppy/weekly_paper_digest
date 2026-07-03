@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Editorial Framework | Weekly Paper Digest</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <style>
+    .site-nav {
+      margin: 1.2rem 0 2rem;
+    }
+    .site-home-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.45rem 0.85rem;
+      border: 1px solid #d0d0d0;
+      border-radius: 999px;
+      text-decoration: none;
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: #333;
+      background: #fafafa;
+    }
+    .site-home-link:hover {
+      background: #f0f0f0;
+      text-decoration: none;
+    }
+    .page-header {
+      margin-bottom: 2.2rem;
+    }
+    .page-header h1 {
+      margin-bottom: 0.4rem;
+    }
+    .page-meta {
+      color: #666;
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin: 0;
+    }
+    .framework-intro {
+      margin: 1.5rem 0 2rem;
+      line-height: 1.9;
+    }
+
+    .framework-cards {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0 2.5rem;
+    }
+
+    .framework-card {
+      display: block;
+      padding: 1.1rem 1.1rem 1.2rem;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      text-decoration: none;
+      color: inherit;
+      background: #fff;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      min-height: 155px;
+    }
+
+    .framework-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+    }
+
+    .framework-card h3 {
+      margin-top: 0;
+      margin-bottom: 0.7rem;
+      font-size: 1.05rem;
+    }
+
+    .framework-card .question {
+      display: inline-block;
+      margin-bottom: 0.65rem;
+      font-size: 0.85rem;
+      color: #666;
+      font-weight: 600;
+    }
+
+    .framework-card p {
+      margin: 0;
+      color: #666;
+      line-height: 1.7;
+      font-size: 0.95rem;
+    }
+
+    .supporting-links {
+      margin-top: 2rem;
+      padding-top: 1.2rem;
+      border-top: 1px solid #e5e5e5;
+      font-size: 0.95rem;
+      color: #666;
+    }
+
+    .supporting-links a {
+      margin-right: 1rem;
+    }
+
+    @media (max-width: 900px) {
+      .framework-cards {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 560px) {
+      .framework-cards {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-N22XGSKTFW"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-N22XGSKTFW');
+</script>
+
+<body>
+<div class="container">
+
+<nav class="site-nav" aria-label="Site navigation">
+  <a class="site-home-link" href="https://kuroppy.github.io/weekly_paper_digest/">
+    ← Weekly Paper Digest Home
+  </a>
+</nav>
+
+<header class="page-header">
+  <h1>Editorial Framework</h1>
+  <p class="page-meta">Version 0.0</p>
+</header>
+
+<main>
+  <section class="framework-intro">
+    <p>
+      Editorial Framework は、Weekly Paper Digest をどのような考え方で編集し、運用していくかをまとめるためのドキュメント群です。
+    </p>
+    <p>
+      Podcastの成果物だけでなく、論文選定やPrompt設計など、編集の考え方を整理し、必要に応じて更新していきます。
+    </p>
+
+    <div class="framework-note">
+      Version 0.0 は、プロジェクト開始当時の考え方を、README や初期の記録をもとに再構成したものです。
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-title">Current Framework</h2>
+
+    <p>Editorial Framework は、編集思想を4つのレイヤーに分けて管理します。</p>
+
+    <div class="framework-cards">
+      <a class="framework-card" href="Manifesto.html">
+        <h3>Manifesto</h3>
+        <span class="question">Why?</span>
+        <p>
+          このプロジェクトの目的を記録した文書。
+        </p>
+      </a>
+
+      <a class="framework-card" href="Editorial_Policy.html">
+        <h3>Editorial Policy</h3>
+        <span class="question">What?</span>
+        <p>
+          配信構成、語り方、番組として大切にする編集方針。
+        </p>
+      </a>
+
+      <a class="framework-card" href="Curation_Policy.html">
+        <h3>Curation Policy</h3>
+        <span class="question">Which?</span>
+        <p>
+          どのような論文を選ぶのかを考えるための方針。
+        </p>
+      </a>
+
+      <a class="framework-card" href="Prompt_Design.html">
+        <h3>Prompt Design</h3>
+        <span class="question">How?</span>
+        <p>
+          編集方針をLLMのPromptへ実装するための設計指針。
+        </p>
+      </a>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-title">Archive</h2>
+    <p>
+      過去バージョンは必要に応じて参照できるよう、archive に保存します。
+    </p>
+    <ul class="version-list">
+      <li><a href="archive/v0.0/">Version 0.0</a></li>
+    </ul>
+  </section>
+
+</main>
+
+</div>
+</body>
+</html>
