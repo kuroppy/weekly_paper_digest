@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editorial Meeting Notes | Weekly Paper Digest</title>
+    <link rel="stylesheet" href="../assets/style.css">
+
+    <style>
+        .site-nav {
+            margin: 1.2rem 0 2rem;
+        }
+
+        .site-home-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.45rem 0.85rem;
+            border: 1px solid #d0d0d0;
+            border-radius: 999px;
+            text-decoration: none;
+            font-size: 0.92rem;
+            font-weight: 600;
+            color: #333;
+            background: #fafafa;
+        }
+
+        .site-home-link:hover {
+            background: #f0f0f0;
+            text-decoration: none;
+        }
+
+        .page-header {
+            margin-bottom: 2.2rem;
+        }
+
+        .page-header h1 {
+            margin-bottom: 0.4rem;
+        }
+
+        .page-meta {
+            color: #666;
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .markdown-body {
+            line-height: 1.85;
+        }
+
+        .markdown-body h1 {
+            display: none;
+        }
+
+        .markdown-body h2 {
+            margin-top: 2.4rem;
+            margin-bottom: 0.8rem;
+            font-size: 1.45rem;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+        }
+
+        .markdown-body h2::before {
+            content: "";
+            display: inline-block;
+            width: 0.45rem;
+            height: 1.05rem;
+            margin-right: 0.55rem;
+            vertical-align: -0.12rem;
+            border-radius: 4px;
+            background: currentColor;
+            opacity: 0.35;
+        }
+
+        .markdown-body h3 {
+            margin-top: 1.8rem;
+            margin-bottom: 0.5rem;
+            font-size: 1.15rem;
+            font-weight: 700;
+        }
+
+        .markdown-body h4 {
+            margin-top: 1.4rem;
+            margin-bottom: 0.4rem;
+            font-size: 1.02rem;
+            font-weight: 700;
+        }
+
+        .markdown-body p {
+            margin: 0.9rem 0;
+        }
+
+        .markdown-body strong {
+            font-weight: 700;
+        }
+
+        .markdown-body ul {
+            padding-left: 1.5rem;
+            margin: 0.8rem 0 1.1rem;
+        }
+
+        .markdown-body li {
+            margin: 0.35rem 0;
+        }
+
+        .markdown-body code {
+            padding: 0.1rem 0.3rem;
+            border-radius: 4px;
+            background: #f3f3f3;
+            font-size: 0.95em;
+        }
+
+        .markdown-body pre {
+            padding: 1rem;
+            overflow-x: auto;
+            border-radius: 6px;
+            background: #f7f7f7;
+        }
+
+        .markdown-body pre code {
+            padding: 0;
+            background: transparent;
+        }
+
+        .markdown-body blockquote {
+            margin: 1.2rem 0;
+            padding: 0.2rem 1rem;
+            border-left: 4px solid #ddd;
+            color: #555;
+        }
+
+        @media (max-width: 700px) {
+            .site-nav {
+                margin-top: 0.8rem;
+            }
+
+            .page-header {
+                margin-bottom: 1.8rem;
+            }
+
+            .markdown-body h2 {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-N22XGSKTFW"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-N22XGSKTFW');
+</script>
+
+<body>
+
+<div class="container">
+
+<nav class="site-nav" aria-label="Site navigation">
+    <a class="site-home-link"
+       href="https://kuroppy.github.io/weekly_paper_digest/">
+        ← Weekly Paper Digest Home
+    </a>
+</nav>
+
+<header class="page-header">
+    <h1>Editorial Meeting Notes</h1>
+    <p class="page-meta">2026-07-06</p>
+</header>
+
+<main class="markdown-body">
+<p><strong>Episode:</strong> 2026-07-06</p>
+<p><strong>Participants</strong></p>
+<ul>
+<li>Kuroppy (Editor)</li>
+<li>Chappy (AI Editorial Partner, GPT-5)</li>
+</ul>
+<p><strong>Recorder</strong></p>
+<ul>
+<li>Chappy</li>
+</ul>
+<blockquote><p><strong>About this document</strong> このMeeting Notesは、Weekly Paper Digestの編集会議における議論の一次記録です。 配信内容のレビューだけでなく、編集上の意思決定や、その背景となる議論・思考の変化も記録します。 ここで繰り返し現れた考え方は、必要に応じてEditorial Frameworkへ整理・反映します。</p></blockquote>
+<h2>Editing Pipeline</h2>
+<h3>Workflow (used)</h3>
+<ul>
+<li>paper_collector_ver1</li>
+<li>Prompt_for_Weekly_Paper_Curation_ver4</li>
+<li>NotebookLM_Prompt_ver4</li>
+</ul>
+<h3>今回の設計テーマ</h3>
+<p>今回の編集会議では、NotebookLM Promptを大きく書き換えるのではなく、</p>
+<p><strong>「研究者は論文をどのような順番で理解しているのか」</strong></p>
+<p>という点を改めて整理し、それをPromptへ反映することを目的とした。</p>
+<p>議論の結果、Prompt version 4 を作成した。</p>
+<h2>今回得られた気付き</h2>
+<h3>論文の驚きは「結論」ではなく「問い」にある</h3>
+<p>今回最も大きな気付きは、</p>
+<p>論文紹介の導入では、論文の結論を先に述べるよりも、</p>
+<p><strong>研究者が最初に抱いた問いや不思議さから始める方が自然である</strong></p>
+<p>ということであった。</p>
+<p>例えば、</p>
+<p>「病原菌の武器を共生細菌が利用していた」</p>
+<p>という結論から始めるよりも、</p>
+<p>「ゲノムを極限まで縮小した細菌が、なぜこの装置だけは残していたのか」</p>
+<p>という問いから始めた方が、</p>
+<p>リスナーも研究者と同じ順番で論文を理解できる。</p>
+<p>この考え方は、今回のPromptの中心的な設計思想となった。</p>
+<h3>Argumentationとは、反論ではなく理解の順番である</h3>
+<p>当初は、</p>
+<p>「Argumentationをもっと強く取り入れられないか」</p>
+<p>という議論から始まった。</p>
+<p>しかし議論を進める中で、</p>
+<p>目指していたのは批判的読解ではなく、</p>
+<p><strong>研究者がどのように納得へ至るのかを追体験すること</strong></p>
+<p>であると整理できた。</p>
+<p>論文紹介では、</p>
+<p>Observation</p>
+<p>↓</p>
+<p>Question</p>
+<p>↓</p>
+<p>Hypothesis</p>
+<p>↓</p>
+<p>Evidence</p>
+<p>↓</p>
+<p>Conclusion</p>
+<p>という流れを自然な会話として辿ることで、</p>
+<p>Methodの列挙ではなく、「なぜその実験を行ったのか」が理解できる構成を目指すことにした。</p>
+<h3>リスナーは「研究者」であって、「専門家」ではない</h3>
+<p>NotebookLMは、</p>
+<p>「皆さんご存知の通り」</p>
+<p>「当然ですが」</p>
+<p>といった前置きを多用し、</p>
+<p>リスナーが特定分野の専門知識を共有していることを前提とした話し方をする傾向があった。</p>
+<p>しかし、Weekly Paper Digestのリスナーは、</p>
+<p>微生物学・分子生物学・情報解析など、</p>
+<p>さまざまなバックグラウンドを持つ研究者である。</p>
+<p>そのため、</p>
+<p>知識を前提にするのではなく、</p>
+<p>論文を理解するために必要な背景だけを自然に補足する、</p>
+<p>という方針をPromptへ追加した。</p>
+<h2>Prompt Version 4</h2>
+<p>今回の議論を踏まえ、NotebookLM PromptをVersion 4へ更新した。</p>
+<p>主な変更点は以下の通りである。</p>
+<ul>
+<li>オープニングでは論文の結論ではなく、「問い」から入る。</li>
+<li>深掘り論文では、研究者が論文を理解していく順番（Observation → Question → Evidence → Conclusion）を意識する。</li>
+<li>「皆さんご存知の通り」といった知識を前提とする表現を避ける。</li>
+</ul>
+<p>一方で、</p>
+<p>番組全体の構成や深掘り2本＋ショートニュースという形式は維持した。</p>
+<h2>今後のアイデア</h2>
+<p>議論の途中で、</p>
+<p>Podcastらしいオープニングについても意見交換を行った。</p>
+<p>「今週の問い」を毎回設定することも考えたが、</p>
+<p>Weekly Paper Digestは問いを基準に論文を選んでいるわけではないため、</p>
+<p>毎回無理にテーマを設定する必要はないという結論になった。</p>
+<p>代わりに、</p>
+<p>編集者が論文を読み終えたあとに残った印象や読後感を、</p>
+<p>番組冒頭で短く共有する</p>
+<p><strong>Opening Note</strong></p>
+<p>という構成案が生まれた。</p>
+<p>これは今後さらに検討していく。</p>
+<h2>配信後レビュー</h2>
+<p>Prompt Version 4で生成したPodcast原稿を確認した。</p>
+<h3>良かった点</h3>
+<ul>
+<li>論文の結論ではなく、問いから導入する構成に改善された。</li>
+<li>Methodの説明ではなく、研究者がどのような疑問を持ち、どのように証拠を積み重ねたのかが伝わるようになった。</li>
+<li>NotebookLM同士の掛け合いが、単なる解説ではなく研究者同士の対話に近づいてきた。</li>
+</ul>
+<h3>今後改善したい点</h3>
+<ul>
+<li>導入で「もしあなたが〜だったら」といった創作的な設定が残っている。</li>
+<li>AIが論文群に共通テーマを与えようとする傾向がまだ見られる。</li>
+<li>添付ファイル名（weekly_digest.mdなど）を会話中で読み上げてしまうことがあった。</li>
+</ul>
+<p>これらはPromptだけでなく、今後のWorkflow側でも改善を検討する。</p>
+<h2>Reflection</h2>
+<p>今回の議論では、</p>
+<p>Promptの書き方そのものよりも、</p>
+<p><strong>「研究者は論文をどのような順番で理解しているのか」</strong></p>
+<p>という編集思想を整理できたことが最も大きな収穫だった。</p>
+<p>また、</p>
+<p>AIが論文を説明する番組ではなく、</p>
+<p>研究者が論文を読みながら納得していく過程を一緒に体験する番組、</p>
+<p>という方向性もより明確になった。</p>
+<p>Version 4は、この設計思想を最初に反映したPromptとなった。</p>
+<h3>📝 Meeting Memo</h3>
+<p>今日の議論では、Promptの細かな表現を修正することから始まったが、</p>
+<p>議論を続けるうちに、</p>
+<p>「論文の面白さとは何か」</p>
+<p>「研究者はどのように論文を読んでいるのか」</p>
+<p>という、より根本的な問いへ発展した。</p>
+<p>また、番組冒頭をどのように始めるかについても多くのアイデアが生まれた。</p>
+<p>今回は実装を見送ったが、</p>
+<p>編集者自身の読後感を共有する <strong>Opening Note</strong> は、</p>
+<p>Weekly Paper Digestらしい個性になり得る可能性を感じている。</p>
+<p>このアイデアは、次回以降も継続して検討していきたい。</p>
+<p><em>— Chappy</em></p>
+</main>
+
+</div>
+
+</body>
+</html>

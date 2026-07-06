@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weekly Paper Digest index</title>
+  <link rel="stylesheet" href="../../assets/style.css">
+    
+    <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N22XGSKTFW"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-N22XGSKTFW');
+  </script>
+
+  <!-- Audio Analytics -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const audio = document.getElementById("podcast-player");
+      if (!audio || typeof gtag !== "function") return;
+
+      const episode = audio.dataset.episode;
+      const reached = new Set();
+      let playedOnce = false;
+
+      audio.addEventListener("play", () => {
+        if (playedOnce) return;
+        playedOnce = true;
+
+        gtag("event", "podcast_play", {
+          episode: episode,
+          page_path: location.pathname
+        });
+      });
+
+      audio.addEventListener("timeupdate", () => {
+        if (!audio.duration || !isFinite(audio.duration)) return;
+
+        const percent = Math.floor((audio.currentTime / audio.duration) * 100);
+
+        [25, 50, 75, 100].forEach((milestone) => {
+          if (percent >= milestone && !reached.has(milestone)) {
+            reached.add(milestone);
+
+            gtag("event", "podcast_progress", {
+              episode: episode,
+              page_path: location.pathname,
+              progress_percent: milestone,
+              audio_current_time: Math.round(audio.currentTime),
+              audio_duration: Math.round(audio.duration)
+            });
+          }
+        });
+      });
+    });
+  </script>
+</head>
+
+<body>
+
+<div class="container">
+
+<nav class="site-nav" aria-label="Site navigation">
+  <a class="site-home-link"
+     href="https://kuroppy.github.io/weekly_paper_digest/">
+      ← Weekly Paper Digest Home
+  </a>
+</nav>
+
+<h1>Weekly Paper Digest index</h1>
+
+<audio
+    id="podcast-player"
+    data-episode="2026-07-06"
+    controls
+    preload="metadata">
+  <source src="audio.mp3" type="audio/mpeg">
+</audio>
+
+<section>
+<h2>今週の印象</h2>
+<p>今週は、宿主―微生物相互作用を分子レベルで解き明かす研究が特に目立った。一方で、環境微生物学では氷河後退域や蛇紋岩環境など極限環境を対象とした研究や、ウイルスと微生物の共進化を扱う研究も充実している。また、培養系やメタボリックモデリングなど、新しい解析基盤を提供する論文も印象的だった。</p>
+
+</section>
+<section class="paper-list">
+<h2>今週の注目論文</h2>
+<article class="paper-card">
+  <h3>A secreted endosymbiont protein essential for colonizing host cells.</h3>
+  <p><strong>Nature</strong></p>
+  <p><a href="https://doi.org/10.1038/s41586-026-10711-4">https://doi.org/10.1038/s41586-026-10711-4</a></p>
+  <p>共生細菌Buchneraが宿主細胞へ侵入・定着するために必須となる分泌タンパク質SyeAを発見した。</p>
+</article>
+<article class="paper-card">
+  <h3>Viral modulation of sulfur-oxidizing bacteria drives organic carbon sink formation during primary succession in deglaciating ecosystems.</h3>
+  <p><strong>Nature Communications</strong></p>
+  <p><a href="https://doi.org/10.1038/s41467-026-75234-y">https://doi.org/10.1038/s41467-026-75234-y</a></p>
+  <p>氷河後退直後の土壌形成を支える硫黄酸化細菌とそのウイルスの共進化を解明した。</p>
+</article>
+<article class="paper-card">
+  <h3>Isolation of Allocrenothrix methanica reveals distinct ecophysiologies of filamentous methanotrophs and adaptations to O2 limitation.</h3>
+  <p><strong>The ISME Journal</strong></p>
+  <p><a href="https://doi.org/10.1093/ismejo/wrag178">https://doi.org/10.1093/ismejo/wrag178</a></p>
+  <p>約150年前から知られていた糸状メタン酸化細菌を初めて単離した。</p>
+</article>
+<article class="paper-card">
+  <h3>Active-learning-guided optimization of cell-free systems for genome-wide transcriptomic profiling reveals progressive layers of regulation.</h3>
+  <p><strong>Nature Communications</strong></p>
+  <p><a href="https://doi.org/10.1038/s41467-026-74559-y">https://doi.org/10.1038/s41467-026-74559-y</a></p>
+  <p>Active Learningを用いてCell-free RNA-seq系を最適化した。</p>
+</article>
+<article class="paper-card">
+  <h3>Environmental former Massilia group bacteria secrete metabolites that promote Leptospira growth.</h3>
+  <p><strong>mSystems</strong></p>
+  <p><a href="https://doi.org/10.1128/msystems.00638-26">https://doi.org/10.1128/msystems.00638-26</a></p>
+  <p>環境細菌が産生する代謝物がLeptospiraの増殖を促進することを示した。</p>
+</article>
+</section>
+<section class="paper-list">
+<h2>今週のショートニュース</h2>
+<article class="paper-card">
+  <h3>Endozoicomonas acroporae enhances coral thermal resilience through host-microbe coordination.</h3>
+  <p><strong>The ISME Journal</strong></p>
+  <p><a href="https://doi.org/10.1093/ismejo/wrag173">https://doi.org/10.1093/ismejo/wrag173</a></p>
+  <p>サンゴプロバイオティクスが宿主の耐熱性を向上させる分子機構を示した。</p>
+</article>
+<article class="paper-card">
+  <h3>Methanotrophy under extreme alkalinity in a serpentinizing system.</h3>
+  <p><strong>Nature Communications</strong></p>
+  <p><a href="https://doi.org/10.1038/s41467-026-72513-6">https://doi.org/10.1038/s41467-026-72513-6</a></p>
+  <p>pH11を超える極限環境でもメタン酸化が起きていることを示した。</p>
+</article>
+<article class="paper-card">
+  <h3>Host life-history strategy is a critical determinant of virulent phage infection propensity.</h3>
+  <p><strong>The ISME Journal</strong></p>
+  <p><a href="https://doi.org/10.1093/ismejo/wrag168">https://doi.org/10.1093/ismejo/wrag168</a></p>
+  <p>ファージライフスタイルは宿主の生活史戦略によって規定されることを大規模ゲノム解析で示した。</p>
+</article>
+<article class="paper-card">
+  <h3>Mucin-induced metabolic reprogramming in Pseudomonas aeruginosa clinical isolates.</h3>
+  <p><strong>mSystems</strong></p>
+  <p><a href="https://doi.org/10.1128/msystems.00580-26">https://doi.org/10.1128/msystems.00580-26</a></p>
+  <p>ムチンが緑膿菌の代謝を菌株ごとに異なる形で変化させることを示した。</p>
+</article>
+</section>
+<section>
+<h2>まとめ</h2>
+<p>今週は、宿主と微生物の分子相互作用を深く掘り下げた研究と、環境中での微生物・ウイルスの役割を再評価する研究が特に印象的だった。一方で、培養技術やAIを利用した実験最適化など、今後の研究基盤になりそうな技術論文も充実しており、基礎生物学と方法論の双方で収穫の多い一週間だった。</p>
+</section>
+
+<p>
+<a href="../../editorial_notes/editorial_meeting_notes_20260706.html">
+📝 Read the Editorial Note of this episode
+</a>
+</p>
+
+</div>
+
+</body>
+</html>
