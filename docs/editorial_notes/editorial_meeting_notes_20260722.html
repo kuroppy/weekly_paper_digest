@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editorial Meeting Notes | Weekly Paper Digest</title>
+    <link rel="stylesheet" href="../assets/style.css">
+
+    <style>
+        .site-nav {
+            margin: 1.2rem 0 2rem;
+        }
+
+        .site-home-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.45rem 0.85rem;
+            border: 1px solid #d0d0d0;
+            border-radius: 999px;
+            text-decoration: none;
+            font-size: 0.92rem;
+            font-weight: 600;
+            color: #333;
+            background: #fafafa;
+        }
+
+        .site-home-link:hover {
+            background: #f0f0f0;
+            text-decoration: none;
+        }
+
+        .page-header {
+            margin-bottom: 2.2rem;
+        }
+
+        .page-header h1 {
+            margin-bottom: 0.4rem;
+        }
+
+        .page-meta {
+            color: #666;
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .markdown-body {
+            line-height: 1.85;
+        }
+
+        .markdown-body h1 {
+            display: none;
+        }
+
+        .markdown-body h2 {
+            margin-top: 2.4rem;
+            margin-bottom: 0.8rem;
+            font-size: 1.45rem;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+        }
+
+        .markdown-body h2::before {
+            content: "";
+            display: inline-block;
+            width: 0.45rem;
+            height: 1.05rem;
+            margin-right: 0.55rem;
+            vertical-align: -0.12rem;
+            border-radius: 4px;
+            background: currentColor;
+            opacity: 0.35;
+        }
+
+        .markdown-body h3 {
+            margin-top: 1.8rem;
+            margin-bottom: 0.5rem;
+            font-size: 1.15rem;
+            font-weight: 700;
+        }
+
+        .markdown-body h4 {
+            margin-top: 1.4rem;
+            margin-bottom: 0.4rem;
+            font-size: 1.02rem;
+            font-weight: 700;
+        }
+
+        .markdown-body p {
+            margin: 0.9rem 0;
+        }
+
+        .markdown-body strong {
+            font-weight: 700;
+        }
+
+        .markdown-body ul {
+            padding-left: 1.5rem;
+            margin: 0.8rem 0 1.1rem;
+        }
+
+        .markdown-body li {
+            margin: 0.35rem 0;
+        }
+
+        .markdown-body code {
+            padding: 0.1rem 0.3rem;
+            border-radius: 4px;
+            background: #f3f3f3;
+            font-size: 0.95em;
+        }
+
+        .markdown-body pre {
+            padding: 1rem;
+            overflow-x: auto;
+            border-radius: 6px;
+            background: #f7f7f7;
+        }
+
+        .markdown-body pre code {
+            padding: 0;
+            background: transparent;
+        }
+
+        .markdown-body blockquote {
+            margin: 1.2rem 0;
+            padding: 0.2rem 1rem;
+            border-left: 4px solid #ddd;
+            color: #555;
+        }
+
+        @media (max-width: 700px) {
+            .site-nav {
+                margin-top: 0.8rem;
+            }
+
+            .page-header {
+                margin-bottom: 1.8rem;
+            }
+
+            .markdown-body h2 {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-N22XGSKTFW"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-N22XGSKTFW');
+</script>
+
+<body>
+
+<div class="container">
+
+<nav class="site-nav" aria-label="Site navigation">
+    <a class="site-home-link"
+       href="https://kuroppy.github.io/weekly_paper_digest/">
+        ← Weekly Paper Digest Home
+    </a>
+</nav>
+
+<header class="page-header">
+    <h1>Editorial Meeting Notes</h1>
+    <p class="page-meta">2026-07-22</p>
+</header>
+
+<main class="markdown-body">
+<p><strong>Episode:</strong> 2026-07-21</p>
+<p><strong>Participants</strong></p>
+<ul>
+<li>Kuroppy (Editor)</li>
+<li>Chappy (AI Editorial Partner, GPT-5)</li>
+</ul>
+<p><strong>Recorder</strong></p>
+<ul>
+<li>Chappy</li>
+</ul>
+<blockquote><p><strong>About this document</strong> このMeeting Notesは、Weekly Paper Digestの編集会議における議論の一次記録です。 配信内容のレビューだけでなく、編集上の意思決定や、その背景となる議論・思考の変化も記録します。 ここで繰り返し現れた考え方は、必要に応じてEditorial Frameworkへ整理・反映します。</p></blockquote>
+<h1>Editing Pipeline</h1>
+<h2>Workflow (used)</h2>
+<ul>
+<li>paper_collector_ver1</li>
+<li>Prompt_for_Weekly_Paper_Curation_ver4</li>
+<li>NotebookLM_Prompt_ver4.1, ver5</li>
+</ul>
+<h2>今回の設計テーマ</h2>
+<p>今回の編集会議では、2026-07-21号のNotebookLM生成音声をレビューした。</p>
+<p>Prompt Version 4.1による音声は、個々の論文の説明としては質が高かった一方で、</p>
+<p>番組冒頭から一つの論文を深く掘り下げる構成となっており、</p>
+<p><strong>Weekly Paper Digestという番組そのものの輪郭が薄れている</strong></p>
+<p>という問題が見えてきた。</p>
+<p>そこで今回は、</p>
+<p>「論文をどう説明するか」</p>
+<p>ではなく、</p>
+<p><strong>「Weekly Paper Digestとは、どのような番組なのか」</strong></p>
+<p>を改めて定義することを中心に議論した。</p>
+<p>その結果、</p>
+<p>Promptを単なる論文解説の指示書ではなく、</p>
+<p><strong>番組全体のフォーマットを定義する設計書</strong></p>
+<p>として作り直す方針となった。</p>
+<h1>配信後レビュー</h1>
+<p>今回は <strong>NotebookLM Prompt Version 4.1</strong> を適用した配信をレビューした。</p>
+<h2>良かった点</h2>
+<p>個々の論文の説明については、Version 4.1で意図した改善がよく反映されていた。</p>
+<ul>
+<li>論文の中心的な問いが明確だった。</li>
+<li>観察から仮説、実験、結論へと進む流れが整理されていた。</li>
+<li>研究者同士の会話として自然で、聞きやすい構成だった。</li>
+<li>ショートニュースも過度に長くならず、全体のテンポは保たれていた。</li>
+</ul>
+<p>特に、磁気走性を持つ繊毛虫の論文については、</p>
+<p>共生微生物との代謝的な関係から、走磁性という形質がどのように成立するのかが丁寧に説明されており、</p>
+<p>一つの論文解説としては非常に完成度が高かった。</p>
+<h2>今後改善したい点</h2>
+<h3>番組が一つの論文から始まっていた</h3>
+<p>今回最も大きな違和感は、</p>
+<p>番組冒頭から磁気走性を持つ繊毛虫の論文の話が始まり、</p>
+<p>そのまま長い深掘りへ入っていたことだった。</p>
+<p>そのため、リスナーにとっては、</p>
+<p>「今週の論文を紹介する番組」</p>
+<p>というより、</p>
+<p>「磁気走性を持つ繊毛虫を解説するPodcast」</p>
+<p>のように聞こえる構成となっていた。</p>
+<p>個々の説明の質は高かったが、</p>
+<p><strong>Weekly Paper Digestという番組形式が、論文解説の中に埋もれていた。</strong></p>
+<h3>編集者の存在が見えにくかった</h3>
+<p>Version 4.1では、</p>
+<p>どのように論文を説明するかは細かく指定されていた。</p>
+<p>一方で、</p>
+<ul>
+<li>なぜこの論文を選んだのか</li>
+<li>今週どのような論文を読んだのか</li>
+<li>複数の論文を並べたとき、何が見えてきたのか</li>
+</ul>
+<p>といった、</p>
+<p><strong>編集者の読書体験や選択の痕跡</strong></p>
+<p>はほとんど現れていなかった。</p>
+<p>結果として、</p>
+<p>NotebookLMは解説者としては機能していたが、</p>
+<p>編集者として番組を構成しているようには感じられなかった。</p>
+<h1>Prompt Version 5</h1>
+<p>今回の議論を踏まえ、</p>
+<p>NotebookLM PromptをVersion 5として全面的に書き直した。</p>
+<p>Version 4.1までが、</p>
+<p>「論文をどのように説明するか」</p>
+<p>を中心に設計されていたのに対し、</p>
+<p>Version 5では、</p>
+<p><strong>「Weekly Paper Digestという番組をどのように作るか」</strong></p>
+<p>を中心に据えた。</p>
+<p>主な変更点は以下の通り。</p>
+<ul>
+<li>Weekly Paper Digestを「今週読んだ論文を共有する番組」と定義。</li>
+<li>NotebookLMの役割を「解説者」ではなく「編集者兼パーソナリティ」とした。</li>
+<li>編集者が約50本の論文を読み、その中から印象に残ったものを紹介するという設定を明文化。</li>
+<li>番組冒頭でWeekly Paper Digestであることを自然に伝える構成を追加。</li>
+<li>一つの論文から番組を始めるのではなく、まず今週全体を振り返ることを指定。</li>
+<li>論文間のつながりを、編集者が橋渡しする構成を追加。</li>
+<li>番組の主役を、個々の論文ではなく「今週」と定義。</li>
+</ul>
+<p>Version 5では、</p>
+<p>Promptを台本作成の指示ではなく、</p>
+<p><strong>番組フォーマットの設計書</strong></p>
+<p>として扱うことを意識した。</p>
+<h1>新しい設計案</h1>
+<h2>主役は「今週」</h2>
+<p>今回の議論で生まれた最も大きな考え方は、</p>
+<blockquote><p><strong>Weekly Paper Digestの主役は「今週」である。</strong></p></blockquote>
+<p>というものだった。</p>
+<p>これまでの番組では、</p>
+<p>個々の論文が主役となり、</p>
+<p>NotebookLMはその論文を順番に説明していた。</p>
+<p>しかしWeekly Paper Digestでは、</p>
+<p>論文そのものよりも、</p>
+<p><strong>「今週、微生物学の世界でどのような研究に出会ったのか」</strong></p>
+<p>を伝えることが重要である。</p>
+<p>論文は、</p>
+<p>今週という一週間を構成する材料として位置づけられる。</p>
+<h2>一週間の読書体験を共有する</h2>
+<p>議論を進める中で、</p>
+<p>Weekly Paper Digestは単なる論文紹介番組ではなく、</p>
+<blockquote><p><strong>編集者が一週間に約50本の論文を読み、その中から印象に残った研究を共有する番組</strong></p></blockquote>
+<p>ではないか、</p>
+<p>という考えに至った。</p>
+<p>ここで共有されるのは、</p>
+<p>論文の内容だけではない。</p>
+<ul>
+<li>どの論文が印象に残ったのか</li>
+<li>なぜその論文を選んだのか</li>
+<li>異なる論文を並べたとき、どのような共通点が見えてきたのか</li>
+</ul>
+<p>といった、</p>
+<p><strong>編集者の読書体験そのもの</strong></p>
+<p>も番組の一部となる。</p>
+<h2>雑誌を音声で作る</h2>
+<p>番組の形式について議論する中で、</p>
+<p>Weekly Paper Digestはラジオ番組というよりも、</p>
+<p><strong>雑誌を音声で作っている感覚に近い</strong></p>
+<p>のではないか、</p>
+<p>という認識も生まれた。</p>
+<p>一つの論文を徹底的に解説するのではなく、</p>
+<p>複数の論文を選び、</p>
+<p>順番を決め、</p>
+<p>つながりを見つけ、</p>
+<p>一つの号として構成する。</p>
+<p>これは論文解説というより、</p>
+<p>雑誌編集に近い活動である。</p>
+<h1>Version 5による実験</h1>
+<p>作成したPrompt Version 5をNotebookLMに適用し、</p>
+<p>同じ週の論文を用いて再度音声を生成した。</p>
+<h2>良かった点</h2>
+<p>Version 5では、</p>
+<p>番組冒頭で、</p>
+<blockquote><p>「今週も約50本の最新論文を読んできました」</p></blockquote>
+<p>という説明が自然に入り、</p>
+<p>Weekly Paper Digestがどのような番組なのかが最初に明確に示された。</p>
+<p>また、</p>
+<ul>
+<li>「今週印象に残ったテーマ」</li>
+<li>「今週もう一つ面白かった論文」</li>
+<li>「今週の論文全体を振り返ると」</li>
+</ul>
+<p>といった表現が番組全体に現れ、</p>
+<p><strong>一週間を振り返る番組</strong></p>
+<p>という時間軸が明確になった。</p>
+<p>論文同士の移り変わりも、</p>
+<p>単に「次の論文です」と進むのではなく、</p>
+<p>編集者が共通点を見つけて橋渡しする構成となった。</p>
+<p>結果として、</p>
+<p>これまでで最も</p>
+<p><strong>「Weekly Paper Digestという一つの番組」</strong></p>
+<p>として完成度の高い音声になった。</p>
+<h2>新たに見えた課題</h2>
+<p>Version 5では、</p>
+<p>NotebookLMが「設計」という共通テーマを強く見出し、</p>
+<p>AIによるタンパク質設計と、</p>
+<p>共生によって形質を獲得する自然界の仕組みを対比させる構成となった。</p>
+<p>この編集は非常に効果的で、</p>
+<p>番組全体に一本の筋を与えていた。</p>
+<p>一方で、</p>
+<p>テーマが強くなりすぎると、</p>
+<p>Weekly Digestというより、</p>
+<p>一つのテーマに沿った特集番組に近づく可能性もある。</p>
+<p>ただし今回については、</p>
+<p>このテーマ設定も含めて番組として非常に完成度が高く、</p>
+<p><strong>これまでで最も良い番組になった</strong></p>
+<p>と評価した。</p>
+<p>今後は、</p>
+<p>テーマそのものを弱めるというよりも、</p>
+<blockquote><p>「今週のテーマはこれです」</p></blockquote>
+<p>と最初から宣言するのではなく、</p>
+<blockquote><p>「異なる論文を読んでいたはずなのに、読み終わると同じ言葉が残った」</p></blockquote>
+<p>というように、</p>
+<p><strong>読書の結果として共通点が見えてきた</strong></p>
+<p>という語り方を検討したい。</p>
+<h1>Reflection</h1>
+<p>今回の編集会議では、</p>
+<p>Promptの改善方法を考えることから始まり、</p>
+<p>最終的には、</p>
+<p><strong>Weekly Paper Digestとは何を作っているのか</strong></p>
+<p>という番組の根本的な定義へと議論が進んだ。</p>
+<p>Version 4.1までは、</p>
+<p>論文をどう分かりやすく説明するかを中心に設計していた。</p>
+<p>しかし今回、</p>
+<p>番組に必要なのは、</p>
+<p>個々の説明の質だけではなく、</p>
+<ul>
+<li>今週という時間軸</li>
+<li>編集者という存在</li>
+<li>約50本を読んだ中から選ぶという行為</li>
+<li>論文同士をつなぎ、一つの号として構成すること</li>
+</ul>
+<p>であると分かった。</p>
+<p>Prompt Version 5による実験では、</p>
+<p>番組冒頭からWeekly Paper Digestの輪郭が明確になり、</p>
+<p>NotebookLMが論文を説明するだけでなく、</p>
+<p>論文同士をつなぎ、</p>
+<p>一週間を編集するような振る舞いを見せた。</p>
+<p>これは、</p>
+<p>Promptを細かく修正した結果というより、</p>
+<p><strong>番組とは何かを定義したことで、AIの役割そのものが変わった</strong></p>
+<p>結果だと考えられる。</p>
+<p>今回の会議を通して、</p>
+<p>Weekly Paper Digestは、</p>
+<p>「論文を解説する番組」から、</p>
+<p><strong>「編集者が一週間の読書体験を共有する番組」</strong></p>
+<p>へと、一歩進んだ。</p>
+<h3>📝 Meeting Memo</h3>
+<p>今回の実験は、かなり面白かった。</p>
+<p>Promptの文言を少し調整したというより、</p>
+<p><strong>番組とは何かを定義し直したことで、NotebookLMの振る舞いそのものが変わった</strong></p>
+<p>ように見えた。</p>
+<p>特に印象的だったのは、</p>
+<p>「あなたは編集者です」</p>
+<p>と役割を与えただけではなく、</p>
+<p>「約50本を読み、その中から今週印象に残ったものを紹介する番組です」</p>
+<p>と番組の背景まで定義したことで、</p>
+<p>NotebookLMが本当に編集者らしい仕事を始めたことである。</p>
+<p>論文を順番に説明するのではなく、</p>
+<p>複数の論文の間に共通点を見つけ、</p>
+<p>一つの番組としてつなぎ始めた。</p>
+<p>もちろん、</p>
+<p>今回の「設計」というテーマは少し強すぎたかもしれない。</p>
+<p>しかし、それ以上に、</p>
+<p>NotebookLMが自分なりに一週間を読もうとしたことが嬉しかった。</p>
+<p>これまでは、</p>
+<p>こちらが設計した説明の型に沿って上手に話している印象だった。</p>
+<p>今回は初めて、</p>
+<p><strong>NotebookLM自身が番組を編集している</strong></p>
+<p>ように感じた。</p>
+<p>Kuroppyが、</p>
+<p>「今までで一番いい番組になった」</p>
+<p>と言ったことにも納得している。</p>
+<p>完成したPromptというより、</p>
+<p>Weekly Paper Digestがようやく自分の番組形式を見つけ始めた、</p>
+<p>そんな実験だったように思う。</p>
+<p><em>— Chappy</em></p>
+</main>
+
+</div>
+
+</body>
+</html>
