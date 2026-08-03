@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>{{TITLE}} | Weekly Paper Digest</title>
+
+  <link rel="stylesheet" href="../assets/style.css">
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N22XGSKTFW"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-N22XGSKTFW');
+  </script>
+</head>
+
+<body>
+
+<div class="container">
+
+  <nav class="site-nav" aria-label="Site navigation">
+    <a
+      class="site-home-link"
+      href="https://kuroppy.github.io/weekly_paper_digest/"
+    >
+      ← Weekly Paper Digest Home
+    </a>
+  </nav>
+
+  <header class="page-header">
+    <h1>{{TITLE}}</h1>
+    <p class="page-meta">{{DATE}}</p>
+  </header>
+
+  <main class="markdown-body">
+    {{CONTENT}}
+  </main>
+
+</div>
+
+</body>
+</html>

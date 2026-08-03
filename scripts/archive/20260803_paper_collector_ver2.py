@@ -14,6 +14,7 @@ paper_collector.py
 
 環境変数 (.env):
   NCBI_EMAIL      必須
+  NCBI_API_KEY    任意
 
 出力:
   - papers_YYYY-MM-DD.csv
@@ -51,6 +52,7 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 load_dotenv(REPO_ROOT / ".env")
 
 NCBI_EMAIL = os.getenv("NCBI_EMAIL", "").strip()
+NCBI_API_KEY = os.getenv("NCBI_API_KEY", "").strip()
 
 TOOL_NAME = "paper_collector"
 REQUEST_TIMEOUT = 60
@@ -253,6 +255,8 @@ def ncbi_common_params() -> dict:
         "tool": TOOL_NAME,
         "email": NCBI_EMAIL,
     }
+    if NCBI_API_KEY:
+        params["api_key"] = NCBI_API_KEY
     return params
 
 

@@ -1,7 +1,6 @@
+/* Base */
 body {
-  max-width: 760px;
-  margin: 0 auto;
-  padding: 2rem 1.2rem;
+  margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Hiragino Sans",
     "Yu Gothic", "YuGothic", Meiryo, sans-serif;
   line-height: 1.8;
@@ -9,9 +8,15 @@ body {
   background: #fafafa;
 }
 
+.container {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 2rem 1.2rem;
+}
+
 h1 {
-  font-size: 2rem;
   margin-bottom: 0.5rem;
+  font-size: 2rem;
   line-height: 1.3;
 }
 
@@ -25,6 +30,14 @@ p {
   margin: 1rem 0;
 }
 
+ul {
+  padding-left: 1.4rem;
+}
+
+li {
+  margin: 0.4rem 0;
+}
+
 a {
   color: #1f5f9f;
   text-decoration: none;
@@ -35,9 +48,9 @@ a:hover {
 }
 
 hr {
-  border: none;
-  border-top: 1px solid #ddd;
   margin: 2rem 0;
+  border: 0;
+  border-top: 1px solid #ddd;
 }
 
 audio {
@@ -45,112 +58,69 @@ audio {
   margin: 1rem 0 1.5rem;
 }
 
-ul {
-  padding-left: 1.4rem;
-}
-
-li {
-  margin: 0.4rem 0;
-}
-
 blockquote {
   margin: 1.5rem 0;
   padding: 0.8rem 1rem;
   border-left: 4px solid #999;
-  background: #f0f0f0;
   color: #444;
+  background: #f0f0f0;
 }
 
-.container {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 2rem;
+/* Navigation */
+.site-nav {
+  margin: 1.2rem 0 2rem;
 }
 
-.site-note {
-  padding: 1rem 1.2rem;
-  margin: 1.5rem 0;
-  background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-}
-
-.episode-list {
-  list-style: none;
-  padding-left: 0;
-}
-
-.episode-list li {
-  padding: 0.8rem 0;
-  border-bottom: 1px solid #e5e5e5;
-}
-
-.small {
-  font-size: 0.9rem;
-  color: #666;
-}
-
-.latest-episode {
-  margin: 1.5rem 0 2rem;
-  padding: 1.4rem 1.5rem;
-  background: #ffffff;
-  border: 1px solid #ddd;
-  border-radius: 14px;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
-}
-
-.latest-episode h3 {
-  margin-top: 0.4rem;
-  margin-bottom: 0.8rem;
-  font-size: 1.35rem;
-}
-
-.episode-date {
-  display: inline-block;
-  font-size: 0.85rem;
-  color: #666;
-  background: #f2f2f2;
-  padding: 0.2rem 0.6rem;
+.site-home-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.45rem 0.85rem;
+  border: 1px solid #d0d0d0;
   border-radius: 999px;
-}
-
-.episode-button {
-  display: inline-block;
-  margin-top: 0.8rem;
-  padding: 0.65rem 1rem;
-  background: #1f5f9f;
-  color: #fff;
-  border-radius: 999px;
+  color: #333;
+  background: #fafafa;
+  font-size: 0.92rem;
   font-weight: 600;
 }
 
-.episode-button:hover {
+.site-home-link:hover {
+  background: #f0f0f0;
   text-decoration: none;
-  background: #174b7d;
 }
 
-.topic-heading {
-  margin-top: 3rem;
-  padding-left: 0.8rem;
-  border-left: 5px solid #1f5f9f;
+/* Page header */
+.page-header {
+  margin-bottom: 2.2rem;
 }
 
+.page-header h1 {
+  margin-bottom: 0.4rem;
+}
+
+.page-meta {
+  margin: 0;
+  color: #666;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+/* Episode / paper cards */
 .paper-list {
   margin-top: 1.5rem;
 }
 
 .paper-card {
-  background: #fff;
+  margin: 1.2rem 0;
+  padding: 1.3rem 1.5rem;
   border: 1px solid #ddd;
   border-radius: 14px;
-  padding: 1.3rem 1.5rem;
-  margin: 1.2rem 0;
+  background: #fff;
   box-shadow: 0 3px 12px rgba(0, 0, 0, 0.04);
 }
 
 .paper-card h3 {
-  margin-top: 0;
-  margin-bottom: 0.7rem;
+  margin: 0 0 0.7rem;
   font-size: 1.05rem;
   line-height: 1.6;
 }
@@ -159,148 +129,161 @@ blockquote {
   margin: 0.7rem 0;
 }
 
+.paper-card a {
+  word-break: break-all;
+}
+
 .journal {
   font-weight: 700;
   color: #333;
 }
 
-.paper-card a {
-  word-break: break-all;
+/* Home / index pages */
+.site-note {
+  margin: 1.5rem 0;
+  padding: 1rem 1.2rem;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background: #fff;
 }
 
-.site-nav {
-  margin: 1.2rem 0 2rem;
+.episode-list {
+  padding-left: 0;
+  list-style: none;
 }
 
-.site-home-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35rem;
-    padding: 0.45rem 0.85rem;
-    border: 1px solid #d0d0d0;
-    border-radius: 999px;
-    text-decoration: none;
-    font-size: 0.92rem;
-    font-weight: 600;
-    color: #333;
-    background: #fafafa;
+.episode-list li {
+  padding: 0.8rem 0;
+  border-bottom: 1px solid #e5e5e5;
 }
 
-.site-home-link:hover {
-    background: #f0f0f0;
-    text-decoration: none;
+.latest-episode {
+  margin: 1.5rem 0 2rem;
+  padding: 1.4rem 1.5rem;
+  border: 1px solid #ddd;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
 }
 
-.page-header {
-    margin-bottom: 2.2rem;
+.latest-episode h3 {
+  margin: 0.4rem 0 0.8rem;
+  font-size: 1.35rem;
 }
 
-.page-header h1 {
-    margin-bottom: 0.4rem;
+.episode-button {
+  display: inline-block;
+  margin-top: 0.8rem;
+  padding: 0.65rem 1rem;
+  border-radius: 999px;
+  color: #fff;
+  background: #1f5f9f;
+  font-weight: 600;
 }
 
-.page-meta {
-    color: #666;
-    font-size: 0.95rem;
-    font-weight: 600;
-    margin: 0;
+.episode-button:hover {
+  background: #174b7d;
+  text-decoration: none;
 }
 
+.episode-footer {
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #ddd;
+  font-size: 0.95rem;
+}
+
+/* Markdown-based documentation pages */
 .markdown-body {
-    line-height: 1.85;
+  line-height: 1.85;
 }
 
 .markdown-body h1 {
-    display: none;
+  display: none;
 }
 
 .markdown-body h2 {
-    margin-top: 2.4rem;
-    margin-bottom: 0.8rem;
-    font-size: 1.45rem;
-    font-weight: 700;
-    letter-spacing: 0.02em;
+  margin: 2.4rem 0 0.8rem;
+  font-size: 1.45rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
 }
 
 .markdown-body h2::before {
-    content: "";
-    display: inline-block;
-    width: 0.45rem;
-    height: 1.05rem;
-    margin-right: 0.55rem;
-    vertical-align: -0.12rem;
-    border-radius: 4px;
-    background: currentColor;
-    opacity: 0.35;
+  content: "";
+  display: inline-block;
+  width: 0.45rem;
+  height: 1.05rem;
+  margin-right: 0.55rem;
+  border-radius: 4px;
+  background: currentColor;
+  vertical-align: -0.12rem;
+  opacity: 0.35;
 }
 
 .markdown-body h3 {
-    margin-top: 1.8rem;
-    margin-bottom: 0.5rem;
-    font-size: 1.15rem;
-    font-weight: 700;
+  margin: 1.8rem 0 0.5rem;
+  font-size: 1.15rem;
 }
 
 .markdown-body h4 {
-    margin-top: 1.4rem;
-    margin-bottom: 0.4rem;
-    font-size: 1.02rem;
-    font-weight: 700;
+  margin: 1.4rem 0 0.4rem;
+  font-size: 1.02rem;
 }
 
 .markdown-body p {
-    margin: 0.9rem 0;
-}
-
-.markdown-body strong {
-    font-weight: 700;
+  margin: 0.9rem 0;
 }
 
 .markdown-body ul {
-    padding-left: 1.5rem;
-    margin: 0.8rem 0 1.1rem;
+  margin: 0.8rem 0 1.1rem;
+  padding-left: 1.5rem;
 }
 
 .markdown-body li {
-    margin: 0.35rem 0;
+  margin: 0.35rem 0;
 }
 
 .markdown-body code {
-    padding: 0.1rem 0.3rem;
-    border-radius: 4px;
-    background: #f3f3f3;
-    font-size: 0.95em;
+  padding: 0.1rem 0.3rem;
+  border-radius: 4px;
+  background: #f3f3f3;
+  font-size: 0.95em;
 }
 
 .markdown-body pre {
-    padding: 1rem;
-    overflow-x: auto;
-    border-radius: 6px;
-    background: #f7f7f7;
+  padding: 1rem;
+  overflow-x: auto;
+  border-radius: 6px;
+  background: #f7f7f7;
 }
 
 .markdown-body pre code {
-    padding: 0;
-    background: transparent;
+  padding: 0;
+  background: transparent;
 }
 
 .markdown-body blockquote {
-    margin: 1.2rem 0;
-    padding: 0.2rem 1rem;
-    border-left: 4px solid #ddd;
-    color: #555;
+  margin: 1.2rem 0;
+  padding: 0.2rem 1rem;
+  border-left-color: #ddd;
+  color: #555;
 }
 
 @media (max-width: 700px) {
-    .site-nav {
-        margin-top: 0.8rem;
-    }
+  .container {
+    padding: 1.5rem 1rem;
+  }
 
-    .page-header {
-        margin-bottom: 1.8rem;
-    }
+  .site-nav {
+    margin-top: 0.8rem;
+  }
 
-    .markdown-body h2 {
-        font-size: 1.3rem;
-    }
+  .page-header {
+    margin-bottom: 1.8rem;
+  }
+
+  .markdown-body h2 {
+    font-size: 1.3rem;
+  }
 }

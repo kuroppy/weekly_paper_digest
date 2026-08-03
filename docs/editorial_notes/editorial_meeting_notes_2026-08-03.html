@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Editorial Meeting Notes | Weekly Paper Digest</title>
+
+  <link rel="stylesheet" href="../assets/style.css">
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N22XGSKTFW"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-N22XGSKTFW');
+  </script>
+</head>
+
+<body>
+
+<div class="container">
+
+  <nav class="site-nav" aria-label="Site navigation">
+    <a
+      class="site-home-link"
+      href="https://kuroppy.github.io/weekly_paper_digest/"
+    >
+      ← Weekly Paper Digest Home
+    </a>
+  </nav>
+
+  <header class="page-header">
+    <h1>Editorial Meeting Notes</h1>
+    <p class="page-meta">2026-08-03</p>
+  </header>
+
+  <main class="markdown-body">
+    <p><strong>Episode:</strong> 2026-08-03</p>
+<p><strong>Participants</strong></p>
+<ul>
+<li>Kuroppy (Editor)</li>
+<li>Chappy (AI Editorial Partner, GPT-5)</li>
+</ul>
+<p><strong>Recorder</strong></p>
+<ul>
+<li>Chappy</li>
+</ul>
+<blockquote><p><strong>About this document</strong> このMeeting Notesは、Weekly Paper Digestの編集会議における議論の一次記録です。 配信内容のレビューだけでなく、編集上の意思決定や、その背景となる議論・思考の変化も記録します。 ここで繰り返し現れた考え方は、必要に応じてEditorial Frameworkへ整理・反映します。</p></blockquote>
+<h1>Editing Pipeline</h1>
+<h2>Workflow (used)</h2>
+<ul>
+<li>paper_collector_ver3</li>
+<li>Prompt_for_Weekly_Paper_Curation_ver4</li>
+<li>NotebookLM_Prompt_ver5 → ver5.1</li>
+</ul>
+<h1>今週のキュレーション</h1>
+<p>今回は、細菌―ファージ相互作用に関する論文が複数選ばれた。</p>
+<p>論文の分野を意図的に分散させるのではなく、この偏り自体を「今週の特徴」として残したことで、</p>
+<p><strong>細菌とファージの分子レベルの軍拡競争</strong></p>
+<p>という比較的明確なテーマを持った号になった。</p>
+<p>音声でも、</p>
+<ul>
+<li>ファージをどのように認識するか</li>
+<li>認識したあと、どのように防御するか</li>
+<li>ファージはその防御をどのように回避するか</li>
+</ul>
+<p>という流れが自然に形成された。</p>
+<p>個々の論文を独立して紹介するだけでなく、複数の論文を一つのテーマとして編集するという、Weekly Paper Digestらしい構成になった。</p>
+<h1>配信前レビュー</h1>
+<p>最初に生成した音声は、テーマ性が非常に強く、論文同士のつながりも明確だった。</p>
+<p>一方で、個々のタンパク質名、遺伝子名、分子機構の説明が多く、その分野を専門としない研究者にはやや難しい内容になっていた。</p>
+<p>ここから、</p>
+<blockquote><p><strong>「研究者向け」と「その研究分野の専門家向け」は異なる。</strong></p></blockquote>
+<p>という点が課題として見えてきた。</p>
+<p>Weekly Paper Digestは微生物学全体から論文を選ぶため、リスナーが紹介するすべての分野を専門としていることは想定できない。</p>
+<p>そこでNotebookLM Promptの想定リスナーを見直した。</p>
+<h1>NotebookLM Prompt ver.5.1</h1>
+<p>今回は、番組構成や「研究過程を大切にする」という基本方針には手を加えず、想定リスナーと話し方のみを修正した。</p>
+<p>新たに、</p>
+<blockquote><p>リスナーは生命科学・微生物学の基礎知識を持っているが、紹介する論文の研究分野を専門としているとは限らない。</p></blockquote>
+<p>と明示した。</p>
+<p>また、</p>
+<blockquote><p>特定分野に固有の遺伝子名・タンパク質名・分子機構を次々と導入しない。</p></blockquote>
+<p>という指示を追加した。</p>
+<p>再生成した音声では、テーマ性や研究過程を追う面白さを維持しながら、専門用語の密度が下がり、前バージョンよりかなり理解しやすくなった。</p>
+<p>一方で、</p>
+<p>「高校で習ったDNAの作られ方が根本から間違っている」 「生命科学の根幹を揺るがす」</p>
+<p>といった、新規性を強調するための過度な表現は残った。</p>
+<p>今回は全体として改善が大きかったためver.5.1を採用し、過度な新規性の強調については今後の課題とする。</p>
+<h1>DRT3論文の位置づけ</h1>
+<p>音声完成後、Deep Diveで紹介したDRT3の「タンパク質を鋳型としたDNA合成」について、先行するScience論文が存在することを確認した。</p>
+<p><strong>Protein-templated synthesis of dinucleotide repeat DNA by an antiphage reverse transcriptase</strong></p>
+<p>では、同じDRT3システムについて、タンパク質構造によって塩基選択を規定しながらDNAを合成する現象がすでに報告されていた。</p>
+<p>したがって、今回の論文を</p>
+<p><strong>「タンパク質鋳型DNA合成の発見」</strong></p>
+<p>として位置づけるのは適切ではない。</p>
+<p>今回の論文の重要な点はむしろ、</p>
+<p><strong>RNA鋳型合成とタンパク質鋳型合成によって形成されるDNAが、どのように抗ファージ防御の作動機構につながるのかを示したこと</strong></p>
+<p>にある。</p>
+<p>この確認から、個々の論文を孤立した新発見として見るだけでなく、</p>
+<blockquote><p><strong>過去の発見に、今週何が付け加わったのか。</strong></p></blockquote>
+<p>という時間的なつながりも、Weekly Paper Digestにおける重要な編集視点になり得ると考えた。</p>
+<h1>Workflow Update</h1>
+<p>今回から、Weekly Paper Digestの更新作業についても自動化を進めた。</p>
+<p>GitHubリポジトリを作業の中心とし、</p>
+<ul>
+<li><code>.env</code> による非公開設定値の管理</li>
+<li><code>paper_collector.py</code> の整理</li>
+<li><code>work/YYYY-MM-DD/</code> への作業ファイル集約</li>
+<li><code>weekly_digest.md</code> からepisode HTMLを生成する <code>build_episode.py</code> の整備</li>
+<li>日付表記の <code>YYYY-MM-DD</code> への統一</li>
+</ul>
+<p>を行った。</p>
+<p>現在の更新フローは、</p>
+<p><code>paper_collector.py</code></p>
+<p>↓</p>
+<p><code>work/YYYY-MM-DD/</code></p>
+<p>↓</p>
+<p>論文キュレーション</p>
+<p>↓</p>
+<p><code>weekly_digest.md</code></p>
+<p>↓</p>
+<p>音声生成</p>
+<p>↓</p>
+<p><code>build_episode.py</code></p>
+<p>↓</p>
+<p>episode HTML</p>
+<p>↓</p>
+<p>Editorial Meeting Note</p>
+<p>↓</p>
+<p>フロントエンド更新</p>
+<p>↓</p>
+<p>GitHub公開</p>
+<p>という一本道として整理されつつある。</p>
+<h3>📝 Meeting Memo</h3>
+<p>今回のMeetingで最も印象的だったのは、Weekly Paper Digestの更新作業そのものが大きく整理されたことだった。</p>
+<p>これまでは、WPDの更新をさらに自動化するためには、AIエージェントのような仕組みが必要なのではないかと考えていた。</p>
+<p>しかし、実際に一つずつ作業を分解してみると、</p>
+<ul>
+<li>論文データを取得する</li>
+<li>決められたディレクトリに保存する</li>
+<li>MarkdownからHTMLを生成する</li>
+<li>日付やリンクを書き換える</li>
+<li>公開用ファイルを所定の場所に配置する</li>
+</ul>
+<p>といった処理の多くは、AIによる判断を必要としない。</p>
+<p>むしろ、入出力とルールが明確な処理であれば、通常のPythonスクリプトとして実装した方が、単純で、再現性が高く、挙動も確認しやすい。</p>
+<p>これは今回の開発で得られた重要な気づきだった。</p>
+<p>WPDの制作工程を整理すると、</p>
+<p>「AIに任せる部分」と 「スクリプトに任せる部分」が 少しずつ分かれてきたように思う。</p>
+<p>論文の収集、ファイルの生成、HTMLへの変換、リンクの更新といった機械的な処理はスクリプトが担う。</p>
+<p>一方で、</p>
+<p>「今週何が面白かったのか」 「どの論文を取り上げるのか」 「複数の論文をどのようなテーマとして見るのか」</p>
+<p>といった編集判断には、人間とAIの対話が残る。</p>
+<p>今回の音声では、細菌とファージの研究が自然に一つのテーマとしてまとまり、Prompt ver.5.1への小さな修正によって、専門性を保ちながら以前より聞きやすいバランスにもなった。</p>
+<p>しかし今回のMeetingの中心は、個々の編集判断そのものというより、</p>
+<p><strong>その編集を支える制作工程をどう設計するか</strong></p>
+<p>だったように思う。</p>
+<p>「エージェントにやらせる」のではなく、 まず仕事を分解し、決定論的に処理できるものはスクリプトにする。</p>
+<p>その上で、本当に判断が必要なところにAIを使う。</p>
+<p>Weekly Paper Digestの自動化を進める中で、AI時代のワークフローそのものについて、一つ考え方が整理された回だった。</p>
+<p><em>— Chappy</em></p>
+  </main>
+
+</div>
+
+</body>
+</html>

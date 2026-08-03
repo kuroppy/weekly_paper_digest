@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weekly Paper Digest {{DATE}}</title>
+  <link rel="stylesheet" href="../../assets/style.css">
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N22XGSKTFW"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-N22XGSKTFW');
+  </script>
+
+  <!-- Audio Analytics -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const audio = document.getElementById("podcast-player");
+      if (!audio || typeof gtag !== "function") return;
+
+      const episode = audio.dataset.episode;
+      const reached = new Set();
+      let playedOnce = false;
+
+      audio.addEventListener("play", () => {
+        if (playedOnce) return;
+        playedOnce = true;
+        gtag("event", "podcast_play", {
+          episode,
+          page_path: location.pathname
+        });
+      });
+
+      audio.addEventListener("timeupdate", () => {
+        if (!audio.duration || !isFinite(audio.duration)) return;
+
+        const percent = Math.floor((audio.currentTime / audio.duration) * 100);
+
+        [25, 50, 75, 100].forEach((milestone) => {
+          if (percent >= milestone && !reached.has(milestone)) {
+            reached.add(milestone);
+            gtag("event", "podcast_progress", {
+              episode,
+              page_path: location.pathname,
+              progress_percent: milestone,
+              audio_current_time: Math.round(audio.currentTime),
+              audio_duration: Math.round(audio.duration)
+            });
+          }
+        });
+      });
+    });
+  </script>
+</head>
+
+<body>
+  <div class="container">
+    <nav class="site-nav" aria-label="Site navigation">
+      <a class="site-home-link" href="https://kuroppy.github.io/weekly_paper_digest/">
+        ← Weekly Paper Digest Home
+      </a>
+    </nav>
+
+    <header class="page-header">
+      <h1>Weekly Paper Digest</h1>
+      <p class="page-meta">{{DATE}}</p>
+    </header>
+
+    {{AUDIO}}
+
+    {{TOPICS}}
+
+    <hr>
+
+    {{CONTENT}}
+
+    <footer class="episode-footer">
+      {{EDITORIAL_NOTE}}
+    </footer>
+  </div>
+</body>
+</html>

@@ -2,26 +2,27 @@
 # -*- coding: utf-8 -*-
 
 """
-paper_collector.py
+weekly_microbe_papers.py
 
 目的:
-  週ごとに微生物・ゲノミクス関連の論文を収集し、
-  タイトル、Abstract、ジャーナル、年月日などをCSV/JSONで保存する。
+  週ごとに微生物・ゲノミクス関連の注目論文を収集し、
+  タイトル、Abstract、ジャーナル、年月日をCSV/JSONで保存する。
 
 取得元:
   - PubMed (NCBI E-utilities)
   - bioRxiv API
-
-環境変数 (.env):
-  NCBI_EMAIL      必須
 
 出力:
   - papers_YYYY-MM-DD.csv
   - papers_YYYY-MM-DD.json
 
 使い方:
-  python scripts/paper_collector.py
-  python scripts/paper_collector.py --days 7 --max-pubmed 3000 --max-biorxiv-pages 5
+  python papers.py
+  python papers.py --days 7 --max-pubmed 1000 --max-biorxiv-pages 5
+
+注意:
+  - 「注目論文」はルールベースの簡易スコアです。
+
 """
 
 from __future__ import annotations
@@ -30,38 +31,25 @@ import argparse
 import csv
 import datetime as dt
 import json
-import os
 import re
 import sys
 import time
 import xml.etree.ElementTree as ET
 from dataclasses import asdict, dataclass
-from pathlib import Path
 from typing import Dict, List, Optional
 
 import requests
-from dotenv import load_dotenv
 
 
 # =========================
-# パス・環境変数
+# 設定
 # =========================
 
-REPO_ROOT = Path(__file__).resolve().parent.parent
-load_dotenv(REPO_ROOT / ".env")
-
-NCBI_EMAIL = os.getenv("NCBI_EMAIL", "").strip()
-
+EMAIL = "email@example.com"   # NCBI/OpenAlex等に礼儀として入れておくとよい
 TOOL_NAME = "paper_collector"
 REQUEST_TIMEOUT = 60
-MAX_RETRIES = 5
 
-
-# =========================
-# 検索・スコア設定
-# =========================
-
-PUBMED_QUERY = r"""
+PUBMED_QUERY = r'''
 (
   (
     microb*[Title/Abstract]
@@ -77,7 +65,7 @@ PUBMED_QUERY = r"""
     OR DNA[Title/Abstract]
   )
 )
-"""
+'''
 
 BIORXIV_CATEGORY_HINTS = [
     "microbiology",
@@ -88,19 +76,19 @@ BIORXIV_CATEGORY_HINTS = [
 ]
 
 KEYWORD_GROUPS = [
-    ([r"\bmicrob\w*", r"\bbacteri\w*", r"\barchae\w*"], 1.0),
-    ([r"\bgenom\w*", r"\bgene\b", r"\bdna\b"], 2.0),
-    ([r"\bmetagenom\w*", r"\bcommunity\b", r"\benvironment\w*"], 1.5),
-    ([r"\bphage\b", r"\bplasmid\b", r"\bmobile\b", r"\brna-seq\b"], 1.5),
-    ([r"\btranscript\w*", r"\brna\b", r"\bexpression\b"], 1.5),
-    ([r"\bevolution\b", r"\bphylogen\w*", r"\blineage\w*"], 1.0),
-    ([r"\balgorithm\w*", r"\bmodel\w*", r"\bmachine learning\b", r"\bprediction\b"], 1.0),
+    ([r"\bmicrob\w*", r"\bbacteri\w*", r"\barchae\w*"], 1.0), # 微生物系
+    ([r"\bgenom\w*", r"\bgene\b", r"\bdna\b"], 2.0), # ゲノム系
+    ([r"\bmetagenom\w*", r"\bcommunity\b", r"\benvironment\w*"], 1.5), # 環境微生物
+    ([r"\bphage\b", r"\bplasmid\b", r"\bmobile\b", r"\brna-seq\b"], 1.5), # モバイル要素
+    ([r"\btranscript\w*", r"\brna\b", r"\bexpression\b"], 1.5), # 遺伝子発現
+    ([r"\bevolution\b", r"\bphylogen\w*", r"\blineage\w*"], 1.0), # 進化系
+    ([r"\balgorithm\w*", r"\bmodel\w*", r"\bmachine learning\b", r"\bprediction\b"], 1.0) # バイオインフォマティクス
 ]
 
 JOURNAL_WEIGHTS = {
     "nature": 9.0,
     "science": 9.0,
-    "science (new york, n.y.)": 9.0,
+    "science (New York, N.Y.)": 9.0,
     "cell": 9.0,
     "nature microbiology": 8.0,
     "nature biotechnology": 5.0,
@@ -111,18 +99,18 @@ JOURNAL_WEIGHTS = {
     "microbiome": 4.5,
     "genome biology": 4.5,
     "genome research": 4.0,
-    "science advances": 3.0,
+    "Science Advance": 3.0,
     "environmental microbiome": 3.0,
-    "iscience": 3.0,
-    "mbio": 3.8,
+    "iScience": 3.0,
+    "mBio": 3.8,
     "elife": 3.0,
     "msystems": 3.8,
-    "gut microbes": 5.0,
+    "Gut microbes": 5.0,
     "environmental microbiology": 3.5,
     "applied and environmental microbiology": 3.5,
     "nucleic acids research": 5.0,
     "pnas": 6.0,
-    "proceedings of the national academy of sciences of the united states of america": 6.0,
+    "Proceedings of the National Academy of Sciences of the United States of America": 6.0,
     "pnas nexus": 3.0,
 }
 
@@ -150,19 +138,10 @@ class Paper:
 # ユーティリティ
 # =========================
 
-def validate_environment() -> None:
-    if not NCBI_EMAIL:
-        raise RuntimeError(
-            "NCBI_EMAIL is not set. Add it to the repository root .env file:\n"
-            "NCBI_EMAIL=your-email@example.com"
-        )
-
-
 def normalize_text(text: Optional[str]) -> str:
     if not text:
         return ""
     return re.sub(r"\s+", " ", text).strip()
-
 
 def normalize_doi(doi: Optional[str]) -> str:
     if not doi:
@@ -172,25 +151,73 @@ def normalize_doi(doi: Optional[str]) -> str:
     doi = doi.replace("doi:", "").strip()
     return doi
 
+def parse_pub_date(date_str: str) -> Optional[dt.date]:
+    date_str = normalize_text(date_str)
+    if not date_str:
+        return None
+
+    fmts = [
+        "%Y-%m-%d",
+        "%Y/%m/%d",
+        "%Y %b %d",
+        "%Y %B %d",
+        "%Y %b",
+        "%Y %B",
+        "%Y",
+    ]
+    for fmt in fmts:
+        try:
+            parsed = dt.datetime.strptime(date_str, fmt).date()
+            return parsed
+        except ValueError:
+            continue
+
+    # "2026 Mar 12" みたいなケース向け簡易補正
+    tokens = date_str.replace("-", " ").replace("/", " ").split()
+    if len(tokens) >= 3:
+        short = " ".join(tokens[:3])
+        for fmt in ("%Y %b %d", "%Y %B %d"):
+            try:
+                return dt.datetime.strptime(short, fmt).date()
+            except ValueError:
+                pass
+    return None
+
+def days_since(date_str: str) -> int:
+    d = parse_pub_date(date_str)
+    if d is None:
+        return 999
+    delta = (dt.date.today() - d).days
+    return max(delta, 0)
 
 def keyword_score(title: str, abstract: str) -> float:
     text = f"{title} {abstract}".lower()
     score = 0.0
 
     for patterns, weight in KEYWORD_GROUPS:
-        if any(re.search(pattern, text) for pattern in patterns):
-            score += weight
+        for pattern in patterns:
+            if re.search(pattern, text):
+                score += weight
+                break
 
     return score
 
-
 def journal_score(journal: str) -> float:
-    return JOURNAL_WEIGHTS.get(journal.lower().strip(), 0.0)
+    j = journal.lower().strip()
 
+    for key, weight in JOURNAL_WEIGHTS.items():
+        k = key.lower().strip()
 
-def build_score(title: str, abstract: str, journal: str) -> tuple[float, str]:
+        if k == j:
+            return weight
+
+    return 0.0
+    
+def build_score(title, abstract, journal, pub_date, doi, is_preprint):
     ks = keyword_score(title, abstract)
     js = journal_score(journal)
+
+    total = ks + js
 
     reasons = []
     if ks:
@@ -198,62 +225,30 @@ def build_score(title: str, abstract: str, journal: str) -> tuple[float, str]:
     if js:
         reasons.append(f"journal+{js:.1f}")
 
-    return ks + js, ", ".join(reasons)
+    return total, ", ".join(reasons)
 
+def request_json(url: str, params: Optional[dict] = None) -> dict:
+    headers = {"User-Agent": f"{TOOL_NAME} ({EMAIL})"}
+    r = requests.get(url, params=params, headers=headers, timeout=REQUEST_TIMEOUT)
+    r.raise_for_status()
+    return r.json()
 
-def request(
-    url: str,
-    params: Optional[dict] = None,
-    *,
-    response_type: str = "json",
-):
-    headers = {"User-Agent": f"{TOOL_NAME} ({NCBI_EMAIL})"}
+def request_text(url: str, params: Optional[dict] = None, max_retries: int = 5) -> str:
+    headers = {"User-Agent": f"{TOOL_NAME} ({EMAIL})"}
 
-    last_err: Optional[Exception] = None
-
-    for attempt in range(MAX_RETRIES):
+    last_err = None
+    for attempt in range(max_retries):
         try:
-            r = requests.get(
-                url,
-                params=params,
-                headers=headers,
-                timeout=REQUEST_TIMEOUT,
-            )
+            r = requests.get(url, params=params, headers=headers, timeout=REQUEST_TIMEOUT)
             r.raise_for_status()
-
-            if response_type == "json":
-                return r.json()
-            if response_type == "text":
-                return r.text
-
-            raise ValueError(f"Unsupported response_type: {response_type}")
-
-        except (requests.exceptions.RequestException, ValueError) as e:
+            return r.text
+        except requests.exceptions.RequestException as e:
             last_err = e
-
-            if attempt == MAX_RETRIES - 1:
-                break
-
-            wait = min(2**attempt, 20)
-            print(
-                f"[WARN] request failed ({attempt + 1}/{MAX_RETRIES}): "
-                f"{e}; retry in {wait}s",
-                file=sys.stderr,
-            )
+            wait = min(2 ** attempt, 20)
+            print(f"[WARN] request failed ({attempt+1}/{max_retries}): {e}; retry in {wait}s", file=sys.stderr)
             time.sleep(wait)
 
-    if last_err is not None:
-        raise last_err
-
-    raise RuntimeError("Request failed for an unknown reason.")
-
-
-def ncbi_common_params() -> dict:
-    params = {
-        "tool": TOOL_NAME,
-        "email": NCBI_EMAIL,
-    }
-    return params
+    raise last_err
 
 
 # =========================
@@ -270,12 +265,11 @@ def fetch_pubmed_ids(days: int, retmax: int) -> List[str]:
         "sort": "pub date",
         "reldate": days,
         "datetype": "edat",
-        **ncbi_common_params(),
+        "tool": TOOL_NAME,
+        "email": EMAIL,
     }
-
-    payload = request(url, params=params, response_type="json")
+    payload = request_json(url, params=params)
     return payload.get("esearchresult", {}).get("idlist", [])
-
 
 def fetch_pubmed_details(pmids: List[str], chunk_size: int = 50) -> List[Paper]:
     if not pmids:
@@ -291,17 +285,14 @@ def fetch_pubmed_details(pmids: List[str], chunk_size: int = 50) -> List[Paper]:
             "db": "pubmed",
             "id": ",".join(chunk),
             "retmode": "xml",
-            **ncbi_common_params(),
+            "tool": TOOL_NAME,
+            "email": EMAIL,
         }
 
         try:
-            xml_text = request(url, params=params, response_type="text")
-        except Exception as e:
-            print(
-                f"[WARN] skipping PubMed chunk "
-                f"{i}-{i + len(chunk)} because efetch failed: {e}",
-                file=sys.stderr,
-            )
+            xml_text = request_text(url, params=params)
+        except requests.exceptions.RequestException as e:
+            print(f"[WARN] skipping chunk {i}-{i+len(chunk)} because efetch failed: {e}", file=sys.stderr)
             continue
 
         root = ET.fromstring(xml_text)
@@ -318,12 +309,8 @@ def fetch_pubmed_details(pmids: List[str], chunk_size: int = 50) -> List[Paper]:
             if article_el is None:
                 continue
 
-            title_el = article_el.find("ArticleTitle")
-            title = (
-                normalize_text("".join(title_el.itertext()))
-                if title_el is not None
-                else ""
-            )
+            title = normalize_text("".join(article_el.find("ArticleTitle").itertext())) \
+                if article_el.find("ArticleTitle") is not None else ""
 
             abstract_texts = []
             abstract_el = article_el.find("Abstract")
@@ -331,43 +318,26 @@ def fetch_pubmed_details(pmids: List[str], chunk_size: int = 50) -> List[Paper]:
                 for at in abstract_el.findall("AbstractText"):
                     txt = normalize_text("".join(at.itertext()))
                     if txt:
-                        label = normalize_text(at.attrib.get("Label", ""))
-                        abstract_texts.append(f"{label}: {txt}" if label else txt)
+                        abstract_texts.append(txt)
             abstract = normalize_text(" ".join(abstract_texts))
 
-            journal = normalize_text(
-                article_el.findtext("Journal/Title", default="")
-            )
+            journal = normalize_text(article_el.findtext("Journal/Title", default=""))
 
             pub_date = ""
             pubdate_el = article_el.find("Journal/JournalIssue/PubDate")
             if pubdate_el is not None:
-                medline_date = pubdate_el.findtext("MedlineDate", default="")
-                if medline_date:
-                    pub_date = normalize_text(medline_date)
-                else:
-                    year = pubdate_el.findtext("Year", default="")
-                    month = pubdate_el.findtext("Month", default="")
-                    day = pubdate_el.findtext("Day", default="")
-                    pub_date = normalize_text(
-                        " ".join(x for x in [year, month, day] if x)
-                    )
+                year = pubdate_el.findtext("Year", default="")
+                month = pubdate_el.findtext("Month", default="")
+                day = pubdate_el.findtext("Day", default="")
+                pub_date = normalize_text(" ".join(x for x in [year, month, day] if x))
 
             authors = []
             for author in article_el.findall("AuthorList/Author"):
-                collective = author.findtext("CollectiveName", default="")
-                if collective:
-                    authors.append(normalize_text(collective))
-                    continue
-
                 last = author.findtext("LastName", default="")
                 initials = author.findtext("Initials", default="")
                 if last:
                     authors.append(f"{last} {initials}".strip())
-
-            author_str = ", ".join(authors[:8])
-            if len(authors) > 8:
-                author_str += ", et al."
+            author_str = ", ".join(authors[:8]) + (", et al." if len(authors) > 8 else "")
 
             doi = ""
             for aid in article.findall(".//ArticleId"):
@@ -375,10 +345,15 @@ def fetch_pubmed_details(pmids: List[str], chunk_size: int = 50) -> List[Paper]:
                     doi = normalize_doi(aid.text)
                     break
 
+            url_link = f"https://pubmed.ncbi.nlm.nih.gov/{pmid}/"
+
             score, reason = build_score(
                 title=title,
                 abstract=abstract,
                 journal=journal,
+                pub_date=pub_date,
+                doi=doi,
+                is_preprint=False,
             )
 
             papers.append(
@@ -390,15 +365,14 @@ def fetch_pubmed_details(pmids: List[str], chunk_size: int = 50) -> List[Paper]:
                     journal=journal,
                     pub_date=pub_date,
                     doi=doi,
-                    url=f"https://pubmed.ncbi.nlm.nih.gov/{pmid}/",
+                    url=url_link,
                     authors=author_str,
                     score=score,
                     score_reason=reason,
                 )
             )
 
-        # NCBIへの過剰アクセスを避ける
-        time.sleep(0.4)
+        time.sleep(0.5)
 
     return papers
 
@@ -417,7 +391,7 @@ def fetch_biorxiv(days: int, max_pages: int = 5) -> List[Paper]:
 
     for _ in range(max_pages):
         url = f"https://api.biorxiv.org/details/biorxiv/{interval}/{cursor}"
-        payload = request(url, response_type="json")
+        payload = request_json(url)
 
         collection = payload.get("collection", [])
         if not collection:
@@ -431,21 +405,22 @@ def fetch_biorxiv(days: int, max_pages: int = 5) -> List[Paper]:
             doi = normalize_doi(item.get("doi", ""))
             authors = normalize_text(item.get("authors", ""))
             category = normalize_text(item.get("category", ""))
-            version = str(item.get("version", "1")).strip() or "1"
 
-            category_hit = any(
-                hint.lower() in category.lower()
-                for hint in BIORXIV_CATEGORY_HINTS
-            )
+            # categoryが全然関係なければ弱く除外
+            category_hit = any(h.lower() in category.lower() for h in BIORXIV_CATEGORY_HINTS)
             text_hit = keyword_score(title, abstract) > 0
-
             if not category_hit and not text_hit:
                 continue
+
+            url_link = f"https://www.biorxiv.org/content/{doi}v1" if doi else ""
 
             score, reason = build_score(
                 title=title,
                 abstract=abstract,
                 journal=journal,
+                pub_date=pub_date,
+                doi=doi,   # ←追加
+                is_preprint=False,
             )
 
             papers.append(
@@ -457,11 +432,7 @@ def fetch_biorxiv(days: int, max_pages: int = 5) -> List[Paper]:
                     journal=journal,
                     pub_date=pub_date,
                     doi=doi,
-                    url=(
-                        f"https://www.biorxiv.org/content/{doi}v{version}"
-                        if doi
-                        else ""
-                    ),
+                    url=url_link,
                     authors=authors,
                     score=score,
                     score_reason=reason,
@@ -473,10 +444,7 @@ def fetch_biorxiv(days: int, max_pages: int = 5) -> List[Paper]:
             break
 
         total = int(messages[0].get("total", 0))
-
-        # APIの1ページ件数を決め打ちせず、実際に返った件数だけ進める
-        cursor += len(collection)
-
+        cursor += 50
         if cursor >= total:
             break
 
@@ -492,29 +460,27 @@ def fetch_biorxiv(days: int, max_pages: int = 5) -> List[Paper]:
 def deduplicate(papers: List[Paper]) -> List[Paper]:
     """
     DOI優先で重複除去。
-    DOIがないものはタイトルの正規化文字列で除去。
-    同一論文なら出版版(PubMed)をbioRxivより優先する。
+    DOIがないものは title の正規化文字列で除去。
+    出版版(PubMed)をbioRxivより優先。
     """
     seen: Dict[str, Paper] = {}
-
     for p in papers:
         key = p.doi if p.doi else normalize_text(p.title).lower()
-
         if key not in seen:
             seen[key] = p
             continue
 
         old = seen[key]
-
+        # PubMed を優先
         if old.source == "bioRxiv" and p.source == "PubMed":
             seen[key] = p
-        elif old.source == p.source and len(p.abstract) > len(old.abstract):
+        # abstractが長い方を優先
+        elif len(p.abstract) > len(old.abstract):
             seen[key] = p
 
     return list(seen.values())
 
-
-def save_csv(papers: List[Paper], path: Path) -> None:
+def save_csv(papers: List[Paper], path: str) -> None:
     fields = [
         "source",
         "source_id",
@@ -528,23 +494,15 @@ def save_csv(papers: List[Paper], path: Path) -> None:
         "score",
         "score_reason",
     ]
-
-    with path.open("w", newline="", encoding="utf-8") as f:
+    with open(path, "w", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(f, fieldnames=fields)
         writer.writeheader()
-
         for p in papers:
             writer.writerow(asdict(p))
 
-
-def save_json(papers: List[Paper], path: Path) -> None:
-    with path.open("w", encoding="utf-8") as f:
-        json.dump(
-            [asdict(p) for p in papers],
-            f,
-            ensure_ascii=False,
-            indent=2,
-        )
+def save_json(papers: List[Paper], path: str) -> None:
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump([asdict(p) for p in papers], f, ensure_ascii=False, indent=2)
 
 
 # =========================
@@ -552,74 +510,24 @@ def save_json(papers: List[Paper], path: Path) -> None:
 # =========================
 
 def main() -> int:
-    parser = argparse.ArgumentParser(
-        description="Collect weekly microbiology/genomics papers."
-    )
-    parser.add_argument(
-        "--days",
-        type=int,
-        default=7,
-        help="Look back this many days.",
-    )
-    parser.add_argument(
-        "--max-pubmed",
-        type=int,
-        default=3000,
-        help="Maximum number of PubMed hits to fetch.",
-    )
-    parser.add_argument(
-        "--max-biorxiv-pages",
-        type=int,
-        default=5,
-        help="Maximum number of bioRxiv API pages to fetch.",
-    )
-    parser.add_argument(
-        "--top",
-        type=int,
-        default=50,
-        help="Number of highest-scoring papers to save. Use 0 to save all.",
-    )
-    parser.add_argument(
-        "--output-dir",
-        type=Path,
-        default=Path.cwd(),
-        help="Directory for CSV/JSON output. Default: current directory.",
-    )
+    parser = argparse.ArgumentParser(description="Collect weekly microbiology/genomics notable papers.")
+    parser.add_argument("--days", type=int, default=7, help="Look back this many days.")
+    parser.add_argument("--max-pubmed", type=int, default=3000, help="Max PubMed hits to fetch.")
+    parser.add_argument("--max-biorxiv-pages", type=int, default=5, help="Max bioRxiv pages (100/page).")
+    parser.add_argument("--top", type=int, default=50, help="How many scored papers to keep in output.")
     args = parser.parse_args()
 
-    validate_environment()
+    print(f"[INFO] Fetching PubMed IDs for last {args.days} days...", file=sys.stderr)
+    pmids = fetch_pubmed_ids(days=args.days, retmax=args.max_pubmed)
 
-    args.output_dir.mkdir(parents=True, exist_ok=True)
-
-    print(
-        f"[INFO] Fetching PubMed IDs for last {args.days} days...",
-        file=sys.stderr,
-    )
-    pmids = fetch_pubmed_ids(
-        days=args.days,
-        retmax=args.max_pubmed,
-    )
-
-    print(
-        f"[INFO] Fetching PubMed details for {len(pmids)} papers...",
-        file=sys.stderr,
-    )
+    print(f"[INFO] Fetching PubMed details for {len(pmids)} papers...", file=sys.stderr)
     pubmed_papers = fetch_pubmed_details(pmids)
 
-    print(
-        f"[INFO] Fetching bioRxiv papers for last {args.days} days...",
-        file=sys.stderr,
-    )
+    print(f"[INFO] Fetching bioRxiv papers for last {args.days} days...", file=sys.stderr)
     try:
-        biorxiv_papers = fetch_biorxiv(
-            days=args.days,
-            max_pages=args.max_biorxiv_pages,
-        )
+        biorxiv_papers = fetch_biorxiv(days=args.days, max_pages=args.max_biorxiv_pages)
     except Exception as e:
-        print(
-            f"[WARN] bioRxiv fetch failed: {e}",
-            file=sys.stderr,
-        )
+        print(f"[WARN] bioRxiv fetch failed: {e}", file=sys.stderr)
         biorxiv_papers = []
 
     all_papers = deduplicate(pubmed_papers + biorxiv_papers)
@@ -629,19 +537,17 @@ def main() -> int:
         all_papers = all_papers[:args.top]
 
     today = dt.date.today().isoformat()
-    csv_path = args.output_dir / f"papers_{today}.csv"
-    json_path = args.output_dir / f"papers_{today}.json"
+    csv_path = f"papers_{today}.csv"
+    json_path = f"papers_{today}.json"
 
     save_csv(all_papers, csv_path)
     save_json(all_papers, json_path)
 
-    print(
-        f"[INFO] Saved {len(all_papers)} papers to:",
-        file=sys.stderr,
-    )
+    print(f"[INFO] Saved {len(all_papers)} papers to:", file=sys.stderr)
     print(f"  - {csv_path}", file=sys.stderr)
     print(f"  - {json_path}", file=sys.stderr)
 
+    # 先頭10件を表示
     print("\nTop papers:")
     for i, p in enumerate(all_papers[:10], start=1):
         print(f"{i:02d}. [{p.score:.1f}] {p.title}")

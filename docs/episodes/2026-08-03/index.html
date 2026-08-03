@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weekly Paper Digest 2026-08-03</title>
+  <link rel="stylesheet" href="../../assets/style.css">
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N22XGSKTFW"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-N22XGSKTFW');
+  </script>
+
+  <!-- Audio Analytics -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const audio = document.getElementById("podcast-player");
+      if (!audio || typeof gtag !== "function") return;
+
+      const episode = audio.dataset.episode;
+      const reached = new Set();
+      let playedOnce = false;
+
+      audio.addEventListener("play", () => {
+        if (playedOnce) return;
+        playedOnce = true;
+        gtag("event", "podcast_play", {
+          episode,
+          page_path: location.pathname
+        });
+      });
+
+      audio.addEventListener("timeupdate", () => {
+        if (!audio.duration || !isFinite(audio.duration)) return;
+
+        const percent = Math.floor((audio.currentTime / audio.duration) * 100);
+
+        [25, 50, 75, 100].forEach((milestone) => {
+          if (percent >= milestone && !reached.has(milestone)) {
+            reached.add(milestone);
+            gtag("event", "podcast_progress", {
+              episode,
+              page_path: location.pathname,
+              progress_percent: milestone,
+              audio_current_time: Math.round(audio.currentTime),
+              audio_duration: Math.round(audio.duration)
+            });
+          }
+        });
+      });
+    });
+  </script>
+</head>
+
+<body>
+  <div class="container">
+    <nav class="site-nav" aria-label="Site navigation">
+      <a class="site-home-link" href="https://kuroppy.github.io/weekly_paper_digest/">
+        ← Weekly Paper Digest Home
+      </a>
+    </nav>
+
+    <header class="page-header">
+      <h1>Weekly Paper Digest</h1>
+      <p class="page-meta">2026-08-03</p>
+    </header>
+
+    <audio
+            id="podcast-player"
+            data-episode="2026-08-03"
+            controls
+            preload="metadata">
+            <source src="audio.mp3" type="audio/mpeg">
+            </audio>
+
+    <h2>今週の注目論文</h2><ol><li>Diverse bacterial pattern recognition receptors sense the core phage proteome.</li><li>Coordinated RNA- and protein-templated synthesis of double-stranded DNA by a dual reverse transcriptase immune system.</li><li>Phage hijacks host phosphorothioate DNA modification machinery to circumvent bacterial Ssp defences.</li><li>Discovery of a phenazine-thiol conjugase from sparse data using genome-informed machine learning.</li><li>The free-living wellspring of symbiotic nitrogen fixation in Bradyrhizobium.</li></ol>
+
+    <hr>
+
+    <section>
+  <h2>今週の印象</h2>
+  <p>今週は、細菌の抗ファージ免疫をめぐる論文が特に強い。ファージの保存的な構成要素を認識する受容体群、RNAとタンパク質という異なる鋳型原理を組み合わせる逆転写酵素系、さらに宿主のDNA修飾機構を奪って「自己」に擬態するファージまで、宿主とファージの攻防が分子機構のレベルで一気に広がった印象がある。一方で、少数の既知配列から機械学習で新酵素を発見する研究や、自由生活型窒素固定から共生型への進化をたどる研究もあり、方法論と進化の両面で話したくなる論文がそろった週だった。</p>
+</section>
+<section class="paper-list">
+  <h2>今週の注目論文</h2>
+  <article class="paper-card">
+  <h3>Diverse bacterial pattern recognition receptors sense the core phage proteome.</h3>
+  <p class="journal">Nature</p>
+  <p><a href="https://doi.org/10.1038/s41586-026-10852-6">https://doi.org/10.1038/s41586-026-10852-6</a></p>
+  <p>細菌・古細菌のSTAND NTPase型免疫受容体が、ファージの主要カプシドからDNA polymeraseまで、保存的な「コア・ファージプロテオーム」を広く認識することを示した。</p>
+</article>
+<article class="paper-card">
+  <h3>Coordinated RNA- and protein-templated synthesis of double-stranded DNA by a dual reverse transcriptase immune system.</h3>
+  <p class="journal">Cell</p>
+  <p><a href="https://doi.org/10.1016/j.cell.2026.07.012">https://doi.org/10.1016/j.cell.2026.07.012</a></p>
+  <p>2種類の防御関連逆転写酵素が、RNA鋳型とタンパク質による鋳型様制御という異なる原理で相補的DNAを作り、二本鎖DNAを生成して抗ファージ防御を起動する。</p>
+</article>
+<article class="paper-card">
+  <h3>Phage hijacks host phosphorothioate DNA modification machinery to circumvent bacterial Ssp defences.</h3>
+  <p class="journal">Nature microbiology</p>
+  <p><a href="https://doi.org/10.1038/s41564-026-02387-3">https://doi.org/10.1038/s41564-026-02387-3</a></p>
+  <p>ファージが宿主の硫黄代謝酵素を利用して自分のDNAに宿主型のphosphorothioate修飾を施し、「自己」に擬態してSsp防御を回避する。</p>
+</article>
+<article class="paper-card">
+  <h3>Discovery of a phenazine-thiol conjugase from sparse data using genome-informed machine learning.</h3>
+  <p class="journal">Proceedings of the National Academy of Sciences of the United States of America</p>
+  <p><a href="https://doi.org/10.1073/pnas.2607571123">https://doi.org/10.1073/pnas.2607571123</a></p>
+  <p>わずか14個の既知配列から、ゲノム文脈とprotein language spaceを組み合わせた機械学習によってphenazine修飾酵素を発見した。</p>
+</article>
+<article class="paper-card">
+  <h3>The free-living wellspring of symbiotic nitrogen fixation in Bradyrhizobium.</h3>
+  <p class="journal">Proceedings of the National Academy of Sciences of the United States of America</p>
+  <p><a href="https://doi.org/10.1073/pnas.2604918123">https://doi.org/10.1073/pnas.2604918123</a></p>
+  <p>Bradyrhizobiumの窒素固定はまず自由生活型として存在し、そこから共生型がsymbiosis islandの水平獲得によって少なくとも3回独立に進化したことを示した。</p>
+</article>
+</section>
+<section class="paper-list">
+  <h2>今週のショートニュース</h2>
+  <article class="paper-card">
+  <h3>Prophage induction stimulates ribosomal RNA operon recombination and facilitates genome mobility.</h3>
+  <p class="journal">Nucleic acids research</p>
+  <p><a href="https://doi.org/10.1093/nar/gkag760">https://doi.org/10.1093/nar/gkag760</a></p>
+  <p>プロファージ誘導が隣接するrRNA operon間の組換えを促し、形成された大きなDNA circleをlateral transductionで運ぶ「rrn-linked lateral transduction」という新しい遺伝子移動経路を示した。</p>
+</article>
+<article class="paper-card">
+  <h3>Pandoomain, a scalable pipeline for genomic and protein domain context analysis, reveals widespread PT-TG domain architectural diversity and novel polymorphic toxins.</h3>
+  <p class="journal">mSystems</p>
+  <p><a href="https://doi.org/10.1128/msystems.00427-26">https://doi.org/10.1128/msystems.00427-26</a></p>
+  <p>347,289細菌ゲノムのdomain architectureと遺伝子近傍を大規模解析し、PT-TG関連タンパク質から24の新規toxin familyを見いだし、そのうち6つを実験的に検証した。</p>
+</article>
+<article class="paper-card">
+  <h3>Unveiling active microbial processes in Earth&#x27;s deepest seawater.</h3>
+  <p class="journal">Cell host &amp; microbe</p>
+  <p><a href="https://doi.org/10.1016/j.chom.2026.07.001">https://doi.org/10.1016/j.chom.2026.07.001</a></p>
+  <p>有人潜水艇による現場ろ過とmetagenome-guided metaproteomicsから、超深海微生物が難分解性有機物や多様な電子受容体を利用する、表層海洋とは異なる活動様式を示した。</p>
+</article>
+<article class="paper-card">
+  <h3>Viruses help shape microbiome response to polyphenol rewiring of methane-suppressed peat microcosms.</h3>
+  <p class="journal">PLoS biology</p>
+  <p><a href="https://doi.org/10.1371/journal.pbio.3003925">https://doi.org/10.1371/journal.pbio.3003925</a></p>
+  <p>catechin添加でメタン生成が抑えられる泥炭microcosmにおいて、増殖したcatechin分解菌をウイルスが溶菌し、その中間代謝物を他の微生物へ再分配するviral shunt様過程を提案した。</p>
+</article>
+<article class="paper-card">
+  <h3>A global stress alarmone couples nutrient limitation to suppression of social signaling in bacteria.</h3>
+  <p class="journal">iScience</p>
+  <p><a href="https://doi.org/10.1016/j.isci.2026.116675">https://doi.org/10.1016/j.isci.2026.116675</a></p>
+  <p>stringent response alarmoneのppGppがRpfGを直接阻害し、c-di-GMPを介してquorum sensingを抑えることで、栄養制限下の高コストな社会行動を止める仕組みを示した。</p>
+</article>
+</section>
+<section>
+  <h2>まとめ</h2>
+  <p>今週は、細菌とファージの攻防を「何を認識するか」「どのように防御産物を作るか」「どう自己擬態して逃げるか」という異なる角度から描く論文が重なった。特に、保存的ファージタンパク質を認識するSTAND受容体群と、RNA鋳型・タンパク質鋳型様DNA合成を組み合わせるDRT3は、細菌免疫の概念そのものを広げる内容だった。その一方で、small dataからの機械学習による酵素発見や、自由生活型から共生型への窒素固定進化など、ゲノム情報を使って新しい機能や歴史を引き出す研究も印象に残る週だった。</p>
+</section>
+
+    <footer class="episode-footer">
+      <p>
+  <a href="../../editorial_notes/editorial_meeting_notes_2026-08-03.html">
+    📝 Read the Editorial Note of this episode
+  </a>
+</p>
+    </footer>
+  </div>
+</body>
+</html>
