@@ -1,0 +1,1223 @@
+{
+  "metadata": {
+    "generated_at": "2026-08-04T02:10:09.656082+00:00",
+    "source_tree_hash": "b55c39351e25c6c2c1723a3557bcbfb85f4a5f60ae4c4bee4f3d3323355b7ddd",
+    "repo_name": "weekly_paper_digest",
+    "depth_level": 1,
+    "depth_cap": 2,
+    "file_coverage_summary": {
+      "total_files": 66,
+      "analyzed": 6,
+      "not_analyzed": 60,
+      "not_analyzed_by_reason": {
+        "other": 60
+      }
+    }
+  },
+  "description": "The weekly_paper_digest system is an automated pipeline designed to curate academic research from bioRxiv and PubMed into a structured digital publication. The process begins with automated paper collection and scoring based on journal prestige and keyword relevance. Once papers are filtered and deduplicated, the system uses LLM-driven logic to synthesize content into episodes and editorial notes. Finally, a static site generation layer transforms these markdown-based insights into a web-ready frontend, complete with analytics and historical archives.",
+  "files": {
+    "scripts/archive/20260602_paper_collector_ver1.py": {
+      "method_keys": [
+        "scripts/archive/20260602_paper_collector_ver1.py|scripts.archive.20260602_paper_collector_ver1.Paper",
+        "scripts/archive/20260602_paper_collector_ver1.py|scripts.archive.20260602_paper_collector_ver1.normalize_text",
+        "scripts/archive/20260602_paper_collector_ver1.py|scripts.archive.20260602_paper_collector_ver1.normalize_doi",
+        "scripts/archive/20260602_paper_collector_ver1.py|scripts.archive.20260602_paper_collector_ver1.parse_pub_date",
+        "scripts/archive/20260602_paper_collector_ver1.py|scripts.archive.20260602_paper_collector_ver1.days_since",
+        "scripts/archive/20260602_paper_collector_ver1.py|scripts.archive.20260602_paper_collector_ver1.keyword_score",
+        "scripts/archive/20260602_paper_collector_ver1.py|scripts.archive.20260602_paper_collector_ver1.journal_score",
+        "scripts/archive/20260602_paper_collector_ver1.py|scripts.archive.20260602_paper_collector_ver1.build_score",
+        "scripts/archive/20260602_paper_collector_ver1.py|scripts.archive.20260602_paper_collector_ver1.request_json",
+        "scripts/archive/20260602_paper_collector_ver1.py|scripts.archive.20260602_paper_collector_ver1.request_text",
+        "scripts/archive/20260602_paper_collector_ver1.py|scripts.archive.20260602_paper_collector_ver1.fetch_pubmed_ids",
+        "scripts/archive/20260602_paper_collector_ver1.py|scripts.archive.20260602_paper_collector_ver1.fetch_pubmed_details",
+        "scripts/archive/20260602_paper_collector_ver1.py|scripts.archive.20260602_paper_collector_ver1.fetch_biorxiv",
+        "scripts/archive/20260602_paper_collector_ver1.py|scripts.archive.20260602_paper_collector_ver1.deduplicate",
+        "scripts/archive/20260602_paper_collector_ver1.py|scripts.archive.20260602_paper_collector_ver1.save_csv",
+        "scripts/archive/20260602_paper_collector_ver1.py|scripts.archive.20260602_paper_collector_ver1.save_json",
+        "scripts/archive/20260602_paper_collector_ver1.py|scripts.archive.20260602_paper_collector_ver1.main"
+      ],
+      "content_hash": "9b013b0aa61340f5",
+      "module_hash": "2c950b4c320e010a"
+    },
+    "scripts/archive/20260803_paper_collector_ver2.py": {
+      "method_keys": [
+        "scripts/archive/20260803_paper_collector_ver2.py|scripts.archive.20260803_paper_collector_ver2.Paper",
+        "scripts/archive/20260803_paper_collector_ver2.py|scripts.archive.20260803_paper_collector_ver2.validate_environment",
+        "scripts/archive/20260803_paper_collector_ver2.py|scripts.archive.20260803_paper_collector_ver2.normalize_text",
+        "scripts/archive/20260803_paper_collector_ver2.py|scripts.archive.20260803_paper_collector_ver2.normalize_doi",
+        "scripts/archive/20260803_paper_collector_ver2.py|scripts.archive.20260803_paper_collector_ver2.keyword_score",
+        "scripts/archive/20260803_paper_collector_ver2.py|scripts.archive.20260803_paper_collector_ver2.journal_score",
+        "scripts/archive/20260803_paper_collector_ver2.py|scripts.archive.20260803_paper_collector_ver2.build_score",
+        "scripts/archive/20260803_paper_collector_ver2.py|scripts.archive.20260803_paper_collector_ver2.request",
+        "scripts/archive/20260803_paper_collector_ver2.py|scripts.archive.20260803_paper_collector_ver2.ncbi_common_params",
+        "scripts/archive/20260803_paper_collector_ver2.py|scripts.archive.20260803_paper_collector_ver2.fetch_pubmed_ids",
+        "scripts/archive/20260803_paper_collector_ver2.py|scripts.archive.20260803_paper_collector_ver2.fetch_pubmed_details",
+        "scripts/archive/20260803_paper_collector_ver2.py|scripts.archive.20260803_paper_collector_ver2.fetch_biorxiv",
+        "scripts/archive/20260803_paper_collector_ver2.py|scripts.archive.20260803_paper_collector_ver2.deduplicate",
+        "scripts/archive/20260803_paper_collector_ver2.py|scripts.archive.20260803_paper_collector_ver2.save_csv",
+        "scripts/archive/20260803_paper_collector_ver2.py|scripts.archive.20260803_paper_collector_ver2.save_json",
+        "scripts/archive/20260803_paper_collector_ver2.py|scripts.archive.20260803_paper_collector_ver2.main"
+      ],
+      "content_hash": "1b2b30a893a27996",
+      "module_hash": "a890cfb18d2344a4"
+    },
+    "scripts/paper_collector.py": {
+      "method_keys": [
+        "scripts/paper_collector.py|scripts.paper_collector.Paper",
+        "scripts/paper_collector.py|scripts.paper_collector.validate_environment",
+        "scripts/paper_collector.py|scripts.paper_collector.normalize_text",
+        "scripts/paper_collector.py|scripts.paper_collector.normalize_doi",
+        "scripts/paper_collector.py|scripts.paper_collector.keyword_score",
+        "scripts/paper_collector.py|scripts.paper_collector.journal_score",
+        "scripts/paper_collector.py|scripts.paper_collector.build_score",
+        "scripts/paper_collector.py|scripts.paper_collector.request",
+        "scripts/paper_collector.py|scripts.paper_collector.ncbi_common_params",
+        "scripts/paper_collector.py|scripts.paper_collector.fetch_pubmed_ids",
+        "scripts/paper_collector.py|scripts.paper_collector.fetch_pubmed_details",
+        "scripts/paper_collector.py|scripts.paper_collector.fetch_biorxiv",
+        "scripts/paper_collector.py|scripts.paper_collector.deduplicate",
+        "scripts/paper_collector.py|scripts.paper_collector.save_csv",
+        "scripts/paper_collector.py|scripts.paper_collector.save_json",
+        "scripts/paper_collector.py|scripts.paper_collector.main"
+      ],
+      "content_hash": "fc7679c2d63c39a7",
+      "module_hash": "329b84f09198a5cf"
+    },
+    "scripts/build_episode.py": {
+      "method_keys": [
+        "scripts/build_episode.py|scripts.build_episode.escape",
+        "scripts/build_episode.py|scripts.build_episode.inline_markdown",
+        "scripts/build_episode.py|scripts.build_episode.get_section",
+        "scripts/build_episode.py|scripts.build_episode.paragraphs_to_html",
+        "scripts/build_episode.py|scripts.build_episode.parse_field",
+        "scripts/build_episode.py|scripts.build_episode.parse_papers",
+        "scripts/build_episode.py|scripts.build_episode.doi_url",
+        "scripts/build_episode.py|scripts.build_episode.render_paper_card",
+        "scripts/build_episode.py|scripts.build_episode.render_paper_section",
+        "scripts/build_episode.py|scripts.build_episode.render_text_section",
+        "scripts/build_episode.py|scripts.build_episode.build_content",
+        "scripts/build_episode.py|scripts.build_episode.build_topics",
+        "scripts/build_episode.py|scripts.build_episode.build_audio",
+        "scripts/build_episode.py|scripts.build_episode.build_editorial_note",
+        "scripts/build_episode.py|scripts.build_episode.main"
+      ],
+      "content_hash": "0114cc38ab538595",
+      "module_hash": "10ec4dc2ca63084e"
+    },
+    "scripts/build_editorial_meeting_note.py": {
+      "method_keys": [
+        "scripts/build_editorial_meeting_note.py|scripts.build_editorial_meeting_note.escape",
+        "scripts/build_editorial_meeting_note.py|scripts.build_editorial_meeting_note.inline_markdown",
+        "scripts/build_editorial_meeting_note.py|scripts.build_editorial_meeting_note.extract_title",
+        "scripts/build_editorial_meeting_note.py|scripts.build_editorial_meeting_note.strip_first_h1",
+        "scripts/build_editorial_meeting_note.py|scripts.build_editorial_meeting_note.markdown_to_html",
+        "scripts/build_editorial_meeting_note.py|scripts.build_editorial_meeting_note.markdown_to_html.flush_paragraph",
+        "scripts/build_editorial_meeting_note.py|scripts.build_editorial_meeting_note.markdown_to_html.flush_list",
+        "scripts/build_editorial_meeting_note.py|scripts.build_editorial_meeting_note.markdown_to_html.flush_blockquote",
+        "scripts/build_editorial_meeting_note.py|scripts.build_editorial_meeting_note.main"
+      ],
+      "content_hash": "075714a347e2a5e6",
+      "module_hash": "837118edd22488a7"
+    },
+    "scripts/update_frontend.py": {
+      "method_keys": [
+        "scripts/update_frontend.py|scripts.update_frontend.escape",
+        "scripts/update_frontend.py|scripts.update_frontend.get_episode_dates",
+        "scripts/update_frontend.py|scripts.update_frontend.get_editorial_notes",
+        "scripts/update_frontend.py|scripts.update_frontend.update_home",
+        "scripts/update_frontend.py|scripts.update_frontend.analytics_html",
+        "scripts/update_frontend.py|scripts.update_frontend.build_episodes_index",
+        "scripts/update_frontend.py|scripts.update_frontend.build_editorial_notes_index",
+        "scripts/update_frontend.py|scripts.update_frontend.main"
+      ],
+      "content_hash": "fec53b8f7d81e3f1",
+      "module_hash": "9b45be7aec6106a1"
+    }
+  },
+  "methods_index": {
+    "scripts/archive/20260602_paper_collector_ver1.py|scripts.archive.20260602_paper_collector_ver1.Paper": {
+      "file_path": "scripts/archive/20260602_paper_collector_ver1.py",
+      "qualified_name": "scripts.archive.20260602_paper_collector_ver1.Paper",
+      "start_line": 123,
+      "end_line": 134,
+      "type": "CLASS",
+      "content_hash": "eee644f027792f13"
+    },
+    "scripts/archive/20260602_paper_collector_ver1.py|scripts.archive.20260602_paper_collector_ver1.normalize_text": {
+      "file_path": "scripts/archive/20260602_paper_collector_ver1.py",
+      "qualified_name": "scripts.archive.20260602_paper_collector_ver1.normalize_text",
+      "start_line": 141,
+      "end_line": 144,
+      "type": "FUNCTION",
+      "content_hash": "413ef8b9d243ad46"
+    },
+    "scripts/archive/20260602_paper_collector_ver1.py|scripts.archive.20260602_paper_collector_ver1.normalize_doi": {
+      "file_path": "scripts/archive/20260602_paper_collector_ver1.py",
+      "qualified_name": "scripts.archive.20260602_paper_collector_ver1.normalize_doi",
+      "start_line": 146,
+      "end_line": 152,
+      "type": "FUNCTION",
+      "content_hash": "9aa940877a7bbd47"
+    },
+    "scripts/archive/20260602_paper_collector_ver1.py|scripts.archive.20260602_paper_collector_ver1.parse_pub_date": {
+      "file_path": "scripts/archive/20260602_paper_collector_ver1.py",
+      "qualified_name": "scripts.archive.20260602_paper_collector_ver1.parse_pub_date",
+      "start_line": 154,
+      "end_line": 184,
+      "type": "FUNCTION",
+      "content_hash": "d874637c391e1fd9"
+    },
+    "scripts/archive/20260602_paper_collector_ver1.py|scripts.archive.20260602_paper_collector_ver1.days_since": {
+      "file_path": "scripts/archive/20260602_paper_collector_ver1.py",
+      "qualified_name": "scripts.archive.20260602_paper_collector_ver1.days_since",
+      "start_line": 186,
+      "end_line": 191,
+      "type": "FUNCTION",
+      "content_hash": "38f44c50e03863a0"
+    },
+    "scripts/archive/20260602_paper_collector_ver1.py|scripts.archive.20260602_paper_collector_ver1.keyword_score": {
+      "file_path": "scripts/archive/20260602_paper_collector_ver1.py",
+      "qualified_name": "scripts.archive.20260602_paper_collector_ver1.keyword_score",
+      "start_line": 193,
+      "end_line": 203,
+      "type": "FUNCTION",
+      "content_hash": "9f51148abc91df4f"
+    },
+    "scripts/archive/20260602_paper_collector_ver1.py|scripts.archive.20260602_paper_collector_ver1.journal_score": {
+      "file_path": "scripts/archive/20260602_paper_collector_ver1.py",
+      "qualified_name": "scripts.archive.20260602_paper_collector_ver1.journal_score",
+      "start_line": 205,
+      "end_line": 214,
+      "type": "FUNCTION",
+      "content_hash": "a1c139b89925b998"
+    },
+    "scripts/archive/20260602_paper_collector_ver1.py|scripts.archive.20260602_paper_collector_ver1.build_score": {
+      "file_path": "scripts/archive/20260602_paper_collector_ver1.py",
+      "qualified_name": "scripts.archive.20260602_paper_collector_ver1.build_score",
+      "start_line": 216,
+      "end_line": 228,
+      "type": "FUNCTION",
+      "content_hash": "2f98be82479cfd1d"
+    },
+    "scripts/archive/20260602_paper_collector_ver1.py|scripts.archive.20260602_paper_collector_ver1.request_json": {
+      "file_path": "scripts/archive/20260602_paper_collector_ver1.py",
+      "qualified_name": "scripts.archive.20260602_paper_collector_ver1.request_json",
+      "start_line": 230,
+      "end_line": 234,
+      "type": "FUNCTION",
+      "content_hash": "59bd28bd026298e8"
+    },
+    "scripts/archive/20260602_paper_collector_ver1.py|scripts.archive.20260602_paper_collector_ver1.request_text": {
+      "file_path": "scripts/archive/20260602_paper_collector_ver1.py",
+      "qualified_name": "scripts.archive.20260602_paper_collector_ver1.request_text",
+      "start_line": 236,
+      "end_line": 251,
+      "type": "FUNCTION",
+      "content_hash": "3a6eea47e7657b25"
+    },
+    "scripts/archive/20260602_paper_collector_ver1.py|scripts.archive.20260602_paper_collector_ver1.fetch_pubmed_ids": {
+      "file_path": "scripts/archive/20260602_paper_collector_ver1.py",
+      "qualified_name": "scripts.archive.20260602_paper_collector_ver1.fetch_pubmed_ids",
+      "start_line": 258,
+      "end_line": 272,
+      "type": "FUNCTION",
+      "content_hash": "815f8a06c8033c41"
+    },
+    "scripts/archive/20260602_paper_collector_ver1.py|scripts.archive.20260602_paper_collector_ver1.fetch_pubmed_details": {
+      "file_path": "scripts/archive/20260602_paper_collector_ver1.py",
+      "qualified_name": "scripts.archive.20260602_paper_collector_ver1.fetch_pubmed_details",
+      "start_line": 274,
+      "end_line": 377,
+      "type": "FUNCTION",
+      "content_hash": "2f279e2b2c8a1a11"
+    },
+    "scripts/archive/20260602_paper_collector_ver1.py|scripts.archive.20260602_paper_collector_ver1.fetch_biorxiv": {
+      "file_path": "scripts/archive/20260602_paper_collector_ver1.py",
+      "qualified_name": "scripts.archive.20260602_paper_collector_ver1.fetch_biorxiv",
+      "start_line": 384,
+      "end_line": 453,
+      "type": "FUNCTION",
+      "content_hash": "4e1a27f41b175a76"
+    },
+    "scripts/archive/20260602_paper_collector_ver1.py|scripts.archive.20260602_paper_collector_ver1.deduplicate": {
+      "file_path": "scripts/archive/20260602_paper_collector_ver1.py",
+      "qualified_name": "scripts.archive.20260602_paper_collector_ver1.deduplicate",
+      "start_line": 460,
+      "end_line": 481,
+      "type": "FUNCTION",
+      "content_hash": "6cc2cd9729568456"
+    },
+    "scripts/archive/20260602_paper_collector_ver1.py|scripts.archive.20260602_paper_collector_ver1.save_csv": {
+      "file_path": "scripts/archive/20260602_paper_collector_ver1.py",
+      "qualified_name": "scripts.archive.20260602_paper_collector_ver1.save_csv",
+      "start_line": 483,
+      "end_line": 501,
+      "type": "FUNCTION",
+      "content_hash": "13f8d1e519e746b1"
+    },
+    "scripts/archive/20260602_paper_collector_ver1.py|scripts.archive.20260602_paper_collector_ver1.save_json": {
+      "file_path": "scripts/archive/20260602_paper_collector_ver1.py",
+      "qualified_name": "scripts.archive.20260602_paper_collector_ver1.save_json",
+      "start_line": 503,
+      "end_line": 505,
+      "type": "FUNCTION",
+      "content_hash": "449125501ff48c54"
+    },
+    "scripts/archive/20260602_paper_collector_ver1.py|scripts.archive.20260602_paper_collector_ver1.main": {
+      "file_path": "scripts/archive/20260602_paper_collector_ver1.py",
+      "qualified_name": "scripts.archive.20260602_paper_collector_ver1.main",
+      "start_line": 512,
+      "end_line": 560,
+      "type": "FUNCTION",
+      "content_hash": "79f1b88fe26ad43c"
+    },
+    "scripts/archive/20260803_paper_collector_ver2.py|scripts.archive.20260803_paper_collector_ver2.Paper": {
+      "file_path": "scripts/archive/20260803_paper_collector_ver2.py",
+      "qualified_name": "scripts.archive.20260803_paper_collector_ver2.Paper",
+      "start_line": 137,
+      "end_line": 148,
+      "type": "CLASS",
+      "content_hash": "eee644f027792f13"
+    },
+    "scripts/archive/20260803_paper_collector_ver2.py|scripts.archive.20260803_paper_collector_ver2.validate_environment": {
+      "file_path": "scripts/archive/20260803_paper_collector_ver2.py",
+      "qualified_name": "scripts.archive.20260803_paper_collector_ver2.validate_environment",
+      "start_line": 155,
+      "end_line": 160,
+      "type": "FUNCTION",
+      "content_hash": "6cc2e6c87b8763b8"
+    },
+    "scripts/archive/20260803_paper_collector_ver2.py|scripts.archive.20260803_paper_collector_ver2.normalize_text": {
+      "file_path": "scripts/archive/20260803_paper_collector_ver2.py",
+      "qualified_name": "scripts.archive.20260803_paper_collector_ver2.normalize_text",
+      "start_line": 163,
+      "end_line": 166,
+      "type": "FUNCTION",
+      "content_hash": "413ef8b9d243ad46"
+    },
+    "scripts/archive/20260803_paper_collector_ver2.py|scripts.archive.20260803_paper_collector_ver2.normalize_doi": {
+      "file_path": "scripts/archive/20260803_paper_collector_ver2.py",
+      "qualified_name": "scripts.archive.20260803_paper_collector_ver2.normalize_doi",
+      "start_line": 169,
+      "end_line": 175,
+      "type": "FUNCTION",
+      "content_hash": "9aa940877a7bbd47"
+    },
+    "scripts/archive/20260803_paper_collector_ver2.py|scripts.archive.20260803_paper_collector_ver2.keyword_score": {
+      "file_path": "scripts/archive/20260803_paper_collector_ver2.py",
+      "qualified_name": "scripts.archive.20260803_paper_collector_ver2.keyword_score",
+      "start_line": 178,
+      "end_line": 186,
+      "type": "FUNCTION",
+      "content_hash": "580299f12bd82b0b"
+    },
+    "scripts/archive/20260803_paper_collector_ver2.py|scripts.archive.20260803_paper_collector_ver2.journal_score": {
+      "file_path": "scripts/archive/20260803_paper_collector_ver2.py",
+      "qualified_name": "scripts.archive.20260803_paper_collector_ver2.journal_score",
+      "start_line": 189,
+      "end_line": 190,
+      "type": "FUNCTION",
+      "content_hash": "4263af1f0c603a51"
+    },
+    "scripts/archive/20260803_paper_collector_ver2.py|scripts.archive.20260803_paper_collector_ver2.build_score": {
+      "file_path": "scripts/archive/20260803_paper_collector_ver2.py",
+      "qualified_name": "scripts.archive.20260803_paper_collector_ver2.build_score",
+      "start_line": 193,
+      "end_line": 203,
+      "type": "FUNCTION",
+      "content_hash": "ed7306df2802dad0"
+    },
+    "scripts/archive/20260803_paper_collector_ver2.py|scripts.archive.20260803_paper_collector_ver2.request": {
+      "file_path": "scripts/archive/20260803_paper_collector_ver2.py",
+      "qualified_name": "scripts.archive.20260803_paper_collector_ver2.request",
+      "start_line": 206,
+      "end_line": 250,
+      "type": "FUNCTION",
+      "content_hash": "cb25ede55e3be2ec"
+    },
+    "scripts/archive/20260803_paper_collector_ver2.py|scripts.archive.20260803_paper_collector_ver2.ncbi_common_params": {
+      "file_path": "scripts/archive/20260803_paper_collector_ver2.py",
+      "qualified_name": "scripts.archive.20260803_paper_collector_ver2.ncbi_common_params",
+      "start_line": 253,
+      "end_line": 260,
+      "type": "FUNCTION",
+      "content_hash": "89e477f2d04f62b0"
+    },
+    "scripts/archive/20260803_paper_collector_ver2.py|scripts.archive.20260803_paper_collector_ver2.fetch_pubmed_ids": {
+      "file_path": "scripts/archive/20260803_paper_collector_ver2.py",
+      "qualified_name": "scripts.archive.20260803_paper_collector_ver2.fetch_pubmed_ids",
+      "start_line": 267,
+      "end_line": 281,
+      "type": "FUNCTION",
+      "content_hash": "870c997fc0b34717"
+    },
+    "scripts/archive/20260803_paper_collector_ver2.py|scripts.archive.20260803_paper_collector_ver2.fetch_pubmed_details": {
+      "file_path": "scripts/archive/20260803_paper_collector_ver2.py",
+      "qualified_name": "scripts.archive.20260803_paper_collector_ver2.fetch_pubmed_details",
+      "start_line": 284,
+      "end_line": 407,
+      "type": "FUNCTION",
+      "content_hash": "ee664e93f38ddb1d"
+    },
+    "scripts/archive/20260803_paper_collector_ver2.py|scripts.archive.20260803_paper_collector_ver2.fetch_biorxiv": {
+      "file_path": "scripts/archive/20260803_paper_collector_ver2.py",
+      "qualified_name": "scripts.archive.20260803_paper_collector_ver2.fetch_biorxiv",
+      "start_line": 414,
+      "end_line": 489,
+      "type": "FUNCTION",
+      "content_hash": "f10f079d760e21a2"
+    },
+    "scripts/archive/20260803_paper_collector_ver2.py|scripts.archive.20260803_paper_collector_ver2.deduplicate": {
+      "file_path": "scripts/archive/20260803_paper_collector_ver2.py",
+      "qualified_name": "scripts.archive.20260803_paper_collector_ver2.deduplicate",
+      "start_line": 496,
+      "end_line": 518,
+      "type": "FUNCTION",
+      "content_hash": "15e1ba2684474114"
+    },
+    "scripts/archive/20260803_paper_collector_ver2.py|scripts.archive.20260803_paper_collector_ver2.save_csv": {
+      "file_path": "scripts/archive/20260803_paper_collector_ver2.py",
+      "qualified_name": "scripts.archive.20260803_paper_collector_ver2.save_csv",
+      "start_line": 521,
+      "end_line": 541,
+      "type": "FUNCTION",
+      "content_hash": "ec8611e38fcae582"
+    },
+    "scripts/archive/20260803_paper_collector_ver2.py|scripts.archive.20260803_paper_collector_ver2.save_json": {
+      "file_path": "scripts/archive/20260803_paper_collector_ver2.py",
+      "qualified_name": "scripts.archive.20260803_paper_collector_ver2.save_json",
+      "start_line": 544,
+      "end_line": 551,
+      "type": "FUNCTION",
+      "content_hash": "a9c436dcffd5f4a6"
+    },
+    "scripts/archive/20260803_paper_collector_ver2.py|scripts.archive.20260803_paper_collector_ver2.main": {
+      "file_path": "scripts/archive/20260803_paper_collector_ver2.py",
+      "qualified_name": "scripts.archive.20260803_paper_collector_ver2.main",
+      "start_line": 558,
+      "end_line": 658,
+      "type": "FUNCTION",
+      "content_hash": "b21047948084d3c9"
+    },
+    "scripts/paper_collector.py|scripts.paper_collector.Paper": {
+      "file_path": "scripts/paper_collector.py",
+      "qualified_name": "scripts.paper_collector.Paper",
+      "start_line": 135,
+      "end_line": 146,
+      "type": "CLASS",
+      "content_hash": "eee644f027792f13"
+    },
+    "scripts/paper_collector.py|scripts.paper_collector.validate_environment": {
+      "file_path": "scripts/paper_collector.py",
+      "qualified_name": "scripts.paper_collector.validate_environment",
+      "start_line": 153,
+      "end_line": 158,
+      "type": "FUNCTION",
+      "content_hash": "6cc2e6c87b8763b8"
+    },
+    "scripts/paper_collector.py|scripts.paper_collector.normalize_text": {
+      "file_path": "scripts/paper_collector.py",
+      "qualified_name": "scripts.paper_collector.normalize_text",
+      "start_line": 161,
+      "end_line": 164,
+      "type": "FUNCTION",
+      "content_hash": "413ef8b9d243ad46"
+    },
+    "scripts/paper_collector.py|scripts.paper_collector.normalize_doi": {
+      "file_path": "scripts/paper_collector.py",
+      "qualified_name": "scripts.paper_collector.normalize_doi",
+      "start_line": 167,
+      "end_line": 173,
+      "type": "FUNCTION",
+      "content_hash": "9aa940877a7bbd47"
+    },
+    "scripts/paper_collector.py|scripts.paper_collector.keyword_score": {
+      "file_path": "scripts/paper_collector.py",
+      "qualified_name": "scripts.paper_collector.keyword_score",
+      "start_line": 176,
+      "end_line": 184,
+      "type": "FUNCTION",
+      "content_hash": "580299f12bd82b0b"
+    },
+    "scripts/paper_collector.py|scripts.paper_collector.journal_score": {
+      "file_path": "scripts/paper_collector.py",
+      "qualified_name": "scripts.paper_collector.journal_score",
+      "start_line": 187,
+      "end_line": 188,
+      "type": "FUNCTION",
+      "content_hash": "4263af1f0c603a51"
+    },
+    "scripts/paper_collector.py|scripts.paper_collector.build_score": {
+      "file_path": "scripts/paper_collector.py",
+      "qualified_name": "scripts.paper_collector.build_score",
+      "start_line": 191,
+      "end_line": 201,
+      "type": "FUNCTION",
+      "content_hash": "ed7306df2802dad0"
+    },
+    "scripts/paper_collector.py|scripts.paper_collector.request": {
+      "file_path": "scripts/paper_collector.py",
+      "qualified_name": "scripts.paper_collector.request",
+      "start_line": 204,
+      "end_line": 248,
+      "type": "FUNCTION",
+      "content_hash": "cb25ede55e3be2ec"
+    },
+    "scripts/paper_collector.py|scripts.paper_collector.ncbi_common_params": {
+      "file_path": "scripts/paper_collector.py",
+      "qualified_name": "scripts.paper_collector.ncbi_common_params",
+      "start_line": 251,
+      "end_line": 256,
+      "type": "FUNCTION",
+      "content_hash": "1eed387fdb8ff6d8"
+    },
+    "scripts/paper_collector.py|scripts.paper_collector.fetch_pubmed_ids": {
+      "file_path": "scripts/paper_collector.py",
+      "qualified_name": "scripts.paper_collector.fetch_pubmed_ids",
+      "start_line": 263,
+      "end_line": 277,
+      "type": "FUNCTION",
+      "content_hash": "870c997fc0b34717"
+    },
+    "scripts/paper_collector.py|scripts.paper_collector.fetch_pubmed_details": {
+      "file_path": "scripts/paper_collector.py",
+      "qualified_name": "scripts.paper_collector.fetch_pubmed_details",
+      "start_line": 280,
+      "end_line": 403,
+      "type": "FUNCTION",
+      "content_hash": "ee664e93f38ddb1d"
+    },
+    "scripts/paper_collector.py|scripts.paper_collector.fetch_biorxiv": {
+      "file_path": "scripts/paper_collector.py",
+      "qualified_name": "scripts.paper_collector.fetch_biorxiv",
+      "start_line": 410,
+      "end_line": 485,
+      "type": "FUNCTION",
+      "content_hash": "f10f079d760e21a2"
+    },
+    "scripts/paper_collector.py|scripts.paper_collector.deduplicate": {
+      "file_path": "scripts/paper_collector.py",
+      "qualified_name": "scripts.paper_collector.deduplicate",
+      "start_line": 492,
+      "end_line": 514,
+      "type": "FUNCTION",
+      "content_hash": "15e1ba2684474114"
+    },
+    "scripts/paper_collector.py|scripts.paper_collector.save_csv": {
+      "file_path": "scripts/paper_collector.py",
+      "qualified_name": "scripts.paper_collector.save_csv",
+      "start_line": 517,
+      "end_line": 537,
+      "type": "FUNCTION",
+      "content_hash": "ec8611e38fcae582"
+    },
+    "scripts/paper_collector.py|scripts.paper_collector.save_json": {
+      "file_path": "scripts/paper_collector.py",
+      "qualified_name": "scripts.paper_collector.save_json",
+      "start_line": 540,
+      "end_line": 547,
+      "type": "FUNCTION",
+      "content_hash": "a9c436dcffd5f4a6"
+    },
+    "scripts/paper_collector.py|scripts.paper_collector.main": {
+      "file_path": "scripts/paper_collector.py",
+      "qualified_name": "scripts.paper_collector.main",
+      "start_line": 554,
+      "end_line": 654,
+      "type": "FUNCTION",
+      "content_hash": "b21047948084d3c9"
+    },
+    "scripts/build_episode.py|scripts.build_episode.escape": {
+      "file_path": "scripts/build_episode.py",
+      "qualified_name": "scripts.build_episode.escape",
+      "start_line": 32,
+      "end_line": 33,
+      "type": "FUNCTION",
+      "content_hash": "2bbf4f60cb3f7d0f"
+    },
+    "scripts/build_episode.py|scripts.build_episode.inline_markdown": {
+      "file_path": "scripts/build_episode.py",
+      "qualified_name": "scripts.build_episode.inline_markdown",
+      "start_line": 36,
+      "end_line": 40,
+      "type": "FUNCTION",
+      "content_hash": "9a6e9d38ab001273"
+    },
+    "scripts/build_episode.py|scripts.build_episode.get_section": {
+      "file_path": "scripts/build_episode.py",
+      "qualified_name": "scripts.build_episode.get_section",
+      "start_line": 43,
+      "end_line": 55,
+      "type": "FUNCTION",
+      "content_hash": "788d4fe85fb421cb"
+    },
+    "scripts/build_episode.py|scripts.build_episode.paragraphs_to_html": {
+      "file_path": "scripts/build_episode.py",
+      "qualified_name": "scripts.build_episode.paragraphs_to_html",
+      "start_line": 58,
+      "end_line": 78,
+      "type": "FUNCTION",
+      "content_hash": "5d43ea842e4e8221"
+    },
+    "scripts/build_episode.py|scripts.build_episode.parse_field": {
+      "file_path": "scripts/build_episode.py",
+      "qualified_name": "scripts.build_episode.parse_field",
+      "start_line": 81,
+      "end_line": 85,
+      "type": "FUNCTION",
+      "content_hash": "f17e375ba44b5525"
+    },
+    "scripts/build_episode.py|scripts.build_episode.parse_papers": {
+      "file_path": "scripts/build_episode.py",
+      "qualified_name": "scripts.build_episode.parse_papers",
+      "start_line": 88,
+      "end_line": 111,
+      "type": "FUNCTION",
+      "content_hash": "0cf17e28719e5769"
+    },
+    "scripts/build_episode.py|scripts.build_episode.doi_url": {
+      "file_path": "scripts/build_episode.py",
+      "qualified_name": "scripts.build_episode.doi_url",
+      "start_line": 114,
+      "end_line": 123,
+      "type": "FUNCTION",
+      "content_hash": "1c5d75f2ad9238be"
+    },
+    "scripts/build_episode.py|scripts.build_episode.render_paper_card": {
+      "file_path": "scripts/build_episode.py",
+      "qualified_name": "scripts.build_episode.render_paper_card",
+      "start_line": 126,
+      "end_line": 151,
+      "type": "FUNCTION",
+      "content_hash": "a20950eb06eca019"
+    },
+    "scripts/build_episode.py|scripts.build_episode.render_paper_section": {
+      "file_path": "scripts/build_episode.py",
+      "qualified_name": "scripts.build_episode.render_paper_section",
+      "start_line": 154,
+      "end_line": 166,
+      "type": "FUNCTION",
+      "content_hash": "70e250c4aea39c2e"
+    },
+    "scripts/build_episode.py|scripts.build_episode.render_text_section": {
+      "file_path": "scripts/build_episode.py",
+      "qualified_name": "scripts.build_episode.render_text_section",
+      "start_line": 169,
+      "end_line": 173,
+      "type": "FUNCTION",
+      "content_hash": "b01f13652fe72394"
+    },
+    "scripts/build_episode.py|scripts.build_episode.build_content": {
+      "file_path": "scripts/build_episode.py",
+      "qualified_name": "scripts.build_episode.build_content",
+      "start_line": 176,
+      "end_line": 229,
+      "type": "FUNCTION",
+      "content_hash": "1aeaf35e2e8305fe"
+    },
+    "scripts/build_episode.py|scripts.build_episode.build_topics": {
+      "file_path": "scripts/build_episode.py",
+      "qualified_name": "scripts.build_episode.build_topics",
+      "start_line": 232,
+      "end_line": 238,
+      "type": "FUNCTION",
+      "content_hash": "520d06ed9ad1d4f8"
+    },
+    "scripts/build_episode.py|scripts.build_episode.build_audio": {
+      "file_path": "scripts/build_episode.py",
+      "qualified_name": "scripts.build_episode.build_audio",
+      "start_line": 241,
+      "end_line": 251,
+      "type": "FUNCTION",
+      "content_hash": "83fb3b8b09b00d1f"
+    },
+    "scripts/build_episode.py|scripts.build_episode.build_editorial_note": {
+      "file_path": "scripts/build_episode.py",
+      "qualified_name": "scripts.build_episode.build_editorial_note",
+      "start_line": 254,
+      "end_line": 262,
+      "type": "FUNCTION",
+      "content_hash": "5cf024dd806f73ab"
+    },
+    "scripts/build_episode.py|scripts.build_episode.main": {
+      "file_path": "scripts/build_episode.py",
+      "qualified_name": "scripts.build_episode.main",
+      "start_line": 265,
+      "end_line": 349,
+      "type": "FUNCTION",
+      "content_hash": "aa27257d13268615"
+    },
+    "scripts/build_editorial_meeting_note.py|scripts.build_editorial_meeting_note.escape": {
+      "file_path": "scripts/build_editorial_meeting_note.py",
+      "qualified_name": "scripts.build_editorial_meeting_note.escape",
+      "start_line": 31,
+      "end_line": 32,
+      "type": "FUNCTION",
+      "content_hash": "2bbf4f60cb3f7d0f"
+    },
+    "scripts/build_editorial_meeting_note.py|scripts.build_editorial_meeting_note.inline_markdown": {
+      "file_path": "scripts/build_editorial_meeting_note.py",
+      "qualified_name": "scripts.build_editorial_meeting_note.inline_markdown",
+      "start_line": 35,
+      "end_line": 66,
+      "type": "FUNCTION",
+      "content_hash": "261eee956d9db039"
+    },
+    "scripts/build_editorial_meeting_note.py|scripts.build_editorial_meeting_note.extract_title": {
+      "file_path": "scripts/build_editorial_meeting_note.py",
+      "qualified_name": "scripts.build_editorial_meeting_note.extract_title",
+      "start_line": 69,
+      "end_line": 80,
+      "type": "FUNCTION",
+      "content_hash": "527df799b5969faa"
+    },
+    "scripts/build_editorial_meeting_note.py|scripts.build_editorial_meeting_note.strip_first_h1": {
+      "file_path": "scripts/build_editorial_meeting_note.py",
+      "qualified_name": "scripts.build_editorial_meeting_note.strip_first_h1",
+      "start_line": 83,
+      "end_line": 91,
+      "type": "FUNCTION",
+      "content_hash": "b4e5b37a8e85f1b9"
+    },
+    "scripts/build_editorial_meeting_note.py|scripts.build_editorial_meeting_note.markdown_to_html": {
+      "file_path": "scripts/build_editorial_meeting_note.py",
+      "qualified_name": "scripts.build_editorial_meeting_note.markdown_to_html",
+      "start_line": 94,
+      "end_line": 259,
+      "type": "FUNCTION",
+      "content_hash": "6241d7f281a1c563"
+    },
+    "scripts/build_editorial_meeting_note.py|scripts.build_editorial_meeting_note.markdown_to_html.flush_paragraph": {
+      "file_path": "scripts/build_editorial_meeting_note.py",
+      "qualified_name": "scripts.build_editorial_meeting_note.markdown_to_html.flush_paragraph",
+      "start_line": 108,
+      "end_line": 120,
+      "type": "FUNCTION",
+      "content_hash": "27e1f3c8ccb702f6"
+    },
+    "scripts/build_editorial_meeting_note.py|scripts.build_editorial_meeting_note.markdown_to_html.flush_list": {
+      "file_path": "scripts/build_editorial_meeting_note.py",
+      "qualified_name": "scripts.build_editorial_meeting_note.markdown_to_html.flush_list",
+      "start_line": 122,
+      "end_line": 132,
+      "type": "FUNCTION",
+      "content_hash": "d1adf6b3621f9964"
+    },
+    "scripts/build_editorial_meeting_note.py|scripts.build_editorial_meeting_note.markdown_to_html.flush_blockquote": {
+      "file_path": "scripts/build_editorial_meeting_note.py",
+      "qualified_name": "scripts.build_editorial_meeting_note.markdown_to_html.flush_blockquote",
+      "start_line": 134,
+      "end_line": 146,
+      "type": "FUNCTION",
+      "content_hash": "b5c9b16c3e0e7df0"
+    },
+    "scripts/build_editorial_meeting_note.py|scripts.build_editorial_meeting_note.main": {
+      "file_path": "scripts/build_editorial_meeting_note.py",
+      "qualified_name": "scripts.build_editorial_meeting_note.main",
+      "start_line": 262,
+      "end_line": 335,
+      "type": "FUNCTION",
+      "content_hash": "c53716c4fe11940d"
+    },
+    "scripts/update_frontend.py|scripts.update_frontend.escape": {
+      "file_path": "scripts/update_frontend.py",
+      "qualified_name": "scripts.update_frontend.escape",
+      "start_line": 39,
+      "end_line": 41,
+      "type": "FUNCTION",
+      "content_hash": "8e4c2e4da66fe134"
+    },
+    "scripts/update_frontend.py|scripts.update_frontend.get_episode_dates": {
+      "file_path": "scripts/update_frontend.py",
+      "qualified_name": "scripts.update_frontend.get_episode_dates",
+      "start_line": 44,
+      "end_line": 74,
+      "type": "FUNCTION",
+      "content_hash": "62f644acd6f67c2b"
+    },
+    "scripts/update_frontend.py|scripts.update_frontend.get_editorial_notes": {
+      "file_path": "scripts/update_frontend.py",
+      "qualified_name": "scripts.update_frontend.get_editorial_notes",
+      "start_line": 77,
+      "end_line": 119,
+      "type": "FUNCTION",
+      "content_hash": "289277d9eb63464c"
+    },
+    "scripts/update_frontend.py|scripts.update_frontend.update_home": {
+      "file_path": "scripts/update_frontend.py",
+      "qualified_name": "scripts.update_frontend.update_home",
+      "start_line": 122,
+      "end_line": 166,
+      "type": "FUNCTION",
+      "content_hash": "af2ef36deabe080e"
+    },
+    "scripts/update_frontend.py|scripts.update_frontend.analytics_html": {
+      "file_path": "scripts/update_frontend.py",
+      "qualified_name": "scripts.update_frontend.analytics_html",
+      "start_line": 169,
+      "end_line": 180,
+      "type": "FUNCTION",
+      "content_hash": "a4c61d083d83b030"
+    },
+    "scripts/update_frontend.py|scripts.update_frontend.build_episodes_index": {
+      "file_path": "scripts/update_frontend.py",
+      "qualified_name": "scripts.update_frontend.build_episodes_index",
+      "start_line": 183,
+      "end_line": 243,
+      "type": "FUNCTION",
+      "content_hash": "06f173e6fa725be3"
+    },
+    "scripts/update_frontend.py|scripts.update_frontend.build_editorial_notes_index": {
+      "file_path": "scripts/update_frontend.py",
+      "qualified_name": "scripts.update_frontend.build_editorial_notes_index",
+      "start_line": 246,
+      "end_line": 326,
+      "type": "FUNCTION",
+      "content_hash": "9a6fa60f5078449c"
+    },
+    "scripts/update_frontend.py|scripts.update_frontend.main": {
+      "file_path": "scripts/update_frontend.py",
+      "qualified_name": "scripts.update_frontend.main",
+      "start_line": 329,
+      "end_line": 381,
+      "type": "FUNCTION",
+      "content_hash": "04c3f5e565d80312"
+    }
+  },
+  "components": [
+    {
+      "name": "Legacy Paper Ingestion (v1)",
+      "description": "Provides the initial implementation of the paper collection pipeline, focusing on basic fetching from bioRxiv and PubMed with early scoring logic.",
+      "key_entities": [
+        {
+          "qualified_name": "scripts.archive.20260602_paper_collector_ver1.fetch_pubmed_ids",
+          "reference_file": "scripts/archive/20260602_paper_collector_ver1.py",
+          "reference_start_line": 258,
+          "reference_end_line": 272
+        },
+        {
+          "qualified_name": "scripts.archive.20260602_paper_collector_ver1.fetch_biorxiv",
+          "reference_file": "scripts/archive/20260602_paper_collector_ver1.py",
+          "reference_start_line": 384,
+          "reference_end_line": 453
+        },
+        {
+          "qualified_name": "scripts.archive.20260602_paper_collector_ver1.build_score",
+          "reference_file": "scripts/archive/20260602_paper_collector_ver1.py",
+          "reference_start_line": 216,
+          "reference_end_line": 228
+        },
+        {
+          "qualified_name": "scripts.archive.20260602_paper_collector_ver1.Paper",
+          "reference_file": "scripts/archive/20260602_paper_collector_ver1.py",
+          "reference_start_line": 123,
+          "reference_end_line": 134
+        }
+      ],
+      "source_cluster_ids": [
+        "1"
+      ],
+      "file_methods": [
+        {
+          "file_path": "scripts/archive/20260602_paper_collector_ver1.py",
+          "methods": [
+            "scripts.archive.20260602_paper_collector_ver1.Paper",
+            "scripts.archive.20260602_paper_collector_ver1.normalize_text",
+            "scripts.archive.20260602_paper_collector_ver1.normalize_doi",
+            "scripts.archive.20260602_paper_collector_ver1.parse_pub_date",
+            "scripts.archive.20260602_paper_collector_ver1.days_since",
+            "scripts.archive.20260602_paper_collector_ver1.keyword_score",
+            "scripts.archive.20260602_paper_collector_ver1.journal_score",
+            "scripts.archive.20260602_paper_collector_ver1.build_score",
+            "scripts.archive.20260602_paper_collector_ver1.request_json",
+            "scripts.archive.20260602_paper_collector_ver1.request_text",
+            "scripts.archive.20260602_paper_collector_ver1.fetch_pubmed_ids",
+            "scripts.archive.20260602_paper_collector_ver1.fetch_pubmed_details",
+            "scripts.archive.20260602_paper_collector_ver1.fetch_biorxiv",
+            "scripts.archive.20260602_paper_collector_ver1.deduplicate",
+            "scripts.archive.20260602_paper_collector_ver1.save_csv",
+            "scripts.archive.20260602_paper_collector_ver1.save_json",
+            "scripts.archive.20260602_paper_collector_ver1.main"
+          ]
+        }
+      ],
+      "component_id": "1",
+      "can_expand": false,
+      "components": [],
+      "components_relations": []
+    },
+    {
+      "name": "Refined Paper Ingestion (v2)",
+      "description": "An evolved version of the ingestion engine that introduces standardized NCBI parameters and improved deduplication for more reliable metadata harvesting.",
+      "key_entities": [
+        {
+          "qualified_name": "scripts.archive.20260803_paper_collector_ver2.ncbi_common_params",
+          "reference_file": "scripts/archive/20260803_paper_collector_ver2.py",
+          "reference_start_line": 253,
+          "reference_end_line": 260
+        },
+        {
+          "qualified_name": "scripts.archive.20260803_paper_collector_ver2.fetch_pubmed_details",
+          "reference_file": "scripts/archive/20260803_paper_collector_ver2.py",
+          "reference_start_line": 284,
+          "reference_end_line": 407
+        },
+        {
+          "qualified_name": "scripts.archive.20260803_paper_collector_ver2.deduplicate",
+          "reference_file": "scripts/archive/20260803_paper_collector_ver2.py",
+          "reference_start_line": 496,
+          "reference_end_line": 518
+        },
+        {
+          "qualified_name": "scripts.archive.20260803_paper_collector_ver2.main",
+          "reference_file": "scripts/archive/20260803_paper_collector_ver2.py",
+          "reference_start_line": 558,
+          "reference_end_line": 658
+        }
+      ],
+      "source_cluster_ids": [
+        "2"
+      ],
+      "file_methods": [
+        {
+          "file_path": "scripts/archive/20260803_paper_collector_ver2.py",
+          "methods": [
+            "scripts.archive.20260803_paper_collector_ver2.Paper",
+            "scripts.archive.20260803_paper_collector_ver2.validate_environment",
+            "scripts.archive.20260803_paper_collector_ver2.normalize_text",
+            "scripts.archive.20260803_paper_collector_ver2.normalize_doi",
+            "scripts.archive.20260803_paper_collector_ver2.keyword_score",
+            "scripts.archive.20260803_paper_collector_ver2.journal_score",
+            "scripts.archive.20260803_paper_collector_ver2.build_score",
+            "scripts.archive.20260803_paper_collector_ver2.request",
+            "scripts.archive.20260803_paper_collector_ver2.ncbi_common_params",
+            "scripts.archive.20260803_paper_collector_ver2.fetch_pubmed_ids",
+            "scripts.archive.20260803_paper_collector_ver2.fetch_pubmed_details",
+            "scripts.archive.20260803_paper_collector_ver2.fetch_biorxiv",
+            "scripts.archive.20260803_paper_collector_ver2.deduplicate",
+            "scripts.archive.20260803_paper_collector_ver2.save_csv",
+            "scripts.archive.20260803_paper_collector_ver2.save_json",
+            "scripts.archive.20260803_paper_collector_ver2.main"
+          ]
+        }
+      ],
+      "component_id": "2",
+      "can_expand": false,
+      "components": [],
+      "components_relations": []
+    },
+    {
+      "name": "Active Paper Collector",
+      "description": "The production-ready ingestion component responsible for the current automated retrieval, scoring, and normalization of academic papers.",
+      "key_entities": [
+        {
+          "qualified_name": "scripts.paper_collector.fetch_pubmed_ids",
+          "reference_file": "scripts/paper_collector.py",
+          "reference_start_line": 263,
+          "reference_end_line": 277
+        },
+        {
+          "qualified_name": "scripts.paper_collector.journal_score",
+          "reference_file": "scripts/paper_collector.py",
+          "reference_start_line": 187,
+          "reference_end_line": 188
+        },
+        {
+          "qualified_name": "scripts.paper_collector.keyword_score",
+          "reference_file": "scripts/paper_collector.py",
+          "reference_start_line": 176,
+          "reference_end_line": 184
+        },
+        {
+          "qualified_name": "scripts.paper_collector.normalize_doi",
+          "reference_file": "scripts/paper_collector.py",
+          "reference_start_line": 167,
+          "reference_end_line": 173
+        }
+      ],
+      "source_cluster_ids": [
+        "3"
+      ],
+      "file_methods": [
+        {
+          "file_path": "scripts/paper_collector.py",
+          "methods": [
+            "scripts.paper_collector.Paper",
+            "scripts.paper_collector.validate_environment",
+            "scripts.paper_collector.normalize_text",
+            "scripts.paper_collector.normalize_doi",
+            "scripts.paper_collector.keyword_score",
+            "scripts.paper_collector.journal_score",
+            "scripts.paper_collector.build_score",
+            "scripts.paper_collector.request",
+            "scripts.paper_collector.ncbi_common_params",
+            "scripts.paper_collector.fetch_pubmed_ids",
+            "scripts.paper_collector.fetch_pubmed_details",
+            "scripts.paper_collector.fetch_biorxiv",
+            "scripts.paper_collector.deduplicate",
+            "scripts.paper_collector.save_csv",
+            "scripts.paper_collector.save_json",
+            "scripts.paper_collector.main"
+          ]
+        }
+      ],
+      "component_id": "3",
+      "can_expand": false,
+      "components": [],
+      "components_relations": []
+    },
+    {
+      "name": "Episode Content Builder",
+      "description": "Orchestrates the transformation of raw paper data into structured editorial content, including topic clustering and audio-ready scripts.",
+      "key_entities": [
+        {
+          "qualified_name": "scripts.build_episode.build_content",
+          "reference_file": "scripts/build_episode.py",
+          "reference_start_line": 176,
+          "reference_end_line": 229
+        },
+        {
+          "qualified_name": "scripts.build_episode.build_topics",
+          "reference_file": "scripts/build_episode.py",
+          "reference_start_line": 232,
+          "reference_end_line": 238
+        },
+        {
+          "qualified_name": "scripts.build_episode.build_audio",
+          "reference_file": "scripts/build_episode.py",
+          "reference_start_line": 241,
+          "reference_end_line": 251
+        },
+        {
+          "qualified_name": "scripts.build_episode.parse_papers",
+          "reference_file": "scripts/build_episode.py",
+          "reference_start_line": 88,
+          "reference_end_line": 111
+        }
+      ],
+      "source_cluster_ids": [
+        "4"
+      ],
+      "file_methods": [
+        {
+          "file_path": "scripts/build_episode.py",
+          "methods": [
+            "scripts.build_episode.escape",
+            "scripts.build_episode.inline_markdown",
+            "scripts.build_episode.get_section",
+            "scripts.build_episode.paragraphs_to_html",
+            "scripts.build_episode.parse_field",
+            "scripts.build_episode.parse_papers",
+            "scripts.build_episode.doi_url",
+            "scripts.build_episode.render_paper_card",
+            "scripts.build_episode.render_paper_section",
+            "scripts.build_episode.render_text_section",
+            "scripts.build_episode.build_content",
+            "scripts.build_episode.build_topics",
+            "scripts.build_episode.build_audio",
+            "scripts.build_episode.build_editorial_note",
+            "scripts.build_episode.main"
+          ]
+        }
+      ],
+      "component_id": "4",
+      "can_expand": false,
+      "components": [],
+      "components_relations": []
+    },
+    {
+      "name": "Static Site Generator",
+      "description": "Manages the final presentation layer by converting markdown notes into HTML and updating the frontend indices for episodes and editorial meetings.",
+      "key_entities": [
+        {
+          "qualified_name": "scripts.update_frontend.build_episodes_index",
+          "reference_file": "scripts/update_frontend.py",
+          "reference_start_line": 183,
+          "reference_end_line": 243
+        },
+        {
+          "qualified_name": "scripts.update_frontend.build_editorial_notes_index",
+          "reference_file": "scripts/update_frontend.py",
+          "reference_start_line": 246,
+          "reference_end_line": 326
+        },
+        {
+          "qualified_name": "scripts.build_editorial_meeting_note.markdown_to_html",
+          "reference_file": "scripts/build_editorial_meeting_note.py",
+          "reference_start_line": 94,
+          "reference_end_line": 259
+        },
+        {
+          "qualified_name": "scripts.update_frontend.analytics_html",
+          "reference_file": "scripts/update_frontend.py",
+          "reference_start_line": 169,
+          "reference_end_line": 180
+        }
+      ],
+      "source_cluster_ids": [
+        "5",
+        "6"
+      ],
+      "file_methods": [
+        {
+          "file_path": "scripts/build_editorial_meeting_note.py",
+          "methods": [
+            "scripts.build_editorial_meeting_note.escape",
+            "scripts.build_editorial_meeting_note.inline_markdown",
+            "scripts.build_editorial_meeting_note.extract_title",
+            "scripts.build_editorial_meeting_note.strip_first_h1",
+            "scripts.build_editorial_meeting_note.markdown_to_html",
+            "scripts.build_editorial_meeting_note.markdown_to_html.flush_paragraph",
+            "scripts.build_editorial_meeting_note.markdown_to_html.flush_list",
+            "scripts.build_editorial_meeting_note.markdown_to_html.flush_blockquote",
+            "scripts.build_editorial_meeting_note.main"
+          ]
+        },
+        {
+          "file_path": "scripts/update_frontend.py",
+          "methods": [
+            "scripts.update_frontend.escape",
+            "scripts.update_frontend.get_episode_dates",
+            "scripts.update_frontend.get_editorial_notes",
+            "scripts.update_frontend.update_home",
+            "scripts.update_frontend.analytics_html",
+            "scripts.update_frontend.build_episodes_index",
+            "scripts.update_frontend.build_editorial_notes_index",
+            "scripts.update_frontend.main"
+          ]
+        }
+      ],
+      "component_id": "5",
+      "can_expand": false,
+      "components": [],
+      "components_relations": []
+    }
+  ],
+  "components_relations": [
+    {
+      "relation": "Provides scoring logic",
+      "src_name": "Legacy Paper Ingestion (v1)",
+      "dst_name": "Active Paper Collector",
+      "evidence": "The active collector uses refined versions of the build_score and fetch logic originally developed in the legacy scripts.",
+      "key_edges": [
+        {
+          "source": "scripts/archive/20260602_paper_collector_ver1.py|scripts.archive.20260602_paper_collector_ver1.build_score",
+          "target": "scripts/paper_collector.py|scripts.paper_collector.build_score",
+          "call_sites": [],
+          "description": "Legacy scoring logic refactored into active collector."
+        }
+      ],
+      "src_id": "1",
+      "dst_id": "3",
+      "is_static": false,
+      "all_edges": [
+        {
+          "source": "scripts/archive/20260602_paper_collector_ver1.py|scripts.archive.20260602_paper_collector_ver1.build_score",
+          "target": "scripts/paper_collector.py|scripts.paper_collector.build_score",
+          "call_sites": [],
+          "description": "Legacy scoring logic refactored into active collector."
+        }
+      ]
+    },
+    {
+      "relation": "Standardizes API parameters",
+      "src_name": "Refined Paper Ingestion (v2)",
+      "dst_name": "Active Paper Collector",
+      "evidence": "The active collector adopts the ncbi_common_params and deduplication patterns established in the v2 iteration.",
+      "key_edges": [
+        {
+          "source": "scripts/archive/20260803_paper_collector_ver2.py|scripts.archive.20260803_paper_collector_ver2.ncbi_common_params",
+          "target": "scripts/paper_collector.py|scripts.paper_collector.ncbi_common_params",
+          "call_sites": [],
+          "description": "Standardized API parameters adopted from v2 iteration."
+        }
+      ],
+      "src_id": "2",
+      "dst_id": "3",
+      "is_static": false,
+      "all_edges": [
+        {
+          "source": "scripts/archive/20260803_paper_collector_ver2.py|scripts.archive.20260803_paper_collector_ver2.ncbi_common_params",
+          "target": "scripts/paper_collector.py|scripts.paper_collector.ncbi_common_params",
+          "call_sites": [],
+          "description": "Standardized API parameters adopted from v2 iteration."
+        }
+      ]
+    },
+    {
+      "relation": "Persists metadata for curation",
+      "src_name": "Active Paper Collector",
+      "dst_name": "Episode Content Builder",
+      "evidence": "The collector saves papers to data/ or work/ which are then referenced by the builder to generate episode content.",
+      "key_edges": [
+        {
+          "source": "scripts/paper_collector.py|scripts.paper_collector.main",
+          "target": "|data/papers_YYYY-MM-DD.json",
+          "call_sites": [],
+          "description": "Collector writes metadata to file system for builder consumption."
+        }
+      ],
+      "src_id": "3",
+      "dst_id": "4",
+      "is_static": false,
+      "all_edges": [
+        {
+          "source": "scripts/paper_collector.py|scripts.paper_collector.main",
+          "target": "|data/papers_YYYY-MM-DD.json",
+          "call_sites": [],
+          "description": "Collector writes metadata to file system for builder consumption."
+        }
+      ]
+    },
+    {
+      "relation": "Provides structured episode pages",
+      "src_name": "Episode Content Builder",
+      "dst_name": "Static Site Generator",
+      "evidence": "The builder generates index.html within date-specific folders in docs/episodes/, which the generator then indexes.",
+      "key_edges": [
+        {
+          "source": "scripts/build_episode.py|scripts.build_episode.main",
+          "target": "|docs/episodes/YYYY-MM-DD/index.html",
+          "call_sites": [],
+          "description": "Builder generates HTML fragments for the static site."
+        }
+      ],
+      "src_id": "4",
+      "dst_id": "5",
+      "is_static": false,
+      "all_edges": [
+        {
+          "source": "scripts/build_episode.py|scripts.build_episode.main",
+          "target": "|docs/episodes/YYYY-MM-DD/index.html",
+          "call_sites": [],
+          "description": "Builder generates HTML fragments for the static site."
+        }
+      ]
+    },
+    {
+      "relation": "Discovers and links episodes",
+      "src_name": "Static Site Generator",
+      "dst_name": "Episode Content Builder",
+      "evidence": "update_frontend.py scans the output directories of the builder to update the site-wide navigation and home page.",
+      "key_edges": [
+        {
+          "source": "scripts/update_frontend.py|scripts.update_frontend.get_episode_dates",
+          "target": "docs/episodes|docs/episodes/",
+          "call_sites": [],
+          "description": "Generator scans builder output directories to update site indices."
+        }
+      ],
+      "src_id": "5",
+      "dst_id": "4",
+      "is_static": false,
+      "all_edges": [
+        {
+          "source": "scripts/update_frontend.py|scripts.update_frontend.get_episode_dates",
+          "target": "docs/episodes|docs/episodes/",
+          "call_sites": [],
+          "description": "Generator scans builder output directories to update site indices."
+        }
+      ]
+    }
+  ]
+}
