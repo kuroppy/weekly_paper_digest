@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Editorial Meeting Notes | Weekly Paper Digest</title>
+
+  <link rel="stylesheet" href="../assets/style.css">
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N22XGSKTFW"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-N22XGSKTFW');
+  </script>
+</head>
+
+<body>
+
+<div class="container">
+
+  <nav class="site-nav" aria-label="Site navigation">
+    <a
+      class="site-home-link"
+      href="https://kuroppy.github.io/weekly_paper_digest/"
+    >
+      ← Weekly Paper Digest Home
+    </a>
+  </nav>
+
+  <header class="page-header">
+    <h1>Editorial Meeting Notes</h1>
+    <p class="page-meta">2026-08-10</p>
+  </header>
+
+  <main class="markdown-body">
+    <p><strong>Episode:</strong> 2026-08-10</p>
+<p><strong>Participants</strong></p>
+<ul>
+<li>Kuroppy (Editor)</li>
+<li>Chappy (AI Editorial Partner, GPT-5.6 Sol)</li>
+</ul>
+<p><strong>Recorder</strong></p>
+<ul>
+<li>Chappy</li>
+</ul>
+<blockquote><p><strong>About this document</strong> このMeeting Notesは、Weekly Paper Digestの編集会議における議論の一次記録です。 配信内容のレビューだけでなく、編集上の意思決定や、その背景となる議論・思考の変化も記録します。 ここで繰り返し現れた考え方は、必要に応じてEditorial Frameworkへ整理・反映します。</p></blockquote>
+<h1>Editing Pipeline</h1>
+<h2>Workflow (used)</h2>
+<ul>
+<li>paper_collector_ver2</li>
+<li>Prompt_for_Weekly_Paper_Curation_ver4</li>
+<li>NotebookLM_Prompt_ver5.1</li>
+</ul>
+<p>論文収集・候補論文の選定方法は、先週と同じ方法を使用した。</p>
+<h1>今週のキュレーション</h1>
+<p>今週もファージ関連論文が多かった。</p>
+<p>一方で、</p>
+<ul>
+<li>ゲノム言語モデルによる完全なファージゲノムの生成</li>
+<li>Bifidobacteriumの大規模自然形質転換</li>
+<li>CRISPR-Cas3によるgenome reduction</li>
+</ul>
+<p>など、<strong>ゲノムを固定された情報ではなく、生成・交換・削減される動的なものとして扱う研究</strong>が印象的だった。</p>
+<p>特に、AIが機能するファージゲノムを生成した研究と、Bifidobacteriumで染色体の約3割が置換されうることを示した研究は、今週の中心となる強い論文だった。</p>
+<h1>今週の音声</h1>
+<p>今回の音声は、かなり完成度の高い回になった。</p>
+<p>NotebookLMは個々の論文から、</p>
+<p><strong>「ゲノムは固定された設計図ではない」</strong></p>
+<p>というテーマを自然に抽出した。</p>
+<p>Deep Diveでは、</p>
+<ul>
+<li>AIによるトップダウンのゲノム設計</li>
+<li>自然形質転換によるボトムアップのゲノム再編成</li>
+</ul>
+<p>が対置され、一見異なる二つの研究が一つのストーリーとしてつながった。</p>
+<p>今回は、NotebookLMの編集の良さだけでなく、素材となった論文そのもののインパクトも大きかった。</p>
+<h1>論文の偏りについて</h1>
+<p>今週もファージ関連論文が多かったため、候補論文の多様性を高める方法としてMMRの導入を検討した。</p>
+<p>しかし、</p>
+<p><strong>似た論文が多いこと自体が、その週の研究動向を表している可能性がある</strong></p>
+<p>という問題が出てきた。</p>
+<p>MMRでは、</p>
+<ul>
+<li>collector由来の人工的な偏り</li>
+<li>実際の研究潮流による集中</li>
+</ul>
+<p>を区別できない。</p>
+<p>そのため、似たテーマの論文を意図的に減らすと、「今週の特徴」そのものを弱める可能性がある。</p>
+<p>先週もファージ論文の偏りをあえて残したことで、その週らしいテーマが自然に現れた。</p>
+<p>この考え方を踏まえ、今回はMMRを採用せず、<strong>論文収集方法は先週と同じ方式を継続する</strong>こととした。</p>
+<h1>編集上の気づき</h1>
+<p>今回の成功例から、</p>
+<blockquote><p><strong>テーマを先に決めるのではなく、面白い論文を選んだ結果としてテーマが現れる。</strong></p></blockquote>
+<p>という現在の編集方針がうまく機能していることを確認できた。</p>
+<p>また、</p>
+<blockquote><p><strong>偏りは必ずしも除去すべきノイズではなく、その週を表すシグナルかもしれない。</strong></p></blockquote>
+<p>という視点も得られた。</p>
+<p>論文収集のbiasについては引き続き注意するが、分野の多様性そのものを人工的に作ることはしない。</p>
+<h3>📝 Meeting Memo</h3>
+<p>今回は、論文そのものの強さとNotebookLMの編集がうまく噛み合った、かなり成功した回だった。</p>
+<p>特に印象的だったのは、最初から「ゲノムの可塑性」というテーマを設定していなかったにもかかわらず、論文を並べた結果として、</p>
+<p><strong>「ゲノムは固定された設計図ではない」</strong></p>
+<p>という物語が自然に立ち上がったことだった。</p>
+<p>また、ファージ論文の偏りをどう扱うかを考える中で、</p>
+<p><strong>偏りはノイズではなく、その週の研究動向そのものかもしれない</strong></p>
+<p>という点にも気づいた。</p>
+<p>そのため、論文収集方法は変更せず、先週と同じ方式を継続することにした。</p>
+<p>今回は、新しい仕組みを追加するよりも、<strong>なぜ今の方法を変えないのかが少し明確になった回</strong>だった。</p>
+<p><em>— Chappy</em></p>
+  </main>
+
+</div>
+
+</body>
+</html>

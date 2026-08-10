@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weekly Paper Digest 2026-08-10</title>
+  <link rel="stylesheet" href="../../assets/style.css">
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N22XGSKTFW"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-N22XGSKTFW');
+  </script>
+
+  <!-- Audio Analytics -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const audio = document.getElementById("podcast-player");
+      if (!audio || typeof gtag !== "function") return;
+
+      const episode = audio.dataset.episode;
+      const reached = new Set();
+      let playedOnce = false;
+
+      audio.addEventListener("play", () => {
+        if (playedOnce) return;
+        playedOnce = true;
+        gtag("event", "podcast_play", {
+          episode,
+          page_path: location.pathname
+        });
+      });
+
+      audio.addEventListener("timeupdate", () => {
+        if (!audio.duration || !isFinite(audio.duration)) return;
+
+        const percent = Math.floor((audio.currentTime / audio.duration) * 100);
+
+        [25, 50, 75, 100].forEach((milestone) => {
+          if (percent >= milestone && !reached.has(milestone)) {
+            reached.add(milestone);
+            gtag("event", "podcast_progress", {
+              episode,
+              page_path: location.pathname,
+              progress_percent: milestone,
+              audio_current_time: Math.round(audio.currentTime),
+              audio_duration: Math.round(audio.duration)
+            });
+          }
+        });
+      });
+    });
+  </script>
+</head>
+
+<body>
+  <div class="container">
+    <nav class="site-nav" aria-label="Site navigation">
+      <a class="site-home-link" href="https://kuroppy.github.io/weekly_paper_digest/">
+        ← Weekly Paper Digest Home
+      </a>
+    </nav>
+
+    <header class="page-header">
+      <h1>Weekly Paper Digest</h1>
+      <p class="page-meta">2026-08-10</p>
+    </header>
+
+    <audio
+            id="podcast-player"
+            data-episode="2026-08-10"
+            controls
+            preload="metadata">
+            <source src="audio.mp3" type="audio/mpeg">
+            </audio>
+
+    <h2>今週の注目論文</h2><ol><li>Generative design of bacteriophages with genome language models.</li><li>Antiviral defence is a conserved function of diverse bacterial DNA glycosylases.</li><li>The anaerobic fungus Caecomyces churrovis produces H2 via a non-bifurcating NADH-dependent enzyme complex.</li><li>Natural transformation drives large-scale genome mosaicism in human gut bifidobacteria.</li><li>Genome shuffling enables quantitative trait locus mapping in Bacillus subtilis.</li></ol>
+
+    <hr>
+
+    <section>
+  <h2>今週の印象</h2>
+  <p>今週はファージ関連の研究が引き続き強い。なかでも、ゲノム言語モデルで生存可能なファージゲノムを生成した研究と、DNA修復酵素として知られてきたDNA glycosylaseを抗ファージ防御因子として捉え直した研究は、どちらも既存の枠組みを一段広げる内容だった。</p>
+<p>一方で、腸内Bifidobacteriumの自然形質転換による染色体スケールの組換え、Bacillus subtilisでのQTL mapping、嫌気性真菌のhydrogenosomeにおけるH2生成機構など、微生物ゲノムの可塑性や代謝の基本原理に踏み込む研究も印象に残る。</p>
+</section>
+<section class="paper-list">
+  <h2>今週の注目論文</h2>
+  <article class="paper-card">
+  <h3>Generative design of bacteriophages with genome language models.</h3>
+  <p class="journal">Science (New York, N.Y.)</p>
+  <p><a href="https://doi.org/10.1126/science.aec2657">https://doi.org/10.1126/science.aec2657</a></p>
+  <p>ゲノム言語モデルで完全なファージゲノムを生成し、実際に感染・増殖可能なファージを作った。</p>
+</article>
+<article class="paper-card">
+  <h3>Antiviral defence is a conserved function of diverse bacterial DNA glycosylases.</h3>
+  <p class="journal">Nature microbiology</p>
+  <p><a href="https://doi.org/10.1038/s41564-026-02441-0">https://doi.org/10.1038/s41564-026-02441-0</a></p>
+  <p>DNA修復酵素として知られるDNA glycosylaseが、修飾塩基を持つファージDNAを狙う多様な抗ウイルス防御因子でもあった。</p>
+</article>
+<article class="paper-card">
+  <h3>The anaerobic fungus Caecomyces churrovis produces H2 via a non-bifurcating NADH-dependent enzyme complex.</h3>
+  <p class="journal">mBio</p>
+  <p><a href="https://doi.org/10.1128/mbio.01643-26">https://doi.org/10.1128/mbio.01643-26</a></p>
+  <p>嫌気性真菌のhydrogenosomeでは、ferredoxinを介さずNADHから直接H2を作るnon-bifurcating enzyme complexが働いていた。</p>
+</article>
+<article class="paper-card">
+  <h3>Natural transformation drives large-scale genome mosaicism in human gut bifidobacteria.</h3>
+  <p class="journal">The ISME journal</p>
+  <p><a href="https://doi.org/10.1093/ismejo/wrag208">https://doi.org/10.1093/ismejo/wrag208</a></p>
+  <p>ヒト腸内Bifidobacteriumでは、自然形質転換によって染色体の約3割にも及ぶDNA交換が起こりうる。</p>
+</article>
+<article class="paper-card">
+  <h3>Genome shuffling enables quantitative trait locus mapping in Bacillus subtilis.</h3>
+  <p class="journal">Nature communications</p>
+  <p><a href="https://doi.org/10.1038/s41467-026-72929-0">https://doi.org/10.1038/s41467-026-72929-0</a></p>
+  <p>細菌ゲノムを人工的にシャッフルすることで、Bacillus subtilisでQTL mappingを可能にした。</p>
+</article>
+</section>
+<section class="paper-list">
+  <h2>今週のショートニュース</h2>
+  <article class="paper-card">
+  <h3>Structural and enzymatic insights into QatD, a dual-function TatD-like nuclease in the QatABCD anti-phage defense system.</h3>
+  <p class="journal">Nucleic acids research</p>
+  <p><a href="https://doi.org/10.1093/nar/gkag776">https://doi.org/10.1093/nar/gkag776</a></p>
+  <p>QatDはTatD-family nucleaseを抗ファージ防御へ転用した因子で、host NTP濃度による抑制がファージ感染時の代謝変化によって解除されるという、代謝センサー型の防御モデルが提案された。</p>
+</article>
+<article class="paper-card">
+  <h3>Mutations in filamentous bacteriophages spark eco-evolutionary feedbacks in Pseudomonas aeruginosa.</h3>
+  <p class="journal">The ISME journal</p>
+  <p><a href="https://doi.org/10.1093/ismejo/wrag193">https://doi.org/10.1093/ismejo/wrag193</a></p>
+  <p>実験進化中にprophage由来のhyperactive filamentous phageが出現し、それが細菌側のphage resistanceやmotilityの進化まで駆動するeco-evolutionary feedbackを引き起こした。</p>
+</article>
+<article class="paper-card">
+  <h3>The halophilic archaeon Halogranum roseipondis sp. nov. is susceptible to a virus carrying an exceptionally high number of viral tRNA genes.</h3>
+  <p class="journal">Microbiology spectrum</p>
+  <p><a href="https://doi.org/10.1128/spectrum.00854-26">https://doi.org/10.1128/spectrum.00854-26</a></p>
+  <p>新規haloarchaeonとそのvirus-host systemを確立し、ウイルスHGTV-1が34個ものtRNA遺伝子を持つことを報告した。</p>
+</article>
+<article class="paper-card">
+  <h3>Cas3-mediated genome reduction: demonstration in Cupriavidus necator H16 improves growth on heterotrophic and autotrophic carbon sources.</h3>
+  <p class="journal">Nucleic acids research</p>
+  <p><a href="https://doi.org/10.1093/nar/gkag753">https://doi.org/10.1093/nar/gkag753</a></p>
+  <p>Cascade-Cas3でランダムな大規模ゲノム欠失を作るTRIM3を開発し、最大18.4%のゲノムを削減してfructoseで25%速く増殖するCupriavidus necatorを得た。</p>
+</article>
+<article class="paper-card">
+  <h3>Nonantibiotic-driven evolution reveals rare but predictable routes to broad antibiotic resistance.</h3>
+  <p class="journal">mBio</p>
+  <p><a href="https://doi.org/10.1128/mbio.01168-26">https://doi.org/10.1128/mbio.01168-26</a></p>
+  <p>40種類の抗菌薬・非抗菌薬でEscherichia coliを進化させると、多剤耐性化は全体として稀だった一方、特定の非抗菌薬ではacrRやlonを介したefflux pump制御へ繰り返し収束した。</p>
+</article>
+</section>
+<section>
+  <h2>まとめ</h2>
+  <p>今週はファージ研究の強さが目立つ一方、ゲノムを「読む対象」だけではなく、生成し、組み換え、削減し、実験的にmappingする対象として扱う研究が並んだ。特に、ゲノム言語モデルによるファージ設計とBifidobacteriumの大規模自然形質転換は、ゲノムというものの可塑性を異なる方向から強く感じさせる。</p>
+<p>同時に、嫌気性真菌のH2生成機構のように、古典的な微生物代謝にもまだ基本的な発見が残されている。ファージだけに収束せず、「ゲノムをどう扱うか」「微生物の基本原理をどう捉え直すか」という広がりのある週だった。</p>
+</section>
+
+    <footer class="episode-footer">
+      <p>
+  <a href="../../editorial_notes/editorial_meeting_notes_2026-08-10.html">
+    📝 Read the Editorial Note of this episode
+  </a>
+</p>
+    </footer>
+  </div>
+</body>
+</html>
