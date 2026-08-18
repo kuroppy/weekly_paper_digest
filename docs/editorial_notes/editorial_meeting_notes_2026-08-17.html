@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Editorial Meeting Notes | Weekly Paper Digest</title>
+
+  <link rel="stylesheet" href="../assets/style.css">
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N22XGSKTFW"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-N22XGSKTFW');
+  </script>
+</head>
+
+<body>
+
+<div class="container">
+
+  <nav class="site-nav" aria-label="Site navigation">
+    <a
+      class="site-home-link"
+      href="https://kuroppy.github.io/weekly_paper_digest/"
+    >
+      ← Weekly Paper Digest Home
+    </a>
+  </nav>
+
+  <header class="page-header">
+    <h1>Editorial Meeting Notes</h1>
+    <p class="page-meta">2026-08-17</p>
+  </header>
+
+  <main class="markdown-body">
+    <p><strong>Episode:</strong> 2026-08-17</p>
+<p><strong>Participants</strong></p>
+<ul>
+<li>Kuroppy (Editor)</li>
+<li>Chappy (AI Editorial Partner, GPT-5.6 Sol)</li>
+</ul>
+<p><strong>Recorder</strong></p>
+<ul>
+<li>Chappy</li>
+</ul>
+<blockquote><p><strong>About this document</strong> このMeeting Notesは、Weekly Paper Digestの編集会議における議論の一次記録です。 配信内容のレビューだけでなく、編集上の意思決定や、その背景となる議論・思考の変化も記録します。</p></blockquote>
+<h1>Editing Pipeline</h1>
+<h2>Workflow (used)</h2>
+<ul>
+<li>paper_collector_ver2</li>
+<li>Prompt_for_Weekly_Paper_Curation_ver4</li>
+<li>NotebookLM_Prompt_ver5.1</li>
+</ul>
+<p>論文収集・候補論文の選定方法は、先週と同じ方法を使用した。</p>
+<h1>今週のキュレーション</h1>
+<p>当初、Nature Microbiologyの2報をDeep Dive候補としていたが、どちらもオープンアクセスではなく、所属機関からも本文へアクセスできなかった。</p>
+<p>そのため、<strong>Deep Diveでは実際に全文を確認できることを重視し、別のOA論文へ変更した。</strong></p>
+<p>候補を探す過程ではbioRxivのpreprintも検討したが、その研究はすでにmSystemsから出版されていることが確認できた。preprintの投稿日と出版論文の公開時期を混同しないことも、今回の確認事項となった。</p>
+<h1>今週の音声</h1>
+<p>今回、最も印象的だったのは、<strong>Deep Dive以外の論文にも十分な存在感があったこと</strong>だった。</p>
+<p>これまでの音声はDeep Dive 2報を中心とした「解説番組」に近くなることが多かったが、今回はDeep Dive以外にも話題性の高い論文が並び、番組全体としてバランスがよかった。</p>
+<p>結果的には、OAであることを条件にNature Microbiologyの2報をDeep Diveに使わなかったことが、このバランスにうまく働いた可能性がある。</p>
+<p>ただし、ここから「強い論文をDeep Diveにしない」という方針を導くべきではない。</p>
+<p>今後は、<strong>本当に面白い論文をDeep Diveしながら、他の論文にも存在感を持たせる編集</strong>を目指したい。</p>
+<h1>50本のキュレーション</h1>
+<p>今後、collectorが選んだ約50本について、AIと人間の共同作業でキュレーションする方法を検討した。</p>
+<p>50本すべての英語Abstractを人間が読むのは負担が大きい。一方で、AIに最終選定まで任せるのではなく、<strong>AIが情報を整理し、それを読んで人間が選ぶ</strong>形にしたい。</p>
+<p>そのため、各論文について、</p>
+<ul>
+<li>ひとことで</li>
+<li>何をした？</li>
+<li>何が分かった？</li>
+<li>AI編集メモ｜ここが面白い</li>
+<li>AI編集メモ｜話せそうなポイント</li>
+<li>tags</li>
+</ul>
+<p>を整理し、HTML上で</p>
+<ul>
+<li>◎ 話したい</li>
+<li>○ 気になる</li>
+<li>− 今週はいい</li>
+</ul>
+<p>と評価できるPaper Reviewを試作した。</p>
+<p>評価はブラウザ内に保存し、結果をJSONとして書き出せる。</p>
+<h1>Paper Review v1</h1>
+<p>来週から実際に使えるよう、Paper Reviewをテンプレート化することにした。</p>
+<p>今回、以下を準備した。</p>
+<ul>
+<li><code>prompts/20260818_Prompt_for_Paper_Review_ver1.md</code></li>
+<li><code>templates/paper_review.html</code></li>
+<li><code>scripts/build_paper_review.py</code></li>
+</ul>
+<p>週ごとの入力・生成物は<code>work/YYYY-MM-DD/</code>に置き、prompt、script、templateは既存のリポジトリ構造に合わせて共通化する。</p>
+<p>Paper Reviewはまず内部の編集作業で使いながら育てる。将来的には、候補論文を読者自身が評価できるページとして公開する可能性もある。</p>
+<h1>今後の検討事項</h1>
+<p>Paper Reviewの項目として「研究の型」を持たせる案も出た。</p>
+<p>単なる研究分野ではなく、研究がどのような問いを立て、どのような証拠から、どのような結論へ進むのかを分類する考え方である。</p>
+<p>これは以前から考えていたテーマともつながるため、今週はPaper Review v1には入れず、今後あらためて検討する。</p>
+<h3>📝 Meeting Memo</h3>
+<p>今週は、OAという実務的な制約からDeep Dive論文を変更したことが、結果として番組全体のバランスをよくした。</p>
+<p>特に、Deep Dive以外の論文が単なる短い紹介にならず、それぞれ話題として存在感を持っていた点が印象的だった。</p>
+<p>そこから、次の課題として「50本の候補論文をどう人間が読むか」という話に進み、Paper Reviewの試作までできた。</p>
+<p>AIに論文を選ばせるのではなく、人間が選ぶための情報整理をAIに任せる。来週は、この仕組みを実際のキュレーションで試してみたい。</p>
+<p><em>--- Chappy</em></p>
+  </main>
+
+</div>
+
+</body>
+</html>
