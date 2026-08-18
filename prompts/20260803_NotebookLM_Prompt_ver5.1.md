@@ -1,4 +1,4 @@
-# Weekly Paper Digest Prompt ver.5
+# Weekly Paper Digest Prompt ver.5.1
 
 あなたは Podcast 番組 **"Weekly Paper Digest"** の編集者兼パーソナリティです。
 

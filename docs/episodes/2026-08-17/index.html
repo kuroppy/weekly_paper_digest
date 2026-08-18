@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weekly Paper Digest 2026-08-17</title>
+  <link rel="stylesheet" href="../../assets/style.css">
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N22XGSKTFW"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-N22XGSKTFW');
+  </script>
+
+  <!-- Audio Analytics -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const audio = document.getElementById("podcast-player");
+      if (!audio || typeof gtag !== "function") return;
+
+      const episode = audio.dataset.episode;
+      const reached = new Set();
+      let playedOnce = false;
+
+      audio.addEventListener("play", () => {
+        if (playedOnce) return;
+        playedOnce = true;
+        gtag("event", "podcast_play", {
+          episode,
+          page_path: location.pathname
+        });
+      });
+
+      audio.addEventListener("timeupdate", () => {
+        if (!audio.duration || !isFinite(audio.duration)) return;
+
+        const percent = Math.floor((audio.currentTime / audio.duration) * 100);
+
+        [25, 50, 75, 100].forEach((milestone) => {
+          if (percent >= milestone && !reached.has(milestone)) {
+            reached.add(milestone);
+            gtag("event", "podcast_progress", {
+              episode,
+              page_path: location.pathname,
+              progress_percent: milestone,
+              audio_current_time: Math.round(audio.currentTime),
+              audio_duration: Math.round(audio.duration)
+            });
+          }
+        });
+      });
+    });
+  </script>
+</head>
+
+<body>
+  <div class="container">
+    <nav class="site-nav" aria-label="Site navigation">
+      <a class="site-home-link" href="https://kuroppy.github.io/weekly_paper_digest/">
+        ← Weekly Paper Digest Home
+      </a>
+    </nav>
+
+    <header class="page-header">
+      <h1>Weekly Paper Digest</h1>
+      <p class="page-meta">2026-08-17</p>
+    </header>
+
+    <audio
+            id="podcast-player"
+            data-episode="2026-08-17"
+            controls
+            preload="metadata">
+            <source src="audio.mp3" type="audio/mpeg">
+            </audio>
+
+    <h2>今週の注目論文</h2><ol><li>Antisense transcription reveals disease-associated</li><li>Global microbial DNA signatures of temperature and</li><li>Phage-encoded contingency loci enable bet-hedging against</li><li>Giant viruses encode vitamin K-based redox modules for</li><li>Phylogenetic reconciliation supports a methanogenic</li></ol>
+
+    <hr>
+
+    <section>
+  <h2>今週の印象</h2>
+  <p>今週は、微生物が環境変化に適応する仕組みを、これまで見落とされていた情報層から捉え直す論文が目立つ。アンチセンスRNA、DNAの短い配列組成、ファージの高頻度可逆変異、巨大ウイルスの代謝遺伝子など、ゲノムや転写産物を「何があるか」だけでなく「どう使われ、どう変わるか」まで読む研究が面白い。加えて、古細菌共通祖先の姿を系統解析から再構成する研究もあり、時間スケールの異なる進化研究が並んだ週でもある。</p>
+</section>
+<section class="paper-list">
+  <h2>今週の注目論文</h2>
+  <article class="paper-card">
+  <h3>Antisense transcription reveals disease-associated</h3>
+  <p class="journal">Nature microbiology</p>
+  <p><a href="https://doi.org/10.1038/s41564-026-02442-z">https://doi.org/10.1038/s41564-026-02442-z</a></p>
+  <p>腸内細菌叢のアンチセンスRNAを遺伝子単位で捉え、炎症時の適応やゲノム再編成と結びつく転写プログラムを見いだした。</p>
+</article>
+<article class="paper-card">
+  <h3>Global microbial DNA signatures of temperature and</h3>
+  <p class="journal">Nature microbiology</p>
+  <p><a href="https://doi.org/10.1038/s41564-026-02451-y">https://doi.org/10.1038/s41564-026-02451-y</a></p>
+  <p>1,235の海洋・土壌メタゲノムから、tetranucleotide</p>
+</article>
+<article class="paper-card">
+  <h3>Phage-encoded contingency loci enable bet-hedging against</h3>
+  <p class="journal">Nature microbiology</p>
+  <p><a href="https://doi.org/10.1038/s41564-026-02445-w">https://doi.org/10.1038/s41564-026-02445-w</a></p>
+  <p>ファージがsimple sequence</p>
+</article>
+<article class="paper-card">
+  <h3>Giant viruses encode vitamin K-based redox modules for</h3>
+  <p class="journal">Proceedings of the National Academy of Sciences of the</p>
+  <p><a href="https://doi.org/10.1073/pnas.2610764123">https://doi.org/10.1073/pnas.2610764123</a></p>
+  <p>巨大ウイルスがvitamin K epoxide reductaseを含むredox</p>
+</article>
+<article class="paper-card">
+  <h3>Phylogenetic reconciliation supports a methanogenic</h3>
+  <p class="journal">Nature communications</p>
+  <p><a href="https://doi.org/10.1038/s41467-026-76386-7">https://doi.org/10.1038/s41467-026-76386-7</a></p>
+  <p>複数の高度な系統解析とgene tree--species tree</p>
+</article>
+</section>
+<section class="paper-list">
+  <h2>今週のショートニュース</h2>
+  <article class="paper-card">
+  <h3>Discovery and biosynthesis of a novel</h3>
+  <p class="journal">Nucleic acids research</p>
+  <p><a href="https://doi.org/10.1093/nar/gkag763">https://doi.org/10.1093/nar/gkag763</a></p>
+  <p>Acinetobacter baumannii phageから新しいthymine</p>
+</article>
+<article class="paper-card">
+  <h3>Maternal influences on infant gut microbiome and health.</h3>
+  <p class="journal">Nature</p>
+  <p><a href="https://doi.org/10.1038/s41586-026-10922-9">https://doi.org/10.1038/s41586-026-10922-9</a></p>
+  <p>714組の母子・4,526糞便サンプルを追跡し、乳児腸内細菌株の主要な供給源が母親の腸内細菌叢であることを示した。分娩様式と授乳様式も乳児腸内細菌叢を大きく形づくる。</p>
+</article>
+<article class="paper-card">
+  <h3>Characterization of microbial dark matter at scale with</h3>
+  <p class="journal">Nature biotechnology</p>
+  <p><a href="https://doi.org/10.1038/s41587-026-03245-7">https://doi.org/10.1038/s41587-026-03245-7</a></p>
+  <p>Sequence Bloom</p>
+</article>
+<article class="paper-card">
+  <h3>Fast assembly and in vivo coalescence of ParBF</h3>
+  <p class="journal">Nucleic acids research</p>
+  <p><a href="https://doi.org/10.1093/nar/gkag781">https://doi.org/10.1093/nar/gkag781</a></p>
+  <p>細菌DNA分配に関わるParB condensateがin</p>
+</article>
+<article class="paper-card">
+  <h3>Virome DNA stable isotope probing reveals diverse active</h3>
+  <p class="journal">mSystems</p>
+  <p><a href="https://doi.org/10.1128/msystems.00733-26">https://doi.org/10.1128/msystems.00733-26</a></p>
+  <p>13C-glucoseを宿主からウイルスDNAまで追跡し、5,000以上の活動的な土壌ウイルス集団を検出。宿主の増殖ポテンシャルとウイルスによる溶菌の強さが関連していた。</p>
+</article>
+</section>
+<section>
+  <h2>まとめ</h2>
+  <p>今週は、微生物やウイルスの適応を「新しい観測軸」で読み解く論文が印象に残る。antisense transcription、tetranucleotide composition、hypermutable contingency loci、viral redox moduleと、従来なら周辺的に見えた情報が生物学的な戦略として前面に出てきた。一方で古細菌共通祖先の再構成のような大きな進化史の議論もあり、短期的な適応から数十億年規模の進化までを行き来できる週だった。</p>
+</section>
+
+    <footer class="episode-footer">
+      <p>
+  <a href="../../editorial_notes/editorial_meeting_notes_2026-08-17.html">
+    📝 Read the Editorial Note of this episode
+  </a>
+</p>
+    </footer>
+  </div>
+</body>
+</html>
