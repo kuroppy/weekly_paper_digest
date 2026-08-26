@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weekly Paper Digest 2026-08-24</title>
+  <link rel="stylesheet" href="../../assets/style.css">
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N22XGSKTFW"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-N22XGSKTFW');
+  </script>
+
+  <!-- Audio Analytics -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const audio = document.getElementById("podcast-player");
+      if (!audio || typeof gtag !== "function") return;
+
+      const episode = audio.dataset.episode;
+      const reached = new Set();
+      let playedOnce = false;
+
+      audio.addEventListener("play", () => {
+        if (playedOnce) return;
+        playedOnce = true;
+        gtag("event", "podcast_play", {
+          episode,
+          page_path: location.pathname
+        });
+      });
+
+      audio.addEventListener("timeupdate", () => {
+        if (!audio.duration || !isFinite(audio.duration)) return;
+
+        const percent = Math.floor((audio.currentTime / audio.duration) * 100);
+
+        [25, 50, 75, 100].forEach((milestone) => {
+          if (percent >= milestone && !reached.has(milestone)) {
+            reached.add(milestone);
+            gtag("event", "podcast_progress", {
+              episode,
+              page_path: location.pathname,
+              progress_percent: milestone,
+              audio_current_time: Math.round(audio.currentTime),
+              audio_duration: Math.round(audio.duration)
+            });
+          }
+        });
+      });
+    });
+  </script>
+</head>
+
+<body>
+  <div class="container">
+    <nav class="site-nav" aria-label="Site navigation">
+      <a class="site-home-link" href="https://kuroppy.github.io/weekly_paper_digest/">
+        ← Weekly Paper Digest Home
+      </a>
+    </nav>
+
+    <header class="page-header">
+      <h1>Weekly Paper Digest</h1>
+      <p class="page-meta">2026-08-24</p>
+    </header>
+
+    <audio
+            id="podcast-player"
+            data-episode="2026-08-24"
+            controls
+            preload="metadata">
+            <source src="audio.mp3" type="audio/mpeg">
+            </audio>
+
+    <h2>今週の注目論文</h2><ol><li>Pervasive phosphorylation by phage T7 kinase disarms bacterial defences.</li><li>A cloaked glutamate decarboxylase sustains the GABA shunt in Mycobacterium tuberculosis.</li><li>The leading region of many plasmids is adapted for translational efficiency.</li><li>Polyphosphate acts as an architectural regulator of carbon fixation and nucleoid structure in cyanobacteria.</li><li>Large language models enhance annotation of enzymes in metagenomes.</li></ol>
+
+    <hr>
+
+    <section>
+  <h2>今週の印象</h2>
+  <p>今週は、ファージと細菌の攻防、プラスミドの伝播、酵素機能アノテーション、細胞内構造、そして大規模メタゲノム解析と、個々の論文がそれぞれ異なる方向から「ゲノムに書かれた機能をどう理解するか」を問い直す研究が目立った。なかでも、T7ファージが宿主タンパク質をほぼ網羅的にリン酸化するという研究と、プラスミドの侵入先頭領域が侵入直後の翻訳効率にまで適応しているという研究は、既知の仕組みにもう一段の意味を与える点で印象的だった。</p>
+</section>
+<section class="paper-list">
+  <h2>今週の注目論文</h2>
+  <article class="paper-card">
+  <h3>Pervasive phosphorylation by phage T7 kinase disarms bacterial defences.</h3>
+  <p class="journal">Nature</p>
+  <p><a href="https://doi.org/10.1038/s41586-026-10934-5">https://doi.org/10.1038/s41586-026-10934-5</a></p>
+  <p>T7ファージは、単一の防御系を狙い撃ちするのではなく、超広範なタンパク質リン酸化によって複数の細菌防御系をまとめて弱体化させる。</p>
+</article>
+<article class="paper-card">
+  <h3>A cloaked glutamate decarboxylase sustains the GABA shunt in Mycobacterium tuberculosis.</h3>
+  <p class="journal">Proceedings of the National Academy of Sciences of the United States of America</p>
+  <p><a href="https://doi.org/10.1073/pnas.2619778123">https://doi.org/10.1073/pnas.2619778123</a></p>
+  <p>26,000配列以上を含む既知酵素ファミリーの一員と考えられていた結核菌タンパク質が、実際には別の基質を使うglutamate decarboxylaseだった。</p>
+</article>
+<article class="paper-card">
+  <h3>The leading region of many plasmids is adapted for translational efficiency.</h3>
+  <p class="journal">Nucleic acids research</p>
+  <p><a href="https://doi.org/10.1093/nar/gkag810">https://doi.org/10.1093/nar/gkag810</a></p>
+  <p>接合で最初に受容菌へ入るプラスミド領域は、単にanti-defence遺伝子を持つだけでなく、それらを素早く翻訳できるようcodon usageまで適応している。</p>
+</article>
+<article class="paper-card">
+  <h3>Polyphosphate acts as an architectural regulator of carbon fixation and nucleoid structure in cyanobacteria.</h3>
+  <p class="journal">mBio</p>
+  <p><a href="https://doi.org/10.1128/mbio.00999-26">https://doi.org/10.1128/mbio.00999-26</a></p>
+  <p>cyanobacteriaのpolyphosphateは単なるリン酸貯蔵物ではなく、炭素固定装置とnucleoidの空間配置を調節する細胞内architectureの因子として働く。</p>
+</article>
+<article class="paper-card">
+  <h3>Large language models enhance annotation of enzymes in metagenomes.</h3>
+  <p class="journal">Science advances</p>
+  <p><a href="https://doi.org/10.1126/sciadv.aee4389">https://doi.org/10.1126/sciadv.aee4389</a></p>
+  <p>large language modelを用いて、従来法では機能を付けにくいmetagenomic enzyme sequencesのannotationを改善する。</p>
+</article>
+</section>
+<section>
+  <h2>まとめ</h2>
+  <p>今週は、ファージ、プラスミド、酵素アノテーション、細胞内構造と対象はばらばらだが、既知の仕組みをもう一段深く見ることで新しい意味が現れる論文が印象に残った。特にT7 kinaseの大規模リン酸化と、プラスミドleading regionの翻訳適応は、これまで知られていた現象に「なぜそうなっているのか」という新しい説明を与える研究として、音声で掘り下げる価値が高い。</p>
+</section>
+
+    <footer class="episode-footer">
+      <p>
+  <a href="../../editorial_notes/editorial_meeting_notes_2026-08-24.html">
+    📝 Read the Editorial Note of this episode
+  </a>
+</p>
+    </footer>
+  </div>
+</body>
+</html>
