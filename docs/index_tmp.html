@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Weekly Paper Digest</title>
+<meta content="微生物学の新着論文から、毎週いくつかを選んで紹介しています。" name="description"/>
+<style>
+    :root {
+      --bg: #fbfbf8;
+      --text: #202020;
+      --muted: #6f6f69;
+      --line: #d8d8d1;
+      --link: #2f3f37;
+      --max: 860px;
+      --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Sans", "Yu Gothic", sans-serif;
+      --serif: "Iowan Old Style", "Palatino Linotype", "Yu Mincho", "Hiragino Mincho ProN", serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      line-height: 1.75;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .page {
+      width: min(calc(100% - 36px), var(--max));
+      margin: 0 auto;
+      padding: 46px 0 60px;
+    }
+
+    a {
+      color: var(--link);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+      text-underline-offset: 0.18em;
+      text-decoration-thickness: 1px;
+    }
+
+    header { padding-bottom: 32px; }
+
+    h1 {
+      margin: 0;
+      font-family: var(--serif);
+      font-size: clamp(2rem, 5vw, 3rem);
+      line-height: 1.1;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .intro {
+      margin: 14px 0 0;
+      color: var(--muted);
+      font-size: 0.98rem;
+    }
+
+    .rule {
+      border: 0;
+      border-top: 1px solid var(--line);
+      margin: 0;
+    }
+
+    main section { padding: 34px 0; }
+
+    .date {
+      color: var(--muted);
+      font-size: 0.86rem;
+      letter-spacing: 0.02em;
+      margin-bottom: 6px;
+    }
+
+    h2 {
+      margin: 0 0 20px;
+      font-family: var(--serif);
+      font-size: 1.65rem;
+      line-height: 1.25;
+    }
+
+    h3 {
+      margin: 28px 0 12px;
+      font-size: 0.82rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .audio-wrap { margin: 18px 0 8px; }
+
+    audio {
+      width: 100%;
+      max-width: 680px;
+    }
+
+    .paper-list {
+      margin: 0;
+      padding-left: 1.2rem;
+    }
+
+    .paper-list li + li { margin-top: 12px; }
+
+    .paper-title {
+      font-family: var(--serif);
+      font-size: 1.04rem;
+      line-height: 1.5;
+    }
+
+    .journal {
+      display: block;
+      margin-top: 2px;
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    .issue-links,
+    .content-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .issue-links {
+      margin-top: 24px;
+    }
+
+    .issue-links li + li,
+    .content-list li + li {
+      margin-top: 10px;
+    }
+
+    .issue-links a,
+    .content-list a {
+      font-weight: 600;
+    }
+
+    .description {
+      display: block;
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    .content-list {
+      border-top: 1px solid var(--line);
+    }
+
+    .content-list li {
+      padding: 17px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    footer {
+      padding-top: 30px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    @media (max-width: 600px) {
+      .page {
+        width: min(calc(100% - 26px), var(--max));
+        padding-top: 30px;
+      }
+
+      main section { padding: 28px 0; }
+    }
+  
+
+    /* Friendly, but still restrained */
+    .issue-links {
+      margin-top: 0;
+    }
+
+    .content-list li {
+      padding: 18px 0;
+    }
+
+    .content-list a,
+    .issue-links a {
+      letter-spacing: 0.005em;
+    }
+
+    .date {
+      letter-spacing: 0;
+    }
+
+    .site-subtitle {
+        margin-top: 6px;
+        font-family: var(--serif);
+        font-size: 1.5rem;
+        font-style: italic;
+    }
+
+    .section-body-indent {
+      margin-left: 1.25rem;
+    }
+
+    .content-list-clean {
+      border-top: 0;
+    }
+
+    .content-list-clean li {
+      border-bottom: 0;
+      padding: 10px 0;
+    }
+
+    @media (max-width: 600px) {
+      .section-body-indent {
+        margin-left: 0.7rem;
+      }
+    }
+
+    .weekly-note {
+    margin: 3rem;
+    padding: 0;
+    border: 0;
+    font-family: var(--serif);
+    font-size: 1.05rem;
+    line-height: 1.9;
+    color: #444;
+    }
+
+    .weekly-note p {
+        margin: 0;
+    }
+
+</style>
+</head>
+<body>
+<div class="page">
+<header>
+<h1>Weekly Paper Digest</h1><div class="site-subtitle">in Genome Microbiology</div>
+<p class="intro">微生物学の新着論文から、毎週いくつかを選んで紹介しています。<br>論文の整理・編集・音声制作には生成AIを利用しています。</p>
+</header>
+<hr class="rule"/>
+<main>
+<section>
+<h2>今週のWeekly Paper Digest</h2>
+<div class="date">2026.08.24</div>
+<div class="audio-wrap">
+<audio controls="" preload="metadata">
+<source src="./assets/audio/audio_2026-08-24.m4a" type="audio/mp4"/>
+            お使いのブラウザは audio 要素に対応していません。
+          </audio>
+</div>
+<blockquote class="weekly-note"><p>今週はかなり面白い回になりました。特に、別々に選んだ2本のDeep Diveが、音声の中で思いがけず一つの話につながったのが気に入っています。</p></blockquote>
+<h3>🔎 Deep Dive</h3>
+<ul class="paper-list section-body-indent">
+<li>
+<a class="paper-title" href="https://doi.org/10.1038/s41586-026-10934-5">
+              Pervasive phosphorylation by phage T7 kinase disarms bacterial defences.
+            </a>
+<span class="journal">Nature</span>
+</li>
+<li>
+<a class="paper-title" href="https://doi.org/10.1093/nar/gkag810">
+              The leading region of many plasmids is adapted for translational efficiency.
+            </a>
+<span class="journal">Nucleic Acids Research</span>
+</li>
+</ul>
+<h3>📝 Editorial</h3><ul class="issue-links section-body-indent">
+<li>
+<a href="./paper_review/2026-08-24.html">📚 Paper Review →</a>
+<span class="description">今週の約50報を、どう読み、どう評価したかを見る</span>
+</li>
+<li>
+<a href="./editorial_notes/editorial_meeting_notes_2026-08-24.html">💬 Editorial Meeting Note →</a>
+<span class="description">今週の編集会議と、制作を通して考えたことを読む</span>
+</li>
+</ul>
+</section>
+<hr class="rule"/>
+<section>
+<h2>Contents</h2>
+<ul class="content-list content-list-clean">
+<li>
+<a href="./episodes/">🎧 Past Episodes →</a>
+<span class="description">過去回を聴く</span>
+</li>
+<li>
+<a href="./about.html">🌱 What is WPD? →</a>
+<span class="description">このプロジェクトについての説明</span>
+</li>
+<li>
+<a href="./editorial_framework/">📖 Editorial Framework →</a>
+<span class="description">このプロジェクトの運営方針</span>
+</li>
+</ul>
+</section>
+</main>
+<footer>
+      Weekly Paper Digest
+    </footer>
+</div>
+</body>
+</html>

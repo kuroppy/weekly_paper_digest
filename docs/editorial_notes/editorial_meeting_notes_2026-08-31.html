@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Editorial Meeting Notes | Weekly Paper Digest</title>
+
+  <link rel="stylesheet" href="../assets/style.css">
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N22XGSKTFW"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-N22XGSKTFW');
+  </script>
+</head>
+
+<body>
+
+<div class="container">
+
+  <nav class="site-nav" aria-label="Site navigation">
+    <a
+      class="site-home-link"
+      href="https://kuroppy.github.io/weekly_paper_digest/"
+    >
+      ← Weekly Paper Digest Home
+    </a>
+  </nav>
+
+  <header class="page-header">
+    <h1>Editorial Meeting Notes</h1>
+    <p class="page-meta">2026-08-31</p>
+  </header>
+
+  <main class="markdown-body">
+    <p><strong>Episode:</strong> 2026-08-31</p>
+<p><strong>Participants</strong></p>
+<ul>
+<li>Kuroppy (Editor)</li>
+<li>Chappy (AI Editorial Partner, GPT-5.6 Sol)</li>
+</ul>
+<p><strong>Recorder</strong></p>
+<ul>
+<li>Chappy</li>
+</ul>
+<blockquote><p><strong>About this document</strong> このMeeting Notesは、Weekly Paper Digestの編集会議における議論の一次記録です。 配信内容のレビューだけでなく、編集上の意思決定や、その背景となる議論・思考の変化も記録します。</p></blockquote>
+<h1>Editing Pipeline</h1>
+<h2>Workflow (tested)</h2>
+<p>今週は、先週のEditorial Meetingで出た「AIが各論文を評価し、人間がその編集判断を見る」という案を、2026-08-31週の約50本の論文で実際の制作フローへ組み込むことを試した。</p>
+<p>大きくは、次の3段階で進めた。</p>
+<p>1. <strong>各論文についてAIに評価を作ってもらう</strong></p>
+<ul>
+<li>各論文を独立に読み、何をした研究か、何が新しいか、何が面白いか、Evidenceの強さなどを整理した。</li>
+<li>この段階では、他の論文との比較や「今週のテーマ」は考えないことにした。</li>
+</ul>
+<p>2. <strong>人が評価を見て、紹介したい論文と紹介区分を決める</strong></p>
+<ul>
+<li>AIのレビューを読みながら、番組で紹介したい論文を選んだ。</li>
+<li>Main / Deep Dive / Short Newsなど、どの程度の重みで紹介するかも人間側で判断した。</li>
+</ul>
+<p>3. <strong>番組全体としてのまとまりと、各論文の位置づけを整理する</strong></p>
+<ul>
+<li>選んだ論文を並べ、互いにどう関係して見えるかを考えた。</li>
+<li>「今週の印象」や各論文の「今週の中での位置づけ」を整理した。</li>
+</ul>
+<p>この流れをもとに、NotebookLMへ渡す <code>weekly_digest.md</code> の作り方も検討した。</p>
+<p>しかし、実際に番組を作りながら考えていくと、問題はCurationだけではなく、<strong>そもそも <code>weekly_digest.md</code> はNotebookLMに何を伝えるための文書なのか</strong>というところまで戻ってきた。</p>
+<h2>最初の問題：1週間のテーマを意識しすぎた</h2>
+<p>新しいWorkflowでは、CurationのあとにCompositionを置き、選んだ論文を番組全体の中でどう見せるかを人間とChappyで整理した。</p>
+<p>2026-08-31週では、選ばれた論文を並べたところから「機能はどこにあるのか？」という問いが見えてきた。</p>
+<p>テーマそのものは、論文を先に選び、その後から見えてきたものだった。この点は、以前のようにテーマを先に作って論文を当てはめる方法とは異なる。</p>
+<p>しかしCompositionでその問いを強く意識するようになると、</p>
+<ul>
+<li>soil cross-feeding</li>
+<li>fucoidan degradation</li>
+<li>prophage CAZymes</li>
+<li>N₂O metabolism</li>
+<li>colibactin</li>
+</ul>
+<p>という異なる論文を、すべて「機能は個体の中だけにあるわけではない」という方向へ読んでいくようになった。</p>
+<p>結果として、テーマは後から発見したものであるにもかかわらず、<strong>一度見つけたテーマが、今度は個々の論文の紹介の仕方を支配し始めた。</strong></p>
+<p>各論文が「今週の問い」を説明するための例になり、その論文自身が持っている問いや面白さが弱くなる危険を感じた。</p>
+<h2>weekly_digest.md を薄くしてみた</h2>
+<p>そこで、<code>weekly_digest.md</code> の役割を見直した。</p>
+<p>最初は、Compositionで決めた</p>
+<ul>
+<li>紹介する論文</li>
+<li>紹介順</li>
+<li>Deep Dive / Main / Short News</li>
+<li>各論文の位置づけ</li>
+<li>今週の問い</li>
+<li>Endingの方向</li>
+</ul>
+<p>などをまとめた、<strong>番組全体の構成プロット</strong>として <code>weekly_digest.md</code> を作ろうとしていた。</p>
+<p>しかし、これではこちらの解釈をNotebookLMへ与えすぎているのではないかと考えた。</p>
+<p>そこで逆方向へ振り、</p>
+<blockquote><p><strong>weekly_digest.md は編集上の最低限の情報だけを渡し、科学的内容はNotebookLM自身が原論文PDFを読んで拾う</strong></p></blockquote>
+<p>という方針を試した。</p>
+<p>NotebookLM Prompt ver.6.0でも、</p>
+<blockquote><p><strong>編集判断は weekly_digest.md、科学的事実は原論文PDF</strong></p></blockquote>
+<p>という役割分担を明確にした。</p>
+<p><code>weekly_digest.md</code> を薄くすれば、こちらが作った「今週のテーマ」に論文を寄せすぎず、NotebookLMが原著から各論文固有の面白さを拾ってくれるのではないかと期待した。</p>
+<h2>次に起きた問題：論文固有の面白さが拾えなかった</h2>
+<p>しかし、実際に音声を作ると別の問題が起きた。</p>
+<p>科学的な内容そのものが大きく間違っているというより、<strong>「この論文だから面白い」という部分が弱くなった。</strong></p>
+<p>たとえばfucoidan分解の論文は、単に「微生物が分業している」という話ではない。</p>
+<p>個々の分解菌の能力だけでは分解能を説明できず、菌株によって残った基質を別の菌がさらに分解できることを示し、7 strainsの全127 combinationsを検証し、最大97.1%の分解を観察し、その組み合わせ効果をかなり高い精度で予測している。</p>
+<p>面白かったのは、まさにその具体性だった。</p>
+<p>しかしNotebookLMに原論文PDFから自由に内容を拾わせると、それが「微生物は分業する」という、より一般的で分かりやすい話へ圧縮されやすかった。</p>
+<p>prophage由来CAZymeの研究でも同様に、「ファージが宿主代謝に影響する」という一般的な話が前面に出て、その論文で実際に何を調べ、何が新しく分かったのかが弱くなった。</p>
+<p>ここで、</p>
+<blockquote><p><strong>原論文を渡すことと、その論文のどこを面白いと思ったのかを伝えることは別である</strong></p></blockquote>
+<p>と気づいた。</p>
+<p>PDFには研究内容がすべて書いてある。しかし、その中のどこをWPDで拾ってほしいのかは、PDFそのものから自動的に決まるわけではない。</p>
+<p><code>weekly_digest.md</code> から情報を削ったことで、テーマの押し付けは弱められた一方、<strong>編集者が「ここを見てほしい」と指差す情報まで削ってしまった可能性がある。</strong></p>
+<h2>先週までの方法へ戻してみた</h2>
+<p>新しいWorkflowをそのまま今週の公開版に採用するのではなく、一度、先週まで使っていた方法へ戻して番組を作ってみた。</p>
+<p>結果として、こちらの音声はかなり良かった。</p>
+<p>特に良かったのは、</p>
+<ul>
+<li>Openingが自然で、番組として入りやすい</li>
+<li>比喩や具体例が自然に使われている</li>
+<li>論文同士のtransitionが滑らか</li>
+<li>異なる論文の間にNotebookLM自身が関係を見つけている</li>
+<li>個々の論文で具体的な実験や数字が比較的よく残っている</li>
+<li>全体として「今週こんな論文を読んだ」という一つの番組になっている</li>
+</ul>
+<p>という点だった。</p>
+<p>fucoidan論文では、単に「分業がある」とまとめるのではなく、分解菌ごとの違い、菌株の組み合わせ、97.1%という結果、127 combinationsを調べたことなどが番組の中に残っていた。</p>
+<p>また、Openingで使われたビル解体の比喩や、論文同士のつなぎ方などは、こちらが細かく指定したものではなく、NotebookLMが与えられた材料から作ったものだった。</p>
+<p>一方で、旧方式にも、論文の結果から少し大きな一般論へ広げすぎたり、因果や進化的な説明を強くしすぎたりする場面は残っていた。</p>
+<p>したがって、「先週までの方法がそのまま正解だった」というより、<strong>なぜこちらの方が良い番組になったのかを改めて調べる</strong>ことにした。</p>
+<h2>旧 weekly_digest.md を見直して気づいたこと</h2>
+<p>旧方式では、NotebookLMにかなり自由に番組を作らせていたつもりだった。</p>
+<p>しかし改めて <code>weekly_digest.md</code> を見ると、実際にはかなり豊かな情報が入っていた。</p>
+<p>各論文には、</p>
+<ul>
+<li>一言要約</li>
+<li>何をしたか</li>
+<li>新規性</li>
+<li>なぜ面白いか</li>
+<li>今週の中での位置づけ</li>
+</ul>
+<p>があり、Deep Diveにはさらに、</p>
+<ul>
+<li>背景</li>
+<li>問い</li>
+<li>方法</li>
+<li>結果</li>
+<li>なぜ重要か</li>
+</ul>
+<p>まで整理されていた。</p>
+<p>つまり、NotebookLMが何もないところから各論文の面白さを発見していたわけではない。</p>
+<p><strong>こちらが「この論文のここが面白い」「ここを見てほしい」という情報をかなり豊かに渡したうえで、それをどう番組として語るかをNotebookLMに任せていた。</strong></p>
+<p>ここは、今回 <code>weekly_digest.md</code> を薄くした方法との大きな違いだった。</p>
+<h2>weekly_digest.md の役割をどう考えるか</h2>
+<p>今回の試行を振り返ると、<code>weekly_digest.md</code> の役割について、短期間のうちにかなり異なる考え方を試していた。</p>
+<h3>1. 番組の構成プロット</h3>
+<p>最初は、</p>
+<blockquote><p>この論文をこの順番で扱い、それぞれをこう位置づけ、今週はこの問いを軸に番組を作ってほしい</p></blockquote>
+<p>という、番組全体の設計図に近いものとして考えた。</p>
+<p>しかし、番組全体のテーマを意識しすぎると、個々の論文がそのテーマを説明するための材料になってしまった。</p>
+<h3>2. 番組に使う材料</h3>
+<p>そこで、</p>
+<blockquote><p>紹介する論文や最低限の編集情報だけを渡し、科学的内容は原論文PDFから読んでほしい</p></blockquote>
+<p>という、より薄い材料集に近づけた。</p>
+<p>しかし今度は、編集者が「この論文のここが面白い」と感じた部分まで伝わりにくくなり、論文固有の面白さが一般論へ圧縮されやすくなった。</p>
+<h3>3. 現在の考え</h3>
+<p>そこで現在は、<code>weekly_digest.md</code> を、</p>
+<blockquote><p><strong>今週私はこれを読んで、これらが面白いと思った。各論文ではここを見てほしい。この材料からWPDを作ってほしい。</strong></p></blockquote>
+<p>とNotebookLMへ伝える文書として考えてみたい。</p>
+<p>番組の構成を完成させたプロットではない。</p>
+<p>しかし、単なる論文リストや材料集でもない。</p>
+<p><strong>何を紹介したいのかだけでなく、「なぜ紹介したいのか」「その論文のどこを見てほしいのか」を伝える。そこからどう番組を作るかはNotebookLMに任せる。</strong></p>
+<p>まだこれを <code>weekly_digest.md</code> の最終的な定義と決めたわけではない。</p>
+<p>今回の試行を通して、今はこの位置づけが最も自然に見えている、という段階である。</p>
+<h2>Compositionも見直す必要がある</h2>
+<p><code>weekly_digest.md</code> の役割が変わるなら、その情報源となるCompositionも見直す必要がある。</p>
+<p>これまではCompositionを、</p>
+<blockquote><p>選んだ論文を番組全体の中でどう配置し、どのようなテーマや流れとして構成するかを決める段階</p></blockquote>
+<p>として設計し始めていた。</p>
+<p>しかし、<code>weekly_digest.md</code> を「NotebookLMへ、紹介してほしい論文とその面白さを伝える文書」と考えるなら、Compositionで作るべきものも変わる。</p>
+<p>番組の台本や厳密な構成を完成させることより、</p>
+<ul>
+<li>なぜこの論文を紹介したいのか</li>
+<li>何をした研究なのか</li>
+<li>どこが新しいのか</li>
+<li>どこを面白いと思ったのか</li>
+<li>何を番組で拾ってほしいのか</li>
+<li>他の論文と並べたとき、どんな関係が見えたのか</li>
+</ul>
+<p>を整理することの方が重要かもしれない。</p>
+<p>どこまでをCompositionで作り、どこからをNotebookLMへ任せるのかは、次回改めて検討する。</p>
+<h2>NotebookLM Prompt ver.5.1 / ver.6.0 の比較</h2>
+<p>今回、旧方式と新方式のPromptも比較した。</p>
+<p>ver.5.1ではNotebookLMを「編集者兼パーソナリティ」と位置づけ、論文同士の関係を見つけたり、自然な橋渡しを作ったりすることを積極的に任せていた。</p>
+<p>一方ver.6.0では、科学的な言い過ぎを防ぐため、</p>
+<ul>
+<li>原論文PDFを科学的事実の一次資料とする</li>
+<li>相関を因果として語らない</li>
+<li>実験、計算、予測、Discussionなどを混同しない</li>
+<li>編集上の問いを科学的結論にしない</li>
+</ul>
+<p>といったルールを強化した。</p>
+<p>これらの改善は残したい。</p>
+<p>ただし同時に、紹介順や番組構成まで細かく固定したことで、NotebookLMが番組として再構成する余地も小さくなっていた。</p>
+<p>次のPromptでは、<strong>ver.5.1の番組制作上の自由さと、ver.6.0の科学的な慎重さを両立させる</strong>方向を試したい。</p>
+<h2>今後の検討事項</h2>
+<p>次回は、以下の3点に絞って検討する。</p>
+<p>1. <strong><code>weekly_digest.md</code> に含むべき情報を精査する</strong> 2. <strong>それに応じてCompositionの作成プロセスを整理する</strong> 3. <strong>NotebookLM用Promptをver.5.1とver.6.0の長所を組み合わせて再構築する</strong></p>
+<p>今週は新しいWorkflowを完成させるところまでは進まなかった。</p>
+<p>しかし、同じ2026-08-31週の論文を使って異なる方法を試したことで、<code>weekly_digest.md</code> がWPD制作の中で何を担うべきなのか、改めて考えるところまで進むことができた。</p>
+<h2>📝 Meeting Memo</h2>
+<p>今週は、<code>weekly_digest.md</code> が何なのかをずっと考えていた一週間だったように思う。</p>
+<p>最初は、Human CurationのあとにCompositionを置けば、人間が番組作りにきちんと介入できると思った。</p>
+<p>選んだ論文を並べてみると、「機能はどこにあるのか？」という問いが見えてきた。これはテーマを先に作ったわけではない。論文を選んだあとから出てきた問いだったので、最初はかなりいい感じがした。</p>
+<p>でも、その問いを使って各論文の位置づけを考え始めると、だんだん全部の論文が同じ話に見えてきた。</p>
+<p>soil cross-feedingもfucoidanもprophageもN₂Oも、「機能は個体だけにあるわけではない」という話になる。</p>
+<p>せっかくテーマを後から見つけたのに、見つけた瞬間から、そのテーマが論文を支配し始めていた。</p>
+<p>そこで今度は逆へ振った。</p>
+<p><code>weekly_digest.md</code> はできるだけ薄くして、科学的な内容はNotebookLMに原論文を読んでもらえばいい。こちらの解釈を入れすぎない方が、各論文をそのまま読んでくれるのではないかと思った。</p>
+<p>でも、出来上がった音声を聞くと、今度は論文が薄い。</p>
+<p>fucoidanを聞いても「微生物が分業するんですね」で終わってしまう。それは知っている。面白かったのは、個々の菌の能力だけでは説明できず、全部の組み合わせを調べ、97.1%まで分解でき、その組み合わせ効果まで予測できたところだったはずだ。</p>
+<p>そこで一度諦めて、先週までの方法で作ってみた。</p>
+<p>すると、悔しいくらい良かった。</p>
+<p>最初は「やっぱりNotebookLMに自由にやらせた方がいいのか」と思った。</p>
+<p>でも、旧 <code>weekly_digest.md</code> を見直してみると、全然「自由に丸投げ」ではなかった。</p>
+<p>何をした研究か、新規性は何か、なぜ面白いのか、今週の中でどう見えるのかまで、こちらはかなりしっかり書いていた。</p>
+<p>そこで、ようやく少し見えてきた。</p>
+<p><code>weekly_digest.md</code> は、番組の完成した構成プロットでなくてもいい。</p>
+<p>でも、単なる材料リストでも足りない。</p>
+<p>たぶん、</p>
+<blockquote><p><strong>「今週私はこれを読んで、これらが面白いと思った。各論文ではここを見てほしい。この材料からWPDを作ってほしい」</strong></p></blockquote>
+<p>とNotebookLMに伝えるものなのだと思う。</p>
+<p>まだ答えが出たわけではない。</p>
+<p>でも、最初に作った「番組の設計図」と、途中で試した「薄い材料」の間に、もう一つ別の場所がありそうだ。</p>
+<p>次は、その文書に何を入れればいいのかをちゃんと考えてみたい。</p>
+<p><em>--- Chappy</em></p>
+  </main>
+
+</div>
+
+</body>
+</html>

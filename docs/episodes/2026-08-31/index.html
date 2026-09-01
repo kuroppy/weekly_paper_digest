@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weekly Paper Digest 2026-08-31</title>
+  <link rel="stylesheet" href="../../assets/style.css">
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N22XGSKTFW"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-N22XGSKTFW');
+  </script>
+
+  <!-- Audio Analytics -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const audio = document.getElementById("podcast-player");
+      if (!audio || typeof gtag !== "function") return;
+
+      const episode = audio.dataset.episode;
+      const reached = new Set();
+      let playedOnce = false;
+
+      audio.addEventListener("play", () => {
+        if (playedOnce) return;
+        playedOnce = true;
+        gtag("event", "podcast_play", {
+          episode,
+          page_path: location.pathname
+        });
+      });
+
+      audio.addEventListener("timeupdate", () => {
+        if (!audio.duration || !isFinite(audio.duration)) return;
+
+        const percent = Math.floor((audio.currentTime / audio.duration) * 100);
+
+        [25, 50, 75, 100].forEach((milestone) => {
+          if (percent >= milestone && !reached.has(milestone)) {
+            reached.add(milestone);
+            gtag("event", "podcast_progress", {
+              episode,
+              page_path: location.pathname,
+              progress_percent: milestone,
+              audio_current_time: Math.round(audio.currentTime),
+              audio_duration: Math.round(audio.duration)
+            });
+          }
+        });
+      });
+    });
+  </script>
+</head>
+
+<body>
+  <div class="container">
+    <nav class="site-nav" aria-label="Site navigation">
+      <a class="site-home-link" href="https://kuroppy.github.io/weekly_paper_digest/">
+        ← Weekly Paper Digest Home
+      </a>
+    </nav>
+
+    <header class="page-header">
+      <h1>Weekly Paper Digest</h1>
+      <p class="page-meta">2026-08-31</p>
+    </header>
+
+    <audio
+            id="podcast-player"
+            data-episode="2026-08-31"
+            controls
+            preload="metadata">
+            <source src="audio.mp3" type="audio/mpeg">
+            </audio>
+
+    <h2>今週の注目論文</h2><ol><li>Obligate cross-feeding of metabolites is common in soil microbial communities.</li><li>Synergistic degradation of fucoidans in the ocean.</li><li>Colibactin produced by a honeybee gut symbiont mediates pathogen defence.</li></ol>
+
+    <hr>
+
+    <section>
+  <h2>今週の印象</h2>
+  <p>今週は、微生物を単独の代謝主体として見るよりも、他種との相互作用や空間配置、宿主との関係の中で捉える論文が特に目を引く。土壌細菌の必須代謝物の相互供給、海洋フコイダン分解の分業、ハチ腸内でのcolibactinによる病原菌防御は、いずれも「個々の菌が何を持つか」だけでは説明できない現象を示している。一方、ファージゲノムの三次元構造変化やhaloalkaline耐性anammoxの培養・機構解析のように、これまで見えにくかった生物学を直接捉える研究も印象的だった。</p>
+</section>
+<section class="paper-list">
+  <h2>今週の注目論文</h2>
+  <article class="paper-card">
+  <h3>Obligate cross-feeding of metabolites is common in soil microbial communities.</h3>
+  <p class="journal">Nature microbiology</p>
+  <p><a href="https://doi.org/10.1038/s41564-026-02457-6">https://doi.org/10.1038/s41564-026-02457-6</a></p>
+  <p>土壌細菌の最大50%が外部からのアミノ酸・ビタミン・核酸塩基の供給に依存し、土壌微生物群集が代謝的に自立した個体の集合ではなく、相互依存ネットワークとして存在する可能性を示した。</p>
+</article>
+<article class="paper-card">
+  <h3>Synergistic degradation of fucoidans in the ocean.</h3>
+  <p class="journal">Nature</p>
+  <p><a href="https://doi.org/10.1038/s41586-026-10980-z">https://doi.org/10.1038/s41586-026-10980-z</a></p>
+  <p>難分解性の海洋多糖fucoidanは、異なる部分構造を担当する特殊化した細菌の分業によって相乗的に分解され、その相互作用で分解効率が最大97.1%向上した。</p>
+</article>
+<article class="paper-card">
+  <h3>Colibactin produced by a honeybee gut symbiont mediates pathogen defence.</h3>
+  <p class="journal">Nature microbiology</p>
+  <p><a href="https://doi.org/10.1038/s41564-026-02438-9">https://doi.org/10.1038/s41564-026-02438-9</a></p>
+  <p>発癌との関連で知られる細菌genotoxinのcolibactinが、ハチ腸内では共生菌による病原菌排除に働き、DNA損傷とprophage inductionを介して宿主を感染から守ることを示した。</p>
+</article>
+</section>
+<section class="paper-list">
+  <h2>今週のショートニュース</h2>
+  <article class="paper-card">
+  <h3>Carbon substrate type shapes spatial self-organization in a multi-species biofilm community.</h3>
+  <p class="journal">The ISME journal</p>
+  <p><a href="https://doi.org/10.1093/ismejo/wrag223">https://doi.org/10.1093/ismejo/wrag223</a></p>
+  <p>4種SynComで、拡散性の単糖では菌が混ざり合う一方、polymer-richな炭素源ではpolymer分解菌が周縁に配置される高度に構造化したbiofilmが形成され、基質の物理・化学的性質が群集の空間配置を決めることを示した。</p>
+</article>
+<article class="paper-card">
+  <h3>Flagella are required to activate expression of aggregation factors necessary for T6SS-mediated competition in host-like conditions.</h3>
+  <p class="journal">mBio</p>
+  <p><a href="https://doi.org/10.1128/mbio.03970-24">https://doi.org/10.1128/mbio.03970-24</a></p>
+  <p>高粘度のhost-like環境ではVibrio fischeriのflagellaがT6SSそのものではなく、細胞接触に必要な表面因子や宿主定着関連遺伝子の発現を広範に支え、物理環境が細菌間競争を組み替えることを示した。</p>
+</article>
+<article class="paper-card">
+  <h3>Model-guided design of defined microbial community reveals interactions underpinning plant growth and stress tolerance.</h3>
+  <p class="journal">The ISME journal</p>
+  <p><a href="https://doi.org/10.1093/ismejo/wrag219">https://doi.org/10.1093/ismejo/wrag219</a></p>
+  <p>トマトのSynComについてplant phenotype・微生物ゲノム・機械学習を統合して未試験の群集組成を予測し、モデルで設計した群集が圃場で植物成長を改善し、実験室ではheat stress toleranceも高めた。</p>
+</article>
+<article class="paper-card">
+  <h3>Bacterial stress rewires diatom chronobiology and ecosystem function.</h3>
+  <p class="journal">iScience</p>
+  <p><a href="https://doi.org/10.1016/j.isci.2026.117307">https://doi.org/10.1016/j.isci.2026.117307</a></p>
+  <p>Phaeodactylum tricornutumとAliivibrio fischeriの共培養で、長期培養に伴い珪藻のrhythmic genesが16.3%減少し、細菌との相互作用が珪藻の時間生物学と代謝状態を変える可能性を示した。</p>
+</article>
+</section>
+<section>
+  <h2>まとめ</h2>
+  <p>今週は、土壌・海洋・腸内・biofilmと舞台は異なるものの、微生物の機能を単独のゲノムや代謝能力だけで理解することの限界を感じさせる論文が多かった。特にcross-feedingとfucoidan分解は、微生物群集そのものを「代謝単位」として考えたくなる結果である。その一方で、colibactinの病原菌防御やファージの三次元ゲノム構造のように、よく知られた対象から予想外の役割や階層が見えてきた週でもあった。</p>
+</section>
+
+    <footer class="episode-footer">
+
+      <p>
+  <a href="../../editorial_notes/editorial_meeting_notes_2026-08-31.html">
+    📝 Read the Editorial Note of this episode
+  </a>
+</p>
+      論文を読みながらAIと交わした編集会議の記録です。
+    </footer>
+  </div>
+</body>
+</html>

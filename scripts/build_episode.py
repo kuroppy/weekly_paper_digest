@@ -132,7 +132,7 @@ def render_paper_card(paper: dict[str, str]) -> str:
 
     url = doi_url(paper["doi"])
     doi_html = (
-        f'<p><a href="{escape(url)}">{escape(paper["doi"])}</a></p>'
+        f'<p><a href="{escape(url)}">{escape(url)}</a></p>'
         if url
         else ""
     )
@@ -261,6 +261,13 @@ def build_editorial_note(date: str) -> str:
   </a>
 </p>"""
 
+def build_curation_link() -> str:
+    return """<p>
+  <a href="curation.html">
+    📝 How this episode was curated
+  </a>
+</p>"""
+
 
 def main() -> int:
     parser = argparse.ArgumentParser(
@@ -320,6 +327,7 @@ def main() -> int:
         "{{TOPICS}}": build_topics(topics),
         "{{CONTENT}}": content,
         "{{EDITORIAL_NOTE}}": build_editorial_note(args.date),
+        "{{CURATION_NOTE}}": build_curation_link(),
     }
 
     for placeholder, value in replacements.items():
