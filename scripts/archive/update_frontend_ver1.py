@@ -3,7 +3,7 @@
 """Update Weekly Paper Digest frontend pages from published files in docs/.
 
 Updates:
-- docs/index.html: latest issue date and date-dependent asset/content links
+- docs/index.html: latest episode date and link
 - docs/episodes/index.html: published episode list
 - docs/editorial_notes/index.html: Editorial Meeting Notes list
 
@@ -121,75 +121,43 @@ def get_editorial_notes() -> list[tuple[str, str]]:
 
 def update_home(latest_date: str) -> None:
     """
-    docs/index.html の最新号に紐づく「日付依存部分」だけを書き換える。
+    docs/index.html の
 
-    現在のトップページでは最新号そのものを直接掲載しているため、
-    以下を latest_date に揃える。
+        Latestの日付
+        Latest episodeへのリンク
 
-    - 表示日付: YYYY.MM.DD
-    - 音声: ./episodes/YYYY-MM-DD/audio.mp3
-    - Paper Review: ./episodes/YYYY-MM-DD/wpd_review.html
-    - Editorial Meeting Note:
-      ./editorial_notes/editorial_meeting_notes_YYYY-MM-DD.html
+    の2か所だけを書き換える。
 
-    issue-note や Deep Dive の本文は編集内容なので自動生成しない。
-    トップページ全体も再生成しない。
+    トップページ全体は人間が編集する内容も多いので、
+    HTML全体を再生成しない。
     """
 
     text = HOME_PATH.read_text(
         encoding="utf-8"
     )
 
-    display_date = latest_date.replace("-", ".")
-
-    new_text, count_issue_date = re.subn(
-        r'(<div class="issue-date">)\d{4}\.\d{2}\.\d{2}(</div>)',
-        rf"\g<1>{display_date}\g<2>",
+    new_text, count_date = re.subn(
+        r"(<strong>Latest:</strong>\s*)\d{4}-\d{2}-\d{2}",
+        rf"\g<1>{latest_date}",
         text,
         count=1,
     )
 
-    new_text, count_audio = re.subn(
-        r'src="(?:\./assets/audio/[^"]+|'
-        r'\./episodes/\d{4}-\d{2}-\d{2}/audio\.mp3)"',
-        f'src="./episodes/{latest_date}/audio.mp3"',
+    new_text, count_link = re.subn(
+        r'href="episodes/\d{4}-\d{2}-\d{2}/"',
+        f'href="episodes/{latest_date}/"',
         new_text,
         count=1,
     )
 
-    new_text, count_review = re.subn(
-        r'href="(?:\./paper_review/\d{4}-\d{2}-\d{2}\.html|'
-        r'\./episodes/\d{4}-\d{2}-\d{2}/wpd_review\.html)"',
-        f'href="./episodes/{latest_date}/wpd_review.html"',
-        new_text,
-        count=1,
-    )
-
-    new_text, count_note = re.subn(
-        r'(href="\./editorial_notes/editorial_meeting_notes_)'
-        r'\d{4}-\d{2}-\d{2}(\.html")',
-        rf"\g<1>{latest_date}\g<2>",
-        new_text,
-        count=1,
-    )
-
-    checks = {
-        "latest issue date": count_issue_date,
-        "latest audio path": count_audio,
-        "Paper Review link": count_review,
-        "Editorial Meeting Note link": count_note,
-    }
-
-    failed = [
-        name
-        for name, count in checks.items()
-        if count != 1
-    ]
-
-    if failed:
+    if count_date != 1:
         raise RuntimeError(
-            "Could not uniquely update docs/index.html: "
-            + ", ".join(failed)
+            "Could not uniquely update Latest date in docs/index.html"
+        )
+
+    if count_link != 1:
+        raise RuntimeError(
+            "Could not uniquely update Latest episode link in docs/index.html"
         )
 
     HOME_PATH.write_text(

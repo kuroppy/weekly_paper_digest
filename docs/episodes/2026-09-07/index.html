@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weekly Paper Digest 2026-09-07</title>
+  <link rel="stylesheet" href="../../assets/style.css">
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N22XGSKTFW"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-N22XGSKTFW');
+  </script>
+
+  <!-- Audio Analytics -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const audio = document.getElementById("podcast-player");
+      if (!audio || typeof gtag !== "function") return;
+
+      const episode = audio.dataset.episode;
+      const reached = new Set();
+      let playedOnce = false;
+
+      audio.addEventListener("play", () => {
+        if (playedOnce) return;
+        playedOnce = true;
+        gtag("event", "podcast_play", {
+          episode,
+          page_path: location.pathname
+        });
+      });
+
+      audio.addEventListener("timeupdate", () => {
+        if (!audio.duration || !isFinite(audio.duration)) return;
+
+        const percent = Math.floor((audio.currentTime / audio.duration) * 100);
+
+        [25, 50, 75, 100].forEach((milestone) => {
+          if (percent >= milestone && !reached.has(milestone)) {
+            reached.add(milestone);
+            gtag("event", "podcast_progress", {
+              episode,
+              page_path: location.pathname,
+              progress_percent: milestone,
+              audio_current_time: Math.round(audio.currentTime),
+              audio_duration: Math.round(audio.duration)
+            });
+          }
+        });
+      });
+    });
+  </script>
+</head>
+
+<body>
+  <div class="container">
+    <nav class="site-nav" aria-label="Site navigation">
+      <a class="site-home-link" href="https://kuroppy.github.io/weekly_paper_digest/">
+        ← Weekly Paper Digest Home
+      </a>
+    </nav>
+
+    <header class="page-header">
+      <h1>Weekly Paper Digest</h1>
+      <p class="page-meta">2026-09-07</p>
+    </header>
+
+    <audio
+            id="podcast-player"
+            data-episode="2026-09-07"
+            controls
+            preload="metadata">
+            <source src="audio.mp3" type="audio/mpeg">
+            </audio>
+
+    <hr>
+
+    <section>
+  <h2>今週の印象</h2>
+  <p>今週は、微生物が既存の分子装置を思いがけない形で使い直す研究が目立つ。新生児腸内での脂質を介した定着と免疫発達、抗ファージ防御における逆転写酵素など、個別の現象をかなり具体的な分子機構まで追った論文が強い。一方で、インテグロンカセットを機能未知遺伝子の探索資源として利用する方法論的研究も印象的である。</p>
+<p>------------------------------------------------------------------------</p>
+</section>
+<section class="paper-list">
+  <h2>今週の注目論文</h2>
+  <article class="paper-card">
+  <h3>Oxygen-responsive bacterial glycosphingolipid links symbiont fitness and immune development in neonatal host.</h3>
+  <p class="journal">Cell</p>
+  <p><a href="https://doi.org/10.1016/j.cell.2026.08.011">https://doi.org/10.1016/j.cell.2026.08.011</a></p>
+  <p>*Bacteroides fragilis*の膜糖脂質BfaGCが、新生児腸内での酸素ストレスへの適応と宿主免疫系の発達を同時につないでいた。</p>
+</article>
+<article class="paper-card">
+  <h3>Dual sensing activates antiviral reverse transcriptase for membrane targeting.</h3>
+  <p class="journal">Cell host &amp; microbe</p>
+  <p><a href="https://doi.org/10.1016/j.chom.2026.08.006">https://doi.org/10.1016/j.chom.2026.08.006</a></p>
+  <p>抗ファージ逆転写酵素DRT2は、ファージ由来タンパク質とdGTP上昇という二種類の感染シグナルを検知し、毒性タンパク質Neoを作って膜を脱分極させる。</p>
+</article>
+<article class="paper-card">
+  <h3>High-throughput recovery of integron cassettes for gene discovery screens.</h3>
+  <p class="journal">Nature microbiology</p>
+  <p><a href="https://doi.org/10.1038/s41564-026-02474-5">https://doi.org/10.1038/s41564-026-02474-5</a></p>
+  <p>インテグロンが捕捉してきた遺伝子カセットを、配列や既知機能に依存せず大量に回収して機能探索できる仕組みを作った。</p>
+</article>
+<article class="paper-card">
+  <h3>Small serine recombinases are markers for antiphage defense system discovery.</h3>
+  <p class="journal">PLoS biology</p>
+  <p><a href="https://doi.org/10.1371/journal.pbio.3003991">https://doi.org/10.1371/journal.pbio.3003991</a></p>
+  <p>small serine recombinaseを「目印」に周辺遺伝子を探索することで、既知・未知の抗ファージ防御系を多様な細菌系統から発見できることを示した。</p>
+</article>
+</section>
+<section class="paper-list">
+  <h2>今週のショートニュース</h2>
+  <article class="paper-card">
+  <h3>A genomic catalog of Earth&#x27;s bacterial and archaeal symbionts.</h3>
+  <p class="journal">Nature biotechnology</p>
+  <p><a href="https://doi.org/10.1038/s41587-026-03213-1">https://doi.org/10.1038/s41587-026-03213-1</a></p>
+  <p>10万超の微生物ゲノムから機械学習で共生生活様式を予測し、未培養微生物の15--23%がhost-associatedまたはobligate intracellularな共生者である可能性を示した大規模カタログ。</p>
+</article>
+<article class="paper-card">
+  <h3>Yellow protein co-opted to sustain obligate symbiosis in leaf beetles.</h3>
+  <p class="journal">Nature communications</p>
+  <p><a href="https://doi.org/10.1038/s41467-026-76942-1">https://doi.org/10.1038/s41467-026-76942-1</a></p>
+  <p>昆虫のYellowタンパク質が、極端に縮小した共生細菌 *Stammera* を母から子へ渡す際の保護ゲルとして転用されていた。</p>
+</article>
+</section>
+<section>
+  <h2>まとめ</h2>
+  <p>今週は、微生物の防御・定着・接着・構造形成といった現象を、かなり具体的な分子機構へ落とし込んだ研究が豊富だった。特に、既知の分子や装置が別の文脈で転用される例が多く、BfaGCの「細菌の酸素適応＋宿主免疫」、DRT2の「感染検知＋逆転写＋膜攻撃」、EPECの代替adhesin進化などは、それぞれ専門領域を越えて話を広げやすい。方法論としては、インテグロンやsmall serine recombinaseを未知の抗ファージ遺伝子を掘り出す入口として利用する研究も、今後の発見を生み出す仕組みとして興味深い。</p>
+</section>
+
+    <footer class="episode-footer">
+      <p>
+  <a href="wpd_review.html">
+    📝 How this episode was curated
+  </a>
+</p>
+      論文のレビューから選定、番組構成まで、このエピソードができるまでの編集過程を公開しています。
+      <p>
+  <a href="../../editorial_notes/editorial_meeting_notes_2026-09-07.html">
+    📝 Read the Editorial Note of this episode
+  </a>
+</p>
+      論文を読みながらAIと交わした編集会議の記録です。
+    </footer>
+  </div>
+</body>
+</html>
