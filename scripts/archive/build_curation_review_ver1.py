@@ -197,9 +197,7 @@ def source_and_title(paper: dict) -> tuple[str, str, str, str]:
         f'<a href="{url}" target="_blank" rel="noopener">{title}</a>'
         if url else title
     )
-    search_text = (
-        f"{paper.get('title','')} {paper.get('journal','')} {paper.get('authors','')}"
-    ).lower()
+    search_text = f"{paper.get('title','')} {paper.get('journal','')}".lower()
     return title_html, meta, " &nbsp; ".join(source_meta), search_text
 
 
@@ -207,15 +205,12 @@ def core_card(index: int, paper: dict, review: dict) -> str:
     c = review["chappy_review"]
     s = review["summary"]
     title_html, meta, source_meta, search_text = source_and_title(paper)
-    authors = str(paper.get("authors") or review.get("authors") or "").strip()
-    authors_html = f'<div class="authors">{esc(authors)}</div>' if authors else ""
 
     return f"""
   <div class="paper-head">
     <div class="paper-num">{index}</div>
     <div>
       <div class="paper-title">{title_html}</div>
-      {authors_html}
       <div class="meta">{meta}</div>
     </div>
   </div>

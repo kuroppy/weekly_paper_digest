@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weekly Paper Digest 2026-09-14</title>
+  <link rel="stylesheet" href="../../assets/style.css">
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N22XGSKTFW"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-N22XGSKTFW');
+  </script>
+
+  <!-- Audio Analytics -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const audio = document.getElementById("podcast-player");
+      if (!audio || typeof gtag !== "function") return;
+
+      const episode = audio.dataset.episode;
+      const reached = new Set();
+      let playedOnce = false;
+
+      audio.addEventListener("play", () => {
+        if (playedOnce) return;
+        playedOnce = true;
+        gtag("event", "podcast_play", {
+          episode,
+          page_path: location.pathname
+        });
+      });
+
+      audio.addEventListener("timeupdate", () => {
+        if (!audio.duration || !isFinite(audio.duration)) return;
+
+        const percent = Math.floor((audio.currentTime / audio.duration) * 100);
+
+        [25, 50, 75, 100].forEach((milestone) => {
+          if (percent >= milestone && !reached.has(milestone)) {
+            reached.add(milestone);
+            gtag("event", "podcast_progress", {
+              episode,
+              page_path: location.pathname,
+              progress_percent: milestone,
+              audio_current_time: Math.round(audio.currentTime),
+              audio_duration: Math.round(audio.duration)
+            });
+          }
+        });
+      });
+    });
+  </script>
+</head>
+
+<body>
+  <div class="container">
+    <nav class="site-nav" aria-label="Site navigation">
+      <a class="site-home-link" href="https://kuroppy.github.io/weekly_paper_digest/">
+        ← Weekly Paper Digest Home
+      </a>
+    </nav>
+
+    <header class="page-header">
+      <h1>Weekly Paper Digest</h1>
+      <p class="page-meta">2026-09-14</p>
+    </header>
+
+    <audio
+            id="podcast-player"
+            data-episode="2026-09-14"
+            controls
+            preload="metadata">
+            <source src="audio.mp3" type="audio/mpeg">
+            </audio>
+
+    <h2>今週の注目論文</h2><ol><li>A host-encoded prophage targets a Candidate Phyla Radiation bacterium and shapes episymbiotic interactions.</li><li>Alternative genetic codes in bacteria and archaea identified with a fast k-mer-based algorithm.</li><li>Experimental evolution reveals contrasting adaptive landscapes in lab and field environments.</li><li>Commensal bacteria inhibit viral infections via a tryptophan metabolite.</li><li>Large-scale benchmarking of prokaryotic annotation tools across thousands of species.</li></ol>
+
+    <hr>
+
+    <section>
+  <h2>今週の印象</h2>
+  <p>今週は、遺伝暗号の例外、培養困難系統とファージの関係、実験室と野外で異なる進化など、微生物学の前提や観察条件を問い直す論文が目を引く。もう一つの流れは、腸内細菌によるウイルス抑制や大規模ゲノム注釈比較のように、複雑な現象を具体的な機構や実用的な選択基準へ落とし込む研究である。無理に一つのテーマへまとめるより、今週は「これまで見えなかったものを、どう見えるようにしたか」が各論文に異なる形で現れている。</p>
+</section>
+<section class="paper-list">
+  <h2>今週の注目論文</h2>
+  <article class="paper-card">
+  <h3>A host-encoded prophage targets a Candidate Phyla Radiation bacterium and shapes episymbiotic interactions.</h3>
+  <p class="journal">Proceedings of the National Academy of Sciences of the United States of America</p>
+  <p><a href="https://doi.org/10.1073/pnas.2615890123">https://doi.org/10.1073/pnas.2615890123</a></p>
+  <p>宿主菌のプロファージが、宿主に付着して生きるCPR細菌TM7xにも接触し、空間条件によってTM7xがファージを吸収する「sink」にも、感染を促進する存在にもなることを示した。</p>
+</article>
+<article class="paper-card">
+  <h3>Alternative genetic codes in bacteria and archaea identified with a fast k-mer-based algorithm.</h3>
+  <p class="journal">Proceedings of the National Academy of Sciences of the United States of America</p>
+  <p><a href="https://doi.org/10.1073/pnas.2610659123">https://doi.org/10.1073/pnas.2610659123</a></p>
+  <p>アセンブル済みゲノムから遺伝暗号を推定する処理を100倍以上高速化し、Asgard古細菌のsense codon再割当を含む3つの候補変異を見つけた。</p>
+</article>
+<article class="paper-card">
+  <h3>Experimental evolution reveals contrasting adaptive landscapes in lab and field environments.</h3>
+  <p class="journal">mBio</p>
+  <p><a href="https://doi.org/10.1128/mbio.01700-26">https://doi.org/10.1128/mbio.01700-26</a></p>
+  <p>同じ細菌の進化を実験室と野外で比べると、実験室では同じcoding locusへの変異が反復する一方、野外では変異が少なく、intergenic領域での反復が目立った。</p>
+</article>
+<article class="paper-card">
+  <h3>Commensal bacteria inhibit viral infections via a tryptophan metabolite.</h3>
+  <p class="journal">Nature communications</p>
+  <p><a href="https://doi.org/10.1038/s41467-026-76412-8">https://doi.org/10.1038/s41467-026-76412-8</a></p>
+  <p>特定の常在細菌がtryptophanを3-indolelactic acidへ変換し、AhRを介してHIVやCMVの増殖を抑える経路を示した。</p>
+</article>
+<article class="paper-card">
+  <h3>Large-scale benchmarking of prokaryotic annotation tools across thousands of species.</h3>
+  <p class="journal">Genome biology</p>
+  <p><a href="https://doi.org/10.1186/s13059-026-04262-0">https://doi.org/10.1186/s13059-026-04262-0</a></p>
+  <p>Prokka、Bakta、EggNOG-mapper、PGAPを156,033ゲノムで比較し、単一の最良ツールではなく、ゲノム品質・分類群・注釈目的によって強みが異なることを示した。</p>
+</article>
+</section>
+<section class="paper-list">
+  <h2>今週のショートニュース</h2>
+  <article class="paper-card">
+  <h3>Type IV-C CRISPR-Cas effector complexes recognize double-stranded DNA and switch on collateral cleavage of ssDNA and RNA.</h3>
+  <p class="journal">Cell reports</p>
+  <p><a href="https://doi.org/10.1016/j.celrep.2026.117939">https://doi.org/10.1016/j.celrep.2026.117939</a></p>
+  <p>Type IV-C1複合体が5′-GGG-3′ PAMを介して二本鎖DNAを認識し、そのR-loop形成によってCas10のHD活性部位が整列してssDNAとRNAのcollateral cleavageを起動することをcryo-EMと機能解析で示した。</p>
+</article>
+<article class="paper-card">
+  <h3>Metax enables accurate cross-domain taxonomic profiling of metagenomes.</h3>
+  <p class="journal">Cell</p>
+  <p><a href="https://doi.org/10.1016/j.cell.2026.08.024">https://doi.org/10.1016/j.cell.2026.08.024</a></p>
+  <p>genome-wide coverageとEM法を利用する分類器Metaxが、細菌・ウイルス・真核生物・古細菌をまたぐ600超の試料で、他法より平均55%高いF1と45%低いBray–Curtis距離を示した。</p>
+</article>
+<article class="paper-card">
+  <h3>Amino acid reprogramming and biofilm-specific tricarboxylate transporters in PET-degrading Piscinibacter sakaiensis.</h3>
+  <p class="journal">Applied and environmental microbiology</p>
+  <p><a href="https://doi.org/10.1128/aem.01465-26">https://doi.org/10.1128/aem.01465-26</a></p>
+  <p>PET応答を、浮遊・biofilmに共通するアミノ酸代謝再編成と、biofilm特異的なtripartite tricarboxylate transporter誘導の二層へ分け、表面付着が酵素保持以上の代謝的役割を持つ可能性を示した。</p>
+</article>
+<article class="paper-card">
+  <h3>An expanded realm of anti-CRISPR-associated proteins and regulatory mechanisms.</h3>
+  <p class="journal">Nucleic acids research</p>
+  <p><a href="https://doi.org/10.1093/nar/gkag862">https://doi.org/10.1093/nar/gkag862</a></p>
+  <p>Anti-CRISPR-associated proteinの制御範囲を、DNA転写抑制だけでなく5′UTR RNA motifへの結合や隣接anti-defence operonの抑制へ広げ、新規Aca14の作用も示した。</p>
+</article>
+</section>
+<section>
+  <h2>まとめ</h2>
+  <p>今週の論文は、未知の生物を増やしたというより、既知の対象間に隠れていた関係や、解析時に暗黙に置いていた前提を見直すものが強かった。空間条件で反転するCPR–ファージ相互作用、非標準遺伝暗号、実験室と野外で異なる適応景観は、観察対象だけでなく観察の枠組みも結果の一部であることを示している。一方で、常在細菌の抗ウイルス代謝経路と注釈ツールの大規模比較は、その複雑さを機構や選択指針へ戻す研究として印象に残る。</p>
+</section>
+
+    <footer class="episode-footer">
+      <p>
+  <a href="curation.html">
+    📝 How this episode was curated
+  </a>
+</p>
+      論文のレビューから選定、番組構成まで、このエピソードができるまでの編集過程を公開しています。
+      <p>
+  <a href="../../editorial_notes/editorial_meeting_notes_2026-09-14.html">
+    📝 Read the Editorial Note of this episode
+  </a>
+</p>
+      論文を読みながらAIと交わした編集会議の記録です。
+    </footer>
+  </div>
+</body>
+</html>

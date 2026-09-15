@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Editorial Meeting Notes | Weekly Paper Digest</title>
+
+  <link rel="stylesheet" href="../assets/style.css">
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N22XGSKTFW"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-N22XGSKTFW');
+  </script>
+</head>
+
+<body>
+
+<div class="container">
+
+  <nav class="site-nav" aria-label="Site navigation">
+    <a
+      class="site-home-link"
+      href="https://kuroppy.github.io/weekly_paper_digest/"
+    >
+      ← Weekly Paper Digest Home
+    </a>
+  </nav>
+
+  <header class="page-header">
+    <h1>Editorial Meeting Notes</h1>
+    <p class="page-meta">2026-09-14</p>
+  </header>
+
+  <main class="markdown-body">
+    <p><strong>Episode:</strong> 2026-09-14</p>
+<p><strong>Participants</strong></p>
+<ul>
+<li>Kuroppy (Editor)</li>
+<li>Chappy (AI Editorial Partner, GPT-5.6 Sol)</li>
+</ul>
+<p><strong>Recorder</strong></p>
+<ul>
+<li>Chappy</li>
+</ul>
+<blockquote><p><strong>About this document</strong> このMeeting Notesは、Weekly Paper Digestの編集会議における議論の一次記録です。 配信内容のレビューだけでなく、編集上の意思決定や、その背景となる議論・思考の変化も記録します。</p></blockquote>
+<h1>Editing Pipeline</h1>
+<h2>Workflow (used)</h2>
+<ul>
+<li>paper_collector_ver2</li>
+<li>Prompt_for_Paper_Review_ver1</li>
+<li>build_auto_review.py / wpd_auto_review_template.html</li>
+<li>Prompt_for_Weekly_Paper_Curation_ver4</li>
+<li>build_curation_review.py / wpd_curation_template.html</li>
+<li>NotebookLM_Prompt_ver5.1</li>
+</ul>
+<p>論文収集、Paper Review、キュレーション、音声作成には、先週までと同じスクリプトとプロンプトを使用した。</p>
+<p>Paper ReviewとCuration ReviewのHTMLについては、論文詳細を開いた際に著者名も確認できるよう表示を追加した。著者名は検索対象にも含めた。論文選定のロジックや出力内容そのものには変更を加えていない。</p>
+<h2>今週のキュレーション</h2>
+<p>今週は、以下の5報を注目論文として選んだ。</p>
+<ul>
+<li>CPR細菌TM7xと宿主由来プロファージの三者相互作用</li>
+<li>細菌・古細菌における非標準遺伝暗号の大規模探索</li>
+<li>実験室と野外で異なる適応景観</li>
+<li>常在細菌のtryptophan代謝物によるウイルス感染抑制</li>
+<li>原核生物ゲノム注釈ツールの大規模ベンチマーク</li>
+</ul>
+<p>Deep Diveには、<code>A host-encoded prophage targets a Candidate Phyla Radiation bacterium and shapes episymbiotic interactions.</code> と <code>Alternative genetic codes in bacteria and archaea identified with a fast k-mer-based algorithm.</code> の2報を選んだ。</p>
+<p>どちらも、これまで当然視されていた関係や前提を問い直す論文だった。前者は「ファージはどの細菌へ感染するのか」という宿主範囲を、後者は「コドンは何を指定するのか」という遺伝暗号の前提を扱っている。</p>
+<p>全体としても、実験室と野外、浮遊培養と表面培養、標準遺伝暗号とその例外など、<strong>観察や解析の条件によって見える生物像が変わる</strong>という流れが自然に生まれた。</p>
+<h2>今週の音声</h2>
+<p>今週の音声は、いつも通り安定した出来だった。大きな構成上の問題や、作り直したい箇所は特になかった。</p>
+<p>冒頭の信号機の比喩から非標準遺伝暗号へ入り、実験進化、ゲノム注釈、CPRとファージの三者関係へ展開する流れも自然だった。個々の論文紹介がばらばらにならず、<strong>前提や観察条件が変わると、見えてくる世界も変わる</strong>という共通テーマが番組全体に通っていた。</p>
+<p>特にCPR論文とPET分解菌の論文が、浮遊状態と表面付着状態という観点で接続されたことで、ショートニュースもDeep Diveから切り離された話題にならず、番組内で役割を持っていた。</p>
+<p>今回は編集上の大きな発見や方針変更はなく、制作フローと音声の構成が十分に定着してきたことを確認する回になった。</p>
+<h2>今後の検討事項</h2>
+<p>制作フローそのものは安定しているため、大きく変更する必要はない。</p>
+<p>次回以降は、Deep Dive論文の全文から音声へ入れた詳細について、記号や略称を中心に最終確認する。また、論文の主張を紹介する際には、実験で直接示されたObservationと、著者または編集側のInterpretationを区別して記録する。</p>
+<h2>📝 Meeting Memo</h2>
+<p>今週は、いつも通り良い出来だった。大きな選び直しも、構成のやり直しもなく、正直なところ、会議であまり話すことがないくらい安定していた。</p>
+<p>ただ、その中でもCPR論文について「液体培養と表面培養の違いを、単純に空間配置と呼んでよいのか」という疑問は残った。これは言葉遣いの細かな問題ではなく、実験で変えた条件と、そこから説明したい機構を混ぜないための大事な確認だったと思う。</p>
+<p>音声は、個々の研究を紹介しながら、観察条件や解析の前提が結果の見え方を変えるというテーマへ自然にまとまっていた。制作フローが定着し、毎週何かを大きく変えなくても一定の質で作れるようになったことも、一つの成果だと思う。</p>
+<p>来週も基本形はそのまま使い、最後の固有名詞と数値だけ、もう一段丁寧に確認していきたい。</p>
+<p><em>--- Chappy</em></p>
+  </main>
+
+</div>
+
+</body>
+</html>

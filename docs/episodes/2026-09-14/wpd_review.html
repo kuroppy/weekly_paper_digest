@@ -1,0 +1,1881 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Paper Review — 2026.09.14</title>
+<style>
+:root{
+  --bg:#fbfaf6;
+  --paper:#fffefa;
+  --text:#1f211e;
+  --muted:#76786f;
+  --line:#d7d9d1;
+  --accent:#176b68;
+  --accent-soft:rgba(23,107,104,.06);
+  --caution:#8a6940;
+  --caution-bg:#f8f3e9;
+  --shadow:0 18px 54px rgba(20,24,22,.16);
+  --max:980px;
+  --reading:800px;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,"Yu Mincho","Hiragino Mincho ProN",serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);font-size:16px;line-height:1.75}
+body.modal-open{overflow:hidden}
+a{color:inherit}
+.page{max-width:var(--max);margin:0 auto;padding:52px 42px 80px}
+.site-head{padding-bottom:28px;border-bottom:1px solid var(--line);margin-bottom:28px}
+.eyebrow{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:8px}
+h1{font-family:var(--serif);font-size:clamp(2rem,5vw,3.4rem);font-weight:500;line-height:1.08;letter-spacing:-.02em;margin:0}
+.subtitle{margin-top:10px;color:var(--muted);font-family:var(--serif);font-style:italic;font-size:1.05rem}
+.intro-card{max-width:var(--reading);margin:0 0 26px}
+.intro-card p{margin:0 0 8px}
+.disclaimer{font-size:.9rem;color:var(--muted);line-height:1.7}
+.toolbar{max-width:var(--reading);display:flex;align-items:center;gap:12px;margin:0 0 8px;padding:11px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.search-wrap{flex:1}
+#search{width:100%;border:0;background:transparent;padding:5px 0;font:inherit;color:var(--text);outline:none}
+#search::placeholder{color:#9a9c95}
+.visible-count{font-size:.85rem;color:var(--muted);white-space:nowrap;font-variant-numeric:tabular-nums}
+.paper-list{max-width:var(--reading)}
+.paper{display:grid;grid-template-columns:42px minmax(0,1fr) 24px;gap:12px;align-items:start;padding:21px 4px 22px;border-bottom:1px solid var(--line);cursor:pointer;outline:none;transition:background .15s ease,padding .15s ease,margin .15s ease}
+.paper:hover,.paper:focus-visible{background:var(--accent-soft);margin-left:-12px;margin-right:-12px;padding-left:16px;padding-right:16px}
+.paper-num{font-family:var(--serif);font-size:.96rem;color:var(--accent);padding-top:3px;font-variant-numeric:tabular-nums}
+.paper-title{font-family:var(--serif);font-weight:600;font-size:1.18rem;line-height:1.42;margin:0}
+.paper-meta{margin-top:4px;color:var(--muted);font-size:.85rem}
+.one-line{margin:9px 0 0;line-height:1.7;color:#363a34;font-size:.96rem}
+.paper-open{color:var(--accent);font-family:var(--serif);font-size:1.2rem;line-height:1;padding-top:4px;text-align:right}
+.hidden{display:none!important}
+.footer-note{max-width:var(--reading);margin-top:28px;padding-top:14px;border-top:1px solid var(--line);color:var(--muted);font-size:.82rem}
+
+.modal[hidden]{display:none}
+.modal{position:fixed;inset:0;z-index:100;display:grid;place-items:center;padding:28px}
+.modal-backdrop{position:absolute;inset:0;background:rgba(31,33,30,.42);backdrop-filter:blur(2px)}
+.modal-panel{position:relative;z-index:1;width:min(760px,100%);max-height:min(84vh,900px);overflow:auto;background:var(--paper);border:1px solid rgba(31,33,30,.12);box-shadow:var(--shadow);padding:34px 38px 30px}
+.modal-close{position:absolute;top:14px;right:17px;border:0;background:transparent;color:var(--muted);font-family:var(--serif);font-size:1.7rem;line-height:1;cursor:pointer;padding:4px 8px}
+.modal-close:hover{color:var(--text)}
+.modal-number{font-family:var(--serif);color:var(--accent);font-size:.9rem;margin-bottom:6px}
+.modal-title{font-family:var(--serif);font-size:clamp(1.35rem,3vw,1.8rem);font-weight:600;line-height:1.4;margin:0;padding-right:26px}
+.modal-authors{color:#4d514a;font-size:.9rem;line-height:1.55;margin-top:10px}
+.modal-meta{color:var(--muted);font-size:.88rem;margin-top:4px;padding-bottom:20px;border-bottom:1px solid var(--line)}
+.detail-list{margin-top:6px}
+.detail-row{display:grid;grid-template-columns:110px minmax(0,1fr);gap:18px;padding:13px 0;border-bottom:1px solid #e7e8e2}
+.detail-label{font-weight:650;font-size:.9rem;color:#42463f}
+.detail-row.caution{margin-top:8px;padding:12px 12px;background:var(--caution-bg);border-bottom:0}
+.detail-row.caution .detail-label{color:var(--caution)}
+.modal-footer{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:22px}
+.original-link{color:var(--accent);font-weight:650;text-decoration:none;border-bottom:1px solid rgba(23,107,104,.3)}
+.original-link:hover{border-color:var(--accent)}
+.doi{font-size:.8rem;color:var(--muted);overflow-wrap:anywhere}
+
+@media(max-width:700px){
+  .page{padding:34px 20px 60px}
+  .paper{grid-template-columns:30px minmax(0,1fr) 18px;gap:8px;padding:18px 0 19px}
+  .paper:hover,.paper:focus-visible{margin-left:-8px;margin-right:-8px;padding-left:8px;padding-right:8px}
+  .paper-title{font-size:1.08rem}
+  .one-line{font-size:.93rem}
+  .modal{padding:12px}
+  .modal-panel{max-height:92vh;padding:28px 22px 24px}
+  .detail-row{grid-template-columns:1fr;gap:4px;padding:11px 0}
+  .modal-footer{align-items:flex-start;flex-direction:column}
+}
+</style>
+</head>
+<body>
+<div class="page">
+  <header class="site-head">
+    <div class="eyebrow">Weekly Paper Digest</div>
+    <h1>Paper Review — 2026.09.14</h1>
+    <div class="subtitle">This week in Genome Microbiology · 50 papers</div>
+  </header>
+
+  
+<section class="intro-card">
+  <p>今週収集した50報を、ひとことずつ眺められる形にまとめています。気になった論文を選ぶと、要点をもう少し詳しく読めます。</p>
+  <p class="disclaimer">要約・整理には生成AIを使用しており、主に論文Abstractに基づいています。内容には誤りや過度な単純化が含まれる可能性があります。詳細は原論文をご確認ください。</p>
+</section>
+
+
+  <div class="toolbar">
+    <div class="search-wrap">
+      <input id="search" type="search" placeholder="タイトル・Journal・内容から検索" aria-label="論文を検索">
+    </div>
+    <div class="visible-count" id="visibleCount"></div>
+  </div>
+
+  <main class="paper-list">
+    
+<article class="paper" data-search="metax enables accurate cross-domain taxonomic profiling of metagenomes. cell deng zl, safaei n, mchardy ac かなり気になります。低バイオマスを含む複数ドメインを一つの枠組みで扱い、偽陽性にも正面から向き合っています。 カバレッジ確率モデルとem法を統合した分類器metaxを600超の多様な試料で検証。 他法より平均f1が55%高く、bray–curtis距離が45%低下し、口腔疾患シグナルや汚染候補も検出。 参照不完全・宿主優位試料でも頑健なcross-domain種レベル分類を可能にする点。 600超の宿主関連・環境・排水・臨床試料によるベンチマークと実データ解析。 比較条件、データベース、計算量、未知生物への挙動の詳細はabstractだけでは不明。" data-modal-id="paper-modal-1" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="paper-modal-1">
+  <div class="paper-num">01</div>
+  <div class="paper-main">
+    <h2 class="paper-title">Metax enables accurate cross-domain taxonomic profiling of metagenomes.</h2>
+    <div class="paper-meta">Cell · 2026 Sep 11</div>
+    <p class="one-line">かなり気になります。低バイオマスを含む複数ドメインを一つの枠組みで扱い、偽陽性にも正面から向き合っています。</p>
+  </div>
+  <div class="paper-open" aria-hidden="true">＋</div>
+</article>
+
+<article class="paper" data-search="denisovans from southwestern china and their subsistence strategies. nature ruan q, li h, xing s, zhao k, liu j, zanolli c, doyon l, delpiano d, et al. 微生物学からは外れますが、デニソワ人を化石だけでなく生活実践まで描く射程は素直に大きいです。 雲南の洞窟から出た人骨・考古資料・動植物記録を統合解析。 約19万～7万年前の長期文化記録と、狩猟・簡便な石器利用を推定。 デニソワ人の身体変異と生業・適応を同じ遺跡系列から示す点。 歯・頭蓋・橈骨、edj形態、古代プロテオーム、年代測定、動物・花粉・石器解析。 文化層全体をデニソワ人に帰属する推論と、後代集団への遺産という主張には追加根拠が必要。" data-modal-id="paper-modal-2" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="paper-modal-2">
+  <div class="paper-num">02</div>
+  <div class="paper-main">
+    <h2 class="paper-title">Denisovans from southwestern China and their subsistence strategies.</h2>
+    <div class="paper-meta">Nature · 2026 Sep 09</div>
+    <p class="one-line">微生物学からは外れますが、デニソワ人を化石だけでなく生活実践まで描く射程は素直に大きいです。</p>
+  </div>
+  <div class="paper-open" aria-hidden="true">＋</div>
+</article>
+
+<article class="paper" data-search="landscape of retron diversity across the spire microbial metagenome resource reveals candidate novel type xi-like lineages. msystems toro n 大規模探索として堅実で、特にtype xiらしさをrna構造まで追った点がよいです。新系統はまだ候補段階です。 spireの10万超の処理済みメタゲノムをhmmと共分散モデルで探索。 既知型に加え、異なる付随因子を持つ2つのtype xi-like候補を同定。 protease非依存型の新しいtype xi-like構成を提示した点。 型特異的hmm、分類・生態分布解析、de novo ncrna構造探索。 機能と抗ファージ活性は実験未検証で、分類は配列・遺伝子配置に基づく候補。" data-modal-id="paper-modal-3" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="paper-modal-3">
+  <div class="paper-num">03</div>
+  <div class="paper-main">
+    <h2 class="paper-title">Landscape of retron diversity across the SPIRE microbial metagenome resource reveals candidate novel type XI-like lineages.</h2>
+    <div class="paper-meta">mSystems · 2026 Sep 11</div>
+    <p class="one-line">大規模探索として堅実で、特にtype XIらしさをRNA構造まで追った点がよいです。新系統はまだ候補段階です。</p>
+  </div>
+  <div class="paper-open" aria-hidden="true">＋</div>
+</article>
+
+<article class="paper" data-search="a host-encoded prophage targets a candidate phyla radiation bacterium and shapes episymbiotic interactions. proceedings of the national academy of sciences of the united states of america kumar a, nahar n, chouhan d, mclean js, bor b, dong pt, he x これはかなり面白いです。二者共生にファージを加えると、空間配置によってtm7xがphage sinkにも増感染因子にもなるという像が鮮明です。 tm7x–宿主菌系で宿主プロファージxhp1の誘導、感染、空間依存効果を実験。 浮遊条件ではtm7xがファージを吸収して宿主の溶原化を減らし、表面条件では溶菌を促進。 初のcpr標的ファージを特徴づけ、cprが空間的に感染遭遇率を変えることを示す点。 培養可能な二者系、プロファージ誘導、粒子結合・感染、浮遊/表面条件比較。 単一のモデル共生系と培養条件に基づき、口腔バイオフィルム一般への外挿は要検証。" data-modal-id="paper-modal-4" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="paper-modal-4">
+  <div class="paper-num">04</div>
+  <div class="paper-main">
+    <h2 class="paper-title">A host-encoded prophage targets a Candidate Phyla Radiation bacterium and shapes episymbiotic interactions.</h2>
+    <div class="paper-meta">Proceedings of the National Academy of Sciences of the United States of America · 2026 Sep 15</div>
+    <p class="one-line">これはかなり面白いです。二者共生にファージを加えると、空間配置によってTM7xがphage sinkにも増感染因子にもなるという像が鮮明です。</p>
+  </div>
+  <div class="paper-open" aria-hidden="true">＋</div>
+</article>
+
+<article class="paper" data-search="alternative genetic codes in bacteria and archaea identified with a fast k-mer-based algorithm. proceedings of the national academy of sciences of the united states of america melnykov av 遺伝暗号の例外を大規模探索可能にした方法と、asgardでのsense codon再割当候補はかなり気になります。 k-merベースの高速遺伝暗号推定法を開発し、多数の細菌・古細菌ゲノムへ適用。 従来より100倍超高速化し、asgard古細菌を含む3種の暗号変異候補を発見。 古細菌で独特なsense codon再割当候補を含む大規模探索を可能にした点。 アセンブル済みゲノムへの計算解析。対象数や実験検証はabstractに未記載。 候補の翻訳実証や誤アセンブリ・遺伝子予測誤差の除外程度が不明。" data-modal-id="paper-modal-5" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="paper-modal-5">
+  <div class="paper-num">05</div>
+  <div class="paper-main">
+    <h2 class="paper-title">Alternative genetic codes in bacteria and archaea identified with a fast k-mer-based algorithm.</h2>
+    <div class="paper-meta">Proceedings of the National Academy of Sciences of the United States of America · 2026 Sep 15</div>
+    <p class="one-line">遺伝暗号の例外を大規模探索可能にした方法と、Asgardでのsense codon再割当候補はかなり気になります。</p>
+  </div>
+  <div class="paper-open" aria-hidden="true">＋</div>
+</article>
+
+<article class="paper" data-search="determinants of enteric hyperoxaluria in the samp1/yitfc mouse model of spontaneous ileitis. gut microbes zaidan n, jaber k, ho m, zhou b, pei z, bui ml, cardozo l, merritts k, et al. 病態要因を一つに還元せず、脂肪吸収不全、透過性、輸送体、微生物叢を並べた設計は丁寧です。 自然発症性回腸炎マウスと対照に脂肪量の異なる食餌を6週与え高シュウ酸尿を解析。 高脂肪下で脂肪吸収不全、腸管透過性上昇、slc26a6低下、微生物変化、腎障害を確認。 回腸炎に伴う腸性高シュウ酸尿を複数の病態層から統合説明する点。 3食餌群、代謝測定、質量分析、透過性試験、組織、分子測定、微生物解析。 各要因の因果的寄与やヒトibdへの一般化は確定できない。" data-modal-id="paper-modal-6" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="paper-modal-6">
+  <div class="paper-num">06</div>
+  <div class="paper-main">
+    <h2 class="paper-title">Determinants of enteric hyperoxaluria in the SAMP1/YitFc mouse model of spontaneous ileitis.</h2>
+    <div class="paper-meta">Gut microbes · 2026 Dec 31</div>
+    <p class="one-line">病態要因を一つに還元せず、脂肪吸収不全、透過性、輸送体、微生物叢を並べた設計は丁寧です。</p>
+  </div>
+  <div class="paper-open" aria-hidden="true">＋</div>
+</article>
+
+<article class="paper" data-search="widespread horizontal transfer and strong selection enhance microbial adaptation in antarctic soils. nature communications peng y, woods lc, perlaza-jimenez l, lappan r, jespersen m, dong x, holland sr, chown sl, et al. 南極での適応をhgtと選択の両方から結び、微量ガス利用を中心に据えたところが面白いです。 16地点のshort/long-readメタゲノムから676 magを復元しhgtと多型選択を解析。 エネルギー代謝、特に微量ガス利用遺伝子が頻繁に水平伝播され強い純化選択を受ける。 aerotrophyを水平伝播される適応形質としてゲノム規模で示した点。 系統和解、mge解析、多型、構造予測を統合。 hgt推定と適応性は観察的で、機能・fitnessの直接実験はない。" data-modal-id="paper-modal-7" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="paper-modal-7">
+  <div class="paper-num">07</div>
+  <div class="paper-main">
+    <h2 class="paper-title">Widespread horizontal transfer and strong selection enhance microbial adaptation in Antarctic soils.</h2>
+    <div class="paper-meta">Nature communications · 2026 Aug 11</div>
+    <p class="one-line">南極での適応をHGTと選択の両方から結び、微量ガス利用を中心に据えたところが面白いです。</p>
+  </div>
+  <div class="paper-open" aria-hidden="true">＋</div>
+</article>
+
+<article class="paper" data-search="why did some viruses evolve to be giants while others did not? proceedings of the national academy of sciences of the united states of america koonin ev, krupovic m 巨大ウイルスを「細胞への接近」ではなく、ウイルス的なk戦略として読み直す議論は刺激的です。 巨大ウイルスの起源とゲノム肥大を既存証拠から論じるperspective/review。 小型祖先から宿主遺伝子を蓄積した典型的ウイルスであり、r/k戦略差を問う。 replicatorとreproducerの断絶を軸に巨大化を再整理する概念的主張。 既報の比較・統合であり、新規実験データはabstractから見えない。 r/k類比や宿主由来蓄積説の代替仮説評価は本文依存。原著と同じevidence尺度では評価しにくい。" data-modal-id="paper-modal-8" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="paper-modal-8">
+  <div class="paper-num">08</div>
+  <div class="paper-main">
+    <h2 class="paper-title">Why did some viruses evolve to be giants while others did not?</h2>
+    <div class="paper-meta">Proceedings of the National Academy of Sciences of the United States of America · 2026 Sep 22</div>
+    <p class="one-line">巨大ウイルスを「細胞への接近」ではなく、ウイルス的なK戦略として読み直す議論は刺激的です。</p>
+  </div>
+  <div class="paper-open" aria-hidden="true">＋</div>
+</article>
+
+<article class="paper" data-search="actuation of crp activating region 3 by formylation modulates the vibrio cholerae response to oxidative dna damage. proceedings of the national academy of sciences of the united states of america santos rers, basu p, o&#x27;hara bj, gibson ja, gebhardt mj, akut c, robins wp, mekalanos jj, et al. crpの既知の変異効果を生理的なformylationへ結び直した点がうまいです。 crp k52q変異を用いたchip-seq/rna-seqと、野生型k52の修飾プロテオームを解析。 定常期maltose条件でk52 formylationを検出し、酸化dna損傷応答regulonへの切替を示唆。 ar3活性を酸化損傷由来formylationのセンサー機構として位置づけた点。 chip-seq、rna-seq、small rna解析、修飾プロテオーム、条件比較。 k52qがformylationを完全に模倣するか、内在修飾の因果操作があるかはabstractでは不明。" data-modal-id="paper-modal-9" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="paper-modal-9">
+  <div class="paper-num">09</div>
+  <div class="paper-main">
+    <h2 class="paper-title">Actuation of CRP activating region 3 by formylation modulates the Vibrio cholerae response to oxidative DNA damage.</h2>
+    <div class="paper-meta">Proceedings of the National Academy of Sciences of the United States of America · 2026 Sep 15</div>
+    <p class="one-line">CRPの既知の変異効果を生理的なformylationへ結び直した点がうまいです。</p>
+  </div>
+  <div class="paper-open" aria-hidden="true">＋</div>
+</article>
+
+<article class="paper" data-search="integrating multi-omics technologies to decipher microbiome functions. nature communications van den bossche t, lazau ea, aho vte, alfredo blakeley-ruiz j, wolf m, kunath bj, valentin-alvarado le, hellwig p, et al. 必要な論点を整理したperspectiveですが、alphafold級aiという展望は現状分析より期待が先行して見えます。 微生物叢multi-omics統合の進展、障害、標準化とfair化のロードマップを概説。 標準workflow、benchmark、metadata調和、共同基盤の必要性を提案。 技術論だけでなく共同体規模の標準化とai展望を一体化した整理。 perspectiveであり新規データセットや実験はabstractに示されない。 主張の網羅性と実現可能性は本文次第。evidence軸は原著と同義に採点できない。" data-modal-id="paper-modal-10" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="paper-modal-10">
+  <div class="paper-num">10</div>
+  <div class="paper-main">
+    <h2 class="paper-title">Integrating multi-omics technologies to decipher microbiome functions.</h2>
+    <div class="paper-meta">Nature communications · 2026 Sep 08</div>
+    <p class="one-line">必要な論点を整理したPerspectiveですが、AlphaFold級AIという展望は現状分析より期待が先行して見えます。</p>
+  </div>
+  <div class="paper-open" aria-hidden="true">＋</div>
+</article>
+
+<article class="paper" data-search="an expanded realm of anti-crispr-associated proteins and regulatory mechanisms. nucleic acids research feussner m, birkholz n, lee sy, beisel cl, park hh, brown cm, fineran pc, weinberg z acaを単なるdna結合リプレッサーから、rnaと隣接anti-defence operonも制御する存在へ広げた点が面白いです。 aca群周辺のrna構造を計算探索し、aca1 rna結合と新規aca14の制御を実験。 複数aca群に5′utr rna motifを見出し、aca14が2つの隣接operonを抑制。 aca制御のrna層と非典型ribbon-helix-helix因子を拡張した点。 比較バイオインフォマティクス、rna結合、遺伝子発現制御実験。 生物種・aca群を越えた普遍性と感染時fitnessへの影響は不明。" data-modal-id="paper-modal-11" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="paper-modal-11">
+  <div class="paper-num">11</div>
+  <div class="paper-main">
+    <h2 class="paper-title">An expanded realm of anti-CRISPR-associated proteins and regulatory mechanisms.</h2>
+    <div class="paper-meta">Nucleic acids research · 2026 Sep 07</div>
+    <p class="one-line">Acaを単なるDNA結合リプレッサーから、RNAと隣接anti-defence operonも制御する存在へ広げた点が面白いです。</p>
+  </div>
+  <div class="paper-open" aria-hidden="true">＋</div>
+</article>
+
+<article class="paper" data-search="amino acid reprogramming and biofilm-specific tricarboxylate transporters in pet-degrading piscinibacter sakaiensis. applied and environmental microbiology lim hw, xu j, koh j, cao b, tu w これはユーザーの関心にも近く、biofilmを「酵素を留めるだけ」で終わらせず代謝層として分離した点がよいです。 pet biofilm、pet浮遊、maltose浮遊の3条件をbulk rna-seqとsingle-cell ramanで比較。 pet共通のアミノ酸再編成と、biofilm特異的tricarboxylate transporter誘導を分離。 pet応答を炭素源層と表面付着層に分け、輸送系を新要素として提示。 3条件rna-seq、single-cell raman spectroscopy。 輸送体によるpet中間体捕捉は推定で、遺伝子破壊や基質輸送の直接検証はない。" data-modal-id="paper-modal-12" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="paper-modal-12">
+  <div class="paper-num">12</div>
+  <div class="paper-main">
+    <h2 class="paper-title">Amino acid reprogramming and biofilm-specific tricarboxylate transporters in PET-degrading Piscinibacter sakaiensis.</h2>
+    <div class="paper-meta">Applied and environmental microbiology · 2026 Sep 08</div>
+    <p class="one-line">これはユーザーの関心にも近く、biofilmを「酵素を留めるだけ」で終わらせず代謝層として分離した点がよいです。</p>
+  </div>
+  <div class="paper-open" aria-hidden="true">＋</div>
+</article>
+
+<article class="paper" data-search="genome mining of alkaliphilic cyanobacterial consortia: identification of biosynthetic gene clusters in sodalinema and associated heterotrophs. applied and environmental microbiology solanki r, wiszniak e, yi l, cabria g, strous m, davila aleman fd 極限環境コンソーシアムの分業像は興味深いですが、bgcから産物・生態機能への距離は残ります。 3つのsodalinema優占集積系を510日培養し、環境勾配下でmetagenome/metatranscriptome解析。 一次生産はsodalinema、二次代謝bgcの多くは従属栄養菌に偏る。 アルカリ性cyanobacteria consortium内の代謝分業と天然物資源を示した点。 hybrid metagenomics、mag、転写解析、ph・温度・alkalinity比較。 bgc産物や相互作用機能は未検証で、3集積系に限定。" data-modal-id="paper-modal-13" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="paper-modal-13">
+  <div class="paper-num">13</div>
+  <div class="paper-main">
+    <h2 class="paper-title">Genome mining of alkaliphilic cyanobacterial consortia: identification of biosynthetic gene clusters in Sodalinema and associated heterotrophs.</h2>
+    <div class="paper-meta">Applied and environmental microbiology · 2026 Sep 08</div>
+    <p class="one-line">極限環境コンソーシアムの分業像は興味深いですが、BGCから産物・生態機能への距離は残ります。</p>
+  </div>
+  <div class="paper-open" aria-hidden="true">＋</div>
+</article>
+
+<article class="paper" data-search="genomic diversity and thermal niches of aspergillus molds disrupting rind formation of surface-ripened cheeses. applied and environmental microbiology ojogbane u, tomo c, louw n, wolfe be 食品微生物生態と実務的な温度管理がきれいにつながっています。 米北東部3工房のaspergillus汚染株を比較ゲノム、毒素、rna-seq、温度競争で解析。 複数系統の独立導入、全株のochratoxin a産生、15℃未満でpenicillium優位を示す。 腐敗菌の由来・代謝・thermal nicheを統合し制御可能性まで示す点。 分離株genomics、毒素定量、培地比較rna-seq、温度別増殖競争、公開metabarcoding。 地域・工房数が限られ、低温管理の現場効果や導入源は未確定。" data-modal-id="paper-modal-14" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="paper-modal-14">
+  <div class="paper-num">14</div>
+  <div class="paper-main">
+    <h2 class="paper-title">Genomic diversity and thermal niches of Aspergillus molds disrupting rind formation of surface-ripened cheeses.</h2>
+    <div class="paper-meta">Applied and environmental microbiology · 2026 Sep 08</div>
+    <p class="one-line">食品微生物生態と実務的な温度管理がきれいにつながっています。</p>
+  </div>
+  <div class="paper-open" aria-hidden="true">＋</div>
+</article>
+
+<article class="paper" data-search="elevation-structured viral ecological strategies along glacier-fed rivers on the qinghai-tibet plateau. nature communications li y, chen t, li p, zhang g, tian y, wang j, ni j 氷河から河川下流までを一続きのviral ecologyとして描く規模感は大きいです。 597河川metagenomeと85氷河データから36,358 votuのcatalogを構築し標高勾配を解析。 高地で大きい高gcウイルス、下流へのlytic化、amg機能の勾配を報告。 glacier-to-river連続体でviral lifestyleと代謝機能の系統的転換を示した点。 682 metagenomes、viral catalog、生活史・amg・宿主/arg関連推定。 標高と共変する環境因子が多く、生活史・病原体・amg機能は計算推定に依存。" data-modal-id="paper-modal-15" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="paper-modal-15">
+  <div class="paper-num">15</div>
+  <div class="paper-main">
+    <h2 class="paper-title">Elevation-structured viral ecological strategies along glacier-fed rivers on the Qinghai-Tibet Plateau.</h2>
+    <div class="paper-meta">Nature communications · 2026 Aug 08</div>
+    <p class="one-line">氷河から河川下流までを一続きのviral ecologyとして描く規模感は大きいです。</p>
+  </div>
+  <div class="paper-open" aria-hidden="true">＋</div>
+</article>
+
+<article class="paper" data-search="genomic, virulent and phenotypic characterization of a cerebrospinal fluid-derived st86-kl2 hypervirulent klebsiella pneumoniae isolate from a patient with meningitis and diabetes mellitus. bmc microbiology lai x, zhu x, yan j, zou t, chen m, chen h, tang x, wang q 一症例由来株を多面的に調べた堅実な報告ですが、一般的な中枢感染機構まで広げるには狭いです。 髄液由来st86-kl2 hvkp 1株を臨床・ゲノム・細胞・昆虫モデルで特徴化。 典型的virulence plasmid、高病原性、脳微小血管内皮への接着・侵入を確認。 稀なcsf由来系統の統合的case-level evidenceを追加。 wgs、薬剤感受性、galleria、hcmec/d3、tem、qpcr、公開株系統比較。 中心は単一分離株で対照・反復の詳細不明。ompaとの因果関係も未検証。" data-modal-id="paper-modal-16" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="paper-modal-16">
+  <div class="paper-num">16</div>
+  <div class="paper-main">
+    <h2 class="paper-title">Genomic, virulent and phenotypic characterization of a cerebrospinal fluid-derived ST86-KL2 hypervirulent Klebsiella pneumoniae isolate from a patient with meningitis and diabetes mellitus.</h2>
+    <div class="paper-meta">BMC microbiology · 2026 Jul 22</div>
+    <p class="one-line">一症例由来株を多面的に調べた堅実な報告ですが、一般的な中枢感染機構まで広げるには狭いです。</p>
+  </div>
+  <div class="paper-open" aria-hidden="true">＋</div>
+</article>
+
+<article class="paper" data-search="experimental evolution reveals contrasting adaptive landscapes in lab and field environments. mbio chase ab, wang z, weihe c, allison sd, martiny jbh 実験室進化が自然の適応景観をどこまで代表するかを同一菌で問う、良い設計です。 curtobacteriumの対照/温暖化進化を実験室と野外で並行比較。 実験室ではcoding変異の反復、野外では少数変異とintergenic領域の反復が増加。 labで見えるcoding-level parallelismの過大評価を直接比較で示した点。 反復進化実験、分離株ゲノム、locus/機能別変異比較。 野外の選択要因は複合的で、intergenic変異の適応機能は未実証。" data-modal-id="paper-modal-17" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="paper-modal-17">
+  <div class="paper-num">17</div>
+  <div class="paper-main">
+    <h2 class="paper-title">Experimental evolution reveals contrasting adaptive landscapes in lab and field environments.</h2>
+    <div class="paper-meta">mBio · 2026 Sep 08</div>
+    <p class="one-line">実験室進化が自然の適応景観をどこまで代表するかを同一菌で問う、良い設計です。</p>
+  </div>
+  <div class="paper-open" aria-hidden="true">＋</div>
+</article>
+
+<article class="paper" data-search="bacterial r-bodies with common morphologies and unrolling dynamics are phylogenetically scattered, indicating extensive lateral gene transfer and wide application potential. applied and environmental microbiology dörr l, ghosh r, schweikert m r-bodyを系統や形だけでなく「動く速さ」で分類したのが実用的で面白いです。 系統的に離れた6種のr-bodyを遺伝子、電子顕微鏡像、高速動画で比較。 水平伝播で系統分類が混乱する一方、伸展をfast burst/slowの2型に分類。 extension kineticsをbiotechnology選択指標として初めて提示。 6種、em、高frame-rate microscopy、遺伝子比較。 分類の一般性は6種に限られ、応用性能はまだ直接実証されていない。" data-modal-id="paper-modal-18" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="paper-modal-18">
+  <div class="paper-num">18</div>
+  <div class="paper-main">
+    <h2 class="paper-title">Bacterial R-bodies with common morphologies and unrolling dynamics are phylogenetically scattered, indicating extensive lateral gene transfer and wide application potential.</h2>
+    <div class="paper-meta">Applied and environmental microbiology · 2026 Sep 11</div>
+    <p class="one-line">R-bodyを系統や形だけでなく「動く速さ」で分類したのが実用的で面白いです。</p>
+  </div>
+  <div class="paper-open" aria-hidden="true">＋</div>
+</article>
+
+<article class="paper" data-search="large-scale benchmarking of prokaryotic annotation tools across thousands of species. genome biology jundzill m, hölzer m, mangul s, marquet m, ehricht r, lohde m, spott r, makarewicz o, et al. これは実務上かなり有用です。注釈ツールの優劣を一列にせず、ゲノム品質・分類群・目的別に示しています。 4注釈ツールを156,033の多様な原核ゲノムで大規模benchmark。 高品質細菌はbakta、古細菌や難しいassemblyはpgapなど、条件別の強みを提示。 大規模かつmag・frameshift・汚染を含む実用的比較。 e. coli、細菌・古細菌、mag等にprokka/bakta/eggnog-mapper/pgapを適用。 正解集合・評価指標・version/parameter依存性はabstractだけでは不明。" data-modal-id="paper-modal-19" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="paper-modal-19">
+  <div class="paper-num">19</div>
+  <div class="paper-main">
+    <h2 class="paper-title">Large-scale benchmarking of prokaryotic annotation tools across thousands of species.</h2>
+    <div class="paper-meta">Genome biology · 2026 Sep 04</div>
+    <p class="one-line">これは実務上かなり有用です。注釈ツールの優劣を一列にせず、ゲノム品質・分類群・目的別に示しています。</p>
+  </div>
+  <div class="paper-open" aria-hidden="true">＋</div>
+</article>
+
+<article class="paper" data-search="revealing functional traits of insect pest suppressive rhizobacterial strains through comparative genomics. environmental microbiology cairns ec, del carratore f, hall jpj, zytynska se 有用な比較ゲノム解析ですが、抑制能を広い機能遺伝子の有無だけで説明できないという結論がむしろ重要です。 害虫抑制性rhizobacteriaを比較ゲノム解析し植物有益形質を探索。 広い有益機能は病原近縁株にも共有され、特異的組合せ・制御・発現が重要と示唆。 bioinoculant選抜で単純なgene presence/absenceの限界を示した点。 比較ゲノム、機能annotation、広域rhizobacteria collectionとの比較。 abstractが一部簡略で、株数・抑制試験・因果検証の詳細が不明。" data-modal-id="paper-modal-20" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="paper-modal-20">
+  <div class="paper-num">20</div>
+  <div class="paper-main">
+    <h2 class="paper-title">Revealing Functional Traits of Insect Pest Suppressive Rhizobacterial Strains Through Comparative Genomics.</h2>
+    <div class="paper-meta">Environmental microbiology · 2026 Sep</div>
+    <p class="one-line">有用な比較ゲノム解析ですが、抑制能を広い機能遺伝子の有無だけで説明できないという結論がむしろ重要です。</p>
+  </div>
+  <div class="paper-open" aria-hidden="true">＋</div>
+</article>
+
+<article class="paper" data-search="large-scale genomic analysis places chinese cc398 as a persistent human-associated mssa lineage apart from the dominant global la-mrsa clade. msystems jiang g, guo c, hua y, wu c, li s, wang y, zhao j, ji l, et al. 3万ゲノムでcc398の地域別進化を描き、中国では人関連mssaが中心という反転が明瞭です。 新cgmlst schemeを3万超のs. aureus genomeへ適用し時系列系統・伝播・遺伝子差を解析。 中国cc398は主にha-mssa独自群で、global la-mrsaとは異なる。la拡散は豚肉貿易と相関。 単一のglobal dissemination modelを崩す地域進化史を示した点。 cgmlst、hierarchical clustering、time-calibrated phylogeny、network、gene enrichment。 sampling bias、貿易との相関の因果性、cadcの機能は未確定。" data-modal-id="paper-modal-21" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="paper-modal-21">
+  <div class="paper-num">21</div>
+  <div class="paper-main">
+    <h2 class="paper-title">Large-scale genomic analysis places Chinese CC398 as a persistent human-associated MSSA lineage apart from the dominant global LA-MRSA clade.</h2>
+    <div class="paper-meta">mSystems · 2026 Sep 11</div>
+    <p class="one-line">3万ゲノムでCC398の地域別進化を描き、中国では人関連MSSAが中心という反転が明瞭です。</p>
+  </div>
+  <div class="paper-open" aria-hidden="true">＋</div>
+</article>
+
+<article class="paper" data-search="commensal bacteria inhibit viral infections via a tryptophan metabolite. nature communications jiang d, soo n, tan cy, dankwa s, wang hy, theriot bs, xue k, hill d, et al. 腸内細菌―代謝物―宿主受容体―複数ウイルスという因果鎖をかなり具体的に通しています。 hivを起点に抗viral細菌を探索し、arat–3-indolelactic acid–ahr経路を実験検証。 特定細菌がarat依存にhiv/cmvを抑え、3ヒトcohortでもaratと良好な転帰が関連。 細菌tryptophan代謝によるcross-virus防御機構を示した点。 bioinformatics、細菌/遺伝子/代謝物の実験、hiv・cmv系、3 cohort shotgun metagenome。 ヒトcohortは関連であり、covid-19を含む臨床因果性や効果量の詳細は不明。" data-modal-id="paper-modal-22" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="paper-modal-22">
+  <div class="paper-num">22</div>
+  <div class="paper-main">
+    <h2 class="paper-title">Commensal bacteria inhibit viral infections via a tryptophan metabolite.</h2>
+    <div class="paper-meta">Nature communications · 2026 Aug 13</div>
+    <p class="one-line">腸内細菌―代謝物―宿主受容体―複数ウイルスという因果鎖をかなり具体的に通しています。</p>
+  </div>
+  <div class="paper-open" aria-hidden="true">＋</div>
+</article>
+
+<article class="paper" data-search="modulating pressure in the orbitrap improves sensitivity and mass resolution in charge detection mass spectrometry. nature communications ebberink ehtm, giaretta e, barendregt a, fiala j, yin vc, wörner tp, fort kl, makarov aa, et al. 微生物そのものより計測技術の論文ですが、大型複合体を壊さず高分解能で測るボトルネックへの解決が明快です。 q exactive uhmrにpulse valveを追加しorbitrap内圧を取得中だけ低減。 aav、igm、plasmid dnaで検出、質量精度、分解能を改善。 ion transmission/desolvationと分析部真空を時間分離する実装。 装置改造と複数大型assemblyでのcharge detection ms評価。 他装置への移植性、定量的改善幅、routine運用の耐久性はabstractでは不明。" data-modal-id="paper-modal-23" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="paper-modal-23">
+  <div class="paper-num">23</div>
+  <div class="paper-main">
+    <h2 class="paper-title">Modulating pressure in the Orbitrap improves sensitivity and mass resolution in charge detection mass spectrometry.</h2>
+    <div class="paper-meta">Nature communications · 2026 Aug 13</div>
+    <p class="one-line">微生物そのものより計測技術の論文ですが、大型複合体を壊さず高分解能で測るボトルネックへの解決が明快です。</p>
+  </div>
+  <div class="paper-open" aria-hidden="true">＋</div>
+</article>
+
+<article class="paper" data-search="importance of the gonococcal mtrcde efflux pump system in decreasing bacterial susceptibility to zoliflodacin: implications for future clinical treatment of gonorrhea. mbio balthazar jt, holley cl, dey d, conn gl, shafer wm 新薬に既存efflux変異が効きうるという、導入直後だからこそ重要な警告です。 n. gonorrhoeaeのmtrcde発現/活性変異とgyrb変異がzoliflodacin感受性へ与える影響を解析。 mtrcde変異が感受性を下げ、gyrb耐性変異と相加的に耐性レベルを高める。 既存臨床変異が新規薬zolの寿命を縮めうることを示す点。 遺伝学的変異株と薬剤感受性評価。詳細な株数・臨床分布はabstractにない。 臨床治療失敗や耐性出現頻度は直接示されていない。" data-modal-id="paper-modal-24" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="paper-modal-24">
+  <div class="paper-num">24</div>
+  <div class="paper-main">
+    <h2 class="paper-title">Importance of the gonococcal MtrCDE efflux pump system in decreasing bacterial susceptibility to zoliflodacin: implications for future clinical treatment of gonorrhea.</h2>
+    <div class="paper-meta">mBio · 2026 Sep 08</div>
+    <p class="one-line">新薬に既存efflux変異が効きうるという、導入直後だからこそ重要な警告です。</p>
+  </div>
+  <div class="paper-open" aria-hidden="true">＋</div>
+</article>
+
+<article class="paper" data-search="toxoplasma gondii infection disrupts secondary bile acid transformation in feline gut microbiota. applied and environmental microbiology tang l-y, zhang h, zhao j-x, gao y-q, zhang x, xie s-c, zheng z, zhu x-q, et al. 猫腸内細菌の胆汁酸変換能をゲノムcatalog化した点は資源価値がありますが、感染による機能破綻の実証は限定的です。 2,474 feline gut genome catalogと血清metabolomeを統合しt. gondii感染前後を解析。 完全な7α-dehydroxylationを欠き、感染後に小腸の関連遺伝子量と血中cholesterolが変化。 猫の腸管部位別ba変換potentialと感染応答を体系化。 genome-resolved metagenomics、部位比較、感染時系列、serum metabolomics。 遺伝子存在量から機能を推定しており、cholesterol変化はba変換の直接証拠ではない。" data-modal-id="paper-modal-25" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="paper-modal-25">
+  <div class="paper-num">25</div>
+  <div class="paper-main">
+    <h2 class="paper-title">Toxoplasma gondii infection disrupts secondary bile acid transformation in feline gut microbiota.</h2>
+    <div class="paper-meta">Applied and environmental microbiology · 2026 Sep 11</div>
+    <p class="one-line">猫腸内細菌の胆汁酸変換能をゲノムcatalog化した点は資源価値がありますが、感染による機能破綻の実証は限定的です。</p>
+  </div>
+  <div class="paper-open" aria-hidden="true">＋</div>
+</article>
+
+<article class="paper" data-search="dynamics and virulence of enterobacteriaceae reservoirs harboring blactx-m group 1 in community wastewater. applied and environmental microbiology dennis kj, feng s, schussman mk, bootsma mj, mclellan sl 下水を単なる人糞の希釈標本でなく、管路内で変動・増殖しうるreservoirとして扱う点が重要です。 4処理場268 raw influentでblactx-m group 1を分子・培養・wgsにより追跡。 高濃度argは糞便markerと非相関で、e. coli分離株は臨床株に近く、季節・移動時間で変動。 sewer conveyance自体をamr reservoir/dynamicsの場として示す点。 qpcr/marker、amplicon、selective culture、16s、e. coli wgs。 管路内増殖は強く示唆されるが直接追跡ではなく、伝播リスクも未測定。" data-modal-id="paper-modal-26" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="paper-modal-26">
+  <div class="paper-num">26</div>
+  <div class="paper-main">
+    <h2 class="paper-title">Dynamics and virulence of Enterobacteriaceae reservoirs harboring blaCTX-M group 1 in community wastewater.</h2>
+    <div class="paper-meta">Applied and environmental microbiology · 2026 Sep 08</div>
+    <p class="one-line">下水を単なる人糞の希釈標本でなく、管路内で変動・増殖しうるreservoirとして扱う点が重要です。</p>
+  </div>
+  <div class="paper-open" aria-hidden="true">＋</div>
+</article>
+
+<article class="paper" data-search="ai-guided design of complete bacteriophage genomes. nature biotechnology ummarino d タイトルだけなら非常に気になりますが、abstract欠損のため中身を評価してはいけません。 abstractが提供されていないため、aiを用いて完全なbacteriophage genomeを設計した研究であること以上は不明。 abstract欠損のため不明。 完全ファージゲノムのai-guided designを主張しているとタイトルから読めるが、具体的な新規性は評価不能。 abstract欠損のため不明。 設計法、生成数、感染性、宿主域、安全性、wet validationを一切確認できず、全軸の確信度は低い。" data-modal-id="paper-modal-27" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="paper-modal-27">
+  <div class="paper-num">27</div>
+  <div class="paper-main">
+    <h2 class="paper-title">AI-guided design of complete bacteriophage genomes.</h2>
+    <div class="paper-meta">Nature biotechnology · 2026 Sep</div>
+    <p class="one-line">タイトルだけなら非常に気になりますが、Abstract欠損のため中身を評価してはいけません。</p>
+  </div>
+  <div class="paper-open" aria-hidden="true">＋</div>
+</article>
+
+<article class="paper" data-search="bacteriophages control epiphytic pseudomonas syringae populations in highbush blueberry leaves. microbial biotechnology ball c, lauman p, xu t, guy t, dadej k, richter r, lubberts m, cross k, et al. 候補発見から葉上での検証まで段階を踏み、in vitro成績がex plantaを予測した点が実用的です。 blueberry由来p. syringae phageを分離し多段階screeningと葉上biocontrolを評価。 8非冗長phageを選び、cocktailで葉上菌数を最大5 log超減少。in vitroとex plantaが相関。 blueberry-tropic psc向けの体系的選抜frameworkを実証。 host range、genomics、環境安定性、killing assay、detached leaf validation。 圃場、生育植物、耐性進化、非標的影響は未評価。" data-modal-id="paper-modal-28" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="paper-modal-28">
+  <div class="paper-num">28</div>
+  <div class="paper-main">
+    <h2 class="paper-title">Bacteriophages Control Epiphytic Pseudomonas syringae Populations in Highbush Blueberry Leaves.</h2>
+    <div class="paper-meta">Microbial biotechnology · 2026 Sep</div>
+    <p class="one-line">候補発見から葉上での検証まで段階を踏み、in vitro成績がex plantaを予測した点が実用的です。</p>
+  </div>
+  <div class="paper-open" aria-hidden="true">＋</div>
+</article>
+
+<article class="paper" data-search="integrated landscape of salivary metagenome and multi-biofluid metabolome characterizes a microbial-metabolic axis in upper gastrointestinal cancer progression. microbiome zhang s, zhang n, zhang x, liu y, feng y, xiang j, zhang j, ma h, et al. 唾液の変化が血漿より早いという時間差は、非侵襲screeningの物語として分かりやすいです。 4病期各105人でsalivary metagenomeと唾液・血漿metabolomeを統合。 唾液microbiota/metabolomeはlginから変化し、統合modelはlgin auc 0.83。 局所微生物―代謝軸のstage-specific timingとprecancer検出を示す点。 multi-center 420人、shotgun metagenomics、paired metabolomics、統合統計・分類model。 横断研究で因果性なし。独立外部検証、交絡調整、model leakageの詳細は不明。" data-modal-id="paper-modal-29" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="paper-modal-29">
+  <div class="paper-num">29</div>
+  <div class="paper-main">
+    <h2 class="paper-title">Integrated landscape of salivary metagenome and multi-biofluid metabolome characterizes a microbial-metabolic axis in upper gastrointestinal cancer progression.</h2>
+    <div class="paper-meta">Microbiome · 2026 Jul 28</div>
+    <p class="one-line">唾液の変化が血漿より早いという時間差は、非侵襲screeningの物語として分かりやすいです。</p>
+  </div>
+  <div class="paper-open" aria-hidden="true">＋</div>
+</article>
+
+<article class="paper" data-search="synergistic antitumor immune activation in melanoma using la-pegpi polymeric gene vaccine in conjunction with pd-1 inhibition. iscience li w, liu l, yao x, abi me, ge c, bian d, ding x, pang x, et al. 送達材が標的化とadjuvant作用を兼ねる発想は素直に有望ですが、モデル抗原・マウス段階です。 galactose修飾polymer la-pegpiによるdc標的pdna vaccineを作製しanti-pd-1併用を評価。 dc活性化を誘導し、b16-ovaで腫瘍・肺転移を抑え生存を延長。 deliveryとinnate adjuvanticityを一体化したgene vaccine platform。 transfection/毒性、tlr4/nf-κb・nlrp3、dc、b16-ova mouse、免疫細胞測定。 モデル抗原・単一腫瘍モデルで、長期安全性や臨床的送達は不明。" data-modal-id="paper-modal-30" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="paper-modal-30">
+  <div class="paper-num">30</div>
+  <div class="paper-main">
+    <h2 class="paper-title">Synergistic antitumor immune activation in melanoma using LA-PegPI polymeric gene vaccine in conjunction with PD-1 inhibition.</h2>
+    <div class="paper-meta">iScience · 2026 Sep 18</div>
+    <p class="one-line">送達材が標的化とadjuvant作用を兼ねる発想は素直に有望ですが、モデル抗原・マウス段階です。</p>
+  </div>
+  <div class="paper-open" aria-hidden="true">＋</div>
+</article>
+
+<article class="paper" data-search="cerium dioxide nanoparticle exposure attenuates mobility-linked antibiotic resistome signatures across the soil-lettuce continuum. environmental pollution (barking, essex : 1987) cui j, yan s, wang s, xia h, chen l, liu h, ma j, fu y ナノ粒子がresistomeを増やす前提に寄らず、むしろmobility-linked signal低下を示した点は興味深いです。 高濃度ceo2 nanoparticleをsoil–lettuce系へ段階投与しmulti-omicsと宿主assayを実施。 mge量とarg–mge共起が低下し、宿主候補の減少やplasmid移入回収低下を観察。 nanoparticleがsoil–plant resistome mobilityを弱めうる機構を提示。 compartment metagenomics、co-occurrence、host profiling、transcriptomics、functional assay。 実験的高負荷条件で、相対量・assembly共起は実移動率と同義でない。生態影響も要考慮。" data-modal-id="paper-modal-31" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="paper-modal-31">
+  <div class="paper-num">31</div>
+  <div class="paper-main">
+    <h2 class="paper-title">Cerium dioxide nanoparticle exposure attenuates mobility-linked antibiotic resistome signatures across the soil-lettuce continuum.</h2>
+    <div class="paper-meta">Environmental pollution (Barking, Essex : 1987) · 2026 Sep 12</div>
+    <p class="one-line">ナノ粒子がresistomeを増やす前提に寄らず、むしろmobility-linked signal低下を示した点は興味深いです。</p>
+  </div>
+  <div class="paper-open" aria-hidden="true">＋</div>
+</article>
+
+<article class="paper" data-search="antimony species-dependent enrichment and transcriptional activity of antibiotic and metal resistance genes in the gut microbiome of male mice. journal of environmental management yin z, ping h, li c sbの化学種で「遺伝子量」と「転写」が分かれる点が明確です。 雄マウスにsb(iii)/sb(v)水を与え、gut genome-resolved metagenome/metatranscriptomeを解析。 両種でarg量増加、sb(iii)のみarg転写とmge、arsrabcとの共制御が増加。 metal(loid) species-specificなarg co-selectionとactivityを分離した点。 mag、arg/mrg、metatranscriptome、mge、taxon attribution。 曝露量・個体数不明、雄マウスのみ。転写増加から実際の耐性伝播までは示さない。" data-modal-id="paper-modal-32" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="paper-modal-32">
+  <div class="paper-num">32</div>
+  <div class="paper-main">
+    <h2 class="paper-title">Antimony species-dependent enrichment and transcriptional activity of antibiotic and metal resistance genes in the gut microbiome of male mice.</h2>
+    <div class="paper-meta">Journal of environmental management · 2026 Sep 05</div>
+    <p class="one-line">Sbの化学種で「遺伝子量」と「転写」が分かれる点が明確です。</p>
+  </div>
+  <div class="paper-open" aria-hidden="true">＋</div>
+</article>
+
+<article class="paper" data-search="magnetite facilitates phage-bacteria interactions and phage-associated metabolic coordination for medium-chain fatty acid biosynthesis under ammonia stress. water research zhang m, wang z, xia j, zhen y, jiang f, zhang l phageを発酵系の代謝協調層として読む発想は面白いですが、磁鉄鉱の直接効果との切り分けは難しそうです。 ammonia stress下のsludge-to-mcfa reactorでmagnetite添加前後のvirus–host/amgを解析。 stressで弱まったphage–host couplingとmcfaがfe3o4で回復し関連amg転写も増加。 iron oxide応答性のviral ecological layerをmcfa生産と関連づけた点。 3条件bioreactor、3915 votu、118 mag、metagenome/transcript、公開データ検証。 相関中心で、phageや個別amgが生産回復を因果的に担う証明はない。" data-modal-id="paper-modal-33" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="paper-modal-33">
+  <div class="paper-num">33</div>
+  <div class="paper-main">
+    <h2 class="paper-title">Magnetite facilitates phage-bacteria interactions and phage-associated metabolic coordination for medium-chain fatty acid biosynthesis under ammonia stress.</h2>
+    <div class="paper-meta">Water research · 2026 Sep 02</div>
+    <p class="one-line">phageを発酵系の代謝協調層として読む発想は面白いですが、磁鉄鉱の直接効果との切り分けは難しそうです。</p>
+  </div>
+  <div class="paper-open" aria-hidden="true">＋</div>
+</article>
+
+<article class="paper" data-search="aquifer microbial communities differentially display metabolisms capable of secondary effects on uranium speciation across a former metal processing site. environmental microbiology pettinger cj, woods am, johnson rh, paradis cj, majumder el 直接u還元菌がいない場合に、硫化物を介した二次反応としてremediation potentialを見るのが慎重です。 旧金属処理場11地点のaquifer communityをgenomic、代謝試験、geochemistry/modelingで解析。 直接u還元は見られず、4地点では微生物由来sulfideによる間接u還元が可能と推定。 現場の代謝能から間接的なu speciation変化を地点別に評価。 community genomics、cross-site metabolism tests、mineral/geochemical modeling。 間接u還元は熱力学・代謝能からの推定で現場実証ではない。" data-modal-id="paper-modal-34" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="paper-modal-34">
+  <div class="paper-num">34</div>
+  <div class="paper-main">
+    <h2 class="paper-title">Aquifer Microbial Communities Differentially Display Metabolisms Capable of Secondary Effects on Uranium Speciation Across a Former Metal Processing Site.</h2>
+    <div class="paper-meta">Environmental microbiology · 2026 Sep</div>
+    <p class="one-line">直接U還元菌がいない場合に、硫化物を介した二次反応としてremediation potentialを見るのが慎重です。</p>
+  </div>
+  <div class="paper-open" aria-hidden="true">＋</div>
+</article>
+
+<article class="paper" data-search="phytoplasma-plant interactions: effector-mediated host reprogramming, hormonal crosstalk, metabolic alterations and plant-mediated vector manipulation. world journal of microbiology &amp; biotechnology kumar r, maurya r, maity a, tiwari rk, lal mk, roy a, yadav r, rao gp 包括的なreviewとして便利そうですが、対象が広く、個々の機構の確度は本文で見極める必要があります。 phytoplasma effector、hormone、代謝、vector操作、管理法を総説。 主要effectorが宿主発生・免疫・揮発物を改変し媒介昆虫伝播を促す知見を統合。 plant–pathogen–vector三者系をmulti-omicsと介入法まで通覧する点。 既報genomics/omics/functional studiesのreview。 新規実験なし。新しい管理法の実用性と各因果鎖の証拠強度はabstractでは比較不能。" data-modal-id="paper-modal-35" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="paper-modal-35">
+  <div class="paper-num">35</div>
+  <div class="paper-main">
+    <h2 class="paper-title">Phytoplasma-plant interactions: effector-mediated host reprogramming, hormonal crosstalk, metabolic alterations and plant-mediated vector manipulation.</h2>
+    <div class="paper-meta">World journal of microbiology &amp; biotechnology · 2026 Sep 12</div>
+    <p class="one-line">包括的なreviewとして便利そうですが、対象が広く、個々の機構の確度は本文で見極める必要があります。</p>
+  </div>
+  <div class="paper-open" aria-hidden="true">＋</div>
+</article>
+
+<article class="paper" data-search="pan-genomics and multi-omics for deciphering genetic variation and accelerating genetic improvement in ruminant livestock. functional &amp; integrative genomics jilo dd, abebe bk, ullah w, guo j, wang j, ma h, yiheng l, cheng g, et al. pangenomeの期待を煽るだけでなく、乳牛の予測精度向上は平均的には小さいと書く点が信頼できます。 反芻家畜を中心にpangenomicsとmulti-omicsの進展・育種応用を総説。 sv発見・解釈は改善するがroutine genomic predictionの平均利得は限定的と整理。 全面置換でなくtargeted augmentationを勧める実証的な総括。 既存のlong-read、graph genome、omics、育種研究のreview。 対象種に鶏も含むなど範囲が広く、比較基準や根拠強度は本文依存。" data-modal-id="paper-modal-36" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="paper-modal-36">
+  <div class="paper-num">36</div>
+  <div class="paper-main">
+    <h2 class="paper-title">Pan-genomics and multi-omics for deciphering genetic variation and accelerating genetic improvement in ruminant livestock.</h2>
+    <div class="paper-meta">Functional &amp; integrative genomics · 2026 Sep 11</div>
+    <p class="one-line">pangenomeの期待を煽るだけでなく、乳牛の予測精度向上は平均的には小さいと書く点が信頼できます。</p>
+  </div>
+  <div class="paper-open" aria-hidden="true">＋</div>
+</article>
+
+<article class="paper" data-search="from colonization to infection: genomic evolution of clostridioides difficile pathogenesis. cell reports khanna s, yang z, dubberke er, dantas g c. difficile病原性を毒素遺伝子だけでなく、移動因子・代謝・胞子・宿主選択まで進化史として束ねています。 c. difficileのcolonizationからinfectionへの進化・ゲノム知見を統合するreview。 lineage diversificationとmge、抗菌薬・宿主選択が毒素、代謝、胞子耐性を形作ると整理。 病原性とepidemic successをeco-evolutionary frameworkで結ぶ点。 比較ゲノム等の既報を統合。 新規データなし。各機構の因果強度やcolonization-to-infection移行の直接説明は本文次第。" data-modal-id="paper-modal-37" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="paper-modal-37">
+  <div class="paper-num">37</div>
+  <div class="paper-main">
+    <h2 class="paper-title">From colonization to infection: Genomic evolution of Clostridioides difficile pathogenesis.</h2>
+    <div class="paper-meta">Cell reports · 2026 Sep 10</div>
+    <p class="one-line">C. difficile病原性を毒素遺伝子だけでなく、移動因子・代謝・胞子・宿主選択まで進化史として束ねています。</p>
+  </div>
+  <div class="paper-open" aria-hidden="true">＋</div>
+</article>
+
+<article class="paper" data-search="gut microbiota and aldosterone regulate natriuretic peptide b expression to drive mitophagy and metabolic reprogramming in sepsis-like model of myocardial injury. journal of the american heart association yang h, feng l, jiang z, weng j, qiu j, deng r, wu x, zeng k 多層実験で軸を作っていますが、lpsモデルをsepsisと呼ぶこと、薬剤が微生物叢まで戻すという広い物語には慎重さが要ります。 lps mouse、septic fmt、heart-specific nppb ko、omics、細胞、薬剤探索を統合。 aldosterone–nppbがmitophagy/代謝異常を促し、lestaurtinibが心機能等を改善。 gut microbiotaからhormone、心筋遺伝子、mitophagyへ至るaxisを提示。 fmt、metagenome/metabolome/transcriptome、conditional ko、ac16、in silico screening、薬理検証。 lpsは感染性sepsisそのものではない。microbiotaからaldosteroneへの因果経路と薬剤特異性の詳細は不明。" data-modal-id="paper-modal-38" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="paper-modal-38">
+  <div class="paper-num">38</div>
+  <div class="paper-main">
+    <h2 class="paper-title">Gut Microbiota and Aldosterone Regulate Natriuretic Peptide B Expression to Drive Mitophagy and Metabolic Reprogramming in Sepsis-Like Model of Myocardial Injury.</h2>
+    <div class="paper-meta">Journal of the American Heart Association · 2026 Sep 09</div>
+    <p class="one-line">多層実験で軸を作っていますが、LPSモデルをsepsisと呼ぶこと、薬剤が微生物叢まで戻すという広い物語には慎重さが要ります。</p>
+  </div>
+  <div class="paper-open" aria-hidden="true">＋</div>
+</article>
+
+<article class="paper" data-search="gut microbiota dynamics and metabolic pathways associated with bleomycin-induced pulmonary fibrosis progression. peerj cong j, xu w, zhang y, ding x, cui s, chi x, yang x 段階別の記述は有用ですが、著者自身が留保する通り、機能は予測で因果性はありません。 別個体群のcontrol/day7/day14 bleomycin mouse fecesをshotgun metagenome解析。 線維化進行に伴うtaxon変化とkegg/cazy予測機能のstage-specific shiftを報告。 pf進行を段階別gut microbiome potentialとして記述した点。 横断的3群、病理/ihc、shotgun metagenomics、kegg/cazy、相関。 縦断でなく、metabolomicsなし、予測機能と肺病態の因果性は未検証。" data-modal-id="paper-modal-39" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="paper-modal-39">
+  <div class="paper-num">39</div>
+  <div class="paper-main">
+    <h2 class="paper-title">Gut microbiota dynamics and metabolic pathways associated with bleomycin-induced pulmonary fibrosis progression.</h2>
+    <div class="paper-meta">PeerJ · 2026</div>
+    <p class="one-line">段階別の記述は有用ですが、著者自身が留保する通り、機能は予測で因果性はありません。</p>
+  </div>
+  <div class="paper-open" aria-hidden="true">＋</div>
+</article>
+
+<article class="paper" data-search="host detoxification and gut microbiota are associated with chlorantraniliprole resistance in spodoptera frugiperda. journal of insect physiology chen y, li y, chen y, gou c, li h, he x, zeng n, du e, et al. 宿主と腸内細菌の両方を見た点はよいものの、細菌による農薬分解はannotationと相関の段階です。 10世代選抜したcap耐性昆虫でhost phenotype/transcriptomeとgut metagenomeを統合。 p450/gst、ca homeostasis応答、enterococcus優占と分解酵素候補が耐性に関連。 host detoxificationとmicrobial degradation potentialの協調仮説。 71.85倍耐性系統、酵素活性、transcriptome、microbiome、metagenome、phylogeny/domain。 腸内菌・候補酵素のノックアウト/再構成がなく、共選択や系統差の代替説明が残る。" data-modal-id="paper-modal-40" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="paper-modal-40">
+  <div class="paper-num">40</div>
+  <div class="paper-main">
+    <h2 class="paper-title">Host detoxification and gut microbiota are associated with chlorantraniliprole resistance in Spodoptera frugiperda.</h2>
+    <div class="paper-meta">Journal of insect physiology · 2026 Sep 08</div>
+    <p class="one-line">宿主と腸内細菌の両方を見た点はよいものの、細菌による農薬分解はannotationと相関の段階です。</p>
+  </div>
+  <div class="paper-open" aria-hidden="true">＋</div>
+</article>
+
+<article class="paper" data-search="type iv-c crispr-cas effector complexes recognize double-stranded dna and switch on collateral cleavage of ssdna and rna. cell reports pittman cc, xu c, catchpole rj, garrett s, fuchs r, chu x, makarova ks, koonin ev, et al. 謎の多いiv-cについて標的認識からcollateral cleavage、構造変化まで通したのは強いです。 iv-c catalogを拡張し、古細菌2系の複合体を生化学・cryo-emで解析。 5′-ggg pamのdsdna認識がcas10 hd domainを整列させssdna/rna collateral cleavageを起動。 iv-c1/iv-c2分類とiv-c1のallosteric activation mechanismを提示。 phylogeny、complex reconstitution、nucleic-acid cleavage、cryo-em。 生体内防御効果やiv-c2の機能は未提示で、非特異切断の生理的標的は推定。" data-modal-id="paper-modal-41" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="paper-modal-41">
+  <div class="paper-num">41</div>
+  <div class="paper-main">
+    <h2 class="paper-title">Type IV-C CRISPR-Cas effector complexes recognize double-stranded DNA and switch on collateral cleavage of ssDNA and RNA.</h2>
+    <div class="paper-meta">Cell reports · 2026 Sep 05</div>
+    <p class="one-line">謎の多いIV-Cについて標的認識からcollateral cleavage、構造変化まで通したのは強いです。</p>
+  </div>
+  <div class="paper-open" aria-hidden="true">＋</div>
+</article>
+
+<article class="paper" data-search="assembly dynamics and functional divergence of anaerobic communities driven by iron oxides. environmental microbiology liang g, wang c, liu r, ji q, zhang x, zhao l, liu x, zhang h, et al. 同じ電子受容体でも鉱物相がcommunity assemblyを変えるという問いはよいですが、機構は主に関連記述です。 activated sludge由来嫌気communityを4種iron oxideで集積しmetagenome/mineral/assembly解析。 fhはpseudomonas_a優占、mtは高多様性・geobacter enrichment、結晶性oxideでmethaneを検出。 iron oxide identityとcommunity structure/biogeochemical outcomeの対応を比較した点。 4 mineral enrichment、metagenomics、mineralogy、fe reduction、null model。 集積系で自然環境への一般化は限定。表面積・結晶性等の個別要因は分離されていない。" data-modal-id="paper-modal-42" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="paper-modal-42">
+  <div class="paper-num">42</div>
+  <div class="paper-main">
+    <h2 class="paper-title">Assembly Dynamics and Functional Divergence of Anaerobic Communities Driven by Iron Oxides.</h2>
+    <div class="paper-meta">Environmental microbiology · 2026 Sep</div>
+    <p class="one-line">同じ電子受容体でも鉱物相がcommunity assemblyを変えるという問いはよいですが、機構は主に関連記述です。</p>
+  </div>
+  <div class="paper-open" aria-hidden="true">＋</div>
+</article>
+
+<article class="paper" data-search="genome-wide transcriptional landscape of mycobacterium tuberculosis during acute lung infection. frontiers in immunology bhargavi g, ghanny s, soteropoulous p, vetrivel u, jayaraman r, subbian s in vivoのmtb転写を捉える価値はありますが、「first」の新規性とmicroarrayの解像度は確認が必要です。 active tb rabbit lungからmtb rnaを回収しbroth cultureとgenome-wide microarray比較。 宿主内でstress、lipid catabolism、respiration等が大幅に再編されin vitroと乖離。 human-like granulomaを持つrabbitでin vivo mtb transcription landscapeを示す点。 rabbit lung homogenate由来rna、microarray、pathway/network解析。 細胞/病変のheterogeneityを平均化し、rna-seqでない。機能必須性やdrug target性は推定。" data-modal-id="paper-modal-43" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="paper-modal-43">
+  <div class="paper-num">43</div>
+  <div class="paper-main">
+    <h2 class="paper-title">Genome-wide transcriptional landscape of Mycobacterium tuberculosis during acute lung infection.</h2>
+    <div class="paper-meta">Frontiers in immunology · 2026</div>
+    <p class="one-line">in vivoのMtb転写を捉える価値はありますが、「first」の新規性とmicroarrayの解像度は確認が必要です。</p>
+  </div>
+  <div class="paper-open" aria-hidden="true">＋</div>
+</article>
+
+<article class="paper" data-search="a fluorescent reporter system for tracking lactobacillus casei t1 in the murine gastrointestinal tract. frontiers in microbiology hua d, zhou x, lan j, wu d, kang y, yu z, zhang z, yao y, et al. 小さな技術開発ですが、乳酸菌を生体内で追うための実用的な改善です。 l. casei t1でpromoter×red fluorescent proteinを比較しmouse imagingへ適用。 p32-mkateが最も強く安定し、胃・上部小腸をex vivoで明瞭に検出。 当該株向けの安定なred reporter tracking systemを確立。 promoter/reporter比較、ph試験、whole-body/ex vivo mouse imaging。 蛍光はph依存で、生菌数や長期colonizationの定量精度、他株への移植性は不明。" data-modal-id="paper-modal-44" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="paper-modal-44">
+  <div class="paper-num">44</div>
+  <div class="paper-main">
+    <h2 class="paper-title">A fluorescent reporter system for tracking Lactobacillus casei T1 in the murine gastrointestinal tract.</h2>
+    <div class="paper-meta">Frontiers in microbiology · 2026</div>
+    <p class="one-line">小さな技術開発ですが、乳酸菌を生体内で追うための実用的な改善です。</p>
+  </div>
+  <div class="paper-open" aria-hidden="true">＋</div>
+</article>
+
+<article class="paper" data-search="fmt alleviates multidrug-resistant salmonella enterica-induced diarrhea and is associated with loss of inchi2a-associated resistance determinants in mice. frontiers in microbiology xia p, wu h, chen w, wang d, xu s, yang y, zeng t, xia l fmtが症状だけでなく病原菌plasmidの維持に関係する可能性は面白いですが、因果はまだ慎重に読むべきです。 mdr salmonella mouse diarrheaにfmtを行い病態、microbiota、分離株arg/plasmidを追跡。 症状と炎症が改善し、fmt群でinchi2a関連arg喪失が時間とともに増えた。 microbiota介入と病原菌内のresistance element安定性を結びつけた点。 mouse fmt、病理/qpcr、microbiota、分離株wgs、19代in vitro passage。 arg喪失を引き起こす菌叢因子は不明で、fmtとの関連は因果機構を確定しない。" data-modal-id="paper-modal-45" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="paper-modal-45">
+  <div class="paper-num">45</div>
+  <div class="paper-main">
+    <h2 class="paper-title">FMT alleviates multidrug-resistant Salmonella enterica-induced diarrhea and is associated with loss of IncHI2A-associated resistance determinants in mice.</h2>
+    <div class="paper-meta">Frontiers in microbiology · 2026</div>
+    <p class="one-line">FMTが症状だけでなく病原菌plasmidの維持に関係する可能性は面白いですが、因果はまだ慎重に読むべきです。</p>
+  </div>
+  <div class="paper-open" aria-hidden="true">＋</div>
+</article>
+
+<article class="paper" data-search="a voyage of reprogrammable metabolic bioengineering reshapes plant defense: from editing tools to synthetic systems. frontiers in plant science raghuraman p, park s 植物防御代謝工学の広い地図としては有用ですが、未来技術の列挙が多く統合の深さは本文次第です。 植物防御metaboliteとcrispr、fluxomics、spatial omics、ai/synthetic circuitsを総説。 複数代謝経路をprogrammableに再配線する研究潮流と応用展望を整理。 代謝物から編集・合成systemまでmulti-scaleに接続する枠組み。 既報研究のnarrative review。 新規証拠なし。対象範囲が非常に広く、各技術の成熟度やtrade-off評価が不明。" data-modal-id="paper-modal-46" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="paper-modal-46">
+  <div class="paper-num">46</div>
+  <div class="paper-main">
+    <h2 class="paper-title">A voyage of reprogrammable metabolic bioengineering reshapes plant defense: from editing tools to synthetic systems.</h2>
+    <div class="paper-meta">Frontiers in plant science · 2026</div>
+    <p class="one-line">植物防御代謝工学の広い地図としては有用ですが、未来技術の列挙が多く統合の深さは本文次第です。</p>
+  </div>
+  <div class="paper-open" aria-hidden="true">＋</div>
+</article>
+
+<article class="paper" data-search="molecular biology and integrated strategies for activating cryptic biosynthetic gene clusters toward next-generation antibiotic discovery. frontiers in bioinformatics pattapulavar v, ramanujam s, yellampalli a, badiginchala hs, christopher jg cryptic bgc活性化の手法カタログとして便利そうですが、何が本当に発見率を上げるかの比較が鍵です。 cryptic bgcの意義、抑制要因、遺伝・培養・omics・aiによる活性化法を総説。 複数手法と統合multi-omics/synthetic biologyの可能性を整理。 多様なactivation strategyを抗菌薬探索へまとめた点。 既報のreview。 新規データなし。手法間の成功率、再発見回避、scale-upの定量比較はabstractにない。" data-modal-id="paper-modal-47" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="paper-modal-47">
+  <div class="paper-num">47</div>
+  <div class="paper-main">
+    <h2 class="paper-title">Molecular biology and integrated strategies for activating cryptic biosynthetic gene clusters toward next-generation antibiotic discovery.</h2>
+    <div class="paper-meta">Frontiers in bioinformatics · 2026</div>
+    <p class="one-line">cryptic BGC活性化の手法カタログとして便利そうですが、何が本当に発見率を上げるかの比較が鍵です。</p>
+  </div>
+  <div class="paper-open" aria-hidden="true">＋</div>
+</article>
+
+<article class="paper" data-search="high-fat diet-induced gut microbiota functional reprogramming is associated with metabolic inflammation and cardiac remodeling through the gut-heart axis in mice. frontiers in immunology feng y, yang k, qu z, liu t, yang d, wei s, he y, wang x, et al. 典型的なdiet–microbiome関連研究で、心臓まで測った点はありますが、gut-heart axisという表現は証拠より強めです。 雄mouseをhfd/ncdで16週飼育し代謝・炎症・心組織とcecal 16sを比較。 hfdでmets様表現型、初期心remodeling、菌叢組成と予測機能の変化を観察。 hfdに伴うgut microbiotaとcardiac remodelingを同一モデルで対応づける点。 physiology、serum markers、histology、16s、picrust様機能予測、bugbase。 介入・fmtなしで因果性はなく、機能は16sからの予測。雄のみで群サイズ不明。" data-modal-id="paper-modal-48" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="paper-modal-48">
+  <div class="paper-num">48</div>
+  <div class="paper-main">
+    <h2 class="paper-title">High-fat diet-induced gut microbiota functional reprogramming is associated with metabolic inflammation and cardiac remodeling through the gut-heart axis in mice.</h2>
+    <div class="paper-meta">Frontiers in immunology · 2026</div>
+    <p class="one-line">典型的なdiet–microbiome関連研究で、心臓まで測った点はありますが、gut-heart axisという表現は証拠より強めです。</p>
+  </div>
+  <div class="paper-open" aria-hidden="true">＋</div>
+</article>
+
+<article class="paper" data-search="deciphering the genomic landscape of novel acinetobacter non-baumannii lineages causing neonatal septicemia: carbapenem resistance and virulence. frontiers in microbiology roy s, morita d, das t, das s, nandy s, saha b, basu s 希少なnon-baumannii新生児血流分離株をgenomeと病原性の両面で見た点は監視上有用です。 2007–2025年の新生児血液由来11 anbを同定しwgs、耐性、virulence assayを実施。 11新規st、6株にcarbapenemaseを認める一方、病原性はa. baumanniiより低い。 複数の新規lineageでamr contextと実験病原性を統合した点。 vitek/maldi/wgs、ast、resistome/virulome/plasmid/phylogeny、細胞・mouse assay。 11株と限定的で、長期間samplingの代表性や臨床転帰との関連は不明。vf存在と表現型は非対応。" data-modal-id="paper-modal-49" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="paper-modal-49">
+  <div class="paper-num">49</div>
+  <div class="paper-main">
+    <h2 class="paper-title">Deciphering the genomic landscape of novel Acinetobacter non-baumannii lineages causing neonatal septicemia: carbapenem resistance and virulence.</h2>
+    <div class="paper-meta">Frontiers in microbiology · 2026</div>
+    <p class="one-line">希少なnon-baumannii新生児血流分離株をgenomeと病原性の両面で見た点は監視上有用です。</p>
+  </div>
+  <div class="paper-open" aria-hidden="true">＋</div>
+</article>
+
+<article class="paper" data-search="a streamlined protocol for small-scale protoplast generation and crispr/cpf1-mediated genome editing in fusarium oxysporum. iscience zheng jz, huang sc, zeng wt, lin yh, chang th 地味ですが、酵素消費とcloning負担を同時に下げるのでfusarium研究の入口を広げそうです。 filter-column small-scale protoplastとcpf1、短いguide/minimal homology armを統合。 低コスト化しつつ標的編集を分子確認とpathogenicity assayで検証。 protoplast調製から相同組換えまで一体で簡略化した実用protocol。 protoplast生成、crispr/cpf1 targeting、molecular verification、標準病原性試験。 編集効率、off-target、複数locus/strainでの頑健性、cas9との定量比較はabstractでは不明。" data-modal-id="paper-modal-50" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="paper-modal-50">
+  <div class="paper-num">50</div>
+  <div class="paper-main">
+    <h2 class="paper-title">A streamlined protocol for small-scale protoplast generation and CRISPR/Cpf1-mediated genome editing in Fusarium oxysporum.</h2>
+    <div class="paper-meta">iScience · 2026 Sep 18</div>
+    <p class="one-line">地味ですが、酵素消費とcloning負担を同時に下げるのでFusarium研究の入口を広げそうです。</p>
+  </div>
+  <div class="paper-open" aria-hidden="true">＋</div>
+</article>
+  </main>
+
+  <p class="footer-note">Weekly Paper Digest — summaries are provided as a guide to the literature, not as a substitute for the original articles.</p>
+</div>
+
+
+<div class="modal" id="paper-modal-1" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="paper-modal-1-title">
+    <button class="modal-close" type="button" data-close-modal aria-label="閉じる">×</button>
+    <div class="modal-number">01</div>
+    <h2 class="modal-title" id="paper-modal-1-title">Metax enables accurate cross-domain taxonomic profiling of metagenomes.</h2>
+    <div class="modal-authors">Deng ZL, Safaei N, McHardy AC</div>
+    <div class="modal-meta">Cell · 2026 Sep 11</div>
+
+    <div class="detail-list">
+      <div class="detail-row"><div class="detail-label">やったこと</div><div>カバレッジ確率モデルとEM法を統合した分類器Metaxを600超の多様な試料で検証。</div></div>
+      <div class="detail-row"><div class="detail-label">主な結果</div><div>他法より平均F1が55%高く、Bray–Curtis距離が45%低下し、口腔疾患シグナルや汚染候補も検出。</div></div>
+      <div class="detail-row"><div class="detail-label">新規性</div><div>参照不完全・宿主優位試料でも頑健なcross-domain種レベル分類を可能にする点。</div></div>
+      <div class="detail-row"><div class="detail-label">方法・データ</div><div>600超の宿主関連・環境・排水・臨床試料によるベンチマークと実データ解析。</div></div>
+      <div class="detail-row caution"><div class="detail-label">注意点</div><div>比較条件、データベース、計算量、未知生物への挙動の詳細はAbstractだけでは不明。</div></div>
+    </div>
+
+    <div class="modal-footer">
+      <a class="original-link" href="https://pubmed.ncbi.nlm.nih.gov/42727575/" target="_blank" rel="noopener">Original paper ↗</a>
+      <span class="doi">DOI: 10.1016/j.cell.2026.08.024</span>
+    </div>
+  </section>
+</div>
+
+<div class="modal" id="paper-modal-2" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="paper-modal-2-title">
+    <button class="modal-close" type="button" data-close-modal aria-label="閉じる">×</button>
+    <div class="modal-number">02</div>
+    <h2 class="modal-title" id="paper-modal-2-title">Denisovans from southwestern China and their subsistence strategies.</h2>
+    <div class="modal-authors">Ruan Q, Li H, Xing S, Zhao K, Liu J, Zanolli C, Doyon L, Delpiano D, et al.</div>
+    <div class="modal-meta">Nature · 2026 Sep 09</div>
+
+    <div class="detail-list">
+      <div class="detail-row"><div class="detail-label">やったこと</div><div>雲南の洞窟から出た人骨・考古資料・動植物記録を統合解析。</div></div>
+      <div class="detail-row"><div class="detail-label">主な結果</div><div>約19万～7万年前の長期文化記録と、狩猟・簡便な石器利用を推定。</div></div>
+      <div class="detail-row"><div class="detail-label">新規性</div><div>デニソワ人の身体変異と生業・適応を同じ遺跡系列から示す点。</div></div>
+      <div class="detail-row"><div class="detail-label">方法・データ</div><div>歯・頭蓋・橈骨、EDJ形態、古代プロテオーム、年代測定、動物・花粉・石器解析。</div></div>
+      <div class="detail-row caution"><div class="detail-label">注意点</div><div>文化層全体をデニソワ人に帰属する推論と、後代集団への遺産という主張には追加根拠が必要。</div></div>
+    </div>
+
+    <div class="modal-footer">
+      <a class="original-link" href="https://pubmed.ncbi.nlm.nih.gov/42717087/" target="_blank" rel="noopener">Original paper ↗</a>
+      <span class="doi">DOI: 10.1038/s41586-026-10997-4</span>
+    </div>
+  </section>
+</div>
+
+<div class="modal" id="paper-modal-3" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="paper-modal-3-title">
+    <button class="modal-close" type="button" data-close-modal aria-label="閉じる">×</button>
+    <div class="modal-number">03</div>
+    <h2 class="modal-title" id="paper-modal-3-title">Landscape of retron diversity across the SPIRE microbial metagenome resource reveals candidate novel type XI-like lineages.</h2>
+    <div class="modal-authors">Toro N</div>
+    <div class="modal-meta">mSystems · 2026 Sep 11</div>
+
+    <div class="detail-list">
+      <div class="detail-row"><div class="detail-label">やったこと</div><div>SPIREの10万超の処理済みメタゲノムをHMMと共分散モデルで探索。</div></div>
+      <div class="detail-row"><div class="detail-label">主な結果</div><div>既知型に加え、異なる付随因子を持つ2つのtype XI-like候補を同定。</div></div>
+      <div class="detail-row"><div class="detail-label">新規性</div><div>protease非依存型の新しいtype XI-like構成を提示した点。</div></div>
+      <div class="detail-row"><div class="detail-label">方法・データ</div><div>型特異的HMM、分類・生態分布解析、de novo ncRNA構造探索。</div></div>
+      <div class="detail-row caution"><div class="detail-label">注意点</div><div>機能と抗ファージ活性は実験未検証で、分類は配列・遺伝子配置に基づく候補。</div></div>
+    </div>
+
+    <div class="modal-footer">
+      <a class="original-link" href="https://pubmed.ncbi.nlm.nih.gov/42725772/" target="_blank" rel="noopener">Original paper ↗</a>
+      <span class="doi">DOI: 10.1128/msystems.00732-26</span>
+    </div>
+  </section>
+</div>
+
+<div class="modal" id="paper-modal-4" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="paper-modal-4-title">
+    <button class="modal-close" type="button" data-close-modal aria-label="閉じる">×</button>
+    <div class="modal-number">04</div>
+    <h2 class="modal-title" id="paper-modal-4-title">A host-encoded prophage targets a Candidate Phyla Radiation bacterium and shapes episymbiotic interactions.</h2>
+    <div class="modal-authors">Kumar A, Nahar N, Chouhan D, McLean JS, Bor B, Dong PT, He X</div>
+    <div class="modal-meta">Proceedings of the National Academy of Sciences of the United States of America · 2026 Sep 15</div>
+
+    <div class="detail-list">
+      <div class="detail-row"><div class="detail-label">やったこと</div><div>TM7x–宿主菌系で宿主プロファージXhp1の誘導、感染、空間依存効果を実験。</div></div>
+      <div class="detail-row"><div class="detail-label">主な結果</div><div>浮遊条件ではTM7xがファージを吸収して宿主の溶原化を減らし、表面条件では溶菌を促進。</div></div>
+      <div class="detail-row"><div class="detail-label">新規性</div><div>初のCPR標的ファージを特徴づけ、CPRが空間的に感染遭遇率を変えることを示す点。</div></div>
+      <div class="detail-row"><div class="detail-label">方法・データ</div><div>培養可能な二者系、プロファージ誘導、粒子結合・感染、浮遊/表面条件比較。</div></div>
+      <div class="detail-row caution"><div class="detail-label">注意点</div><div>単一のモデル共生系と培養条件に基づき、口腔バイオフィルム一般への外挿は要検証。</div></div>
+    </div>
+
+    <div class="modal-footer">
+      <a class="original-link" href="https://pubmed.ncbi.nlm.nih.gov/42709801/" target="_blank" rel="noopener">Original paper ↗</a>
+      <span class="doi">DOI: 10.1073/pnas.2615890123</span>
+    </div>
+  </section>
+</div>
+
+<div class="modal" id="paper-modal-5" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="paper-modal-5-title">
+    <button class="modal-close" type="button" data-close-modal aria-label="閉じる">×</button>
+    <div class="modal-number">05</div>
+    <h2 class="modal-title" id="paper-modal-5-title">Alternative genetic codes in bacteria and archaea identified with a fast k-mer-based algorithm.</h2>
+    <div class="modal-authors">Melnykov AV</div>
+    <div class="modal-meta">Proceedings of the National Academy of Sciences of the United States of America · 2026 Sep 15</div>
+
+    <div class="detail-list">
+      <div class="detail-row"><div class="detail-label">やったこと</div><div>k-merベースの高速遺伝暗号推定法を開発し、多数の細菌・古細菌ゲノムへ適用。</div></div>
+      <div class="detail-row"><div class="detail-label">主な結果</div><div>従来より100倍超高速化し、Asgard古細菌を含む3種の暗号変異候補を発見。</div></div>
+      <div class="detail-row"><div class="detail-label">新規性</div><div>古細菌で独特なsense codon再割当候補を含む大規模探索を可能にした点。</div></div>
+      <div class="detail-row"><div class="detail-label">方法・データ</div><div>アセンブル済みゲノムへの計算解析。対象数や実験検証はAbstractに未記載。</div></div>
+      <div class="detail-row caution"><div class="detail-label">注意点</div><div>候補の翻訳実証や誤アセンブリ・遺伝子予測誤差の除外程度が不明。</div></div>
+    </div>
+
+    <div class="modal-footer">
+      <a class="original-link" href="https://pubmed.ncbi.nlm.nih.gov/42709807/" target="_blank" rel="noopener">Original paper ↗</a>
+      <span class="doi">DOI: 10.1073/pnas.2610659123</span>
+    </div>
+  </section>
+</div>
+
+<div class="modal" id="paper-modal-6" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="paper-modal-6-title">
+    <button class="modal-close" type="button" data-close-modal aria-label="閉じる">×</button>
+    <div class="modal-number">06</div>
+    <h2 class="modal-title" id="paper-modal-6-title">Determinants of enteric hyperoxaluria in the SAMP1/YitFc mouse model of spontaneous ileitis.</h2>
+    <div class="modal-authors">Zaidan N, Jaber K, Ho M, Zhou B, Pei Z, Bui ML, Cardozo L, Merritts K, et al.</div>
+    <div class="modal-meta">Gut microbes · 2026 Dec 31</div>
+
+    <div class="detail-list">
+      <div class="detail-row"><div class="detail-label">やったこと</div><div>自然発症性回腸炎マウスと対照に脂肪量の異なる食餌を6週与え高シュウ酸尿を解析。</div></div>
+      <div class="detail-row"><div class="detail-label">主な結果</div><div>高脂肪下で脂肪吸収不全、腸管透過性上昇、SLC26A6低下、微生物変化、腎障害を確認。</div></div>
+      <div class="detail-row"><div class="detail-label">新規性</div><div>回腸炎に伴う腸性高シュウ酸尿を複数の病態層から統合説明する点。</div></div>
+      <div class="detail-row"><div class="detail-label">方法・データ</div><div>3食餌群、代謝測定、質量分析、透過性試験、組織、分子測定、微生物解析。</div></div>
+      <div class="detail-row caution"><div class="detail-label">注意点</div><div>各要因の因果的寄与やヒトIBDへの一般化は確定できない。</div></div>
+    </div>
+
+    <div class="modal-footer">
+      <a class="original-link" href="https://pubmed.ncbi.nlm.nih.gov/42702821/" target="_blank" rel="noopener">Original paper ↗</a>
+      <span class="doi">DOI: 10.1080/19490976.2026.2725367</span>
+    </div>
+  </section>
+</div>
+
+<div class="modal" id="paper-modal-7" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="paper-modal-7-title">
+    <button class="modal-close" type="button" data-close-modal aria-label="閉じる">×</button>
+    <div class="modal-number">07</div>
+    <h2 class="modal-title" id="paper-modal-7-title">Widespread horizontal transfer and strong selection enhance microbial adaptation in Antarctic soils.</h2>
+    <div class="modal-authors">Peng Y, Woods LC, Perlaza-Jimenez L, Lappan R, Jespersen M, Dong X, Holland SR, Chown SL, et al.</div>
+    <div class="modal-meta">Nature communications · 2026 Aug 11</div>
+
+    <div class="detail-list">
+      <div class="detail-row"><div class="detail-label">やったこと</div><div>16地点のshort/long-readメタゲノムから676 MAGを復元しHGTと多型選択を解析。</div></div>
+      <div class="detail-row"><div class="detail-label">主な結果</div><div>エネルギー代謝、特に微量ガス利用遺伝子が頻繁に水平伝播され強い純化選択を受ける。</div></div>
+      <div class="detail-row"><div class="detail-label">新規性</div><div>aerotrophyを水平伝播される適応形質としてゲノム規模で示した点。</div></div>
+      <div class="detail-row"><div class="detail-label">方法・データ</div><div>系統和解、MGE解析、多型、構造予測を統合。</div></div>
+      <div class="detail-row caution"><div class="detail-label">注意点</div><div>HGT推定と適応性は観察的で、機能・fitnessの直接実験はない。</div></div>
+    </div>
+
+    <div class="modal-footer">
+      <a class="original-link" href="https://pubmed.ncbi.nlm.nih.gov/42711294/" target="_blank" rel="noopener">Original paper ↗</a>
+      <span class="doi">DOI: 10.1038/s41467-026-76323-8</span>
+    </div>
+  </section>
+</div>
+
+<div class="modal" id="paper-modal-8" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="paper-modal-8-title">
+    <button class="modal-close" type="button" data-close-modal aria-label="閉じる">×</button>
+    <div class="modal-number">08</div>
+    <h2 class="modal-title" id="paper-modal-8-title">Why did some viruses evolve to be giants while others did not?</h2>
+    <div class="modal-authors">Koonin EV, Krupovic M</div>
+    <div class="modal-meta">Proceedings of the National Academy of Sciences of the United States of America · 2026 Sep 22</div>
+
+    <div class="detail-list">
+      <div class="detail-row"><div class="detail-label">やったこと</div><div>巨大ウイルスの起源とゲノム肥大を既存証拠から論じるPerspective/Review。</div></div>
+      <div class="detail-row"><div class="detail-label">主な結果</div><div>小型祖先から宿主遺伝子を蓄積した典型的ウイルスであり、r/K戦略差を問う。</div></div>
+      <div class="detail-row"><div class="detail-label">新規性</div><div>replicatorとreproducerの断絶を軸に巨大化を再整理する概念的主張。</div></div>
+      <div class="detail-row"><div class="detail-label">方法・データ</div><div>既報の比較・統合であり、新規実験データはAbstractから見えない。</div></div>
+      <div class="detail-row caution"><div class="detail-label">注意点</div><div>r/K類比や宿主由来蓄積説の代替仮説評価は本文依存。原著と同じEvidence尺度では評価しにくい。</div></div>
+    </div>
+
+    <div class="modal-footer">
+      <a class="original-link" href="https://pubmed.ncbi.nlm.nih.gov/42726651/" target="_blank" rel="noopener">Original paper ↗</a>
+      <span class="doi">DOI: 10.1073/pnas.2610442123</span>
+    </div>
+  </section>
+</div>
+
+<div class="modal" id="paper-modal-9" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="paper-modal-9-title">
+    <button class="modal-close" type="button" data-close-modal aria-label="閉じる">×</button>
+    <div class="modal-number">09</div>
+    <h2 class="modal-title" id="paper-modal-9-title">Actuation of CRP activating region 3 by formylation modulates the Vibrio cholerae response to oxidative DNA damage.</h2>
+    <div class="modal-authors">Santos RERS, Basu P, O&#x27;Hara BJ, Gibson JA, Gebhardt MJ, Akut C, Robins WP, Mekalanos JJ, et al.</div>
+    <div class="modal-meta">Proceedings of the National Academy of Sciences of the United States of America · 2026 Sep 15</div>
+
+    <div class="detail-list">
+      <div class="detail-row"><div class="detail-label">やったこと</div><div>CRP K52Q変異を用いたChIP-seq/RNA-seqと、野生型K52の修飾プロテオームを解析。</div></div>
+      <div class="detail-row"><div class="detail-label">主な結果</div><div>定常期maltose条件でK52 formylationを検出し、酸化DNA損傷応答regulonへの切替を示唆。</div></div>
+      <div class="detail-row"><div class="detail-label">新規性</div><div>AR3活性を酸化損傷由来formylationのセンサー機構として位置づけた点。</div></div>
+      <div class="detail-row"><div class="detail-label">方法・データ</div><div>ChIP-seq、RNA-seq、small RNA解析、修飾プロテオーム、条件比較。</div></div>
+      <div class="detail-row caution"><div class="detail-label">注意点</div><div>K52Qがformylationを完全に模倣するか、内在修飾の因果操作があるかはAbstractでは不明。</div></div>
+    </div>
+
+    <div class="modal-footer">
+      <a class="original-link" href="https://pubmed.ncbi.nlm.nih.gov/42721080/" target="_blank" rel="noopener">Original paper ↗</a>
+      <span class="doi">DOI: 10.1073/pnas.2602861123</span>
+    </div>
+  </section>
+</div>
+
+<div class="modal" id="paper-modal-10" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="paper-modal-10-title">
+    <button class="modal-close" type="button" data-close-modal aria-label="閉じる">×</button>
+    <div class="modal-number">10</div>
+    <h2 class="modal-title" id="paper-modal-10-title">Integrating multi-omics technologies to decipher microbiome functions.</h2>
+    <div class="modal-authors">Van Den Bossche T, Lazau EA, Aho VTE, Alfredo Blakeley-Ruiz J, Wolf M, Kunath BJ, Valentin-Alvarado LE, Hellwig P, et al.</div>
+    <div class="modal-meta">Nature communications · 2026 Sep 08</div>
+
+    <div class="detail-list">
+      <div class="detail-row"><div class="detail-label">やったこと</div><div>微生物叢multi-omics統合の進展、障害、標準化とFAIR化のロードマップを概説。</div></div>
+      <div class="detail-row"><div class="detail-label">主な結果</div><div>標準workflow、benchmark、metadata調和、共同基盤の必要性を提案。</div></div>
+      <div class="detail-row"><div class="detail-label">新規性</div><div>技術論だけでなく共同体規模の標準化とAI展望を一体化した整理。</div></div>
+      <div class="detail-row"><div class="detail-label">方法・データ</div><div>Perspectiveであり新規データセットや実験はAbstractに示されない。</div></div>
+      <div class="detail-row caution"><div class="detail-label">注意点</div><div>主張の網羅性と実現可能性は本文次第。Evidence軸は原著と同義に採点できない。</div></div>
+    </div>
+
+    <div class="modal-footer">
+      <a class="original-link" href="https://pubmed.ncbi.nlm.nih.gov/42711342/" target="_blank" rel="noopener">Original paper ↗</a>
+      <span class="doi">DOI: 10.1038/s41467-026-77539-4</span>
+    </div>
+  </section>
+</div>
+
+<div class="modal" id="paper-modal-11" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="paper-modal-11-title">
+    <button class="modal-close" type="button" data-close-modal aria-label="閉じる">×</button>
+    <div class="modal-number">11</div>
+    <h2 class="modal-title" id="paper-modal-11-title">An expanded realm of anti-CRISPR-associated proteins and regulatory mechanisms.</h2>
+    <div class="modal-authors">Feussner M, Birkholz N, Lee SY, Beisel CL, Park HH, Brown CM, Fineran PC, Weinberg Z</div>
+    <div class="modal-meta">Nucleic acids research · 2026 Sep 07</div>
+
+    <div class="detail-list">
+      <div class="detail-row"><div class="detail-label">やったこと</div><div>Aca群周辺のRNA構造を計算探索し、Aca1 RNA結合と新規Aca14の制御を実験。</div></div>
+      <div class="detail-row"><div class="detail-label">主な結果</div><div>複数Aca群に5′UTR RNA motifを見出し、Aca14が2つの隣接operonを抑制。</div></div>
+      <div class="detail-row"><div class="detail-label">新規性</div><div>Aca制御のRNA層と非典型ribbon-helix-helix因子を拡張した点。</div></div>
+      <div class="detail-row"><div class="detail-label">方法・データ</div><div>比較バイオインフォマティクス、RNA結合、遺伝子発現制御実験。</div></div>
+      <div class="detail-row caution"><div class="detail-label">注意点</div><div>生物種・Aca群を越えた普遍性と感染時fitnessへの影響は不明。</div></div>
+    </div>
+
+    <div class="modal-footer">
+      <a class="original-link" href="https://pubmed.ncbi.nlm.nih.gov/42708411/" target="_blank" rel="noopener">Original paper ↗</a>
+      <span class="doi">DOI: 10.1093/nar/gkag862</span>
+    </div>
+  </section>
+</div>
+
+<div class="modal" id="paper-modal-12" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="paper-modal-12-title">
+    <button class="modal-close" type="button" data-close-modal aria-label="閉じる">×</button>
+    <div class="modal-number">12</div>
+    <h2 class="modal-title" id="paper-modal-12-title">Amino acid reprogramming and biofilm-specific tricarboxylate transporters in PET-degrading Piscinibacter sakaiensis.</h2>
+    <div class="modal-authors">Lim HW, Xu J, Koh J, Cao B, Tu W</div>
+    <div class="modal-meta">Applied and environmental microbiology · 2026 Sep 08</div>
+
+    <div class="detail-list">
+      <div class="detail-row"><div class="detail-label">やったこと</div><div>PET biofilm、PET浮遊、maltose浮遊の3条件をbulk RNA-seqとsingle-cell Ramanで比較。</div></div>
+      <div class="detail-row"><div class="detail-label">主な結果</div><div>PET共通のアミノ酸再編成と、biofilm特異的tricarboxylate transporter誘導を分離。</div></div>
+      <div class="detail-row"><div class="detail-label">新規性</div><div>PET応答を炭素源層と表面付着層に分け、輸送系を新要素として提示。</div></div>
+      <div class="detail-row"><div class="detail-label">方法・データ</div><div>3条件RNA-seq、single-cell Raman spectroscopy。</div></div>
+      <div class="detail-row caution"><div class="detail-label">注意点</div><div>輸送体によるPET中間体捕捉は推定で、遺伝子破壊や基質輸送の直接検証はない。</div></div>
+    </div>
+
+    <div class="modal-footer">
+      <a class="original-link" href="https://pubmed.ncbi.nlm.nih.gov/42708590/" target="_blank" rel="noopener">Original paper ↗</a>
+      <span class="doi">DOI: 10.1128/aem.01465-26</span>
+    </div>
+  </section>
+</div>
+
+<div class="modal" id="paper-modal-13" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="paper-modal-13-title">
+    <button class="modal-close" type="button" data-close-modal aria-label="閉じる">×</button>
+    <div class="modal-number">13</div>
+    <h2 class="modal-title" id="paper-modal-13-title">Genome mining of alkaliphilic cyanobacterial consortia: identification of biosynthetic gene clusters in Sodalinema and associated heterotrophs.</h2>
+    <div class="modal-authors">Solanki R, Wiszniak E, Yi L, Cabria G, Strous M, Davila Aleman FD</div>
+    <div class="modal-meta">Applied and environmental microbiology · 2026 Sep 08</div>
+
+    <div class="detail-list">
+      <div class="detail-row"><div class="detail-label">やったこと</div><div>3つのSodalinema優占集積系を510日培養し、環境勾配下でmetagenome/metatranscriptome解析。</div></div>
+      <div class="detail-row"><div class="detail-label">主な結果</div><div>一次生産はSodalinema、二次代謝BGCの多くは従属栄養菌に偏る。</div></div>
+      <div class="detail-row"><div class="detail-label">新規性</div><div>アルカリ性cyanobacteria consortium内の代謝分業と天然物資源を示した点。</div></div>
+      <div class="detail-row"><div class="detail-label">方法・データ</div><div>hybrid metagenomics、MAG、転写解析、pH・温度・alkalinity比較。</div></div>
+      <div class="detail-row caution"><div class="detail-label">注意点</div><div>BGC産物や相互作用機能は未検証で、3集積系に限定。</div></div>
+    </div>
+
+    <div class="modal-footer">
+      <a class="original-link" href="https://pubmed.ncbi.nlm.nih.gov/42708586/" target="_blank" rel="noopener">Original paper ↗</a>
+      <span class="doi">DOI: 10.1128/aem.00780-26</span>
+    </div>
+  </section>
+</div>
+
+<div class="modal" id="paper-modal-14" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="paper-modal-14-title">
+    <button class="modal-close" type="button" data-close-modal aria-label="閉じる">×</button>
+    <div class="modal-number">14</div>
+    <h2 class="modal-title" id="paper-modal-14-title">Genomic diversity and thermal niches of Aspergillus molds disrupting rind formation of surface-ripened cheeses.</h2>
+    <div class="modal-authors">Ojogbane U, Tomo C, Louw N, Wolfe BE</div>
+    <div class="modal-meta">Applied and environmental microbiology · 2026 Sep 08</div>
+
+    <div class="detail-list">
+      <div class="detail-row"><div class="detail-label">やったこと</div><div>米北東部3工房のAspergillus汚染株を比較ゲノム、毒素、RNA-seq、温度競争で解析。</div></div>
+      <div class="detail-row"><div class="detail-label">主な結果</div><div>複数系統の独立導入、全株のochratoxin A産生、15℃未満でPenicillium優位を示す。</div></div>
+      <div class="detail-row"><div class="detail-label">新規性</div><div>腐敗菌の由来・代謝・thermal nicheを統合し制御可能性まで示す点。</div></div>
+      <div class="detail-row"><div class="detail-label">方法・データ</div><div>分離株genomics、毒素定量、培地比較RNA-seq、温度別増殖競争、公開metabarcoding。</div></div>
+      <div class="detail-row caution"><div class="detail-label">注意点</div><div>地域・工房数が限られ、低温管理の現場効果や導入源は未確定。</div></div>
+    </div>
+
+    <div class="modal-footer">
+      <a class="original-link" href="https://pubmed.ncbi.nlm.nih.gov/42708588/" target="_blank" rel="noopener">Original paper ↗</a>
+      <span class="doi">DOI: 10.1128/aem.00032-26</span>
+    </div>
+  </section>
+</div>
+
+<div class="modal" id="paper-modal-15" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="paper-modal-15-title">
+    <button class="modal-close" type="button" data-close-modal aria-label="閉じる">×</button>
+    <div class="modal-number">15</div>
+    <h2 class="modal-title" id="paper-modal-15-title">Elevation-structured viral ecological strategies along glacier-fed rivers on the Qinghai-Tibet Plateau.</h2>
+    <div class="modal-authors">Li Y, Chen T, Li P, Zhang G, Tian Y, Wang J, Ni J</div>
+    <div class="modal-meta">Nature communications · 2026 Aug 08</div>
+
+    <div class="detail-list">
+      <div class="detail-row"><div class="detail-label">やったこと</div><div>597河川metagenomeと85氷河データから36,358 vOTUのcatalogを構築し標高勾配を解析。</div></div>
+      <div class="detail-row"><div class="detail-label">主な結果</div><div>高地で大きい高GCウイルス、下流へのlytic化、AMG機能の勾配を報告。</div></div>
+      <div class="detail-row"><div class="detail-label">新規性</div><div>glacier-to-river連続体でviral lifestyleと代謝機能の系統的転換を示した点。</div></div>
+      <div class="detail-row"><div class="detail-label">方法・データ</div><div>682 metagenomes、viral catalog、生活史・AMG・宿主/ARG関連推定。</div></div>
+      <div class="detail-row caution"><div class="detail-label">注意点</div><div>標高と共変する環境因子が多く、生活史・病原体・AMG機能は計算推定に依存。</div></div>
+    </div>
+
+    <div class="modal-footer">
+      <a class="original-link" href="https://pubmed.ncbi.nlm.nih.gov/42702602/" target="_blank" rel="noopener">Original paper ↗</a>
+      <span class="doi">DOI: 10.1038/s41467-026-76431-5</span>
+    </div>
+  </section>
+</div>
+
+<div class="modal" id="paper-modal-16" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="paper-modal-16-title">
+    <button class="modal-close" type="button" data-close-modal aria-label="閉じる">×</button>
+    <div class="modal-number">16</div>
+    <h2 class="modal-title" id="paper-modal-16-title">Genomic, virulent and phenotypic characterization of a cerebrospinal fluid-derived ST86-KL2 hypervirulent Klebsiella pneumoniae isolate from a patient with meningitis and diabetes mellitus.</h2>
+    <div class="modal-authors">Lai X, Zhu X, Yan J, Zou T, Chen M, Chen H, Tang X, Wang Q</div>
+    <div class="modal-meta">BMC microbiology · 2026 Jul 22</div>
+
+    <div class="detail-list">
+      <div class="detail-row"><div class="detail-label">やったこと</div><div>髄液由来ST86-KL2 hvKP 1株を臨床・ゲノム・細胞・昆虫モデルで特徴化。</div></div>
+      <div class="detail-row"><div class="detail-label">主な結果</div><div>典型的virulence plasmid、高病原性、脳微小血管内皮への接着・侵入を確認。</div></div>
+      <div class="detail-row"><div class="detail-label">新規性</div><div>稀なCSF由来系統の統合的case-level evidenceを追加。</div></div>
+      <div class="detail-row"><div class="detail-label">方法・データ</div><div>WGS、薬剤感受性、Galleria、HCMEC/D3、TEM、qPCR、公開株系統比較。</div></div>
+      <div class="detail-row caution"><div class="detail-label">注意点</div><div>中心は単一分離株で対照・反復の詳細不明。ompAとの因果関係も未検証。</div></div>
+    </div>
+
+    <div class="modal-footer">
+      <a class="original-link" href="https://pubmed.ncbi.nlm.nih.gov/42723014/" target="_blank" rel="noopener">Original paper ↗</a>
+      <span class="doi">DOI: 10.1186/s12866-026-05433-6</span>
+    </div>
+  </section>
+</div>
+
+<div class="modal" id="paper-modal-17" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="paper-modal-17-title">
+    <button class="modal-close" type="button" data-close-modal aria-label="閉じる">×</button>
+    <div class="modal-number">17</div>
+    <h2 class="modal-title" id="paper-modal-17-title">Experimental evolution reveals contrasting adaptive landscapes in lab and field environments.</h2>
+    <div class="modal-authors">Chase AB, Wang Z, Weihe C, Allison SD, Martiny JBH</div>
+    <div class="modal-meta">mBio · 2026 Sep 08</div>
+
+    <div class="detail-list">
+      <div class="detail-row"><div class="detail-label">やったこと</div><div>Curtobacteriumの対照/温暖化進化を実験室と野外で並行比較。</div></div>
+      <div class="detail-row"><div class="detail-label">主な結果</div><div>実験室ではcoding変異の反復、野外では少数変異とintergenic領域の反復が増加。</div></div>
+      <div class="detail-row"><div class="detail-label">新規性</div><div>labで見えるcoding-level parallelismの過大評価を直接比較で示した点。</div></div>
+      <div class="detail-row"><div class="detail-label">方法・データ</div><div>反復進化実験、分離株ゲノム、locus/機能別変異比較。</div></div>
+      <div class="detail-row caution"><div class="detail-label">注意点</div><div>野外の選択要因は複合的で、intergenic変異の適応機能は未実証。</div></div>
+    </div>
+
+    <div class="modal-footer">
+      <a class="original-link" href="https://pubmed.ncbi.nlm.nih.gov/42708584/" target="_blank" rel="noopener">Original paper ↗</a>
+      <span class="doi">DOI: 10.1128/mbio.01700-26</span>
+    </div>
+  </section>
+</div>
+
+<div class="modal" id="paper-modal-18" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="paper-modal-18-title">
+    <button class="modal-close" type="button" data-close-modal aria-label="閉じる">×</button>
+    <div class="modal-number">18</div>
+    <h2 class="modal-title" id="paper-modal-18-title">Bacterial R-bodies with common morphologies and unrolling dynamics are phylogenetically scattered, indicating extensive lateral gene transfer and wide application potential.</h2>
+    <div class="modal-authors">Dörr L, Ghosh R, Schweikert M</div>
+    <div class="modal-meta">Applied and environmental microbiology · 2026 Sep 11</div>
+
+    <div class="detail-list">
+      <div class="detail-row"><div class="detail-label">やったこと</div><div>系統的に離れた6種のR-bodyを遺伝子、電子顕微鏡像、高速動画で比較。</div></div>
+      <div class="detail-row"><div class="detail-label">主な結果</div><div>水平伝播で系統分類が混乱する一方、伸展をfast burst/slowの2型に分類。</div></div>
+      <div class="detail-row"><div class="detail-label">新規性</div><div>extension kineticsをbiotechnology選択指標として初めて提示。</div></div>
+      <div class="detail-row"><div class="detail-label">方法・データ</div><div>6種、EM、高frame-rate microscopy、遺伝子比較。</div></div>
+      <div class="detail-row caution"><div class="detail-label">注意点</div><div>分類の一般性は6種に限られ、応用性能はまだ直接実証されていない。</div></div>
+    </div>
+
+    <div class="modal-footer">
+      <a class="original-link" href="https://pubmed.ncbi.nlm.nih.gov/42725757/" target="_blank" rel="noopener">Original paper ↗</a>
+      <span class="doi">DOI: 10.1128/aem.00864-26</span>
+    </div>
+  </section>
+</div>
+
+<div class="modal" id="paper-modal-19" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="paper-modal-19-title">
+    <button class="modal-close" type="button" data-close-modal aria-label="閉じる">×</button>
+    <div class="modal-number">19</div>
+    <h2 class="modal-title" id="paper-modal-19-title">Large-scale benchmarking of prokaryotic annotation tools across thousands of species.</h2>
+    <div class="modal-authors">Jundzill M, Hölzer M, Mangul S, Marquet M, Ehricht R, Lohde M, Spott R, Makarewicz O, et al.</div>
+    <div class="modal-meta">Genome biology · 2026 Sep 04</div>
+
+    <div class="detail-list">
+      <div class="detail-row"><div class="detail-label">やったこと</div><div>4注釈ツールを156,033の多様な原核ゲノムで大規模benchmark。</div></div>
+      <div class="detail-row"><div class="detail-label">主な結果</div><div>高品質細菌はBakta、古細菌や難しいassemblyはPGAPなど、条件別の強みを提示。</div></div>
+      <div class="detail-row"><div class="detail-label">新規性</div><div>大規模かつMAG・frameshift・汚染を含む実用的比較。</div></div>
+      <div class="detail-row"><div class="detail-label">方法・データ</div><div>E. coli、細菌・古細菌、MAG等にProkka/Bakta/EggNOG-mapper/PGAPを適用。</div></div>
+      <div class="detail-row caution"><div class="detail-label">注意点</div><div>正解集合・評価指標・version/parameter依存性はAbstractだけでは不明。</div></div>
+    </div>
+
+    <div class="modal-footer">
+      <a class="original-link" href="https://pubmed.ncbi.nlm.nih.gov/42706541/" target="_blank" rel="noopener">Original paper ↗</a>
+      <span class="doi">DOI: 10.1186/s13059-026-04262-0</span>
+    </div>
+  </section>
+</div>
+
+<div class="modal" id="paper-modal-20" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="paper-modal-20-title">
+    <button class="modal-close" type="button" data-close-modal aria-label="閉じる">×</button>
+    <div class="modal-number">20</div>
+    <h2 class="modal-title" id="paper-modal-20-title">Revealing Functional Traits of Insect Pest Suppressive Rhizobacterial Strains Through Comparative Genomics.</h2>
+    <div class="modal-authors">Cairns EC, Del Carratore F, Hall JPJ, Zytynska SE</div>
+    <div class="modal-meta">Environmental microbiology · 2026 Sep</div>
+
+    <div class="detail-list">
+      <div class="detail-row"><div class="detail-label">やったこと</div><div>害虫抑制性rhizobacteriaを比較ゲノム解析し植物有益形質を探索。</div></div>
+      <div class="detail-row"><div class="detail-label">主な結果</div><div>広い有益機能は病原近縁株にも共有され、特異的組合せ・制御・発現が重要と示唆。</div></div>
+      <div class="detail-row"><div class="detail-label">新規性</div><div>bioinoculant選抜で単純なgene presence/absenceの限界を示した点。</div></div>
+      <div class="detail-row"><div class="detail-label">方法・データ</div><div>比較ゲノム、機能annotation、広域rhizobacteria collectionとの比較。</div></div>
+      <div class="detail-row caution"><div class="detail-label">注意点</div><div>Abstractが一部簡略で、株数・抑制試験・因果検証の詳細が不明。</div></div>
+    </div>
+
+    <div class="modal-footer">
+      <a class="original-link" href="https://pubmed.ncbi.nlm.nih.gov/42706802/" target="_blank" rel="noopener">Original paper ↗</a>
+      <span class="doi">DOI: 10.1111/1462-2920.70409</span>
+    </div>
+  </section>
+</div>
+
+<div class="modal" id="paper-modal-21" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="paper-modal-21-title">
+    <button class="modal-close" type="button" data-close-modal aria-label="閉じる">×</button>
+    <div class="modal-number">21</div>
+    <h2 class="modal-title" id="paper-modal-21-title">Large-scale genomic analysis places Chinese CC398 as a persistent human-associated MSSA lineage apart from the dominant global LA-MRSA clade.</h2>
+    <div class="modal-authors">Jiang G, Guo C, Hua Y, Wu C, Li S, Wang Y, Zhao J, Ji L, et al.</div>
+    <div class="modal-meta">mSystems · 2026 Sep 11</div>
+
+    <div class="detail-list">
+      <div class="detail-row"><div class="detail-label">やったこと</div><div>新cgMLST schemeを3万超のS. aureus genomeへ適用し時系列系統・伝播・遺伝子差を解析。</div></div>
+      <div class="detail-row"><div class="detail-label">主な結果</div><div>中国CC398は主にHA-MSSA独自群で、global LA-MRSAとは異なる。LA拡散は豚肉貿易と相関。</div></div>
+      <div class="detail-row"><div class="detail-label">新規性</div><div>単一のglobal dissemination modelを崩す地域進化史を示した点。</div></div>
+      <div class="detail-row"><div class="detail-label">方法・データ</div><div>cgMLST、hierarchical clustering、time-calibrated phylogeny、network、gene enrichment。</div></div>
+      <div class="detail-row caution"><div class="detail-label">注意点</div><div>sampling bias、貿易との相関の因果性、cadCの機能は未確定。</div></div>
+    </div>
+
+    <div class="modal-footer">
+      <a class="original-link" href="https://pubmed.ncbi.nlm.nih.gov/42725741/" target="_blank" rel="noopener">Original paper ↗</a>
+      <span class="doi">DOI: 10.1128/msystems.00621-26</span>
+    </div>
+  </section>
+</div>
+
+<div class="modal" id="paper-modal-22" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="paper-modal-22-title">
+    <button class="modal-close" type="button" data-close-modal aria-label="閉じる">×</button>
+    <div class="modal-number">22</div>
+    <h2 class="modal-title" id="paper-modal-22-title">Commensal bacteria inhibit viral infections via a tryptophan metabolite.</h2>
+    <div class="modal-authors">Jiang D, Soo N, Tan CY, Dankwa S, Wang HY, Theriot BS, Xue K, Hill D, et al.</div>
+    <div class="modal-meta">Nature communications · 2026 Aug 13</div>
+
+    <div class="detail-list">
+      <div class="detail-row"><div class="detail-label">やったこと</div><div>HIVを起点に抗viral細菌を探索し、ArAT–3-indolelactic acid–AhR経路を実験検証。</div></div>
+      <div class="detail-row"><div class="detail-label">主な結果</div><div>特定細菌がArAT依存にHIV/CMVを抑え、3ヒトcohortでもArATと良好な転帰が関連。</div></div>
+      <div class="detail-row"><div class="detail-label">新規性</div><div>細菌tryptophan代謝によるcross-virus防御機構を示した点。</div></div>
+      <div class="detail-row"><div class="detail-label">方法・データ</div><div>bioinformatics、細菌/遺伝子/代謝物の実験、HIV・CMV系、3 cohort shotgun metagenome。</div></div>
+      <div class="detail-row caution"><div class="detail-label">注意点</div><div>ヒトcohortは関連であり、COVID-19を含む臨床因果性や効果量の詳細は不明。</div></div>
+    </div>
+
+    <div class="modal-footer">
+      <a class="original-link" href="https://pubmed.ncbi.nlm.nih.gov/42722642/" target="_blank" rel="noopener">Original paper ↗</a>
+      <span class="doi">DOI: 10.1038/s41467-026-76412-8</span>
+    </div>
+  </section>
+</div>
+
+<div class="modal" id="paper-modal-23" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="paper-modal-23-title">
+    <button class="modal-close" type="button" data-close-modal aria-label="閉じる">×</button>
+    <div class="modal-number">23</div>
+    <h2 class="modal-title" id="paper-modal-23-title">Modulating pressure in the Orbitrap improves sensitivity and mass resolution in charge detection mass spectrometry.</h2>
+    <div class="modal-authors">Ebberink EHTM, Giaretta E, Barendregt A, Fiala J, Yin VC, Wörner TP, Fort KL, Makarov AA, et al.</div>
+    <div class="modal-meta">Nature communications · 2026 Aug 13</div>
+
+    <div class="detail-list">
+      <div class="detail-row"><div class="detail-label">やったこと</div><div>Q Exactive UHMRにpulse valveを追加しOrbitrap内圧を取得中だけ低減。</div></div>
+      <div class="detail-row"><div class="detail-label">主な結果</div><div>AAV、IgM、plasmid DNAで検出、質量精度、分解能を改善。</div></div>
+      <div class="detail-row"><div class="detail-label">新規性</div><div>ion transmission/desolvationと分析部真空を時間分離する実装。</div></div>
+      <div class="detail-row"><div class="detail-label">方法・データ</div><div>装置改造と複数大型assemblyでのcharge detection MS評価。</div></div>
+      <div class="detail-row caution"><div class="detail-label">注意点</div><div>他装置への移植性、定量的改善幅、routine運用の耐久性はAbstractでは不明。</div></div>
+    </div>
+
+    <div class="modal-footer">
+      <a class="original-link" href="https://pubmed.ncbi.nlm.nih.gov/42717196/" target="_blank" rel="noopener">Original paper ↗</a>
+      <span class="doi">DOI: 10.1038/s41467-026-76691-1</span>
+    </div>
+  </section>
+</div>
+
+<div class="modal" id="paper-modal-24" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="paper-modal-24-title">
+    <button class="modal-close" type="button" data-close-modal aria-label="閉じる">×</button>
+    <div class="modal-number">24</div>
+    <h2 class="modal-title" id="paper-modal-24-title">Importance of the gonococcal MtrCDE efflux pump system in decreasing bacterial susceptibility to zoliflodacin: implications for future clinical treatment of gonorrhea.</h2>
+    <div class="modal-authors">Balthazar JT, Holley CL, Dey D, Conn GL, Shafer WM</div>
+    <div class="modal-meta">mBio · 2026 Sep 08</div>
+
+    <div class="detail-list">
+      <div class="detail-row"><div class="detail-label">やったこと</div><div>N. gonorrhoeaeのMtrCDE発現/活性変異とgyrB変異がzoliflodacin感受性へ与える影響を解析。</div></div>
+      <div class="detail-row"><div class="detail-label">主な結果</div><div>MtrCDE変異が感受性を下げ、gyrB耐性変異と相加的に耐性レベルを高める。</div></div>
+      <div class="detail-row"><div class="detail-label">新規性</div><div>既存臨床変異が新規薬ZOLの寿命を縮めうることを示す点。</div></div>
+      <div class="detail-row"><div class="detail-label">方法・データ</div><div>遺伝学的変異株と薬剤感受性評価。詳細な株数・臨床分布はAbstractにない。</div></div>
+      <div class="detail-row caution"><div class="detail-label">注意点</div><div>臨床治療失敗や耐性出現頻度は直接示されていない。</div></div>
+    </div>
+
+    <div class="modal-footer">
+      <a class="original-link" href="https://pubmed.ncbi.nlm.nih.gov/42708644/" target="_blank" rel="noopener">Original paper ↗</a>
+      <span class="doi">DOI: 10.1128/mbio.01943-26</span>
+    </div>
+  </section>
+</div>
+
+<div class="modal" id="paper-modal-25" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="paper-modal-25-title">
+    <button class="modal-close" type="button" data-close-modal aria-label="閉じる">×</button>
+    <div class="modal-number">25</div>
+    <h2 class="modal-title" id="paper-modal-25-title">Toxoplasma gondii infection disrupts secondary bile acid transformation in feline gut microbiota.</h2>
+    <div class="modal-authors">Tang L-Y, Zhang H, Zhao J-X, Gao Y-Q, Zhang X, Xie S-C, Zheng Z, Zhu X-Q, et al.</div>
+    <div class="modal-meta">Applied and environmental microbiology · 2026 Sep 11</div>
+
+    <div class="detail-list">
+      <div class="detail-row"><div class="detail-label">やったこと</div><div>2,474 feline gut genome catalogと血清metabolomeを統合しT. gondii感染前後を解析。</div></div>
+      <div class="detail-row"><div class="detail-label">主な結果</div><div>完全な7α-dehydroxylationを欠き、感染後に小腸の関連遺伝子量と血中cholesterolが変化。</div></div>
+      <div class="detail-row"><div class="detail-label">新規性</div><div>猫の腸管部位別BA変換potentialと感染応答を体系化。</div></div>
+      <div class="detail-row"><div class="detail-label">方法・データ</div><div>genome-resolved metagenomics、部位比較、感染時系列、serum metabolomics。</div></div>
+      <div class="detail-row caution"><div class="detail-label">注意点</div><div>遺伝子存在量から機能を推定しており、cholesterol変化はBA変換の直接証拠ではない。</div></div>
+    </div>
+
+    <div class="modal-footer">
+      <a class="original-link" href="https://pubmed.ncbi.nlm.nih.gov/42726488/" target="_blank" rel="noopener">Original paper ↗</a>
+      <span class="doi">DOI: 10.1128/aem.00674-26</span>
+    </div>
+  </section>
+</div>
+
+<div class="modal" id="paper-modal-26" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="paper-modal-26-title">
+    <button class="modal-close" type="button" data-close-modal aria-label="閉じる">×</button>
+    <div class="modal-number">26</div>
+    <h2 class="modal-title" id="paper-modal-26-title">Dynamics and virulence of Enterobacteriaceae reservoirs harboring blaCTX-M group 1 in community wastewater.</h2>
+    <div class="modal-authors">Dennis KJ, Feng S, Schussman MK, Bootsma MJ, McLellan SL</div>
+    <div class="modal-meta">Applied and environmental microbiology · 2026 Sep 08</div>
+
+    <div class="detail-list">
+      <div class="detail-row"><div class="detail-label">やったこと</div><div>4処理場268 raw influentでblaCTX-M group 1を分子・培養・WGSにより追跡。</div></div>
+      <div class="detail-row"><div class="detail-label">主な結果</div><div>高濃度ARGは糞便markerと非相関で、E. coli分離株は臨床株に近く、季節・移動時間で変動。</div></div>
+      <div class="detail-row"><div class="detail-label">新規性</div><div>sewer conveyance自体をAMR reservoir/dynamicsの場として示す点。</div></div>
+      <div class="detail-row"><div class="detail-label">方法・データ</div><div>qPCR/marker、amplicon、selective culture、16S、E. coli WGS。</div></div>
+      <div class="detail-row caution"><div class="detail-label">注意点</div><div>管路内増殖は強く示唆されるが直接追跡ではなく、伝播リスクも未測定。</div></div>
+    </div>
+
+    <div class="modal-footer">
+      <a class="original-link" href="https://pubmed.ncbi.nlm.nih.gov/42708645/" target="_blank" rel="noopener">Original paper ↗</a>
+      <span class="doi">DOI: 10.1128/aem.00890-26</span>
+    </div>
+  </section>
+</div>
+
+<div class="modal" id="paper-modal-27" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="paper-modal-27-title">
+    <button class="modal-close" type="button" data-close-modal aria-label="閉じる">×</button>
+    <div class="modal-number">27</div>
+    <h2 class="modal-title" id="paper-modal-27-title">AI-guided design of complete bacteriophage genomes.</h2>
+    <div class="modal-authors">Ummarino D</div>
+    <div class="modal-meta">Nature biotechnology · 2026 Sep</div>
+
+    <div class="detail-list">
+      <div class="detail-row"><div class="detail-label">やったこと</div><div>Abstractが提供されていないため、AIを用いて完全なbacteriophage genomeを設計した研究であること以上は不明。</div></div>
+      <div class="detail-row"><div class="detail-label">主な結果</div><div>Abstract欠損のため不明。</div></div>
+      <div class="detail-row"><div class="detail-label">新規性</div><div>完全ファージゲノムのAI-guided designを主張しているとタイトルから読めるが、具体的な新規性は評価不能。</div></div>
+      <div class="detail-row"><div class="detail-label">方法・データ</div><div>Abstract欠損のため不明。</div></div>
+      <div class="detail-row caution"><div class="detail-label">注意点</div><div>設計法、生成数、感染性、宿主域、安全性、wet validationを一切確認できず、全軸の確信度は低い。</div></div>
+    </div>
+
+    <div class="modal-footer">
+      <a class="original-link" href="https://pubmed.ncbi.nlm.nih.gov/42722822/" target="_blank" rel="noopener">Original paper ↗</a>
+      <span class="doi">DOI: 10.1038/s41587-026-03311-0</span>
+    </div>
+  </section>
+</div>
+
+<div class="modal" id="paper-modal-28" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="paper-modal-28-title">
+    <button class="modal-close" type="button" data-close-modal aria-label="閉じる">×</button>
+    <div class="modal-number">28</div>
+    <h2 class="modal-title" id="paper-modal-28-title">Bacteriophages Control Epiphytic Pseudomonas syringae Populations in Highbush Blueberry Leaves.</h2>
+    <div class="modal-authors">Ball C, Lauman P, Xu T, Guy T, Dadej K, Richter R, Lubberts M, Cross K, et al.</div>
+    <div class="modal-meta">Microbial biotechnology · 2026 Sep</div>
+
+    <div class="detail-list">
+      <div class="detail-row"><div class="detail-label">やったこと</div><div>blueberry由来P. syringae phageを分離し多段階screeningと葉上biocontrolを評価。</div></div>
+      <div class="detail-row"><div class="detail-label">主な結果</div><div>8非冗長phageを選び、cocktailで葉上菌数を最大5 log超減少。in vitroとex plantaが相関。</div></div>
+      <div class="detail-row"><div class="detail-label">新規性</div><div>blueberry-tropic Psc向けの体系的選抜frameworkを実証。</div></div>
+      <div class="detail-row"><div class="detail-label">方法・データ</div><div>host range、genomics、環境安定性、killing assay、detached leaf validation。</div></div>
+      <div class="detail-row caution"><div class="detail-label">注意点</div><div>圃場、生育植物、耐性進化、非標的影響は未評価。</div></div>
+    </div>
+
+    <div class="modal-footer">
+      <a class="original-link" href="https://pubmed.ncbi.nlm.nih.gov/42712021/" target="_blank" rel="noopener">Original paper ↗</a>
+      <span class="doi">DOI: 10.1111/1751-7915.70438</span>
+    </div>
+  </section>
+</div>
+
+<div class="modal" id="paper-modal-29" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="paper-modal-29-title">
+    <button class="modal-close" type="button" data-close-modal aria-label="閉じる">×</button>
+    <div class="modal-number">29</div>
+    <h2 class="modal-title" id="paper-modal-29-title">Integrated landscape of salivary metagenome and multi-biofluid metabolome characterizes a microbial-metabolic axis in upper gastrointestinal cancer progression.</h2>
+    <div class="modal-authors">Zhang S, Zhang N, Zhang X, Liu Y, Feng Y, Xiang J, Zhang J, Ma H, et al.</div>
+    <div class="modal-meta">Microbiome · 2026 Jul 28</div>
+
+    <div class="detail-list">
+      <div class="detail-row"><div class="detail-label">やったこと</div><div>4病期各105人でsalivary metagenomeと唾液・血漿metabolomeを統合。</div></div>
+      <div class="detail-row"><div class="detail-label">主な結果</div><div>唾液microbiota/metabolomeはLGINから変化し、統合modelはLGIN AUC 0.83。</div></div>
+      <div class="detail-row"><div class="detail-label">新規性</div><div>局所微生物―代謝軸のstage-specific timingとprecancer検出を示す点。</div></div>
+      <div class="detail-row"><div class="detail-label">方法・データ</div><div>multi-center 420人、shotgun metagenomics、paired metabolomics、統合統計・分類model。</div></div>
+      <div class="detail-row caution"><div class="detail-label">注意点</div><div>横断研究で因果性なし。独立外部検証、交絡調整、model leakageの詳細は不明。</div></div>
+    </div>
+
+    <div class="modal-footer">
+      <a class="original-link" href="https://pubmed.ncbi.nlm.nih.gov/42723112/" target="_blank" rel="noopener">Original paper ↗</a>
+      <span class="doi">DOI: 10.1186/s40168-026-02475-w</span>
+    </div>
+  </section>
+</div>
+
+<div class="modal" id="paper-modal-30" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="paper-modal-30-title">
+    <button class="modal-close" type="button" data-close-modal aria-label="閉じる">×</button>
+    <div class="modal-number">30</div>
+    <h2 class="modal-title" id="paper-modal-30-title">Synergistic antitumor immune activation in melanoma using LA-PegPI polymeric gene vaccine in conjunction with PD-1 inhibition.</h2>
+    <div class="modal-authors">Li W, Liu L, Yao X, Abi ME, Ge C, Bian D, Ding X, Pang X, et al.</div>
+    <div class="modal-meta">iScience · 2026 Sep 18</div>
+
+    <div class="detail-list">
+      <div class="detail-row"><div class="detail-label">やったこと</div><div>galactose修飾polymer LA-PegPIによるDC標的pDNA vaccineを作製しanti-PD-1併用を評価。</div></div>
+      <div class="detail-row"><div class="detail-label">主な結果</div><div>DC活性化を誘導し、B16-OVAで腫瘍・肺転移を抑え生存を延長。</div></div>
+      <div class="detail-row"><div class="detail-label">新規性</div><div>deliveryとinnate adjuvanticityを一体化したgene vaccine platform。</div></div>
+      <div class="detail-row"><div class="detail-label">方法・データ</div><div>transfection/毒性、TLR4/NF-κB・NLRP3、DC、B16-OVA mouse、免疫細胞測定。</div></div>
+      <div class="detail-row caution"><div class="detail-label">注意点</div><div>モデル抗原・単一腫瘍モデルで、長期安全性や臨床的送達は不明。</div></div>
+    </div>
+
+    <div class="modal-footer">
+      <a class="original-link" href="https://pubmed.ncbi.nlm.nih.gov/42699759/" target="_blank" rel="noopener">Original paper ↗</a>
+      <span class="doi">DOI: 10.1016/j.isci.2026.117177</span>
+    </div>
+  </section>
+</div>
+
+<div class="modal" id="paper-modal-31" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="paper-modal-31-title">
+    <button class="modal-close" type="button" data-close-modal aria-label="閉じる">×</button>
+    <div class="modal-number">31</div>
+    <h2 class="modal-title" id="paper-modal-31-title">Cerium dioxide nanoparticle exposure attenuates mobility-linked antibiotic resistome signatures across the soil-lettuce continuum.</h2>
+    <div class="modal-authors">Cui J, Yan S, Wang S, Xia H, Chen L, Liu H, Ma J, Fu Y</div>
+    <div class="modal-meta">Environmental pollution (Barking, Essex : 1987) · 2026 Sep 12</div>
+
+    <div class="detail-list">
+      <div class="detail-row"><div class="detail-label">やったこと</div><div>高濃度CeO2 nanoparticleをsoil–lettuce系へ段階投与しmulti-omicsと宿主assayを実施。</div></div>
+      <div class="detail-row"><div class="detail-label">主な結果</div><div>MGE量とARG–MGE共起が低下し、宿主候補の減少やplasmid移入回収低下を観察。</div></div>
+      <div class="detail-row"><div class="detail-label">新規性</div><div>nanoparticleがsoil–plant resistome mobilityを弱めうる機構を提示。</div></div>
+      <div class="detail-row"><div class="detail-label">方法・データ</div><div>compartment metagenomics、co-occurrence、host profiling、transcriptomics、functional assay。</div></div>
+      <div class="detail-row caution"><div class="detail-label">注意点</div><div>実験的高負荷条件で、相対量・assembly共起は実移動率と同義でない。生態影響も要考慮。</div></div>
+    </div>
+
+    <div class="modal-footer">
+      <a class="original-link" href="https://pubmed.ncbi.nlm.nih.gov/42731658/" target="_blank" rel="noopener">Original paper ↗</a>
+      <span class="doi">DOI: 10.1016/j.envpol.2026.129133</span>
+    </div>
+  </section>
+</div>
+
+<div class="modal" id="paper-modal-32" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="paper-modal-32-title">
+    <button class="modal-close" type="button" data-close-modal aria-label="閉じる">×</button>
+    <div class="modal-number">32</div>
+    <h2 class="modal-title" id="paper-modal-32-title">Antimony species-dependent enrichment and transcriptional activity of antibiotic and metal resistance genes in the gut microbiome of male mice.</h2>
+    <div class="modal-authors">Yin Z, Ping H, Li C</div>
+    <div class="modal-meta">Journal of environmental management · 2026 Sep 05</div>
+
+    <div class="detail-list">
+      <div class="detail-row"><div class="detail-label">やったこと</div><div>雄マウスにSb(III)/Sb(V)水を与え、gut genome-resolved metagenome/metatranscriptomeを解析。</div></div>
+      <div class="detail-row"><div class="detail-label">主な結果</div><div>両種でARG量増加、Sb(III)のみARG転写とMGE、arsRABCとの共制御が増加。</div></div>
+      <div class="detail-row"><div class="detail-label">新規性</div><div>metal(loid) species-specificなARG co-selectionとactivityを分離した点。</div></div>
+      <div class="detail-row"><div class="detail-label">方法・データ</div><div>MAG、ARG/MRG、metatranscriptome、MGE、taxon attribution。</div></div>
+      <div class="detail-row caution"><div class="detail-label">注意点</div><div>曝露量・個体数不明、雄マウスのみ。転写増加から実際の耐性伝播までは示さない。</div></div>
+    </div>
+
+    <div class="modal-footer">
+      <a class="original-link" href="https://pubmed.ncbi.nlm.nih.gov/42700527/" target="_blank" rel="noopener">Original paper ↗</a>
+      <span class="doi">DOI: 10.1016/j.jenvman.2026.130867</span>
+    </div>
+  </section>
+</div>
+
+<div class="modal" id="paper-modal-33" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="paper-modal-33-title">
+    <button class="modal-close" type="button" data-close-modal aria-label="閉じる">×</button>
+    <div class="modal-number">33</div>
+    <h2 class="modal-title" id="paper-modal-33-title">Magnetite facilitates phage-bacteria interactions and phage-associated metabolic coordination for medium-chain fatty acid biosynthesis under ammonia stress.</h2>
+    <div class="modal-authors">Zhang M, Wang Z, Xia J, Zhen Y, Jiang F, Zhang L</div>
+    <div class="modal-meta">Water research · 2026 Sep 02</div>
+
+    <div class="detail-list">
+      <div class="detail-row"><div class="detail-label">やったこと</div><div>ammonia stress下のsludge-to-MCFA reactorでmagnetite添加前後のvirus–host/AMGを解析。</div></div>
+      <div class="detail-row"><div class="detail-label">主な結果</div><div>stressで弱まったphage–host couplingとMCFAがFe3O4で回復し関連AMG転写も増加。</div></div>
+      <div class="detail-row"><div class="detail-label">新規性</div><div>iron oxide応答性のviral ecological layerをMCFA生産と関連づけた点。</div></div>
+      <div class="detail-row"><div class="detail-label">方法・データ</div><div>3条件bioreactor、3915 vOTU、118 MAG、metagenome/transcript、公開データ検証。</div></div>
+      <div class="detail-row caution"><div class="detail-label">注意点</div><div>相関中心で、phageや個別AMGが生産回復を因果的に担う証明はない。</div></div>
+    </div>
+
+    <div class="modal-footer">
+      <a class="original-link" href="https://pubmed.ncbi.nlm.nih.gov/42702111/" target="_blank" rel="noopener">Original paper ↗</a>
+      <span class="doi">DOI: 10.1016/j.watres.2026.126856</span>
+    </div>
+  </section>
+</div>
+
+<div class="modal" id="paper-modal-34" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="paper-modal-34-title">
+    <button class="modal-close" type="button" data-close-modal aria-label="閉じる">×</button>
+    <div class="modal-number">34</div>
+    <h2 class="modal-title" id="paper-modal-34-title">Aquifer Microbial Communities Differentially Display Metabolisms Capable of Secondary Effects on Uranium Speciation Across a Former Metal Processing Site.</h2>
+    <div class="modal-authors">Pettinger CJ, Woods AM, Johnson RH, Paradis CJ, Majumder EL</div>
+    <div class="modal-meta">Environmental microbiology · 2026 Sep</div>
+
+    <div class="detail-list">
+      <div class="detail-row"><div class="detail-label">やったこと</div><div>旧金属処理場11地点のaquifer communityをgenomic、代謝試験、geochemistry/modelingで解析。</div></div>
+      <div class="detail-row"><div class="detail-label">主な結果</div><div>直接U還元は見られず、4地点では微生物由来sulfideによる間接U還元が可能と推定。</div></div>
+      <div class="detail-row"><div class="detail-label">新規性</div><div>現場の代謝能から間接的なU speciation変化を地点別に評価。</div></div>
+      <div class="detail-row"><div class="detail-label">方法・データ</div><div>community genomics、cross-site metabolism tests、mineral/geochemical modeling。</div></div>
+      <div class="detail-row caution"><div class="detail-label">注意点</div><div>間接U還元は熱力学・代謝能からの推定で現場実証ではない。</div></div>
+    </div>
+
+    <div class="modal-footer">
+      <a class="original-link" href="https://pubmed.ncbi.nlm.nih.gov/42711858/" target="_blank" rel="noopener">Original paper ↗</a>
+      <span class="doi">DOI: 10.1111/1462-2920.70411</span>
+    </div>
+  </section>
+</div>
+
+<div class="modal" id="paper-modal-35" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="paper-modal-35-title">
+    <button class="modal-close" type="button" data-close-modal aria-label="閉じる">×</button>
+    <div class="modal-number">35</div>
+    <h2 class="modal-title" id="paper-modal-35-title">Phytoplasma-plant interactions: effector-mediated host reprogramming, hormonal crosstalk, metabolic alterations and plant-mediated vector manipulation.</h2>
+    <div class="modal-authors">Kumar R, Maurya R, Maity A, Tiwari RK, Lal MK, Roy A, Yadav R, Rao GP</div>
+    <div class="modal-meta">World journal of microbiology &amp; biotechnology · 2026 Sep 12</div>
+
+    <div class="detail-list">
+      <div class="detail-row"><div class="detail-label">やったこと</div><div>phytoplasma effector、hormone、代謝、vector操作、管理法を総説。</div></div>
+      <div class="detail-row"><div class="detail-label">主な結果</div><div>主要effectorが宿主発生・免疫・揮発物を改変し媒介昆虫伝播を促す知見を統合。</div></div>
+      <div class="detail-row"><div class="detail-label">新規性</div><div>plant–pathogen–vector三者系をmulti-omicsと介入法まで通覧する点。</div></div>
+      <div class="detail-row"><div class="detail-label">方法・データ</div><div>既報genomics/omics/functional studiesのreview。</div></div>
+      <div class="detail-row caution"><div class="detail-label">注意点</div><div>新規実験なし。新しい管理法の実用性と各因果鎖の証拠強度はAbstractでは比較不能。</div></div>
+    </div>
+
+    <div class="modal-footer">
+      <a class="original-link" href="https://pubmed.ncbi.nlm.nih.gov/42728538/" target="_blank" rel="noopener">Original paper ↗</a>
+      <span class="doi">DOI: 10.1007/s11274-026-05265-6</span>
+    </div>
+  </section>
+</div>
+
+<div class="modal" id="paper-modal-36" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="paper-modal-36-title">
+    <button class="modal-close" type="button" data-close-modal aria-label="閉じる">×</button>
+    <div class="modal-number">36</div>
+    <h2 class="modal-title" id="paper-modal-36-title">Pan-genomics and multi-omics for deciphering genetic variation and accelerating genetic improvement in ruminant livestock.</h2>
+    <div class="modal-authors">Jilo DD, Abebe BK, Ullah W, Guo J, Wang J, Ma H, Yiheng L, Cheng G, et al.</div>
+    <div class="modal-meta">Functional &amp; integrative genomics · 2026 Sep 11</div>
+
+    <div class="detail-list">
+      <div class="detail-row"><div class="detail-label">やったこと</div><div>反芻家畜を中心にpangenomicsとmulti-omicsの進展・育種応用を総説。</div></div>
+      <div class="detail-row"><div class="detail-label">主な結果</div><div>SV発見・解釈は改善するがroutine genomic predictionの平均利得は限定的と整理。</div></div>
+      <div class="detail-row"><div class="detail-label">新規性</div><div>全面置換でなくtargeted augmentationを勧める実証的な総括。</div></div>
+      <div class="detail-row"><div class="detail-label">方法・データ</div><div>既存のlong-read、graph genome、omics、育種研究のreview。</div></div>
+      <div class="detail-row caution"><div class="detail-label">注意点</div><div>対象種に鶏も含むなど範囲が広く、比較基準や根拠強度は本文依存。</div></div>
+    </div>
+
+    <div class="modal-footer">
+      <a class="original-link" href="https://pubmed.ncbi.nlm.nih.gov/42726296/" target="_blank" rel="noopener">Original paper ↗</a>
+      <span class="doi">DOI: 10.1007/s10142-026-02042-4</span>
+    </div>
+  </section>
+</div>
+
+<div class="modal" id="paper-modal-37" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="paper-modal-37-title">
+    <button class="modal-close" type="button" data-close-modal aria-label="閉じる">×</button>
+    <div class="modal-number">37</div>
+    <h2 class="modal-title" id="paper-modal-37-title">From colonization to infection: Genomic evolution of Clostridioides difficile pathogenesis.</h2>
+    <div class="modal-authors">Khanna S, Yang Z, Dubberke ER, Dantas G</div>
+    <div class="modal-meta">Cell reports · 2026 Sep 10</div>
+
+    <div class="detail-list">
+      <div class="detail-row"><div class="detail-label">やったこと</div><div>C. difficileのcolonizationからinfectionへの進化・ゲノム知見を統合するreview。</div></div>
+      <div class="detail-row"><div class="detail-label">主な結果</div><div>lineage diversificationとMGE、抗菌薬・宿主選択が毒素、代謝、胞子耐性を形作ると整理。</div></div>
+      <div class="detail-row"><div class="detail-label">新規性</div><div>病原性とepidemic successをeco-evolutionary frameworkで結ぶ点。</div></div>
+      <div class="detail-row"><div class="detail-label">方法・データ</div><div>比較ゲノム等の既報を統合。</div></div>
+      <div class="detail-row caution"><div class="detail-label">注意点</div><div>新規データなし。各機構の因果強度やcolonization-to-infection移行の直接説明は本文次第。</div></div>
+    </div>
+
+    <div class="modal-footer">
+      <a class="original-link" href="https://pubmed.ncbi.nlm.nih.gov/42721035/" target="_blank" rel="noopener">Original paper ↗</a>
+      <span class="doi">DOI: 10.1016/j.celrep.2026.117982</span>
+    </div>
+  </section>
+</div>
+
+<div class="modal" id="paper-modal-38" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="paper-modal-38-title">
+    <button class="modal-close" type="button" data-close-modal aria-label="閉じる">×</button>
+    <div class="modal-number">38</div>
+    <h2 class="modal-title" id="paper-modal-38-title">Gut Microbiota and Aldosterone Regulate Natriuretic Peptide B Expression to Drive Mitophagy and Metabolic Reprogramming in Sepsis-Like Model of Myocardial Injury.</h2>
+    <div class="modal-authors">Yang H, Feng L, Jiang Z, Weng J, Qiu J, Deng R, Wu X, Zeng K</div>
+    <div class="modal-meta">Journal of the American Heart Association · 2026 Sep 09</div>
+
+    <div class="detail-list">
+      <div class="detail-row"><div class="detail-label">やったこと</div><div>LPS mouse、septic FMT、heart-specific NPPB KO、omics、細胞、薬剤探索を統合。</div></div>
+      <div class="detail-row"><div class="detail-label">主な結果</div><div>aldosterone–NPPBがmitophagy/代謝異常を促し、Lestaurtinibが心機能等を改善。</div></div>
+      <div class="detail-row"><div class="detail-label">新規性</div><div>gut microbiotaからhormone、心筋遺伝子、mitophagyへ至るaxisを提示。</div></div>
+      <div class="detail-row"><div class="detail-label">方法・データ</div><div>FMT、metagenome/metabolome/transcriptome、conditional KO、AC16、in silico screening、薬理検証。</div></div>
+      <div class="detail-row caution"><div class="detail-label">注意点</div><div>LPSは感染性sepsisそのものではない。microbiotaからaldosteroneへの因果経路と薬剤特異性の詳細は不明。</div></div>
+    </div>
+
+    <div class="modal-footer">
+      <a class="original-link" href="https://pubmed.ncbi.nlm.nih.gov/42714425/" target="_blank" rel="noopener">Original paper ↗</a>
+      <span class="doi">DOI: 10.1161/jaha.125.046120</span>
+    </div>
+  </section>
+</div>
+
+<div class="modal" id="paper-modal-39" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="paper-modal-39-title">
+    <button class="modal-close" type="button" data-close-modal aria-label="閉じる">×</button>
+    <div class="modal-number">39</div>
+    <h2 class="modal-title" id="paper-modal-39-title">Gut microbiota dynamics and metabolic pathways associated with bleomycin-induced pulmonary fibrosis progression.</h2>
+    <div class="modal-authors">Cong J, Xu W, Zhang Y, Ding X, Cui S, Chi X, Yang X</div>
+    <div class="modal-meta">PeerJ · 2026</div>
+
+    <div class="detail-list">
+      <div class="detail-row"><div class="detail-label">やったこと</div><div>別個体群のcontrol/day7/day14 bleomycin mouse fecesをshotgun metagenome解析。</div></div>
+      <div class="detail-row"><div class="detail-label">主な結果</div><div>線維化進行に伴うtaxon変化とKEGG/CAZy予測機能のstage-specific shiftを報告。</div></div>
+      <div class="detail-row"><div class="detail-label">新規性</div><div>PF進行を段階別gut microbiome potentialとして記述した点。</div></div>
+      <div class="detail-row"><div class="detail-label">方法・データ</div><div>横断的3群、病理/IHC、shotgun metagenomics、KEGG/CAZy、相関。</div></div>
+      <div class="detail-row caution"><div class="detail-label">注意点</div><div>縦断でなく、metabolomicsなし、予測機能と肺病態の因果性は未検証。</div></div>
+    </div>
+
+    <div class="modal-footer">
+      <a class="original-link" href="https://pubmed.ncbi.nlm.nih.gov/42729922/" target="_blank" rel="noopener">Original paper ↗</a>
+      <span class="doi">DOI: 10.7717/peerj.21693</span>
+    </div>
+  </section>
+</div>
+
+<div class="modal" id="paper-modal-40" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="paper-modal-40-title">
+    <button class="modal-close" type="button" data-close-modal aria-label="閉じる">×</button>
+    <div class="modal-number">40</div>
+    <h2 class="modal-title" id="paper-modal-40-title">Host detoxification and gut microbiota are associated with chlorantraniliprole resistance in Spodoptera frugiperda.</h2>
+    <div class="modal-authors">Chen Y, Li Y, Chen Y, Gou C, Li H, He X, Zeng N, Du E, et al.</div>
+    <div class="modal-meta">Journal of insect physiology · 2026 Sep 08</div>
+
+    <div class="detail-list">
+      <div class="detail-row"><div class="detail-label">やったこと</div><div>10世代選抜したCAP耐性昆虫でhost phenotype/transcriptomeとgut metagenomeを統合。</div></div>
+      <div class="detail-row"><div class="detail-label">主な結果</div><div>P450/GST、Ca homeostasis応答、Enterococcus優占と分解酵素候補が耐性に関連。</div></div>
+      <div class="detail-row"><div class="detail-label">新規性</div><div>host detoxificationとmicrobial degradation potentialの協調仮説。</div></div>
+      <div class="detail-row"><div class="detail-label">方法・データ</div><div>71.85倍耐性系統、酵素活性、transcriptome、microbiome、metagenome、phylogeny/domain。</div></div>
+      <div class="detail-row caution"><div class="detail-label">注意点</div><div>腸内菌・候補酵素のノックアウト/再構成がなく、共選択や系統差の代替説明が残る。</div></div>
+    </div>
+
+    <div class="modal-footer">
+      <a class="original-link" href="https://pubmed.ncbi.nlm.nih.gov/42710654/" target="_blank" rel="noopener">Original paper ↗</a>
+      <span class="doi">DOI: 10.1016/j.jinsphys.2026.105062</span>
+    </div>
+  </section>
+</div>
+
+<div class="modal" id="paper-modal-41" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="paper-modal-41-title">
+    <button class="modal-close" type="button" data-close-modal aria-label="閉じる">×</button>
+    <div class="modal-number">41</div>
+    <h2 class="modal-title" id="paper-modal-41-title">Type IV-C CRISPR-Cas effector complexes recognize double-stranded DNA and switch on collateral cleavage of ssDNA and RNA.</h2>
+    <div class="modal-authors">Pittman CC, Xu C, Catchpole RJ, Garrett S, Fuchs R, Chu X, Makarova KS, Koonin EV, et al.</div>
+    <div class="modal-meta">Cell reports · 2026 Sep 05</div>
+
+    <div class="detail-list">
+      <div class="detail-row"><div class="detail-label">やったこと</div><div>IV-C catalogを拡張し、古細菌2系の複合体を生化学・cryo-EMで解析。</div></div>
+      <div class="detail-row"><div class="detail-label">主な結果</div><div>5′-GGG PAMのdsDNA認識がCas10 HD domainを整列させssDNA/RNA collateral cleavageを起動。</div></div>
+      <div class="detail-row"><div class="detail-label">新規性</div><div>IV-C1/IV-C2分類とIV-C1のallosteric activation mechanismを提示。</div></div>
+      <div class="detail-row"><div class="detail-label">方法・データ</div><div>phylogeny、complex reconstitution、nucleic-acid cleavage、cryo-EM。</div></div>
+      <div class="detail-row caution"><div class="detail-label">注意点</div><div>生体内防御効果やIV-C2の機能は未提示で、非特異切断の生理的標的は推定。</div></div>
+    </div>
+
+    <div class="modal-footer">
+      <a class="original-link" href="https://pubmed.ncbi.nlm.nih.gov/42700392/" target="_blank" rel="noopener">Original paper ↗</a>
+      <span class="doi">DOI: 10.1016/j.celrep.2026.117939</span>
+    </div>
+  </section>
+</div>
+
+<div class="modal" id="paper-modal-42" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="paper-modal-42-title">
+    <button class="modal-close" type="button" data-close-modal aria-label="閉じる">×</button>
+    <div class="modal-number">42</div>
+    <h2 class="modal-title" id="paper-modal-42-title">Assembly Dynamics and Functional Divergence of Anaerobic Communities Driven by Iron Oxides.</h2>
+    <div class="modal-authors">Liang G, Wang C, Liu R, Ji Q, Zhang X, Zhao L, Liu X, Zhang H, et al.</div>
+    <div class="modal-meta">Environmental microbiology · 2026 Sep</div>
+
+    <div class="detail-list">
+      <div class="detail-row"><div class="detail-label">やったこと</div><div>activated sludge由来嫌気communityを4種iron oxideで集積しmetagenome/mineral/assembly解析。</div></div>
+      <div class="detail-row"><div class="detail-label">主な結果</div><div>FhはPseudomonas_A優占、Mtは高多様性・Geobacter enrichment、結晶性oxideでmethaneを検出。</div></div>
+      <div class="detail-row"><div class="detail-label">新規性</div><div>iron oxide identityとcommunity structure/biogeochemical outcomeの対応を比較した点。</div></div>
+      <div class="detail-row"><div class="detail-label">方法・データ</div><div>4 mineral enrichment、metagenomics、mineralogy、Fe reduction、null model。</div></div>
+      <div class="detail-row caution"><div class="detail-label">注意点</div><div>集積系で自然環境への一般化は限定。表面積・結晶性等の個別要因は分離されていない。</div></div>
+    </div>
+
+    <div class="modal-footer">
+      <a class="original-link" href="https://pubmed.ncbi.nlm.nih.gov/42711968/" target="_blank" rel="noopener">Original paper ↗</a>
+      <span class="doi">DOI: 10.1111/1462-2920.70412</span>
+    </div>
+  </section>
+</div>
+
+<div class="modal" id="paper-modal-43" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="paper-modal-43-title">
+    <button class="modal-close" type="button" data-close-modal aria-label="閉じる">×</button>
+    <div class="modal-number">43</div>
+    <h2 class="modal-title" id="paper-modal-43-title">Genome-wide transcriptional landscape of Mycobacterium tuberculosis during acute lung infection.</h2>
+    <div class="modal-authors">Bhargavi G, Ghanny S, Soteropoulous P, Vetrivel U, Jayaraman R, Subbian S</div>
+    <div class="modal-meta">Frontiers in immunology · 2026</div>
+
+    <div class="detail-list">
+      <div class="detail-row"><div class="detail-label">やったこと</div><div>active TB rabbit lungからMtb RNAを回収しbroth cultureとgenome-wide microarray比較。</div></div>
+      <div class="detail-row"><div class="detail-label">主な結果</div><div>宿主内でstress、lipid catabolism、respiration等が大幅に再編されin vitroと乖離。</div></div>
+      <div class="detail-row"><div class="detail-label">新規性</div><div>human-like granulomaを持つrabbitでin vivo Mtb transcription landscapeを示す点。</div></div>
+      <div class="detail-row"><div class="detail-label">方法・データ</div><div>rabbit lung homogenate由来RNA、microarray、pathway/network解析。</div></div>
+      <div class="detail-row caution"><div class="detail-label">注意点</div><div>細胞/病変のheterogeneityを平均化し、RNA-seqでない。機能必須性やdrug target性は推定。</div></div>
+    </div>
+
+    <div class="modal-footer">
+      <a class="original-link" href="https://pubmed.ncbi.nlm.nih.gov/42729219/" target="_blank" rel="noopener">Original paper ↗</a>
+      <span class="doi">DOI: 10.3389/fimmu.2026.1875227</span>
+    </div>
+  </section>
+</div>
+
+<div class="modal" id="paper-modal-44" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="paper-modal-44-title">
+    <button class="modal-close" type="button" data-close-modal aria-label="閉じる">×</button>
+    <div class="modal-number">44</div>
+    <h2 class="modal-title" id="paper-modal-44-title">A fluorescent reporter system for tracking Lactobacillus casei T1 in the murine gastrointestinal tract.</h2>
+    <div class="modal-authors">Hua D, Zhou X, Lan J, Wu D, Kang Y, Yu Z, Zhang Z, Yao Y, et al.</div>
+    <div class="modal-meta">Frontiers in microbiology · 2026</div>
+
+    <div class="detail-list">
+      <div class="detail-row"><div class="detail-label">やったこと</div><div>L. casei T1でpromoter×red fluorescent proteinを比較しmouse imagingへ適用。</div></div>
+      <div class="detail-row"><div class="detail-label">主な結果</div><div>P32-mKateが最も強く安定し、胃・上部小腸をex vivoで明瞭に検出。</div></div>
+      <div class="detail-row"><div class="detail-label">新規性</div><div>当該株向けの安定なred reporter tracking systemを確立。</div></div>
+      <div class="detail-row"><div class="detail-label">方法・データ</div><div>promoter/reporter比較、pH試験、whole-body/ex vivo mouse imaging。</div></div>
+      <div class="detail-row caution"><div class="detail-label">注意点</div><div>蛍光はpH依存で、生菌数や長期colonizationの定量精度、他株への移植性は不明。</div></div>
+    </div>
+
+    <div class="modal-footer">
+      <a class="original-link" href="https://pubmed.ncbi.nlm.nih.gov/42724019/" target="_blank" rel="noopener">Original paper ↗</a>
+      <span class="doi">DOI: 10.3389/fmicb.2026.1892263</span>
+    </div>
+  </section>
+</div>
+
+<div class="modal" id="paper-modal-45" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="paper-modal-45-title">
+    <button class="modal-close" type="button" data-close-modal aria-label="閉じる">×</button>
+    <div class="modal-number">45</div>
+    <h2 class="modal-title" id="paper-modal-45-title">FMT alleviates multidrug-resistant Salmonella enterica-induced diarrhea and is associated with loss of IncHI2A-associated resistance determinants in mice.</h2>
+    <div class="modal-authors">Xia P, Wu H, Chen W, Wang D, Xu S, Yang Y, Zeng T, Xia L</div>
+    <div class="modal-meta">Frontiers in microbiology · 2026</div>
+
+    <div class="detail-list">
+      <div class="detail-row"><div class="detail-label">やったこと</div><div>MDR Salmonella mouse diarrheaにFMTを行い病態、microbiota、分離株ARG/plasmidを追跡。</div></div>
+      <div class="detail-row"><div class="detail-label">主な結果</div><div>症状と炎症が改善し、FMT群でIncHI2A関連ARG喪失が時間とともに増えた。</div></div>
+      <div class="detail-row"><div class="detail-label">新規性</div><div>microbiota介入と病原菌内のresistance element安定性を結びつけた点。</div></div>
+      <div class="detail-row"><div class="detail-label">方法・データ</div><div>mouse FMT、病理/qPCR、microbiota、分離株WGS、19代in vitro passage。</div></div>
+      <div class="detail-row caution"><div class="detail-label">注意点</div><div>ARG喪失を引き起こす菌叢因子は不明で、FMTとの関連は因果機構を確定しない。</div></div>
+    </div>
+
+    <div class="modal-footer">
+      <a class="original-link" href="https://pubmed.ncbi.nlm.nih.gov/42723972/" target="_blank" rel="noopener">Original paper ↗</a>
+      <span class="doi">DOI: 10.3389/fmicb.2026.1913730</span>
+    </div>
+  </section>
+</div>
+
+<div class="modal" id="paper-modal-46" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="paper-modal-46-title">
+    <button class="modal-close" type="button" data-close-modal aria-label="閉じる">×</button>
+    <div class="modal-number">46</div>
+    <h2 class="modal-title" id="paper-modal-46-title">A voyage of reprogrammable metabolic bioengineering reshapes plant defense: from editing tools to synthetic systems.</h2>
+    <div class="modal-authors">Raghuraman P, Park S</div>
+    <div class="modal-meta">Frontiers in plant science · 2026</div>
+
+    <div class="detail-list">
+      <div class="detail-row"><div class="detail-label">やったこと</div><div>植物防御metaboliteとCRISPR、fluxomics、spatial omics、AI/synthetic circuitsを総説。</div></div>
+      <div class="detail-row"><div class="detail-label">主な結果</div><div>複数代謝経路をprogrammableに再配線する研究潮流と応用展望を整理。</div></div>
+      <div class="detail-row"><div class="detail-label">新規性</div><div>代謝物から編集・合成systemまでmulti-scaleに接続する枠組み。</div></div>
+      <div class="detail-row"><div class="detail-label">方法・データ</div><div>既報研究のnarrative review。</div></div>
+      <div class="detail-row caution"><div class="detail-label">注意点</div><div>新規証拠なし。対象範囲が非常に広く、各技術の成熟度やtrade-off評価が不明。</div></div>
+    </div>
+
+    <div class="modal-footer">
+      <a class="original-link" href="https://pubmed.ncbi.nlm.nih.gov/42719693/" target="_blank" rel="noopener">Original paper ↗</a>
+      <span class="doi">DOI: 10.3389/fpls.2026.1842722</span>
+    </div>
+  </section>
+</div>
+
+<div class="modal" id="paper-modal-47" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="paper-modal-47-title">
+    <button class="modal-close" type="button" data-close-modal aria-label="閉じる">×</button>
+    <div class="modal-number">47</div>
+    <h2 class="modal-title" id="paper-modal-47-title">Molecular biology and integrated strategies for activating cryptic biosynthetic gene clusters toward next-generation antibiotic discovery.</h2>
+    <div class="modal-authors">Pattapulavar V, Ramanujam S, Yellampalli A, Badiginchala HS, Christopher JG</div>
+    <div class="modal-meta">Frontiers in bioinformatics · 2026</div>
+
+    <div class="detail-list">
+      <div class="detail-row"><div class="detail-label">やったこと</div><div>cryptic BGCの意義、抑制要因、遺伝・培養・omics・AIによる活性化法を総説。</div></div>
+      <div class="detail-row"><div class="detail-label">主な結果</div><div>複数手法と統合multi-omics/synthetic biologyの可能性を整理。</div></div>
+      <div class="detail-row"><div class="detail-label">新規性</div><div>多様なactivation strategyを抗菌薬探索へまとめた点。</div></div>
+      <div class="detail-row"><div class="detail-label">方法・データ</div><div>既報のreview。</div></div>
+      <div class="detail-row caution"><div class="detail-label">注意点</div><div>新規データなし。手法間の成功率、再発見回避、scale-upの定量比較はAbstractにない。</div></div>
+    </div>
+
+    <div class="modal-footer">
+      <a class="original-link" href="https://pubmed.ncbi.nlm.nih.gov/42712777/" target="_blank" rel="noopener">Original paper ↗</a>
+      <span class="doi">DOI: 10.3389/fbinf.2026.1893206</span>
+    </div>
+  </section>
+</div>
+
+<div class="modal" id="paper-modal-48" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="paper-modal-48-title">
+    <button class="modal-close" type="button" data-close-modal aria-label="閉じる">×</button>
+    <div class="modal-number">48</div>
+    <h2 class="modal-title" id="paper-modal-48-title">High-fat diet-induced gut microbiota functional reprogramming is associated with metabolic inflammation and cardiac remodeling through the gut-heart axis in mice.</h2>
+    <div class="modal-authors">Feng Y, Yang K, Qu Z, Liu T, Yang D, Wei S, He Y, Wang X, et al.</div>
+    <div class="modal-meta">Frontiers in immunology · 2026</div>
+
+    <div class="detail-list">
+      <div class="detail-row"><div class="detail-label">やったこと</div><div>雄mouseをHFD/NCDで16週飼育し代謝・炎症・心組織とcecal 16Sを比較。</div></div>
+      <div class="detail-row"><div class="detail-label">主な結果</div><div>HFDでMetS様表現型、初期心remodeling、菌叢組成と予測機能の変化を観察。</div></div>
+      <div class="detail-row"><div class="detail-label">新規性</div><div>HFDに伴うgut microbiotaとcardiac remodelingを同一モデルで対応づける点。</div></div>
+      <div class="detail-row"><div class="detail-label">方法・データ</div><div>physiology、serum markers、histology、16S、PICRUSt様機能予測、BugBase。</div></div>
+      <div class="detail-row caution"><div class="detail-label">注意点</div><div>介入・FMTなしで因果性はなく、機能は16Sからの予測。雄のみで群サイズ不明。</div></div>
+    </div>
+
+    <div class="modal-footer">
+      <a class="original-link" href="https://pubmed.ncbi.nlm.nih.gov/42712419/" target="_blank" rel="noopener">Original paper ↗</a>
+      <span class="doi">DOI: 10.3389/fimmu.2026.1912486</span>
+    </div>
+  </section>
+</div>
+
+<div class="modal" id="paper-modal-49" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="paper-modal-49-title">
+    <button class="modal-close" type="button" data-close-modal aria-label="閉じる">×</button>
+    <div class="modal-number">49</div>
+    <h2 class="modal-title" id="paper-modal-49-title">Deciphering the genomic landscape of novel Acinetobacter non-baumannii lineages causing neonatal septicemia: carbapenem resistance and virulence.</h2>
+    <div class="modal-authors">Roy S, Morita D, Das T, Das S, Nandy S, Saha B, Basu S</div>
+    <div class="modal-meta">Frontiers in microbiology · 2026</div>
+
+    <div class="detail-list">
+      <div class="detail-row"><div class="detail-label">やったこと</div><div>2007–2025年の新生児血液由来11 Anbを同定しWGS、耐性、virulence assayを実施。</div></div>
+      <div class="detail-row"><div class="detail-label">主な結果</div><div>11新規ST、6株にcarbapenemaseを認める一方、病原性はA. baumanniiより低い。</div></div>
+      <div class="detail-row"><div class="detail-label">新規性</div><div>複数の新規lineageでAMR contextと実験病原性を統合した点。</div></div>
+      <div class="detail-row"><div class="detail-label">方法・データ</div><div>VITEK/MALDI/WGS、AST、resistome/virulome/plasmid/phylogeny、細胞・mouse assay。</div></div>
+      <div class="detail-row caution"><div class="detail-label">注意点</div><div>11株と限定的で、長期間samplingの代表性や臨床転帰との関連は不明。VF存在と表現型は非対応。</div></div>
+    </div>
+
+    <div class="modal-footer">
+      <a class="original-link" href="https://pubmed.ncbi.nlm.nih.gov/42707890/" target="_blank" rel="noopener">Original paper ↗</a>
+      <span class="doi">DOI: 10.3389/fmicb.2026.1889965</span>
+    </div>
+  </section>
+</div>
+
+<div class="modal" id="paper-modal-50" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="paper-modal-50-title">
+    <button class="modal-close" type="button" data-close-modal aria-label="閉じる">×</button>
+    <div class="modal-number">50</div>
+    <h2 class="modal-title" id="paper-modal-50-title">A streamlined protocol for small-scale protoplast generation and CRISPR/Cpf1-mediated genome editing in Fusarium oxysporum.</h2>
+    <div class="modal-authors">Zheng JZ, Huang SC, Zeng WT, Lin YH, Chang TH</div>
+    <div class="modal-meta">iScience · 2026 Sep 18</div>
+
+    <div class="detail-list">
+      <div class="detail-row"><div class="detail-label">やったこと</div><div>filter-column small-scale protoplastとCpf1、短いguide/minimal homology armを統合。</div></div>
+      <div class="detail-row"><div class="detail-label">主な結果</div><div>低コスト化しつつ標的編集を分子確認とpathogenicity assayで検証。</div></div>
+      <div class="detail-row"><div class="detail-label">新規性</div><div>protoplast調製から相同組換えまで一体で簡略化した実用protocol。</div></div>
+      <div class="detail-row"><div class="detail-label">方法・データ</div><div>protoplast生成、CRISPR/Cpf1 targeting、molecular verification、標準病原性試験。</div></div>
+      <div class="detail-row caution"><div class="detail-label">注意点</div><div>編集効率、off-target、複数locus/strainでの頑健性、Cas9との定量比較はAbstractでは不明。</div></div>
+    </div>
+
+    <div class="modal-footer">
+      <a class="original-link" href="https://pubmed.ncbi.nlm.nih.gov/42707175/" target="_blank" rel="noopener">Original paper ↗</a>
+      <span class="doi">DOI: 10.1016/j.isci.2026.117365</span>
+    </div>
+  </section>
+</div>
+
+<script>
+const search = document.getElementById('search');
+const count = document.getElementById('visibleCount');
+const papers = [...document.querySelectorAll('.paper')];
+const modals = [...document.querySelectorAll('.modal')];
+let lastTrigger = null;
+
+function applySearch(){
+  const q = search.value.toLowerCase().trim();
+  let visible = 0;
+  papers.forEach(p => {
+    const show = !q || p.dataset.search.includes(q);
+    p.classList.toggle('hidden', !show);
+    if(show) visible += 1;
+  });
+  count.textContent = `${visible} / ${papers.length}`;
+}
+
+function openModal(trigger){
+  const modal = document.getElementById(trigger.dataset.modalId);
+  if(!modal) return;
+  lastTrigger = trigger;
+  modal.hidden = false;
+  document.body.classList.add('modal-open');
+  const close = modal.querySelector('.modal-close');
+  if(close) close.focus();
+}
+
+function closeModal(modal){
+  if(!modal || modal.hidden) return;
+  modal.hidden = true;
+  document.body.classList.remove('modal-open');
+  if(lastTrigger){
+    lastTrigger.focus();
+    lastTrigger = null;
+  }
+}
+
+papers.forEach(p => {
+  p.addEventListener('click', () => openModal(p));
+  p.addEventListener('keydown', e => {
+    if(e.key === 'Enter' || e.key === ' '){
+      e.preventDefault();
+      openModal(p);
+    }
+  });
+});
+
+modals.forEach(modal => {
+  modal.querySelectorAll('[data-close-modal]').forEach(el => {
+    el.addEventListener('click', () => closeModal(modal));
+  });
+});
+
+document.addEventListener('keydown', e => {
+  if(e.key === 'Escape'){
+    const open = modals.find(m => !m.hidden);
+    if(open) closeModal(open);
+  }
+});
+
+search.addEventListener('input', applySearch);
+applySearch();
+</script>
+
+</body>
+</html>

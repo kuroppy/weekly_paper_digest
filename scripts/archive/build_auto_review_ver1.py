@@ -76,7 +76,6 @@ def render_index_item(index: int, paper: dict, review: dict) -> str:
         for x in (
             paper.get("title"),
             paper.get("journal"),
-            paper.get("authors"),
             c.get("comment"),
             s.get("what_they_did"),
             s.get("main_findings"),
@@ -111,9 +110,6 @@ def render_modal(index: int, paper: dict, review: dict) -> str:
     if paper.get("doi"):
         doi_html = f'<span class="doi">DOI: {esc(paper["doi"])}</span>'
 
-    authors = str(paper.get("authors") or review.get("authors") or "").strip()
-    authors_html = f'<div class="modal-authors">{esc(authors)}</div>' if authors else ""
-
     return f"""
 <div class="modal" id="{modal_id}" hidden>
   <div class="modal-backdrop" data-close-modal></div>
@@ -121,7 +117,6 @@ def render_modal(index: int, paper: dict, review: dict) -> str:
     <button class="modal-close" type="button" data-close-modal aria-label="閉じる">×</button>
     <div class="modal-number">{index:02d}</div>
     <h2 class="modal-title" id="{modal_id}-title">{esc(paper.get('title', ''))}</h2>
-    {authors_html}
     <div class="modal-meta">{journal_date(paper)}</div>
 
     <div class="detail-list">
