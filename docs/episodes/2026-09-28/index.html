@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weekly Paper Digest 2026-09-28</title>
+  <link rel="stylesheet" href="../../assets/style.css">
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N22XGSKTFW"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-N22XGSKTFW');
+  </script>
+
+  <!-- Audio Analytics -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const audio = document.getElementById("podcast-player");
+      if (!audio || typeof gtag !== "function") return;
+
+      const episode = audio.dataset.episode;
+      const reached = new Set();
+      let playedOnce = false;
+
+      audio.addEventListener("play", () => {
+        if (playedOnce) return;
+        playedOnce = true;
+        gtag("event", "podcast_play", {
+          episode,
+          page_path: location.pathname
+        });
+      });
+
+      audio.addEventListener("timeupdate", () => {
+        if (!audio.duration || !isFinite(audio.duration)) return;
+
+        const percent = Math.floor((audio.currentTime / audio.duration) * 100);
+
+        [25, 50, 75, 100].forEach((milestone) => {
+          if (percent >= milestone && !reached.has(milestone)) {
+            reached.add(milestone);
+            gtag("event", "podcast_progress", {
+              episode,
+              page_path: location.pathname,
+              progress_percent: milestone,
+              audio_current_time: Math.round(audio.currentTime),
+              audio_duration: Math.round(audio.duration)
+            });
+          }
+        });
+      });
+    });
+  </script>
+</head>
+
+<body>
+  <div class="container">
+    <nav class="site-nav" aria-label="Site navigation">
+      <a class="site-home-link" href="https://kuroppy.github.io/weekly_paper_digest/">
+        ← Weekly Paper Digest Home
+      </a>
+    </nav>
+
+    <header class="page-header">
+      <h1>Weekly Paper Digest</h1>
+      <p class="page-meta">2026-09-28</p>
+    </header>
+
+    <audio
+            id="podcast-player"
+            data-episode="2026-09-28"
+            controls
+            preload="metadata">
+            <source src="audio.mp3" type="audio/mpeg">
+            </audio>
+
+    <h2>今週の注目論文</h2><ol><li>Defining the essential genome of diverse phages with phage Tn-seq.</li><li>A geothermal amoeba sets a new upper temperature limit for eukaryotes.</li><li>In-cell discovery and characterization of a non-canonical bacterial protein translocation-folding complex.</li><li>Structural diversification of phage tail fibers enables recognition of diverse type IV pili.</li><li>Phenotypic divergence is driven by mobile genetic elements in a heritable insect symbiont.</li></ol>
+
+    <hr>
+
+    <section>
+  <h2>今週の印象</h2>
+  <p>今週は、ファージの遺伝学を大規模かつ実験的に読み解くための手法が一気に前進した週として印象的だった。特に、phage Tn-seqとHIDEN-SEQという独立したトランスポゾン挿入シーケンス法が同時期に登場しており、「未知遺伝子の多いファージをどう機能ゲノミクスの対象にするか」という問題が新しい段階に入ったように見える。その一方で、63°Cで増殖する真核生物、細胞内で直接見つかった非典型的Sec複合体、プラスミド1本による共生表現型の獲得など、個別に話したくなる論文も多い週だった。</p>
+<p>------------------------------------------------------------------------</p>
+</section>
+<section class="paper-list">
+  <h2>今週の注目論文</h2>
+  <article class="paper-card">
+    <h3>In-cell discovery and characterization of a non-canonical bacterial protein translocation-folding complex.</h3>
+    <p class="journal">Cell</p>
+    <p><a href="https://doi.org/10.1016/j.cell.2026.08.055">https://doi.org/10.1016/j.cell.2026.08.055</a></p>
+    <p>Mycoplasma pneumoniae の細胞内cryo-ET像から未知の表面複合体を見つけ、Sec transloconと細胞外foldase様タンパク質が連結した非典型的なタンパク質輸送・フォールディング装置であることを明らかにした。</p>
+  </article>  
+  <article class="paper-card">
+  <h3>Defining the essential genome of diverse phages with phage Tn-seq.</h3>
+  <p class="journal">Nature microbiology</p>
+  <p><a href="https://doi.org/10.1038/s41564-026-02486-1">https://doi.org/10.1038/s41564-026-02486-1</a></p>
+  <p>Tn5トランスポゾン変異導入とanti-CRISPR選択を組み合わせ、多様なファージでゲノムワイドに遺伝子必須性を調べ、さらに新しい遺伝子カーゴまで導入できるphage Tn-seqを開発した。</p>
+</article>
+</section>
+<section class="paper-list">
+  <h2>今週のショートニュース</h2>
+  <article class="paper-card">
+  <h3>Systematic mapping of bacteriophage gene essentiality with HIDEN-SEQ.</h3>
+  <p class="journal">Nature microbiology</p>
+  <p><a href="https://doi.org/10.1038/s41564-026-02455-8">https://doi.org/10.1038/s41564-026-02455-8</a></p>
+  <p>anti-CRISPRを利用したtransposon-insertion sequencingでファージ遺伝子と選択可能な表現型を結びつけ、T4の既知のessentiality mapを再現するとともに、非モデルファージで条件依存的必須遺伝子や未知のantidefence因子を同定した。phage Tn-seqと同じ週に出たこと自体が興味深い。</p>
+</article>
+<article class="paper-card">
+  <h3>A bacterial-killing type IV secretion system as a hidden antifungal device.</h3>
+  <p class="journal">Science advances</p>
+  <p><a href="https://doi.org/10.1126/sciadv.aeg3743">https://doi.org/10.1126/sciadv.aeg3743</a></p>
+  <p>*Lysobacter enzymogenes* のbacterial-killing T4SSが、DNase effector LtdDを直接送り込むことで酵母から糸状菌まで抑制するcross-kingdom antifungal weaponとしても働くことを示した。</p>
+</article>
+<article class="paper-card">
+  <h3>BaCas12a3 represents a new subtype of type V CRISPR effector with collateral activity toward tRNA.</h3>
+  <p class="journal">Nucleic acids research</p>
+  <p><a href="https://doi.org/10.1093/nar/gkag915">https://doi.org/10.1093/nar/gkag915</a></p>
+  <p>新しいtype V CRISPR effector BaCas12a3が、標的RNA認識後にtRNAの3'末端CCAを切断して宿主増殖を停止させることを示し、そのtRNA認識を担う独特なtRNA-loading domainの構造も明らかにした。</p>
+</article>
+<article class="paper-card">
+  <h3>Temperate bacteriophages shape intraspecies competition during Pseudomonas aeruginosa Infection.</h3>
+  <p class="journal">The ISME journal</p>
+  <p><a href="https://doi.org/10.1093/ismejo/wrag253">https://doi.org/10.1093/ismejo/wrag253</a></p>
+  <p>臨床 Pseudomonas aeruginosa 株間の競争でtemperate phageが「武器」として働き、特定ファージの獲得がin vitroだけでなくマウス創傷感染モデルでも競争優位を与えることを示した。</p>
+</article>
+<article class="paper-card">
+  <h3>Targeted, genome-scale overexpression in Proteobacteria.</h3>
+  <p class="journal">mBio</p>
+  <p><a href="https://doi.org/10.1128/mbio.02340-25">https://doi.org/10.1128/mbio.02340-25</a></p>
+  <p>CRISPR-associated transposonで標的遺伝子上流へsynthetic promoterを挿入するCRISPRtOEを開発し、Escherichia coli と Zymomonas mobilis</p>
+</article>
+</section>
+<section>
+  <h2>まとめ</h2>
+  <p>今週はファージ研究、とくに「未知遺伝子を実験的にどう読むか」という部分に大きな動きがあり、phage Tn-seqとHIDEN-SEQが並んで登場したことが最も印象的だった。ただし、それだけの週ではなく、63°Cで増殖する真核生物、細胞内構造から発見されたSec輸送・フォールディング複合体、tail fiberとpilusの構造的共進化、そして単一プラスミドが昆虫共生の防御表現型を動かす研究まで、スケールの異なる強い論文が揃っている。無理に一つのテーマへまとめるより、「実験によってこれまで見えなかった機能や限界が急に具体化した論文が多かった週」として読むのが自然そうだ。</p>
+</section>
+
+    <footer class="episode-footer">
+      <p>
+  <a href="wpd_review.html">
+    📝 How this episode was curated
+  </a>
+</p>
+      論文のレビューから選定、番組構成まで、このエピソードができるまでの編集過程を公開しています。
+      <p>
+  <a href="../../editorial_notes/editorial_meeting_notes_2026-09-28.html">
+    📝 Read the Editorial Note of this episode
+  </a>
+</p>
+      論文を読みながらAIと交わした編集会議の記録です。
+    </footer>
+  </div>
+</body>
+</html>

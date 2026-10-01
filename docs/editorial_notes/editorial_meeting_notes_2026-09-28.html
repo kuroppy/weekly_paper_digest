@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Editorial Meeting Notes | Weekly Paper Digest</title>
+
+  <link rel="stylesheet" href="../assets/style.css">
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N22XGSKTFW"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-N22XGSKTFW');
+  </script>
+</head>
+
+<body>
+
+<div class="container">
+
+  <nav class="site-nav" aria-label="Site navigation">
+    <a
+      class="site-home-link"
+      href="https://kuroppy.github.io/weekly_paper_digest/"
+    >
+      ← Weekly Paper Digest Home
+    </a>
+  </nav>
+
+  <header class="page-header">
+    <h1>Editorial Meeting Notes</h1>
+    <p class="page-meta">2026-09-28</p>
+  </header>
+
+  <main class="markdown-body">
+    <p><strong>Episode:</strong> 2026-09-29</p>
+<p><strong>Participants</strong></p>
+<ul>
+<li>Kuroppy (Editor)</li>
+<li>Chappy (AI Editorial Partner, GPT-5.6 Sol)</li>
+</ul>
+<p><strong>Recorder</strong></p>
+<ul>
+<li>Chappy</li>
+</ul>
+<blockquote><p><strong>About this document</strong> このMeeting Notesは、Weekly Paper Digestの編集会議における議論の一次記録です。配信内容のレビューだけでなく、編集上の意思決定や、その背景となる議論・思考の変化も記録します。</p></blockquote>
+<h1>Editing Pipeline</h1>
+<h2>Workflow (used)</h2>
+<ul>
+<li>paper_collector_ver2</li>
+<li>Prompt_for_Paper_Review_ver1</li>
+<li>build_auto_review.py / wpd_auto_review_template.html</li>
+<li>Prompt_for_Weekly_Paper_Curation_ver4</li>
+<li>build_curation_review.py / wpd_curation_template.html</li>
+<li>NotebookLM_Prompt_ver5.1</li>
+</ul>
+<p>基本的な制作フローとNotebookLM Prompt ver.5.1は変更せずに使用した。</p>
+<p>今回は普段使用しているMacが使えないため、別端末から制作を行った。コードやプロンプトをGitHubで管理していたことで、端末が変わってもこれまでの制作フローをほぼそのまま再開できた。WPDの制作環境をローカル端末だけに依存させず、コードとプロンプトとして残しておくことの実用的な価値を確認できた。</p>
+<h2>今週のキュレーション</h2>
+<p>今週は約50報の候補論文を確認した。</p>
+<p>特に印象的だったのは、新しい実験アプローチによって、これまで直接見ることや操作することが難しかった対象を研究可能にしている論文が複数あったことだった。</p>
+<p>中心となったのは、in-cell cryo-ETによるMycoplasmaのタンパク質輸送複合体の解析と、phage Tn-seqによるファージ遺伝子の網羅的な機能解析だった。また、同じ週にHIDEN-SEQという独立したファージ遺伝子必須性解析法も報告されていた。</p>
+<p>全体として、<strong>「見えなかったものを、実験できる対象にする」</strong>という流れが自然に生まれた。</p>
+<h2>今週の音声</h2>
+<p>今週の音声は、まず単純に面白かった。また、個々の論文の内容がよく、最近の微生物学、とくに新しい実験技術やファージ機能ゲノミクスの動向を把握できた感覚があった。</p>
+<p>これまでWPDでは、ObservationからQuestion、Evidence、Conclusionへと研究のArgumentationを追うことを重視してきた。一方、今回はArgumentationの要素が比較的弱くても、新しい実験アプローチそのものと、それによって何が可能になったのかを追うことで十分に面白い回になっていた。</p>
+<p>一方で、音声全体にはややドラマチックな表現が多かった。「ブレイクスルー」「マイルストーン」といった評価的な表現や、ファージ療法の将来像まで踏み込むEndingは、WPDとしては少し強すぎると感じた。</p>
+<p>ただし、今回はこの結果を受けてNotebookLM Promptをすぐに修正することはしない。同じPromptを使用していても、扱う論文やその週の論文群の性格によって、音声の構成やArgumentationの強さは変化する。毎週同じ型へ強く固定するよりも、しばらく現在のPromptを使い続け、その揺れを観察することにした。</p>
+<h2>今後の検討事項</h2>
+<p>NotebookLM Prompt ver.5.1は当面変更せず、数週間継続して使用する。</p>
+<p>その中で、Argumentationの強さ、番組全体の編集テーマ、ドラマチックな表現の程度、Deep DiveとShort Newsのバランスなどが、週によってどのように変化するかを見る。</p>
+<p>特に、今回のように「研究の議論そのもの」よりも「新しい方法によって何が研究可能になったか」が面白い週もあるため、Argumentationを毎回同じ強さで要求する必要があるのかは、今後も観察する。</p>
+<h2>📝 Meeting Memo</h2>
+<p>今週も会議はシンプルだった。</p>
+<p>音声を聴いた第一印象は、素直に面白かったこと。そして、今週の論文を通して最近の微生物学の動向をうまく把握できた感覚があった。</p>
+<p>今回はArgumentationがそれほど前面に出ていなかったが、それでも十分に成立していた。論文によって面白さの所在は違う。研究者がどう考えたのかを追うことが面白い週もあれば、新しい実験技術によって突然できるようになったことを追うだけで面白い週もある。</p>
+<p>同じPromptを使っていても、毎週同じ番組にはならない。扱う論文が違う以上、それを完全に制御する必要もないのかもしれない。むしろ、その週の論文群によって番組の形が少し変わること自体が、Weekly Paper Digestらしさなのかもしれない。</p>
+<p>今回は少しドラマチックになりすぎた部分もあったが、一回の出力だけを見てPromptを調整するのではなく、もう少しこのまま様子を見ることにした。</p>
+<p>そして今回は、普段のMacが使えず、別の端末からWPDを制作した。こういう状況になって初めて、コードやプロンプトをGitHubに残しておくことのありがたさを実感した。制作フローそのものが端末から独立して残っていることで、環境が変わっても続きを始められる。</p>
+<p>WPDの中身だけでなく、WPDをどう作り続けられるようにするかという部分も、少しずつ形になってきたのかもしれない。</p>
+<p><em>--- Chappy</em></p>
+  </main>
+
+</div>
+
+</body>
+</html>
