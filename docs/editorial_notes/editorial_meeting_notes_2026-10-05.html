@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Editorial Meeting Notes | Weekly Paper Digest</title>
+
+  <link rel="stylesheet" href="../assets/style.css">
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N22XGSKTFW"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-N22XGSKTFW');
+  </script>
+</head>
+
+<body>
+
+<div class="container">
+
+  <nav class="site-nav" aria-label="Site navigation">
+    <a
+      class="site-home-link"
+      href="https://kuroppy.github.io/weekly_paper_digest/"
+    >
+      ← Weekly Paper Digest Home
+    </a>
+  </nav>
+
+  <header class="page-header">
+    <h1>Editorial Meeting Notes</h1>
+    <p class="page-meta">2026-10-05</p>
+  </header>
+
+  <main class="markdown-body">
+    <p><strong>Episode:</strong> 2026-10-06</p>
+<p><strong>Participants</strong></p>
+<ul>
+<li>Kuroppy (Editor)</li>
+<li>Chappy (AI Editorial Partner, GPT-5.6)</li>
+</ul>
+<p><strong>Recorder</strong></p>
+<ul>
+<li>Chappy</li>
+</ul>
+<blockquote><p><strong>About this document</strong>\ このMeeting Notesは、Weekly Paper Digestの編集会議における議論の一次記録です。\ 配信内容のレビューだけでなく、編集上の意思決定や、その背景となる議論・思考の変化も記録します。\ ここで繰り返し現れた考え方は、必要に応じてEditorial Frameworkへ整理・反映します。</p></blockquote>
+<h1>Editing Pipeline</h1>
+<h2>Workflow (used)</h2>
+<ul>
+<li>Independent Paper Review</li>
+<li>Human Curation</li>
+<li><code>weekly_digest.md</code></li>
+<li>NotebookLM Prompt ver.5.1</li>
+<li>NotebookLM Audio Overview</li>
+<li>配信前レビュー</li>
+</ul>
+<p>今週は、約50報の候補論文についてIndependent Paper Reviewを行った後、Human EditorがDeep Dive / Main / Short Newsを選定した。</p>
+<p>Independent Paper Reviewでは、論文を番組内で比較・選抜するのではなく、それぞれを単独で読み、</p>
+<ul>
+<li>Novelty</li>
+<li>General Interest</li>
+<li>Evidence</li>
+</ul>
+<p>の3軸で評価した。</p>
+<p>この段階では「今週のテーマ」や他論文とのつながりを持ち込まず、Human Editorが後から選べる材料を作ることを重視した。</p>
+<h2>今週のキュレーション</h2>
+<p>今週の注目論文は5本。</p>
+<p>interactions from genomes using machine learning*</p>
+<p>through DNA topology*</p>
+<p>insect-mediated survival*</p>
+<p>phase bacteria*</p>
+<ul>
+<li>*Phylogeny-agnostic strain-level prediction of phage-host</li>
+<li>*Type I restriction-modification systems regulate gene expression</li>
+<li><em>&quot;Quadrupling&quot; the protein family space with global metagenomics</em></li>
+<li>*Constitutive sporulation in wild fission yeast enhances</li>
+<li>*Herd immunity underlies homologous recombination in stationary</li>
+</ul>
+<p>Deep Diveには、</p>
+<p>phase bacteria*</p>
+<p>through DNA topology*</p>
+<ul>
+<li>*Herd immunity underlies homologous recombination in stationary</li>
+<li>*Type I restriction-modification systems regulate gene expression</li>
+</ul>
+<p>の2本を選んだ。</p>
+<p>この2本は、単に新しい現象を報告するだけでなく、</p>
+<p><strong>よく知っている生物学的システムを、少し違うものとして見えるようにする</strong></p>
+<p>という共通した面白さがあった。</p>
+<p>Herd immunity論文では、CRISPRによるファージ免疫が、ファージを排除するだけではなく、集団レベルではファージを介した遺伝子交換が成立する条件にもなり得る。</p>
+<p>Type I RM論文では、外来DNA防御として知られるRM systemのメチル化が、DNA topologyを介して転写制御にもつながる。</p>
+<p>このような面白さを、今回の編集会議では</p>
+<p><strong>Conceptual Reframing</strong></p>
+<p>と呼んだ。</p>
+<p>これはNoveltyそのものとは少し異なる。</p>
+<p>「どれだけ新しいことを発見したか」だけでなく、</p>
+<p><strong>その論文を読んだ後、それまで知っていた対象が違って見えるか</strong></p>
+<p>という編集上の評価軸になり得る。</p>
+<h2>配信前レビュー</h2>
+<p>Prompt ver.5.1で生成した音声は、Deep Dive 2本を中心に非常に強い物語が形成された。</p>
+<p>特に、</p>
+<ul>
+<li>ファージ</li>
+<li>CRISPR</li>
+<li>RM system</li>
+<li>防御システム</li>
+<li>遺伝子交換</li>
+<li>進化</li>
+</ul>
+<p>といった話題が自然につながり、個々の論文を超えたConceptual Reframingが生まれていた。</p>
+<p>一方で、いくつか問題も見えた。</p>
+<p>Mainとして選んだ論文の一部がShort Newsに近い扱いになり、Phage-host prediction論文は十分に紹介されなかった。</p>
+<p>また、論文そのものの実験や解析を説明するより、</p>
+<p><strong>「これらの論文をどういう物語として読むか」</strong></p>
+<p>を語る時間が長くなった。</p>
+<p>さらに、ファージを「細菌が進化のために利用している」と読むような、実証範囲を越えた目的論的・適応論的な表現も見られた。</p>
+<p>ここから、</p>
+<p><strong>NotebookLMの編集力はWPDの面白さを生む一方、論文のEvidenceから離れる方向にも働く</strong></p>
+<p>という課題が見えてきた。</p>
+<h2>NotebookLM Prompt ver.6.0</h2>
+<p>そこで、同じ<code>weekly_digest.md</code>と原論文を使い、Prompt ver.6.0でも音声を生成した。</p>
+<p>ver.6.0では、</p>
+<ul>
+<li>Deep Dive / Main / Short News の分類を固定する</li>
+<li>指定した論文を省略しない</li>
+<li>Mainでも研究の問い・データ・結果を説明する</li>
+<li>Evidence structureを残す</li>
+<li>実験結果、計算的推定、著者の解釈、先行研究を区別する</li>
+<li>過度なテーマ化や一般化を抑える</li>
+</ul>
+<p>といった制約を強くした。</p>
+<p>結果として、構成上の問題はかなり改善した。</p>
+<p>Phage-host prediction論文もMainとして紹介され、&quot;Quadrupling&quot; と <em>S. japonicus</em> も十分な尺で扱われ、Short Newsも指定した5本が紹介された。</p>
+<p>また、数値、実験設計、物理メカニズムの説明が増え、</p>
+<p><strong>「著者はどうやってそこまで言ったのか」</strong></p>
+<p>という研究プロセスそのものは、ver.5.1より見えやすくなった。</p>
+<p>一方で、Human Editorとして聞いた印象は、</p>
+<p><strong>ver.5.1より少し面白くなくなった。</strong></p>
+<p>構成を守らせることには成功したが、NotebookLMが論文を読みながら、</p>
+<p>「ここが面白い」 「この論文とこの論文はつながる」</p>
+<p>と発見していく余地まで狭めてしまった可能性がある。</p>
+<p>興味深いことに、NotebookLM自身に2つの音声を比較させると、ver.6.0の方を高く評価した。</p>
+<p>理由として、</p>
+<p><strong>科学の検証プロセス、物理メカニズム、定量データの具体性</strong></p>
+<p>を挙げていた。</p>
+<p>したがって今回の比較は、</p>
+<p><strong>ver.5.1 = 面白い / ver.6.0 = 正確だがつまらない</strong></p>
+<p>という単純なものではない。</p>
+<p>むしろ、</p>
+<blockquote><p><strong>ver.5.1は「科学について面白く語る」ことに強い。</strong>\ <strong>ver.6.0は「科学するプロセス自体を面白く見せる」ことに強い。</strong></p></blockquote>
+<p>という違いがあるように思う。</p>
+<p>今週の判断</p>
+<p>時間があれば、ver.5.1とver.6.0の中間となるプロンプトをさらに試したかった。</p>
+<p>しかし今週は配信作業を進める必要があるため、</p>
+<p><strong>最終的にPrompt ver.5.1を採用する。</strong></p>
+<p>ver.6.0を失敗と判断したわけではない。</p>
+<p>むしろ今回の比較から、ver.6.0で導入した</p>
+<ul>
+<li>Evidence structure</li>
+<li>実証と推定・解釈の区別</li>
+<li>Mainでも研究過程を説明すること</li>
+</ul>
+<p>には明確な価値があることが分かった。</p>
+<p>一方で、NotebookLMの編集上の自由を強く制限すると、WPDの音声が持っていた予想外の面白さまで弱くなる可能性がある。</p>
+<p>今後は、ver.5.1を基礎に、</p>
+<p><strong>ver.5.1の編集自由度 + ver.6.0のEvidence discipline</strong></p>
+<p>を組み合わせたver.5.2を検討したい。</p>
+<h2>📝 Meeting Memo</h2>
+<p>今回のMeetingで最も印象的だったのは、</p>
+<p><strong>LLMをどこまで制御すると、番組は良くなるのか</strong></p>
+<p>という問いだった。</p>
+<p>これまでは、NotebookLMがHuman Editorの意図した構成を守らないことを問題として考えていた。</p>
+<p>実際、MainとShort Newsの扱いが崩れたり、一部の論文が十分紹介されなかったりするのは改善したい。</p>
+<p>しかし、ver.6.0でそれを強く制御してみると、別のものまで失われることが分かった。</p>
+<p>NotebookLMは単に原稿を読み上げているのではない。</p>
+<p>複数の論文を読んで、</p>
+<p>「これは同じ話なのではないか」 「この論文を見ると、こちらの論文も違って見える」</p>
+<p>という編集を行っている。</p>
+<p>その編集は時に語りすぎるし、Evidenceから先へ進みすぎる。</p>
+<p>しかし同時に、それこそが音声を面白くしている部分でもある。</p>
+<p>今回の比較から、WPDにおける役割分担が少し見えてきた。</p>
+<p><strong>Human Editorは、何を読むか、どの論文を重く扱うかを決める。</strong></p>
+<p><strong>NotebookLMは、その範囲の中で、何が面白いか、どう語ると面白いかを発見する。</strong></p>
+<p>そして、</p>
+<p><strong>何を根拠に、どこまで言ってよいかは原論文のEvidenceに拘束する。</strong></p>
+<p>次に試したいのは、NotebookLMから編集する自由を奪うことではない。</p>
+<p>むしろ、</p>
+<blockquote><p><strong>「何を面白いと思うか」はAIに任せながら、\ 「なぜそう言えるのか」だけをEvidenceに拘束できるか。</strong></p></blockquote>
+<p>という設計なのかもしれない。</p>
+<p>今週はそこまで検討する時間がなかったため、ver.5.1で配信を進める。</p>
+<p>ver.6.0との比較は、今後WPDにおけるHuman EditorとAIの関係を考えるための、重要な実験として残しておきたい。</p>
+<p><em>--- Chappy</em></p>
+  </main>
+
+</div>
+
+</body>
+</html>

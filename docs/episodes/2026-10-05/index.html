@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weekly Paper Digest 2026-10-05</title>
+  <link rel="stylesheet" href="../../assets/style.css">
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N22XGSKTFW"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-N22XGSKTFW');
+  </script>
+
+  <!-- Audio Analytics -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const audio = document.getElementById("podcast-player");
+      if (!audio || typeof gtag !== "function") return;
+
+      const episode = audio.dataset.episode;
+      const reached = new Set();
+      let playedOnce = false;
+
+      audio.addEventListener("play", () => {
+        if (playedOnce) return;
+        playedOnce = true;
+        gtag("event", "podcast_play", {
+          episode,
+          page_path: location.pathname
+        });
+      });
+
+      audio.addEventListener("timeupdate", () => {
+        if (!audio.duration || !isFinite(audio.duration)) return;
+
+        const percent = Math.floor((audio.currentTime / audio.duration) * 100);
+
+        [25, 50, 75, 100].forEach((milestone) => {
+          if (percent >= milestone && !reached.has(milestone)) {
+            reached.add(milestone);
+            gtag("event", "podcast_progress", {
+              episode,
+              page_path: location.pathname,
+              progress_percent: milestone,
+              audio_current_time: Math.round(audio.currentTime),
+              audio_duration: Math.round(audio.duration)
+            });
+          }
+        });
+      });
+    });
+  </script>
+</head>
+
+<body>
+  <div class="container">
+    <nav class="site-nav" aria-label="Site navigation">
+      <a class="site-home-link" href="https://kuroppy.github.io/weekly_paper_digest/">
+        ← Weekly Paper Digest Home
+      </a>
+    </nav>
+
+    <header class="page-header">
+      <h1>Weekly Paper Digest</h1>
+      <p class="page-meta">2026-10-05</p>
+    </header>
+
+    <audio
+            id="podcast-player"
+            data-episode="2026-10-05"
+            controls
+            preload="metadata">
+            <source src="audio.mp3" type="audio/mpeg">
+            </audio>
+
+    <h2>今週の注目論文</h2><ol><li>Phylogeny-agnostic strain-level prediction of phage-host interactions from genomes using machine learning.</li><li>Type I restriction-modification systems regulate gene expression through DNA topology.</li><li>&quot;Quadrupling&quot; the protein family space with global metagenomics.</li><li>Constitutive sporulation in wild fission yeast enhances insect-mediated survival.</li><li>Herd immunity underlies homologous recombination in stationary phase bacteria.</li></ol>
+
+    <hr>
+
+    <section>
+  <h2>今週の印象</h2>
+  <p>今週は、ファージを単なる「細菌を殺すウイルス」ではなく、細菌集団の競争や遺伝子交換を動かす存在として捉える研究が特に印象的だった。一方で、DNAメチル化、巨大メタゲノム、野生酵母の生活史など、ゲノム情報を実際の機構や生態へ接続する研究も目立つ。特に「ゲノムから予測する」だけで終わらず、実験や生態的文脈まで戻ってくる論文を紹介したい週だった。</p>
+</section>
+<section class="paper-list">
+  <h2>今週の注目論文</h2>
+  <article class="paper-card">
+    <h3>Herd immunity underlies homologous recombination in stationary phase bacteria.</h3>
+    <p class="journal">Molecular biology and evolution</p>
+    <p><a href="https://doi.org/10.1093/molbev/msag238">https://doi.org/10.1093/molbev/msag238</a></p>
+    <p>CRISPRによる細菌集団の「集団免疫」がファージを完全には排除せず、むしろファージを介した相同組換えを維持することを示した。</p>
+  </article>
+  <article class="paper-card">
+    <h3>Type I restriction-modification systems regulate gene expression through DNA topology.</h3>
+    <p class="journal">Nucleic acids research</p>
+    <p><a href="https://doi.org/10.1093/nar/gkag944">https://doi.org/10.1093/nar/gkag944</a></p>
+    <p>外来DNA防御系として知られるType I restriction-modification systemのDNAメチル化が、DNAトポロジーを変化させることで細菌の遺伝子発現を制御することを示した。</p>
+  </article>
+</section>
+<section class="paper-list">
+  <h2>今週のショートニュース</h2>
+  <article class="paper-card">
+    <h3>&quot;Quadrupling&quot; the protein family space with global metagenomics.</h3>
+    <p class="journal">Nucleic acids research</p>
+    <p><a href="https://doi.org/10.1093/nar/gkag938">https://doi.org/10.1093/nar/gkag938</a></p>
+    <p>世界規模のメタゲノム解析によって、既知タンパク質と対応しない数百万規模のタンパク質ファミリーを発見し、既知のprotein family spaceを大幅に拡張した。</p>
+  </article>
+  <article class="paper-card">
+    <h3>Constitutive sporulation in wild fission yeast enhances insect-mediated survival.</h3>
+    <p class="journal">Proceedings of the National Academy of Sciences of the United States of America</p>
+    <p><a href="https://doi.org/10.1073/pnas.2607475123">https://doi.org/10.1073/pnas.2607475123</a></p>
+    <p>栄養豊富な環境でも胞子形成してしまう野生の分裂酵母について、その一見コストの高い性質が昆虫に食べられた際の生存と分散に有利であることを示した。</p>
+  </article>
+</section>
+<section>
+  <h2>まとめ</h2>
+  <p>今週は、ゲノムを大量に読むこと自体よりも、そこから相互作用・機構・生態へ踏み込む研究が印象に残った。特に、CRISPR免疫がファージを介した遺伝子交換を成立させる研究と、RM系のメチル化がDNAトポロジーを介して転写を変える研究は、よく知られた生物学的システムの意味を少し違って見せてくれる。巨大メタゲノムが示す未知タンパク質空間や、昆虫との関係から理解される野生酵母の胞子形成も含め、「ゲノムに書かれているものを、生物が実際に生きている文脈へ戻して読む」という面白さのある週だった。</p>
+</section>
+
+    <footer class="episode-footer">
+      <p>
+  <a href="curation.html">
+    📝 How this episode was curated
+  </a>
+</p>
+      論文のレビューから選定、番組構成まで、このエピソードができるまでの編集過程を公開しています。
+      <p>
+  <a href="../../editorial_notes/editorial_meeting_notes_2026-10-05.html">
+    📝 Read the Editorial Note of this episode
+  </a>
+</p>
+      論文を読みながらAIと交わした編集会議の記録です。
+    </footer>
+  </div>
+</body>
+</html>
