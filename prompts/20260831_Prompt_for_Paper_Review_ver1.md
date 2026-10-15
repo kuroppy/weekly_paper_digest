@@ -243,6 +243,7 @@ Markdownのコードフェンス、前置き、後書きは不要です。
 - `source_id` 以外の元論文メタデータは出力しなくてよい
 - 各理由は簡潔だが、点数の根拠が分かる程度に書く
 - 日本語で記述する
+- 出力JSONは llm_review_YYYY-MM-DD.json として保存する。日付は入力した papers_YYYY-MM-DD.json と一致させる
 
 ---
 

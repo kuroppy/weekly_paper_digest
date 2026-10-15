@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weekly Paper Digest 2026-10-12</title>
+  <link rel="stylesheet" href="../../assets/style.css">
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N22XGSKTFW"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-N22XGSKTFW');
+  </script>
+
+  <!-- Audio Analytics -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const audio = document.getElementById("podcast-player");
+      if (!audio || typeof gtag !== "function") return;
+
+      const episode = audio.dataset.episode;
+      const reached = new Set();
+      let playedOnce = false;
+
+      audio.addEventListener("play", () => {
+        if (playedOnce) return;
+        playedOnce = true;
+        gtag("event", "podcast_play", {
+          episode,
+          page_path: location.pathname
+        });
+      });
+
+      audio.addEventListener("timeupdate", () => {
+        if (!audio.duration || !isFinite(audio.duration)) return;
+
+        const percent = Math.floor((audio.currentTime / audio.duration) * 100);
+
+        [25, 50, 75, 100].forEach((milestone) => {
+          if (percent >= milestone && !reached.has(milestone)) {
+            reached.add(milestone);
+            gtag("event", "podcast_progress", {
+              episode,
+              page_path: location.pathname,
+              progress_percent: milestone,
+              audio_current_time: Math.round(audio.currentTime),
+              audio_duration: Math.round(audio.duration)
+            });
+          }
+        });
+      });
+    });
+  </script>
+</head>
+
+<body>
+  <div class="container">
+    <nav class="site-nav" aria-label="Site navigation">
+      <a class="site-home-link" href="https://kuroppy.github.io/weekly_paper_digest/">
+        ← Weekly Paper Digest Home
+      </a>
+    </nav>
+
+    <header class="page-header">
+      <h1>Weekly Paper Digest</h1>
+      <p class="page-meta">2026-10-12</p>
+    </header>
+
+    <audio id="podcast-player" data-episode="2026-10-12" controls preload="metadata">
+  <source src="audio.mp3" type="audio/mpeg">
+</audio>
+
+    <h2>Deep Dive</h2><ol><li>Prehistoric global migration of vanishing gut microbes with humans.</li><li>Detectrons convert transient RNA sequences into stable DNA barcodes for high-throughput analysis of RNA-dependent processes.</li><li>Autoinducer-2 functions as both a quorum-sensing and metabolic signal in Escherichia coli.</li></ol>
+<h2>ShortNews</h2><ol><li>High diversity but limited expression of biosynthetic gene clusters in a peatland microbial community.</li><li>Two D-loop resolution systems enable natural genetic transformation in bacteria.</li><li>PanGBank: a large-scale resource of precomputed microbial pangenomes built with PPanGGOLiN.</li></ol>
+
+    <hr>
+
+    <section class="paper-list">
+  <h2>Deep Dive</h2>
+<article class="paper-card">
+  <h3>Prehistoric global migration of vanishing gut microbes with humans.</h3>
+  <p class="journal">Nature</p>
+  <p><a href="https://doi.org/10.1038/s41586-026-11106-1">https://doi.org/10.1038/s41586-026-11106-1</a></p>
+  <p class="editor-comment">ボリビアのTsimaneとタンザニアのHadzaの腸内メタゲノムを比較し、共有菌種の集団遺伝構造を解析した。</p>
+</article>
+<article class="paper-card">
+  <h3>Detectrons convert transient RNA sequences into stable DNA barcodes for high-throughput analysis of RNA-dependent processes.</h3>
+  <p class="journal">Nature biotechnology</p>
+  <p><a href="https://doi.org/10.1038/s41587-026-03334-7">https://doi.org/10.1038/s41587-026-03334-7</a></p>
+  <p class="editor-comment">RNA応答性toeholdスイッチとretronを組み合わせたDetectronsを構築し、RNA依存過程のDNAバーコード記録を試した。</p>
+</article>
+<article class="paper-card">
+  <h3>Autoinducer-2 functions as both a quorum-sensing and metabolic signal in Escherichia coli.</h3>
+  <p class="journal">Applied and environmental microbiology</p>
+  <p><a href="https://doi.org/10.1128/aem.01160-26">https://doi.org/10.1128/aem.01160-26</a></p>
+  <p class="editor-comment">大腸菌のAI-2応答を炭素代謝制御との関係から調べ、環境菌のAI-2利用能も検証した。</p>
+</article>
+</section>
+<section class="paper-list">
+  <h2>ShortNews</h2>
+<article class="paper-card">
+  <h3>High diversity but limited expression of biosynthetic gene clusters in a peatland microbial community.</h3>
+  <p class="journal">Nature communications</p>
+  <p><a href="https://doi.org/10.1038/s41467-026-78121-8">https://doi.org/10.1038/s41467-026-78121-8</a></p>
+  <p class="editor-comment">泥炭地の酸化還元勾配に沿いBGCの多様性と現場での転写活性をメタオミクスで調べた。</p>
+</article>
+<article class="paper-card">
+  <h3>Two D-loop resolution systems enable natural genetic transformation in bacteria.</h3>
+  <p class="journal">Proceedings of the National Academy of Sciences of the United States of America</p>
+  <p><a href="https://doi.org/10.1073/pnas.2610795123">https://doi.org/10.1073/pnas.2610795123</a></p>
+  <p class="editor-comment">自然形質転換で生じるRecA依存D-loopの処理機構を解析し、異なる系統群の関連酵素を調べた。</p>
+</article>
+<article class="paper-card">
+  <h3>PanGBank: a large-scale resource of precomputed microbial pangenomes built with PPanGGOLiN.</h3>
+  <p class="journal">Nucleic acids research</p>
+  <p><a href="https://doi.org/10.1093/nar/gkag948">https://doi.org/10.1093/nar/gkag948</a></p>
+  <p class="editor-comment">PPanGGOLiNを用いてGTDB由来の大規模な原核生物パンゲノムを事前計算し、公開DB PanGBankを構築した。</p>
+</article>
+</section>
+
+    <footer class="episode-footer">
+      <p><a href="curation.html">📝 How this episode was curated</a></p>
+      論文のレビューから選定、番組構成まで、このエピソードができるまでの編集過程を公開しています。
+      <p><a href="../../editorial_notes/editorial_meeting_notes_2026-10-12.html">📝 Read the Editorial Note of this episode</a></p>
+      論文を読みながらAIと交わした編集会議の記録です。
+    </footer>
+  </div>
+</body>
+</html>

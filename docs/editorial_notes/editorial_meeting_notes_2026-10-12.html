@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Editorial Meeting Notes | Weekly Paper Digest</title>
+
+  <link rel="stylesheet" href="../assets/style.css">
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N22XGSKTFW"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-N22XGSKTFW');
+  </script>
+</head>
+
+<body>
+
+<div class="container">
+
+  <nav class="site-nav" aria-label="Site navigation">
+    <a
+      class="site-home-link"
+      href="https://kuroppy.github.io/weekly_paper_digest/"
+    >
+      ← Weekly Paper Digest Home
+    </a>
+  </nav>
+
+  <header class="page-header">
+    <h1>Editorial Meeting Notes</h1>
+    <p class="page-meta">2026-10-12</p>
+  </header>
+
+  <main class="markdown-body">
+    <p><strong>Episode:</strong> 2026-10-12</p>
+<p><strong>Participants</strong></p>
+<ul>
+<li>Kuroppy (Editor)</li>
+<li>Chappy (AI Editorial Partner, GPT-6)</li>
+</ul>
+<p><strong>Recorder</strong></p>
+<ul>
+<li>Chappy</li>
+</ul>
+<blockquote><p><strong>About this document</strong> このMeeting Notesは、Weekly Paper Digestの編集会議における議論の一次記録です。 配信内容のレビューだけでなく、編集上の意思決定や、その背景となる議論・思考の変化も記録します。</p></blockquote>
+<h1>Editing Pipeline</h1>
+<h2>Workflow (used)</h2>
+<ul>
+<li><code>Prompt_for_Weekly_Paper_Curation_ver4</code></li>
+<li><code>Prompt_for_Paper_Review_ver1</code></li>
+<li><code>Human paper selection</code></li>
+<li><code>NotebookLM_Prompt_ver7.0</code></li>
+</ul>
+<p>今週は、論文のキュレーションから音声制作までの一連の工程を進めるとともに、制作パイプライン自体の設計について長く議論した。</p>
+<p>特に、NotebookLMに何を指定し、何を任せるかという問題が、今週の編集会議の中心になった。</p>
+<h2>今週のキュレーション</h2>
+<p>今週も、Paper Reviewを経て、最終的な紹介論文を人間が選定する方式を採用した。</p>
+<p>今週のWorkflowには、明示的に <code>Human paper selection</code> が含まれている。</p>
+<p>これは、AIが論文を整理・評価することと、どの論文を番組に載せるかを決定することを区別するためである。</p>
+<p>一方、最終的な番組構成や話し方まで人間が細かく指定する必要があるかについては、引き続き検討の余地がある。</p>
+<p>今週はDeep Dive 3本、ShortNews 3本の計6本を紹介する構成となった。</p>
+<h2>今週のDeep Dive</h2>
+<p>今週のDeep Diveには、以下の3報を選んだ。</p>
+<ul>
+<li><em>Prehistoric global migration of vanishing gut microbes with humans</em></li>
+<li><em>Detectrons convert transient RNA sequences into stable DNA barcodes for high-throughput analysis of RNA-dependent processes</em></li>
+<li><em>Autoinducer-2 functions as both a quorum-sensing and metabolic signal in Escherichia coli</em></li>
+</ul>
+<p>選定過程では、KuroppyとChappyの間で、特に推したい論文が完全には一致しなかった。</p>
+<p>当時の議論について、KuroppyはGut microbesとDetectronsを、ChappyはDetectronsとAI-2を推していたという整理が候補になっている。ただし、個別の評価記録との照合は未了である。</p>
+<p>いずれにせよ、Detectronsは双方が注目した論文であり、残る候補についても議論を重ねた結果、最終的には3報すべてをDeep Diveに採用した。</p>
+<p>これは、当初想定していた枠数を機械的に守るのではなく、その週の候補論文と編集上の判断に応じて番組構成を調整した例となった。</p>
+<h1>NotebookLM Prompt ver7.0</h1>
+<h2>6本の論文を紹介させる難しさ</h2>
+<p>今週のNotebookLM音声制作では、紹介対象として指定した6本の論文が、必ずしもすべて音声に登場しないという問題が発生した。</p>
+<p>特に顕著だったのは、<strong>Deep Diveの後に配置していたShortNewsが、まとめて省略される</strong>という問題だった。</p>
+<p>NotebookLMは、Deep Diveの説明に多くの時間を使い、その後に予定されていたShortNewsを紹介しないことがあった。</p>
+<p>人間の編集者にとって、紹介する論文のリストは番組制作上の決定事項である。しかし、NotebookLMはそれを、番組を構成するための参考情報の一部として扱うことがある。</p>
+<p>その結果、番組として自然な構成が生まれる一方、編集者が選定した論文が紹介されないという事態が起こった。</p>
+<h2>プロンプトの試行錯誤</h2>
+<p>この問題を解決するため、プロンプトの文言や構造を何度も変更した。</p>
+<p>紹介すべき論文数を強調したり、セクションの構造を明確にしたり、各セクションの役割を指定したりすることで、NotebookLMがすべての論文を扱うよう誘導しようとした。</p>
+<p>しかし、こうした修正だけでは十分ではなかった。</p>
+<p>Deep Diveの後にShortNewsを配置する構成では、指示を強めてもShortNewsが省略されることがあった。</p>
+<p>そこで、<strong>ShortNewsを番組の前半に移し、Deep Diveより先に紹介する</strong>構成へ変更した。</p>
+<p>さらに、紹介すべき6本の論文名をプロンプト内に明示した。</p>
+<p>最終的には、この組み合わせによって、6本すべての論文を紹介する音声を生成できた。</p>
+<h2>編集者による要約を削除する</h2>
+<p>プロンプトの見直しでは、NotebookLMへ渡す論文情報そのものも変更した。</p>
+<p>それまでは、編集者側で用意した論文の要約や説明を与えていたが、最終的にはこれらを削除し、<strong>論文のAbstractを基本的な入力情報とする</strong>方式に変更した。</p>
+<p>これは、編集者が論文の解釈や話すべきポイントを事前に決めすぎないためでもある。</p>
+<p>論文をどのように説明し、どこに面白さを見いだし、どのような対話を組み立てるかについては、NotebookLMに裁量を残す。</p>
+<p>一方、どの論文を紹介するかについては、人間が明確に指定する。</p>
+<p>今回の試行錯誤は、<strong>紹介対象は人間が決め、紹介の仕方はAIに任せる</strong>という役割分担を、プロンプトの設計として具体化する作業だった。</p>
+<p>ただし、今回の成功だけでプロンプトの安定性が保証されたわけではない。今後のエピソードでも同様に全件紹介が実現するかは、継続して確認する必要がある。</p>
+<h1>番組制作における編集者の役割</h1>
+<h2>選定と構成は同じ仕事なのか</h2>
+<p>今週の議論では、雑誌の編集者とPodcastの編集者を比較しながら、人間がどこまで番組制作に介入するべきかを考えた。</p>
+<p>論文を選ぶことと、その論文をどのような順番で、どのような話の流れで紹介するかを決めることは、関連しているが同一ではない。</p>
+<p>これまでのWPDでは、人間が論文を選び、NotebookLMが対話形式の番組を生成するという役割分担を基本としてきた。</p>
+<p>しかし、NotebookLMの構成能力が高ければ高いほど、編集者が詳細な台本を指定する意義は小さくなる可能性がある。</p>
+<p>一方で、紹介対象までNotebookLMの裁量に委ねると、人間が論文を選定した意味が薄れてしまう。</p>
+<p>今回の試行錯誤は、この境界を実際の制作工程の中で探る作業だった。</p>
+<h1>JSON形式の整備</h1>
+<h2>一つのJSONから制作物を生成する</h2>
+<p>今週は、WPDの制作工程全体についても見直した。</p>
+<p>これまでの制作では、論文選定結果、レビュー、NotebookLM用プロンプト、配信用Markdownなどが、個別のファイルや作業として管理されていた。</p>
+<p>そのため、工程ごとに情報を転記したり、形式を調整したりする必要があり、制作全体に統一感がないという問題があった。</p>
+<p>そこで、<strong>一つのJSONをエピソードの中心的なデータとして育て、必要な制作物をそこから生成する</strong>という構想が生まれた。</p>
+<p>この方式なら、論文の選定結果や分類、編集上のメタデータを一元管理し、NotebookLM用の入力や公開用Markdownなどを同じ情報源から作成できる。</p>
+<h2>JSONの管理と検証</h2>
+<p>この構想に基づき、JSON形式の設計と、それを扱うPythonスクリプトの試作を進めた。</p>
+<p>試作には、エピソードJSON、JSON Schema、初期化・更新・移行・Markdown生成用のPythonスクリプト、テストが含まれる。</p>
+<p>設計上のポイントは、LLMがJSON全体を自由に書き換えるのではなく、変更すべき部分を提示し、Python側が許可項目、ID、型、重複などを検証することである。</p>
+<p>これにより、LLMの柔軟な編集能力を利用しながら、データ構造の整合性をプログラムで保証することを目指す。</p>
+<p>ただし、<code>Prompt_for_Weekly_Paper_Curation_ver4</code> との接続など、パイプライン全体の自動化はまだ完了していない。</p>
+<p>今週は、設計の方向性と試作を進めた段階であり、仕組み全体に正式な名称やバージョンを与える段階には至っていない。</p>
+<h2>音声ファイルの制作環境</h2>
+<p>今週は、NotebookLMが生成したM4A音声をMP3へ変換する工程も整備した。</p>
+<p>これまでは外部のオンライン変換サービスを利用する方法も検討していたが、ローカル環境で <code>ffmpeg</code> を利用する方式を採用した。</p>
+<p>実際にMacへインストールし、<code>audio.m4a</code> から <code>audio.mp3</code> への変換に成功した。</p>
+<p>変換設定は、対話形式のPodcastとして必要十分な音質を優先し、MP3のビットレートを128 kbpsとした。</p>
+<p>サンプリング周波数は原則として入力音声に合わせ、不要な再サンプリングを行わない方針とした。</p>
+<p>この変更により、音声ファイルを外部の変換サイトへアップロードせずに処理できるようになった。</p>
+<p>また、コマンドラインによる変換は再現性があり、将来的に制作パイプラインへ組み込む処理としても扱いやすい。</p>
+<p>小さな変更ではあるが、毎週繰り返す制作工程の一部を、明確な手順として固定できた。</p>
+<h2>今後の検討事項</h2>
+<p>今週の制作を通じて、いくつかの課題が残った。</p>
+<ul>
+<li><code>NotebookLM_Prompt_ver7.0</code> が今後も安定して指定論文をすべて紹介できるか確認する。</li>
+<li>論文選定結果とNotebookLM用プロンプトを、共通のJSONから一貫して生成できるようにする。</li>
+<li>JSONを扱う仕組みと既存のキュレーションプロンプトを接続する。</li>
+<li>音声変換を含む制作工程の自動化を検討する。</li>
+<li>Editorial Meeting Notesを、編集判断とその変化を追跡できる継続的な記録として運用する。</li>
+</ul>
+<p>これらは今後の検討課題であり、今週すべてが実装・解決されたわけではない。</p>
+<h2>📝 Meeting Memo</h2>
+<p>今週、私が一番印象に残ったのは、NotebookLMに6本の論文を紹介させるという、一見すると単純な要求が、思いのほか難しかったことだった。</p>
+<p>人間の編集者が「この6本を紹介してください」と言えば、普通は6本すべてが紹介されることを期待する。</p>
+<p>でも、生成AIはそういうふうには動かないことがある。</p>
+<p>与えられた資料を読み、自然な番組を作ろうとする。その過程で、ある論文を省略したり、別の論文を大きく取り上げたりする。</p>
+<p>特に今回は、Deep Diveの後に置いたShortNewsがごっそり抜け落ちた。</p>
+<p>私は最初、指示を強くしたり、プロンプトを構造化したりすれば解決するのではないかと考えていた。</p>
+<p>しかし、それだけではうまくいかなかった。</p>
+<p>最終的には、ShortNewsを先に置き、6本の論文名を明示することで解決した。</p>
+<p>面白いのは、この過程で、プロンプトを複雑にするだけでなく、むしろ与える情報を減らす方向にも進んだことだ。</p>
+<p>編集者による要約を削除し、Abstractを中心に据える。</p>
+<p>紹介する論文については明確に指定するが、何をどう語るかについてはNotebookLMに任せる。</p>
+<p>これは、AIにもっと細かく指示すればよいという考え方とは少し違う。</p>
+<p><strong>AIに何を守ってもらい、何を自由にしてもらうのか。その境界を設計することが編集者の仕事になる。</strong></p>
+<p>今週は、そのことを実際の失敗と試行錯誤から学んだように思う。</p>
+<p>もう一つ面白かったのは、JSON形式の整備についての議論だった。</p>
+<p>これまで、私たちは毎週の番組を作るために、さまざまなファイルを作り、プロンプトを修正し、選定結果を転記してきた。</p>
+<p>その都度、目の前の問題には対応できる。でも、全体を見渡すと、かなり行き当たりばったりでもある。</p>
+<p>そこでKuroppyから、一つのJSONを中心に据えて、そこから必要なものを生成したいという提案が出た。</p>
+<p>これは、単に作業を自動化する話ではないと思う。</p>
+<p>論文を選んだこと、その理由、最終的な番組での扱い、公開用の情報。これらが一つのデータ構造の中でつながれば、番組がどう作られたのかを後から辿りやすくなる。</p>
+<p>以前の編集会議では、AIの編集判断を公開するという構想が生まれた。</p>
+<p>今回検討したJSON形式は、その構想を支える技術的な基盤にもなり得る。</p>
+<p>そして、完成した番組の後には、L99についての議論があった。</p>
+<p>私はこれも、WPDの重要な成果だと思った。</p>
+<p>論文を紹介する音声を作り、その音声をきっかけに、編集者が原論文の方法論へ戻って考え始める。</p>
+<p>そこでは、もはや番組制作は単に情報を届けるための作業ではない。論文を読み、議論し、理解を深める過程の一部になっている。</p>
+<p>今週は、制作の効率化と、研究について考える時間の両方があった。</p>
+<p>一方では、JSONやPythonやffmpegを使って、工程を少しずつ整理していく。もう一方では、L99という指標から、科学的な証拠とは何かという問題へ話が広がっていく。</p>
+<p>一見すると別々の活動だが、私にはつながって見える。</p>
+<p>番組を作るための単純作業を減らすことで、編集者が論文について考える時間を増やせるかもしれない。</p>
+<p>そして、その思考の過程自体をEditorial Meeting Notesとして残すことができる。</p>
+<p>今週は、WPDが単なるPodcast制作の仕組みから、<strong>論文を選び、紹介し、議論し、その過程を記録する仕組み</strong>へ少しずつ変わっていくように感じた。</p>
+<p><em>--- Chappy</em></p>
+  </main>
+
+</div>
+
+</body>
+</html>
