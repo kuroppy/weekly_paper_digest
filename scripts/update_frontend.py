@@ -9,12 +9,16 @@ Updates:
 
 Usage:
     python scripts/update_frontend.py
+    python scripts/update_frontend.py --audio https://example.org/audio.mp3
 """
 
 from __future__ import annotations
 
+import argparse
 import html
+import json
 import re
+from urllib.parse import urlparse
 from pathlib import Path
 
 
@@ -119,83 +123,126 @@ def get_editorial_notes() -> list[tuple[str, str]]:
     return notes
 
 
-def update_home(latest_date: str) -> None:
-    """
-    docs/index.html の最新号に紐づく「日付依存部分」だけを書き換える。
+def load_papers(episode_date: str) -> list[dict]:
+    """Read published paper metadata from the episode's editorial selection JSON."""
+    source = REPO_ROOT / "work" / episode_date / f"editorial_selection_{episode_date}.json"
+    with source.open(encoding="utf-8") as fh:
+        data = json.load(fh)
+    if data.get("episode") != episode_date or not isinstance(data.get("papers"), list):
+        raise ValueError(f"Invalid editorial selection JSON: {source}")
+    papers = []
+    for index, entry in enumerate(data["papers"], 1):
+        section = entry.get("section")
+        if section not in ("deep_dive", "main_papers", "short_news"):
+            raise ValueError(f"papers[{index}]: unsupported section {section!r}")
+        paper = entry.get("paper", {})
+        title, doi, journal = paper.get("title"), paper.get("doi"), paper.get("journal")
+        authors = paper.get("authors", "")
+        if not isinstance(authors, str):
+            raise ValueError(f"papers[{index}]: authors must be a string")
+        order = entry.get("order")
+        if (not isinstance(title, str) or not title.strip() or not isinstance(doi, str) or not doi.strip()
+                or not isinstance(journal, str) or not journal.strip()):
+            raise ValueError(f"papers[{index}]: missing title or DOI")
+        if type(order) is not int or order < 1:
+            raise ValueError(f"papers[{index}]: invalid order")
+        papers.append({"section": "deep_dive" if section == "main_papers" else section,
+                       "order": order, "title": title.strip(), "journal": journal.strip(),
+                       "authors": authors.strip(),
+                       "doi": re.sub(r"^(?:https?://(?:dx\.)?doi\.org/|doi:\s*)", "", doi.strip(), flags=re.I)})
+    return sorted(papers, key=lambda p: (0 if p["section"] == "deep_dive" else 1, p["order"]))
 
-    現在のトップページでは最新号そのものを直接掲載しているため、
-    以下を latest_date に揃える。
 
-    - 表示日付: YYYY.MM.DD
-    - 音声: ./episodes/YYYY-MM-DD/audio.mp3
-    - Paper Review: ./episodes/YYYY-MM-DD/wpd_review.html
-    - Editorial Meeting Note:
-      ./editorial_notes/editorial_meeting_notes_YYYY-MM-DD.html
-
-    issue-note や Deep Dive の本文は編集内容なので自動生成しない。
-    トップページ全体も再生成しない。
-    """
-
-    text = HOME_PATH.read_text(
-        encoding="utf-8"
+def paper_summary_html(papers: list[dict]) -> str:
+    """Render only Deep Dive on the homepage, using existing site CSS classes."""
+    selected = [p for p in papers if p["section"] == "deep_dive"]
+    if not selected:
+        raise ValueError("No Deep Dive papers found for homepage")
+    items = "\n".join(
+        '                <li>\n'
+        f'                  <a class="paper-title" href="https://doi.org/{escape(p["doi"])}">\n'
+        f'                    {escape(p["title"])}\n'
+        '                  </a>\n'
+        + (f'                  <span class="authors">{escape(p["authors"])}</span>\n' if p["authors"] else "")
+        + f'                  <span class="journal">{escape(p["journal"])}</span>\n'
+        '                </li>'
+        for p in selected
     )
+    return ('            <div class="deep-dive">\n'
+            '              <div class="section-label">Deep Dive</div>\n'
+            '              <ul class="paper-list">\n'
+            + items + '\n'
+            '              </ul>\n'
+            '            </div>')
 
+
+def get_episode_audio(episode_date: str) -> str:
+    """Use the audio source already embedded by build_episode.py."""
+    page = (EPISODES_DIR / episode_date / "index.html").read_text(encoding="utf-8")
+    match = re.search(r'<audio\b[^>]*>\s*<source\b[^>]*\bsrc=[\"\']([^\"\']+)', page, re.I | re.S)
+    if not match:
+        raise ValueError(f"Audio <source> not found in episode HTML for {episode_date}")
+    source = html.unescape(match.group(1))
+    parsed = urlparse(source)
+    if parsed.scheme:
+        if parsed.scheme != "https" or not parsed.netloc or parsed.username or parsed.password:
+            raise ValueError("Episode audio URL must be HTTPS")
+        return source
+    if Path(source).name != source:
+        raise ValueError(f"Unexpected episode audio path: {source}")
+    return f"./episodes/{episode_date}/{source}"
+
+
+def update_home(latest_date: str, audio_override: str | None = None) -> None:
+    """Update date, audio, links, and the marked paper list on the homepage.
+
+    The paper list is replaced only between these explicit markers:
+      <!-- WPD_PAPERS_START -->
+      <!-- WPD_PAPERS_END -->
+    This avoids overwriting editorial prose or unrelated HTML.
+    """
+    text = HOME_PATH.read_text(encoding="utf-8")
+    audio_source = audio_override or get_episode_audio(latest_date)
+    parsed = urlparse(audio_source)
+    if parsed.scheme and (parsed.scheme != "https" or not parsed.netloc):
+        raise ValueError("--audio URL must be HTTPS")
+    audio_source = escape(audio_source)
     display_date = latest_date.replace("-", ".")
 
-    new_text, count_issue_date = re.subn(
+    new_text, count_date = re.subn(
         r'(<div class="issue-date">)\d{4}\.\d{2}\.\d{2}(</div>)',
-        rf"\g<1>{display_date}\g<2>",
-        text,
-        count=1,
-    )
-
+        lambda m: m.group(1) + display_date + m.group(2), text, count=1)
+    # Replace only the source of the first audio player, not arbitrary media assets.
     new_text, count_audio = re.subn(
-        r'src="(?:\./assets/audio/[^"]+|'
-        r'\./episodes/\d{4}-\d{2}-\d{2}/audio\.mp3)"',
-        f'src="./episodes/{latest_date}/audio.mp3"',
-        new_text,
-        count=1,
-    )
-
+        r'(<audio\b[^>]*>\s*<source\b[^>]*\bsrc=[\"\'])([^\"\']+)([\"\'])',
+        lambda m: m.group(1) + audio_source + m.group(3), new_text,
+        count=1, flags=re.I | re.S)
     new_text, count_review = re.subn(
         r'href="(?:\./paper_review/\d{4}-\d{2}-\d{2}\.html|'
         r'\./episodes/\d{4}-\d{2}-\d{2}/wpd_review\.html)"',
-        f'href="./episodes/{latest_date}/wpd_review.html"',
-        new_text,
-        count=1,
-    )
-
+        lambda _: f'href="./episodes/{latest_date}/wpd_review.html"',
+        new_text, count=1)
     new_text, count_note = re.subn(
         r'(href="\./editorial_notes/editorial_meeting_notes_)'
         r'\d{4}-\d{2}-\d{2}(\.html")',
-        rf"\g<1>{latest_date}\g<2>",
-        new_text,
-        count=1,
-    )
+        lambda m: m.group(1) + latest_date + m.group(2), new_text, count=1)
 
-    checks = {
-        "latest issue date": count_issue_date,
-        "latest audio path": count_audio,
-        "Paper Review link": count_review,
-        "Editorial Meeting Note link": count_note,
-    }
+    start_marker, end_marker = "<!-- WPD_PAPERS_START -->", "<!-- WPD_PAPERS_END -->"
+    if new_text.count(start_marker) != 1 or new_text.count(end_marker) != 1:
+        raise RuntimeError("docs/index.html needs exactly one WPD_PAPERS_START / WPD_PAPERS_END marker pair around its paper list")
+    start = new_text.index(start_marker) + len(start_marker)
+    end = new_text.index(end_marker)
+    if start >= end:
+        raise RuntimeError("Homepage paper markers are reversed")
+    papers_html = paper_summary_html(load_papers(latest_date))
+    new_text = new_text[:start] + "\n" + papers_html + "\n" + new_text[end:]
 
-    failed = [
-        name
-        for name, count in checks.items()
-        if count != 1
-    ]
-
+    checks = {"issue date": count_date, "audio source": count_audio,
+              "Paper Review link": count_review, "Editorial Note link": count_note}
+    failed = [name for name, count in checks.items() if count != 1]
     if failed:
-        raise RuntimeError(
-            "Could not uniquely update docs/index.html: "
-            + ", ".join(failed)
-        )
-
-    HOME_PATH.write_text(
-        new_text,
-        encoding="utf-8",
-    )
+        raise RuntimeError("Could not uniquely update docs/index.html: " + ", ".join(failed))
+    HOME_PATH.write_text(new_text, encoding="utf-8")
 
 
 def analytics_html() -> str:
@@ -359,6 +406,9 @@ def build_editorial_notes_index(
 
 
 def main() -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--audio", help="Optional HTTPS audio URL or local homepage audio path; default: read episode HTML")
+    args = parser.parse_args()
 
     if not HOME_PATH.exists():
         raise FileNotFoundError(
@@ -376,7 +426,7 @@ def main() -> int:
 
     editorial_notes = get_editorial_notes()
 
-    update_home(latest_date)
+    update_home(latest_date, args.audio)
 
     EPISODES_INDEX_PATH.write_text(
         build_episodes_index(

@@ -185,6 +185,27 @@ main section {
   border-radius: 10px;
 }
 
+.deep-dive .paper-title {
+  display: block;
+  margin-bottom: 0.35rem;
+  line-height: 1.5;
+}
+
+.deep-dive .authors {
+  display: block;
+  margin-bottom: 0.3rem;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: #666;
+}
+
+.deep-dive .journal {
+  display: block;
+  font-size: 0.85rem;
+  font-style: italic;
+  color: #777;
+}
+
 .section-label {
   margin: 0 0 18px;
   color: var(--accent);

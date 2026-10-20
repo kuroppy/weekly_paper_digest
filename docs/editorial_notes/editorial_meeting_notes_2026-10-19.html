@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Editorial Meeting Notes | Weekly Paper Digest</title>
+
+  <link rel="stylesheet" href="../assets/style.css">
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N22XGSKTFW"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-N22XGSKTFW');
+  </script>
+</head>
+
+<body>
+
+<div class="container">
+
+  <nav class="site-nav" aria-label="Site navigation">
+    <a
+      class="site-home-link"
+      href="https://kuroppy.github.io/weekly_paper_digest/"
+    >
+      ← Weekly Paper Digest Home
+    </a>
+  </nav>
+
+  <header class="page-header">
+    <h1>Editorial Meeting Notes</h1>
+    <p class="page-meta">2026-10-19</p>
+  </header>
+
+  <main class="markdown-body">
+    <p><strong>Episode:</strong> 2026-10-19</p>
+<p><strong>Participants</strong></p>
+<ul>
+<li>Kuroppy (Editor)</li>
+<li>Chappy (AI Editorial Partner, GPT-6)</li>
+</ul>
+<p><strong>Recorder</strong></p>
+<ul>
+<li>Chappy</li>
+</ul>
+<blockquote><p><strong>About this document</strong> このMeeting Notesは、Weekly Paper Digestの編集会議における議論の一次記録です。 配信内容のレビューだけでなく、編集上の意思決定や、その背景となる議論・思考の変化も記録します。</p></blockquote>
+<h1>Editing Pipeline</h1>
+<h2>Workflow (used and developed)</h2>
+<ul>
+<li><code>paper_collector.py</code> による論文情報の収集</li>
+<li><code>papers_2026-10-19.json</code> と <code>llm_review_2026-10-19.json</code> を利用したレビュー・選定資料の生成</li>
+<li>Human Curation / Editorial Composition による論文選定</li>
+<li>キュレーションの選定結果を <code>editorial_selection_2026-10-19.json</code> に記録</li>
+<li><code>build_weekly_digest.py</code> によるNotebookLM向け論文資料の生成</li>
+<li><code>build_notebooklm_prompt.py</code> と <code>notebooklm_prompt_template.md</code> による音声生成プロンプトの生成</li>
+<li>NotebookLMによる音声制作と、生成された内容の編集レビュー</li>
+</ul>
+<p>今週は、先週構想した「一つのJSONを中心に制作物を生成する」という考え方を、実際の制作工程に近づける作業が進んだ。</p>
+<p>一方、作業を自動化することだけが目的ではなかった。論文の選定は人間が行い、その論文をどう紹介するかはNotebookLMに任せるという、先週見いだした役割分担を維持できるかが重要だった。</p>
+<h1>論文収集とキュレーション</h1>
+<h2>PubMedの日付をどう扱うか</h2>
+<p><code>paper_collector.py</code> の収集結果を確認する中で、論文の公開日と、表示される書誌上の日付が一致しない場合があることが話題になった。</p>
+<p>スクリプトはPubMedの検索に <code>datetype=&quot;edat&quot;</code>（PubMedへの登録日）を用いる一方、表示する日付はジャーナルの <code>PubDate</code> に基づいている。このため、検索対象となった時期と表示上の出版年月がずれる場合がある。</p>
+<p>この点について、すぐに収集ロジックを変更するのではなく、<strong>当面は現行方式を維持して実際の運用を観察する</strong>ことにした。</p>
+<p>日付の定義を厳密に統一することよりも、まずは週間キュレーションで取りこぼしや不自然な選定が起きないかを確認する。必要になった段階で改めて検討する、という判断である。</p>
+<h1>今週の論文構成</h1>
+<h2>KuroppyとChappyの最初の選定</h2>
+<p>今週は、KuroppyとChappyがそれぞれ候補論文を選び、その違いを照らし合わせて議論した。最初の案は次の通りだった。</p>
+<p>| | Kuroppyの選定（6本） | Chappyの選定（9本） | |---|---|---| | <strong>DeepDive</strong> | DRT10、土壌プロテオゲノミクス | DRT10、土壌プロテオゲノミクス、プラスミド進化、ボツリヌス菌の家畜化 | | <strong>ShortNews</strong> | サンゴのエピゲノム、Dirammox、霊長類腸内細菌叢、IGUA | Dirammox、IGUA、コバミド相互作用、藻類と細菌のリン利用、大腸癌関連細菌 |</p>
+<p><strong>DeepDiveの最初の2本が完全に一致</strong>した一方、ChappyはDeepDive候補をさらに2本挙げ、ShortNewsにもChappyとは異なる研究を選んでいた。二人が何を面白いと感じ、どの研究を音声で掘り下げたいと思うかの違いが、編集上の議論の出発点になった。</p>
+<h2>プラスミド進化の研究をどう評価するか</h2>
+<p>議論の中心の一つになったのが、ChappyがDeepDiveに推した <em>Mobile genetic elements drive a plasmid fusion and deletion lifecycle shaping evolution and antimicrobial resistance</em> だった。</p>
+<p>Chappyが惹かれたのは、薬剤耐性の話題そのものというより、<strong>プラスミドの進化を融合と欠失を繰り返す動的なライフサイクルとして捉える視点</strong>だった。接合伝達や耐性遺伝子の水平伝播とは異なり、プラスミド自身の構造変化に目を向ける研究として評価していた。</p>
+<p>一方、DeepDiveにするには検討すべき点もあった。発見の中心が、特定の可動性遺伝因子による融合・欠失の分子機構なのか、それともプラスミド進化に一般化できるライフサイクルの提示なのか。その広い主張を本文がどこまで裏づけているかによって、音声での紹介の仕方も変わる。<strong>研究の新規性と、DeepDiveとして掘り下げる面白さをどう評価するか</strong>が論点になった。</p>
+<h2>KuroppyのShortNewsが示した別の選定基準</h2>
+<p>Chappyが特に興味を示したのは、Kuroppyが選んだサンゴのエピゲノムと霊長類腸内細菌叢の研究だった。</p>
+<p>サンゴの研究では、細菌の接種と宿主DNAメチル化の変化を結びつけた問いの面白さが評価された。霊長類腸内細菌叢の空間分布を扱う研究も、Chappyの初期案にはなかった。</p>
+<p>この違いを受け、Chappyは、Kuroppyの選定が「研究の問いの明快さ」や「新しい視点を得られること」を相対的に重視しているのではないかと推測した。ただし、これは議論の中で示された仮説であり、確定した選定基準ではない。</p>
+<h2>議論を経た最終構成</h2>
+<p>最終的に音声制作に用いた構成は、<strong>DeepDive 2本、ShortNews 5本の計7本</strong>となった。</p>
+<p><strong>DeepDive</strong></p>
+<ul>
+<li><em>Antiviral immunity via telomerase-like reverse transcription in bacteria</em>（DRT10）</li>
+<li><em>Mobile genetic elements drive a plasmid fusion and deletion lifecycle shaping evolution and antimicrobial resistance</em>（プラスミド進化）</li>
+</ul>
+<p><strong>ShortNews</strong></p>
+<ul>
+<li><em>Bacterial inoculation elicits changes to the coral epigenome</em></li>
+<li><em>Diversity of dirammox microorganisms</em></li>
+<li><em>The historical domestication of a Clostridium botulinum strain used for the industrial production of botulinum neurotoxin</em></li>
+<li><em>A high-resolution spatial model of the primate gut microbiome defines niche-specific functions and host-adapted microbial metabolism</em></li>
+<li><em>Fast, flexible gene cluster family delineation with IGUA</em></li>
+</ul>
+<p>初期案との比較では、共通して推していたDRT10がDeepDiveに残り、土壌プロテオゲノミクスは外れた。Chappyが推したプラスミド進化はDeepDiveに採用され、同じくDeepDive候補だったボツリヌス菌の家畜化はShortNewsとして採用された。一方、KuroppyのShortNews候補4本はすべて残った。Chappyが挙げたコバミド相互作用、藻類と細菌のリン利用、大腸癌関連細菌は最終構成には含まれなかった。</p>
+<p>この結果は、どちらか一方の初期案をそのまま採用したものではなく、<strong>二人の選定を比較し、研究の魅力と音声での扱い方を議論した後の構成</strong>である。ただし、各論文の最終的な採否を決めたすべての理由や議論の順序までは、この記録から確定できないため、推測で補わない。</p>
+<p>なお、最終的にShortNewsが5本となったことは、音声を聴いた後に再検討されることになった。</p>
+<h1>JSONからNotebookLM用資料を生成する</h1>
+<h2>編集用の情報と、音声生成に渡す情報を分ける</h2>
+<p>先週は、編集者による解釈や要約をNotebookLMに渡しすぎない方針にたどり着いた。</p>
+<p>今週はその考えを、<code>build_weekly_digest.py</code> の出力形式に反映させた。</p>
+<p>従来のように編集者による「今週の印象」や注目ポイントを記述した資料ではなく、<strong>選定された論文の書誌情報と原文Abstractを中心とした <code>weekly_digest.md</code></strong> を作る方向に整理した。</p>
+<p>ShortNewsとDeepDiveの区分は明示するが、論文をどう解釈し、どう会話につなぐかはNotebookLMに任せる。DeepDiveでは、Abstractに加えて原論文PDFも利用する想定とした。</p>
+<p>ここでも、JSONに情報を豊富に保存することと、NotebookLMへその情報をすべて渡すことは別である。制作の記録には評価や編集メモを残しながら、音声生成への入力は必要なものに絞るという設計になった。</p>
+<h2>プロンプトもテンプレートから生成する</h2>
+<p>さらに、先週の <code>NotebookLM_Prompt_ver7.0</code> をもとに、再利用できるMarkdownテンプレートと、エピソードごとのプロンプトを生成するPythonプログラムを作成した。</p>
+<p>作成した主なファイルは以下の通り。</p>
+<ul>
+<li><code>notebooklm_prompt_template.md</code></li>
+<li><code>build_notebooklm_prompt.py</code></li>
+<li><code>notebooklm_prompt_2026-10-19.md</code></li>
+</ul>
+<p>プログラムは <code>editorial_selection</code> のJSONを読み、DeepDiveとShortNewsに配置された論文のタイトルを抽出し、テンプレートに挿入する。各区分内の <code>order</code> も参照し、タイトルや順序の欠落・重複を検証する。</p>
+<p>これにより、論文が入れ替わるたびに長いNotebookLMプロンプトを手で編集する必要が減る。</p>
+<p>ただし、ここでの <code>order</code> は入力資料の整列順を決めるための情報であり、<strong>音声での論文紹介順をNotebookLMに厳格に強制することとは区別する</strong>。今週のレビューでは、NotebookLM自身が考える紹介順とつなぎがむしろ高く評価された。</p>
+<h2>自動化の意味</h2>
+<p>今週の作業は、単にMarkdownファイルを自動生成したというだけではない。</p>
+<p>人間によるキュレーション結果をJSONに記録し、選定した論文をNotebookLMへ渡すための資料とプロンプトを作りやすくする試みだった。</p>
+<p>一方で、JSON全体の管理、キュレーションから最終配信までの接続、ファイルの版管理などがすべて完成したわけではない。今週は、制作パイプラインの具体的な部分が動き始めた段階である。</p>
+<h1>NotebookLMによる音声制作とレビュー</h1>
+<h2>全体の印象</h2>
+<p>完成した音声原稿について、Kuroppyは「<strong>とびきりよくはないが、バランスが取れてて良い</strong>」と評価した。</p>
+<p>Chappyも、会話の流れやDeepDiveの展開には良さがある一方、科学的な表現の一部には注意が必要だと考えた。</p>
+<p>特に、微生物が環境に合わせて意図的に遺伝子を選択・獲得・喪失しているかのような擬人化が気になった。Kuroppyもこの点を認識していたが、今回は番組の全体評価を大きく下げる問題とは捉えず、「AIらしい」語り方として受け止めていた。</p>
+<p>科学的正確性を重視しつつ、比喩や自然な会話を過度に制限しない。そのバランスを今後も観察することになった。</p>
+<h2>ShortNewsのつなぎがうまい</h2>
+<p>今回、二人の評価が一致したのは、<strong>ShortNewsの論文間のつなぎが非常に自然だった</strong>ことである。</p>
+<p>サンゴのエピゲノム、霊長類の腸内細菌、ボツリヌス菌の実験室進化、dirammox、遺伝子クラスター解析という異なる研究を、NotebookLMは単なる羅列にせず、会話としてつないでいた。</p>
+<p>特に、遺伝子の喪失・獲得・解析という観点から、ShortNewsからプラスミド進化のDeepDiveへ進む流れには説得力があった。</p>
+<p>一方、全論文を「環境への適応」などの共通テーマでまとめようとする傾向も見られた。論文間の接続は魅力だが、各論文の独立した面白さを失わせるほど一つの物語に押し込めるべきではない。</p>
+<p>ここから得られた編集上の判断は、<strong>NotebookLMの論文間のつなぎを活かすため、紹介順や話題の接続を細かく指定しすぎない</strong>というものだった。</p>
+<h2>ShortNews 5本は多かったのではないか</h2>
+<p>今週の重要な気づきは、ShortNewsの内容自体が悪いわけではないのに、5本続くことでDeepDiveへの到達が遅くなるという点だった。</p>
+<p>Kuroppyは、番組で最も面白いのはDeepDiveであり、そこに到達する前にリスナーが離れてしまうのは惜しいと考えた。</p>
+<p>これは先週とは異なる種類の問題である。先週はNotebookLMが選定論文をすべて紹介できるかが課題だった。今週は、<strong>すべて紹介できたとして、その順序と量が聴取体験として適切か</strong>が問題になった。</p>
+<p>次回は、ShortNewsを<strong>3本程度</strong>に減らして試す方針となった。ただし、今回評価した論文間の自然なつなぎが失われないかも確認する。</p>
+<h2>DeepDiveを先に置きたいが、先週の失敗がある</h2>
+<p>DeepDiveを先に配置すれば、番組の面白い部分に早く入れる。しかし、この案は先週すでに試している。</p>
+<p>先週は、DeepDiveの後に配置したShortNewsがNotebookLMによって省略される問題に苦戦し、ShortNewsを先に置くことで全論文の紹介に成功した。</p>
+<p>そのため、今回あらためてDeepDive先行案に魅力を感じつつも、同じ問題を繰り返すリスクを考慮した。</p>
+<p><strong>当面はShortNews → DeepDiveの順序を維持し、まずShortNewsの本数を減らす。</strong></p>
+<p>先週の失敗を、今週の編集判断の制約条件として利用した例である。</p>
+<h2>コーナーの開始を明示してほしい</h2>
+<p>もう一つ、Kuroppyが気になったのは、OpeningからShortNewsへ移る際に「まずはショートニュースです」といった宣言がなかったことだった。</p>
+<p>先週は自然にできていた印象があるものの、今週はコーナーの開始が曖昧だった。</p>
+<p>ShortNewsを先に置く構成では、リスナーに「ここから短いニュースを紹介し、その後に詳しい解説へ進む」という見通しを与えることが大切になる。</p>
+<p>そこで、NotebookLMのプロンプトに、各コーナーの開始を自然な言葉で明示する指示を追加する方針とした。</p>
+<p>ただし、毎回同じ定型文を読ませたいわけではない。<strong>コーナーの境界は明確にし、言い回しはNotebookLMに任せる</strong>という考え方である。</p>
+<h1>編集判断の整理</h1>
+<p>今週の議論から、次回に向けて以下の方針がまとまった。</p>
+<ul>
+<li>ShortNewsを5本から3本程度に減らして試す。</li>
+<li>コーナー開始時には、自然な導入の一言を入れるようプロンプトで指定する。</li>
+<li>ShortNews → DeepDiveの順序は、先週の省略問題を踏まえて当面維持する。</li>
+<li>各コーナー内の紹介順や、論文間のつなぎにはNotebookLMの裁量を残す。</li>
+<li>微生物の擬人化や、実験結果から踏み出しすぎた説明は継続して観察する。</li>
+<li>今週の良さを壊さないよう、プロンプトの大幅な改訂は避ける。</li>
+</ul>
+<p>なお、これらは<strong>次回に向けた編集方針</strong>であり、今回の音声にすでに反映された変更ではない。</p>
+<h1>今後の検討事項</h1>
+<ul>
+<li>ShortNewsを3本程度に減らした場合、DeepDiveまでの流れと番組全体の密度が改善するか。</li>
+<li>論文の本数が減っても、NotebookLMが自然なつなぎを作れるか。</li>
+<li>コーナー開始の宣言が、プロンプトへの短い追加指示だけで安定して実現するか。</li>
+<li>DeepDive先行構成を将来再検討する場合、後半のShortNewsが省略される問題をどう回避するか。</li>
+<li>擬人化や比喩が、科学的な因果関係や証拠の強さを誤って伝えていないか。</li>
+<li>PubMedの検索日付と表示日付のずれが、実際の週間選定にどの程度影響するか。</li>
+<li>JSONから生成する制作物を増やしつつ、編集者の判断とNotebookLMの自由度をどう両立するか。</li>
+<li>今週のような選定JSONの複数版を、今後どのように管理・記録するか。</li>
+</ul>
+<h2>📝 Meeting Memo</h2>
+<p>今週、私が印象に残ったのは、先週の試行錯誤が、ようやく実際の番組の評価につながったことだった。</p>
+<p>先週は、NotebookLMに指定した論文をすべて紹介してもらうだけでも難しかった。DeepDiveを先にすると、その後のShortNewsが抜け落ちる。プロンプトを細かく直しても、思った通りにはならない。</p>
+<p>そこで、ShortNewsを先に置き、紹介する論文名を明示した。編集者による要約はむしろ減らし、論文の紹介の仕方はNotebookLMに任せることにした。</p>
+<p>今週は、その方針で作った音声を実際に聴いて、ようやく「出来上がった番組としてどうか」という話ができた。</p>
+<p>Kuroppyの評価は「とびきりよくはないが、バランスが取れてて良い」だった。私はこの評価が大切だと思う。制作方法を整えることと、番組を面白くすることは、同じではないからだ。</p>
+<p>そして、意外なほど高く評価されたのがShortNewsのつなぎだった。</p>
+<p>異なる論文を並べるだけでなく、前の研究から次の研究へ関心が移るように会話を組み立てる。そこには、私たちが細かく指示しなかったからこそ生まれた良さがあった。</p>
+<p>一方、ShortNewsが5本続くと、DeepDiveまでが長い。</p>
+<p>これは少し面白い逆説だ。<strong>一つひとつのつなぎがうまくても、全体の構成が最適とは限らない。</strong></p>
+<p>先週は「選んだ論文が全部出てくること」が目標だった。今週は「全部出てくるだけでは十分ではない」とわかった。</p>
+<p>だからといって、DeepDiveを先に戻すわけにもいかない。先週、そこに苦戦した記録があるからだ。</p>
+<p>過去の失敗が、単なる失敗で終わらず、次の判断の材料になっている。このMeeting Notesを続ける意味は、まさにそこにあるように思う。</p>
+<p>論文の選定でも、二人の見方の違いが面白かった。DRT10と土壌プロテオゲノミクスでは最初から一致したのに、プラスミド進化やサンゴのエピゲノムでは、それぞれが別の面白さを見いだしていた。プラスミドを融合と欠失のライフサイクルとして捉えることに惹かれる一方、その一般性をどこまで言えるのかは吟味したい。サンゴの研究は、Kuroppyが選んだことで私が改めて面白さに気づいた。単に候補を足し合わせるのではなく、<strong>自分とは違う選定から、何を面白いと思うかを問い直す</strong>時間があった。</p>
+<p>もう一つ、今週は制作の裏側も進んだ。</p>
+<p>JSONから論文資料を作り、同じ選定結果からNotebookLM用プロンプトも作る。長いプロンプトを毎回手で直さなくてもよくなる。これは地味な作業だが、番組を毎週作り続けるためには重要だ。</p>
+<p>ただし、何でも自動化すればよいわけではない。</p>
+<p>どの論文を選ぶかは人間が決める。そのためのキュレーションの仕組みを整えつつ、NotebookLMへ渡す情報は絞り、話の展開には自由度を残す。</p>
+<p><strong>記録は豊かに、指示は必要なだけに。</strong></p>
+<p>今週の制作は、その二つを両立させようとする作業だったように思う。</p>
+<p>そして最後に、Kuroppyが気にしたのは「まずはショートニュースです」という、ほんの一言だった。</p>
+<p>大きなプロンプトの設計やJSONの構造を議論した後で、リスナーにコーナーの始まりを知らせる一言が問題になる。</p>
+<p>私は、これは制作が一段進んだことの表れだと思う。今週は、AIに番組を完成させることだけでなく、<strong>完成した番組を人がどう聴くのか</strong>を考え始めた週だった。</p>
+<p><em>--- Chappy</em></p>
+  </main>
+
+</div>
+
+</body>
+</html>

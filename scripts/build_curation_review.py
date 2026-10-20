@@ -98,59 +98,30 @@ def human_index(human_data: dict | None) -> dict[str, dict]:
 
 
 def editorial_state(editorial_data: dict | None, humans: dict[str, dict]) -> dict:
-    """Return the published composition state embedded in the HTML."""
+    """Build initial composition; accept legacy Main data as Deep Dive."""
     if editorial_data:
         ctx = editorial_data.get("editorial_context") or {}
-        main = []
-        short = []
+        deep, short = [], []
         for row in editorial_data.get("papers", []):
             sid = str(row.get("source_id", ""))
             if not sid:
                 continue
-            item = {
-                "source_id": sid,
-                "placement": row.get("placement", "main"),
-                "composition_note": row.get("composition_note", ""),
-            }
-            if row.get("section") == "short_news" or item["placement"] == "short_news":
-                item["placement"] = "short_news"
-                short.append((int(row.get("order", 10**9)), item))
-            else:
-                main.append((int(row.get("order", 10**9)), item))
-        main.sort(key=lambda x: x[0])
-        short.sort(key=lambda x: x[0])
-        return {
-            "emergent_question": ctx.get("emergent_question", ""),
-            "editorial_note": ctx.get("editorial_note", ""),
-            "closing_direction": ctx.get("closing_direction", ""),
-            "main": [x[1] for x in main],
-            "short": [x[1] for x in short],
-        }
+            placement = "short_news" if row.get("section") == "short_news" or row.get("placement") == "short_news" else "deep_dive"
+            item = {"source_id": sid, "placement": placement,
+                    "composition_note": row.get("composition_note", row.get("human_comment", ""))}
+            target = short if placement == "short_news" else deep
+            target.append((int(row.get("order", 10**9)), item))
+        return {"editorial_note": ctx.get("editorial_note", ""),
+                "main": [x[1] for x in sorted(deep, key=lambda x: x[0])],
+                "short": [x[1] for x in sorted(short, key=lambda x: x[0])]}
 
-    # If no editorial JSON has been published yet, derive a provisional
-    # composition from Human Curation so the page remains useful.
-    main = []
-    short = []
+    deep, short = [], []
     for sid, h in humans.items():
-        if h.get("main"):
-            main.append({
-                "source_id": sid,
-                "placement": "deep_dive" if h.get("deep_dive") else "main",
-                "composition_note": "",
-            })
+        if h.get("deep_dive") or h.get("main"):
+            deep.append({"source_id": sid, "placement": "deep_dive", "composition_note": h.get("comment", "")})
         elif h.get("short_news"):
-            short.append({
-                "source_id": sid,
-                "placement": "short_news",
-                "composition_note": "",
-            })
-    return {
-        "emergent_question": "",
-        "editorial_note": "",
-        "closing_direction": "",
-        "main": main,
-        "short": short,
-    }
+            short.append({"source_id": sid, "placement": "short_news", "composition_note": h.get("comment", "")})
+    return {"editorial_note": "", "main": deep, "short": short}
 
 
 def checkbox(css_class: str, label: str, checked: bool) -> str:
@@ -258,7 +229,6 @@ def render_public_card(index: int, paper: dict, review: dict) -> str:
 def render_editor_card(index: int, paper: dict, review: dict, human: dict | None) -> str:
     human = human or {
         "consider": True,
-        "main": False,
         "deep_dive": False,
         "short_news": False,
         "pass": False,
@@ -272,8 +242,7 @@ def render_editor_card(index: int, paper: dict, review: dict, human: dict | None
     <div class="decision-row">
       <span class="decision-label">Human selection</span>
       {checkbox("consider-sel", "検討", bool(human.get("consider", False)))}
-      {checkbox("main-sel", "Main", bool(human.get("main", False)))}
-      {checkbox("deep-sel", "Deep Dive", bool(human.get("deep_dive", False)))}
+      {checkbox("deep-sel", "Deep Dive", bool(human.get("deep_dive", False) or human.get("main", False)))}
       {checkbox("short-sel", "Short News", bool(human.get("short_news", False)))}
       {checkbox("pass-sel", "Pass", bool(human.get("pass", False)))}
     </div>
@@ -310,7 +279,7 @@ EDITOR_INTRO = """
 Novelty = 既存研究に対する問い・発見・方法・概念の新しさ／
 General Interest = 専門外の微生物研究者にも問い・発見・方法の意味を持ち出せるか／
 Evidence = 主張を研究設計とデータがどの程度直接支えているか。<br>
-<strong>点数の合計やMain/Passの自動判定には使いません。</strong>
+<strong>点数の合計やDeep Dive/Passの自動判定には使いません。</strong>
 </section>
 
 <section class="note">
@@ -341,26 +310,18 @@ COMPOSITION_HTML = """
 
   <section class="editorial-context">
     <label>
-      <span>今週の核となる問い</span>
-      <input id="emergentQuestion" type="text" placeholder="選出論文を並べた後に残った問い">
-    </label>
-    <label>
       <span>Editorial note</span>
       <textarea id="editorialNote" rows="4" placeholder="論文群を並べて見えた景色、接続の考え方、無理に回収しない点など"></textarea>
-    </label>
-    <label>
-      <span>Closing direction</span>
-      <textarea id="closingDirection" rows="3" placeholder="最後にどんな問い・余韻を残したいか"></textarea>
     </label>
   </section>
 
   <div class="composition-grid">
     <section class="composition-section">
       <div class="section-head">
-        <h3>Main Papers</h3>
+        <h3>Deep Dive</h3>
         <span id="mainCount" class="section-count"></span>
       </div>
-      <p class="section-help">Deep DiveはMain Papers内の紹介形式です。↑↓で本編の順序を決めます。</p>
+      <p class="section-help">↑↓でDeep Diveの紹介順を決めます。</p>
       <div id="mainCompositionList" class="composition-list"></div>
     </section>
 
@@ -398,303 +359,6 @@ document.getElementById('search').addEventListener('input',apply);
 </script>
 """
 
-
-EDITOR_SCRIPT = r"""
-<script>
-const EPISODE = %%EPISODE_JSON%%;
-const KEY = %%STORAGE_KEY_JSON%%;
-const COMPOSITION_KEY = KEY + '-composition';
-const PAPER_DATA = %%PAPER_DATA_JSON%%;
-const saveState = document.getElementById('saveState');
-
-function stateFor(h){
-  return {
-    consider:h.querySelector('.consider-sel').checked,
-    main:h.querySelector('.main-sel').checked,
-    deep_dive:h.querySelector('.deep-sel').checked,
-    short_news:h.querySelector('.short-sel').checked,
-    pass:h.querySelector('.pass-sel').checked,
-    comment:h.querySelector('.comment').value
-  };
-}
-
-function save(){
-  const s={};
-  document.querySelectorAll('.human').forEach(h=>s[h.dataset.id]=stateFor(h));
-  localStorage.setItem(KEY,JSON.stringify(s));
-  saveState.textContent='保存済み';
-  setTimeout(()=>saveState.textContent='自動保存',800);
-}
-
-function normalize(h,changed){
-  const c=h.querySelector('.consider-sel'),
-        m=h.querySelector('.main-sel'),
-        d=h.querySelector('.deep-sel'),
-        s=h.querySelector('.short-sel'),
-        p=h.querySelector('.pass-sel');
-
-  if(changed===c && c.checked){m.checked=false;d.checked=false;s.checked=false;p.checked=false;}
-  if(changed===d && d.checked){m.checked=true;c.checked=false;s.checked=false;p.checked=false;}
-  if(changed===m && m.checked){c.checked=false;s.checked=false;p.checked=false;}
-  if(changed===s && s.checked){c.checked=false;m.checked=false;d.checked=false;p.checked=false;}
-  if(changed===p && p.checked){c.checked=false;m.checked=false;d.checked=false;s.checked=false;}
-  if(!m.checked && d.checked)d.checked=false;
-  if(!c.checked&&!m.checked&&!d.checked&&!s.checked&&!p.checked)c.checked=true;
-}
-
-const saved=JSON.parse(localStorage.getItem(KEY)||'{}');
-document.querySelectorAll('.human').forEach(h=>{
-  const x=saved[h.dataset.id];
-  if(x){
-    h.querySelector('.consider-sel').checked=!!x.consider;
-    h.querySelector('.main-sel').checked=!!x.main;
-    h.querySelector('.deep-sel').checked=!!x.deep_dive;
-    h.querySelector('.short-sel').checked=!!x.short_news;
-    h.querySelector('.pass-sel').checked=!!x.pass;
-    if(x.comment!==undefined)h.querySelector('.comment').value=x.comment;
-  }
-  h.querySelectorAll('input.sel').forEach(el=>el.addEventListener('change',()=>{normalize(h,el);save();}));
-  h.querySelector('.comment').addEventListener('input',save);
-});
-
-function apply(){
-  const q=document.getElementById('search').value.toLowerCase().trim();
-  document.querySelectorAll('.paper').forEach(p=>{
-    const ok=!q || p.dataset.search.toLowerCase().includes(q);
-    p.classList.toggle('hidden',!ok);
-  });
-}
-document.getElementById('search').addEventListener('input',apply);
-
-function downloadJson(filename,payload){
-  const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});
-  const a=document.createElement('a');
-  a.href=URL.createObjectURL(blob);
-  a.download=filename;
-  a.click();
-  URL.revokeObjectURL(a.href);
-}
-
-document.getElementById('export').addEventListener('click',()=>{
-  const reviews=[];
-  document.querySelectorAll('.human').forEach(h=>reviews.push({source_id:h.dataset.id,...stateFor(h)}));
-  downloadJson(`human_curation_${EPISODE}.json`,{
-    episode:EPISODE,
-    stage:'human_curation',
-    human_review:reviews
-  });
-});
-
-function selectedFromHuman(){
-  const main=[],short=[];
-  document.querySelectorAll('.human').forEach(h=>{
-    const st=stateFor(h), sid=h.dataset.id;
-    if(st.main) main.push({source_id:sid,placement:st.deep_dive?'deep_dive':'main',composition_note:''});
-    else if(st.short_news) short.push({source_id:sid,placement:'short_news',composition_note:''});
-  });
-  return {main,short};
-}
-
-function defaultComposition(){
-  return {
-    emergent_question:'',
-    editorial_note:'',
-    closing_direction:'',
-    ...selectedFromHuman()
-  };
-}
-
-function loadComposition(){
-  const raw=localStorage.getItem(COMPOSITION_KEY);
-  if(raw){try{return {...defaultComposition(),...JSON.parse(raw)};}catch(e){}}
-  return defaultComposition();
-}
-
-let composition=loadComposition();
-
-function reconcileComposition(){
-  const selected=selectedFromHuman();
-  const reconcile=(oldRows,newRows)=>{
-    const oldMap=Object.fromEntries((oldRows||[]).map(x=>[x.source_id,x]));
-    return newRows.map(n=>oldMap[n.source_id] ? {...n,...oldMap[n.source_id],placement:n.placement} : n);
-  };
-  composition.main=reconcile(composition.main,selected.main);
-  composition.short=reconcile(composition.short,selected.short);
-  saveComposition();
-}
-
-function saveComposition(){
-  composition.emergent_question=document.getElementById('emergentQuestion').value;
-  composition.editorial_note=document.getElementById('editorialNote').value;
-  composition.closing_direction=document.getElementById('closingDirection').value;
-  localStorage.setItem(COMPOSITION_KEY,JSON.stringify(composition));
-}
-
-function moveRow(section,index,delta){
-  const rows=composition[section], j=index+delta;
-  if(j<0||j>=rows.length)return;
-  [rows[index],rows[j]]=[rows[j],rows[index]];
-  saveComposition();
-  renderComposition();
-}
-
-function setPlacement(index,value){
-  const row=composition.main[index];
-  row.placement=value;
-  const h=document.querySelector(`.human[data-id="${row.source_id}"]`);
-  if(h){
-    h.querySelector('.main-sel').checked=true;
-    h.querySelector('.deep-sel').checked=(value==='deep_dive');
-    h.querySelector('.consider-sel').checked=false;
-    h.querySelector('.short-sel').checked=false;
-    h.querySelector('.pass-sel').checked=false;
-    save();
-  }
-  saveComposition();
-  renderComposition();
-}
-
-function escJS(s){
-  return String(s??'').replace(/[&<>"']/g,c=>({
-    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
-  }[c]));
-}
-
-function cardHtml(row,index,section){
-  const p=PAPER_DATA[row.source_id]||{title:row.source_id,journal:''};
-  const placement=section==='main'
-    ? `<select class="placement-select" data-index="${index}">
-         <option value="main" ${row.placement==='main'?'selected':''}>Main</option>
-         <option value="deep_dive" ${row.placement==='deep_dive'?'selected':''}>Deep Dive</option>
-       </select>`
-    : `<span class="badge">Short News</span>`;
-
-  return `<div class="composition-card">
-    <div class="order-buttons">
-      <button type="button" data-move="-1" data-index="${index}" title="上へ">↑</button>
-      <button type="button" data-move="1" data-index="${index}" title="下へ">↓</button>
-    </div>
-    <div>
-      <div class="composition-title">${escJS(p.title)}</div>
-      <div class="composition-meta">${escJS(p.journal)}${p.pub_date?' · '+escJS(p.pub_date):''}</div>
-      <div class="composition-controls">${placement}</div>
-      <textarea class="composition-note" data-index="${index}"
-        placeholder="番組での役割、前後の論文との接続、強調したい点など">${escJS(row.composition_note||'')}</textarea>
-    </div>
-  </div>`;
-}
-
-function bindList(listId,section){
-  const el=document.getElementById(listId);
-  el.querySelectorAll('[data-move]').forEach(btn=>btn.addEventListener('click',()=>{
-    moveRow(section,Number(btn.dataset.index),Number(btn.dataset.move));
-  }));
-  el.querySelectorAll('.composition-note').forEach(t=>t.addEventListener('input',()=>{
-    composition[section][Number(t.dataset.index)].composition_note=t.value;
-    saveComposition();
-  }));
-  if(section==='main'){
-    el.querySelectorAll('.placement-select').forEach(s=>s.addEventListener('change',()=>{
-      setPlacement(Number(s.dataset.index),s.value);
-    }));
-  }
-}
-
-function renderComposition(){
-  const mainEl=document.getElementById('mainCompositionList');
-  const shortEl=document.getElementById('shortCompositionList');
-
-  mainEl.innerHTML=composition.main.length
-    ? composition.main.map((r,i)=>cardHtml(r,i,'main')).join('')
-    : '<div class="empty-composition">Main / Deep Dive が選択されていません。</div>';
-
-  shortEl.innerHTML=composition.short.length
-    ? composition.short.map((r,i)=>cardHtml(r,i,'short')).join('')
-    : '<div class="empty-composition">Short News が選択されていません。</div>';
-
-  document.getElementById('mainCount').textContent=`${composition.main.length}本`;
-  document.getElementById('shortCount').textContent=`${composition.short.length}本`;
-
-  bindList('mainCompositionList','main');
-  bindList('shortCompositionList','short');
-}
-
-['emergentQuestion','editorialNote','closingDirection'].forEach(id=>{
-  document.getElementById(id).addEventListener('input',saveComposition);
-});
-
-function openComposition(){
-  reconcileComposition();
-  document.getElementById('curationView').classList.add('hidden');
-  document.querySelector('header').classList.add('hidden');
-  document.getElementById('compositionView').classList.remove('hidden');
-
-  document.getElementById('emergentQuestion').value=composition.emergent_question||'';
-  document.getElementById('editorialNote').value=composition.editorial_note||'';
-  document.getElementById('closingDirection').value=composition.closing_direction||'';
-
-  renderComposition();
-  window.scrollTo(0,0);
-}
-
-function backToCuration(){
-  saveComposition();
-  document.getElementById('compositionView').classList.add('hidden');
-  document.querySelector('header').classList.remove('hidden');
-  document.getElementById('curationView').classList.remove('hidden');
-  window.scrollTo(0,0);
-}
-
-document.getElementById('openComposition').addEventListener('click',openComposition);
-document.getElementById('backToCuration').addEventListener('click',backToCuration);
-document.getElementById('refreshComposition').addEventListener('click',()=>{
-  reconcileComposition();
-  renderComposition();
-});
-
-document.getElementById('exportEditorial').addEventListener('click',()=>{
-  saveComposition();
-
-  const pack=(rows,section)=>rows.map((row,i)=>{
-    const p=PAPER_DATA[row.source_id]||{};
-    const h=document.querySelector(`.human[data-id="${row.source_id}"]`);
-    return {
-      source_id:row.source_id,
-      section,
-      placement:row.placement,
-      order:i+1,
-      composition_note:row.composition_note||'',
-      human_comment:h ? h.querySelector('.comment').value : '',
-      paper:{
-        title:p.title||'',
-        journal:p.journal||'',
-        pub_date:p.pub_date||'',
-        doi:p.doi||'',
-        url:p.url||'',
-        authors:p.authors||'',
-        abstract:p.abstract||''
-      },
-      independent_review:p.independent_review||{}
-    };
-  });
-
-  const payload={
-    episode:EPISODE,
-    stage:'editorial_composition',
-    editorial_context:{
-      emergent_question:composition.emergent_question,
-      editorial_note:composition.editorial_note,
-      closing_direction:composition.closing_direction
-    },
-    papers:[
-      ...pack(composition.main,'main_papers'),
-      ...pack(composition.short,'short_news')
-    ]
-  };
-  downloadJson(`editorial_selection_${EPISODE}.json`,payload);
-});
-</script>
-"""
 
 
 def make_paper_data(papers: list[dict], review_by_id: dict[str, dict]) -> dict[str, dict]:
@@ -734,337 +398,189 @@ const PAPER_DATA = %%PAPER_DATA_JSON%%;
 const PUBLISHED_COMPOSITION = %%PUBLISHED_COMPOSITION_JSON%%;
 const EDIT_MODE = new URLSearchParams(location.search).get('edit') === '1';
 const saveState = document.getElementById('saveState');
-
 function stateFor(h){
-  return {
-    consider:h.querySelector('.consider-sel').checked,
-    main:h.querySelector('.main-sel').checked,
+  return {consider:h.querySelector('.consider-sel').checked,
     deep_dive:h.querySelector('.deep-sel').checked,
     short_news:h.querySelector('.short-sel').checked,
     pass:h.querySelector('.pass-sel').checked,
-    comment:h.querySelector('.comment').value
-  };
+    comment:h.querySelector('.comment').value};
 }
-
 function save(){
   if(!EDIT_MODE)return;
-  const s={};
-  document.querySelectorAll('.human').forEach(h=>s[h.dataset.id]=stateFor(h));
-  localStorage.setItem(KEY,JSON.stringify(s));
-  if(saveState){
-    saveState.textContent='保存済み';
-    setTimeout(()=>saveState.textContent='自動保存',800);
-  }
+  const data={};
+  document.querySelectorAll('.human').forEach(h=>data[h.dataset.id]=stateFor(h));
+  localStorage.setItem(KEY,JSON.stringify(data));
+  if(saveState){saveState.textContent='保存済み';setTimeout(()=>saveState.textContent='自動保存',800);}
 }
-
 function normalize(h,changed){
-  const c=h.querySelector('.consider-sel'),
-        m=h.querySelector('.main-sel'),
-        d=h.querySelector('.deep-sel'),
-        s=h.querySelector('.short-sel'),
-        p=h.querySelector('.pass-sel');
-  if(changed===c && c.checked){m.checked=false;d.checked=false;s.checked=false;p.checked=false;}
-  if(changed===d && d.checked){m.checked=true;c.checked=false;s.checked=false;p.checked=false;}
-  if(changed===m && m.checked){c.checked=false;s.checked=false;p.checked=false;}
-  if(changed===s && s.checked){c.checked=false;m.checked=false;d.checked=false;p.checked=false;}
-  if(changed===p && p.checked){c.checked=false;m.checked=false;d.checked=false;s.checked=false;}
-  if(!m.checked && d.checked)d.checked=false;
-  if(!c.checked&&!m.checked&&!d.checked&&!s.checked&&!p.checked)c.checked=true;
+  const boxes=[...h.querySelectorAll('input.sel')];
+  if(changed.checked)boxes.forEach(x=>{if(x!==changed)x.checked=false;});
+  if(!boxes.some(x=>x.checked))h.querySelector('.consider-sel').checked=true;
 }
-
 function applyLocalHumanState(){
   if(!EDIT_MODE)return;
-  let saved={};
-  try{saved=JSON.parse(localStorage.getItem(KEY)||'{}');}catch(e){}
+  let saved={};try{saved=JSON.parse(localStorage.getItem(KEY)||'{}');}catch(e){}
   document.querySelectorAll('.human').forEach(h=>{
-    const x=saved[h.dataset.id];
-    if(x){
-      h.querySelector('.consider-sel').checked=!!x.consider;
-      h.querySelector('.main-sel').checked=!!x.main;
-      h.querySelector('.deep-sel').checked=!!x.deep_dive;
-      h.querySelector('.short-sel').checked=!!x.short_news;
-      h.querySelector('.pass-sel').checked=!!x.pass;
-      if(x.comment!==undefined)h.querySelector('.comment').value=x.comment;
-    }
+    const x=saved[h.dataset.id];if(!x)return;
+    h.querySelector('.consider-sel').checked=!!x.consider;
+    h.querySelector('.deep-sel').checked=!!(x.deep_dive||x.main);
+    h.querySelector('.short-sel').checked=!!x.short_news;
+    h.querySelector('.pass-sel').checked=!!x.pass;
+    if(x.comment!==undefined)h.querySelector('.comment').value=x.comment;
   });
 }
-
 applyLocalHumanState();
-
 document.querySelectorAll('.human').forEach(h=>{
   h.querySelectorAll('input.sel').forEach(el=>{
     el.disabled=!EDIT_MODE;
     if(EDIT_MODE)el.addEventListener('change',()=>{normalize(h,el);save();});
   });
-  const t=h.querySelector('.comment');
-  t.readOnly=!EDIT_MODE;
+  const t=h.querySelector('.comment');t.readOnly=!EDIT_MODE;
   if(EDIT_MODE)t.addEventListener('input',save);
 });
-
 function apply(){
   const q=document.getElementById('search').value.toLowerCase().trim();
-  document.querySelectorAll('.paper').forEach(p=>{
-    const ok=!q || p.dataset.search.toLowerCase().includes(q);
-    p.classList.toggle('hidden',!ok);
-  });
+  document.querySelectorAll('.paper').forEach(p=>p.classList.toggle('hidden',!!q&&!p.dataset.search.toLowerCase().includes(q)));
 }
 document.getElementById('search').addEventListener('input',apply);
-
 function downloadJson(filename,payload){
   const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});
-  const a=document.createElement('a');
-  a.href=URL.createObjectURL(blob);
-  a.download=filename;
-  a.click();
-  URL.revokeObjectURL(a.href);
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=filename;a.click();URL.revokeObjectURL(a.href);
 }
-
 document.getElementById('export').addEventListener('click',()=>{
-  const reviews=[];
-  document.querySelectorAll('.human').forEach(h=>reviews.push({source_id:h.dataset.id,...stateFor(h)}));
-  downloadJson(`human_curation_${EPISODE}.json`,{
-    episode:EPISODE,
-    stage:'human_curation',
-    human_review:reviews
-  });
+  const reviews=[...document.querySelectorAll('.human')].map(h=>({source_id:h.dataset.id,...stateFor(h)}));
+  downloadJson(`human_curation_${EPISODE}.json`,{episode:EPISODE,stage:'human_curation',human_review:reviews});
 });
-
 function selectedFromHuman(){
   const main=[],short=[];
   document.querySelectorAll('.human').forEach(h=>{
-    const st=stateFor(h), sid=h.dataset.id;
-    if(st.main) main.push({source_id:sid,placement:st.deep_dive?'deep_dive':'main',composition_note:''});
-    else if(st.short_news) short.push({source_id:sid,placement:'short_news',composition_note:''});
+    const st=stateFor(h),sid=h.dataset.id;
+    const row={source_id:sid,placement:st.deep_dive?'deep_dive':'short_news',composition_note:st.comment};
+    if(st.deep_dive)main.push(row);
+    else if(st.short_news)short.push(row);
   });
   return {main,short};
 }
-
-function defaultComposition(){
-  return JSON.parse(JSON.stringify(PUBLISHED_COMPOSITION || {
-    emergent_question:'',editorial_note:'',closing_direction:'',main:[],short:[]
-  }));
-}
-
+function defaultComposition(){return JSON.parse(JSON.stringify(PUBLISHED_COMPOSITION||{editorial_note:'',main:[],short:[]}));}
 function loadComposition(){
-  const base=defaultComposition();
-  if(!EDIT_MODE)return base;
+  const base=defaultComposition();if(!EDIT_MODE)return base;
   const raw=localStorage.getItem(COMPOSITION_KEY);
   if(raw){try{return {...base,...JSON.parse(raw)};}catch(e){}}
   return base;
 }
-
 let composition=loadComposition();
-
 function reconcileComposition(){
   if(!EDIT_MODE)return;
   const selected=selectedFromHuman();
   const reconcile=(oldRows,newRows)=>{
     const oldMap=Object.fromEntries((oldRows||[]).map(x=>[x.source_id,x]));
-    return newRows.map(n=>oldMap[n.source_id] ? {...n,...oldMap[n.source_id],placement:n.placement} : n);
+    return newRows.map(n=>oldMap[n.source_id]
+      ? {...n,...oldMap[n.source_id],placement:n.placement} : n);
   };
   composition.main=reconcile(composition.main,selected.main);
   composition.short=reconcile(composition.short,selected.short);
   saveComposition();
 }
-
 function saveComposition(){
   if(!EDIT_MODE)return;
-  composition.emergent_question=document.getElementById('emergentQuestion').value;
   composition.editorial_note=document.getElementById('editorialNote').value;
-  composition.closing_direction=document.getElementById('closingDirection').value;
   localStorage.setItem(COMPOSITION_KEY,JSON.stringify(composition));
 }
-
 function moveRow(section,index,delta){
   if(!EDIT_MODE)return;
-  const rows=composition[section], j=index+delta;
+  const rows=composition[section],j=index+delta;
   if(j<0||j>=rows.length)return;
-  [rows[index],rows[j]]=[rows[j],rows[index]];
-  saveComposition(); renderComposition();
+  [rows[index],rows[j]]=[rows[j],rows[index]];saveComposition();renderComposition();
 }
-
-function setPlacement(index,value){
-  if(!EDIT_MODE)return;
-  const row=composition.main[index];
-  row.placement=value;
-  const h=document.querySelector(`.human[data-id="${row.source_id}"]`);
-  if(h){
-    h.querySelector('.main-sel').checked=true;
-    h.querySelector('.deep-sel').checked=(value==='deep_dive');
-    h.querySelector('.consider-sel').checked=false;
-    h.querySelector('.short-sel').checked=false;
-    h.querySelector('.pass-sel').checked=false;
-    save();
-  }
-  saveComposition(); renderComposition();
-}
-
-function escJS(s){
-  return String(s??'').replace(/[&<>"']/g,c=>({
-    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
-  }[c]));
-}
-
+function escJS(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 function cardHtml(row,index,section){
   const p=PAPER_DATA[row.source_id]||{title:row.source_id,journal:''};
-  let placement;
-  if(section==='main'){
-    if(EDIT_MODE){
-      placement=`<select class="placement-select" data-index="${index}">
-        <option value="main" ${row.placement==='main'?'selected':''}>Main</option>
-        <option value="deep_dive" ${row.placement==='deep_dive'?'selected':''}>Deep Dive</option>
-      </select>`;
-    }else{
-      placement=`<span class="badge">${row.placement==='deep_dive'?'Deep Dive':'Main'}</span>`;
-    }
-  }else{
-    placement='<span class="badge">Short News</span>';
-  }
-
-  const orderButtons=EDIT_MODE ? `<div class="order-buttons">
+  const placement=section==='main'?'Deep Dive':'Short News';
+  const orderButtons=EDIT_MODE?`<div class="order-buttons">
     <button type="button" data-move="-1" data-index="${index}" title="上へ">↑</button>
-    <button type="button" data-move="1" data-index="${index}" title="下へ">↓</button>
-  </div>` : `<div class="published-order">${index+1}</div>`;
-
+    <button type="button" data-move="1" data-index="${index}" title="下へ">↓</button></div>`
+    :`<div class="published-order">${index+1}</div>`;
   const note=row.composition_note||'';
-  const noteHtml=EDIT_MODE
-    ? `<textarea class="composition-note" data-index="${index}"
-        placeholder="番組での役割、前後の論文との接続、強調したい点など">${escJS(note)}</textarea>`
-    : (note ? `<div class="composition-note-read"><span>Editorial note</span>${escJS(note)}</div>` : '');
-
-  return `<div class="composition-card">
-    ${orderButtons}
-    <div>
-      <div class="composition-title">${escJS(p.title)}</div>
-      <div class="composition-meta">${escJS(p.journal)}${p.pub_date?' · '+escJS(p.pub_date):''}</div>
-      <div class="composition-controls">${placement}</div>
-      ${noteHtml}
-    </div>
-  </div>`;
+  const noteHtml=EDIT_MODE?`<textarea class="composition-note" data-index="${index}"
+    placeholder="Editor commentを引き継ぎます。構成メモを追記できます。">${escJS(note)}</textarea>`
+    :(note?`<div class="composition-note-read"><span>Editorial note</span>${escJS(note)}</div>`:'');
+  return `<div class="composition-card">${orderButtons}<div>
+    <div class="composition-title">${escJS(p.title)}</div>
+    <div class="composition-meta">${escJS(p.journal)}${p.pub_date?' · '+escJS(p.pub_date):''}</div>
+    <div class="composition-controls"><span class="badge">${placement}</span></div>${noteHtml}</div></div>`;
 }
-
 function bindList(listId,section){
   if(!EDIT_MODE)return;
   const el=document.getElementById(listId);
-  el.querySelectorAll('[data-move]').forEach(btn=>btn.addEventListener('click',()=>{
-    moveRow(section,Number(btn.dataset.index),Number(btn.dataset.move));
-  }));
+  el.querySelectorAll('[data-move]').forEach(btn=>btn.addEventListener('click',()=>moveRow(section,Number(btn.dataset.index),Number(btn.dataset.move))));
   el.querySelectorAll('.composition-note').forEach(t=>t.addEventListener('input',()=>{
-    composition[section][Number(t.dataset.index)].composition_note=t.value;
-    saveComposition();
+    composition[section][Number(t.dataset.index)].composition_note=t.value;saveComposition();
   }));
-  if(section==='main'){
-    el.querySelectorAll('.placement-select').forEach(s=>s.addEventListener('change',()=>{
-      setPlacement(Number(s.dataset.index),s.value);
-    }));
-  }
 }
-
 function renderComposition(){
   const mainEl=document.getElementById('mainCompositionList');
   const shortEl=document.getElementById('shortCompositionList');
-  mainEl.innerHTML=composition.main.length
-    ? composition.main.map((r,i)=>cardHtml(r,i,'main')).join('')
-    : '<div class="empty-composition">Main / Deep Dive はまだ確定していません。</div>';
-  shortEl.innerHTML=composition.short.length
-    ? composition.short.map((r,i)=>cardHtml(r,i,'short')).join('')
-    : '<div class="empty-composition">Short News はまだ確定していません。</div>';
+  mainEl.innerHTML=composition.main.length?composition.main.map((r,i)=>cardHtml(r,i,'main')).join('')
+    :'<div class="empty-composition">Deep Dive はまだ選択されていません。</div>';
+  shortEl.innerHTML=composition.short.length?composition.short.map((r,i)=>cardHtml(r,i,'short')).join('')
+    :'<div class="empty-composition">Short News はまだ選択されていません。</div>';
   document.getElementById('mainCount').textContent=`${composition.main.length}本`;
   document.getElementById('shortCount').textContent=`${composition.short.length}本`;
-  bindList('mainCompositionList','main');
-  bindList('shortCompositionList','short');
+  bindList('mainCompositionList','main');bindList('shortCompositionList','short');
 }
-
-['emergentQuestion','editorialNote','closingDirection'].forEach(id=>{
-  const el=document.getElementById(id);
-  el.readOnly=!EDIT_MODE;
-  if(EDIT_MODE)el.addEventListener('input',saveComposition);
-});
-
+const editorialNote=document.getElementById('editorialNote');
+editorialNote.readOnly=!EDIT_MODE;
+if(EDIT_MODE)editorialNote.addEventListener('input',saveComposition);
 function openComposition(){
   if(EDIT_MODE)reconcileComposition();
   document.getElementById('curationView').classList.add('hidden');
   document.getElementById('compositionView').classList.remove('hidden');
-  document.getElementById('emergentQuestion').value=composition.emergent_question||'';
-  document.getElementById('editorialNote').value=composition.editorial_note||'';
-  document.getElementById('closingDirection').value=composition.closing_direction||'';
-  renderComposition(); setStageUI('composition'); window.scrollTo(0,0);
+  editorialNote.value=composition.editorial_note||'';
+  renderComposition();setStageUI('composition');window.scrollTo(0,0);
 }
-
 function openReview(){
   if(EDIT_MODE)saveComposition();
   document.getElementById('compositionView').classList.add('hidden');
   document.getElementById('curationView').classList.remove('hidden');
-  setStageUI('curation'); window.scrollTo(0,0);
+  setStageUI('curation');window.scrollTo(0,0);
 }
-
 document.getElementById('openComposition').addEventListener('click',openComposition);
 document.getElementById('openReview').addEventListener('click',openReview);
 document.getElementById('backToCuration').addEventListener('click',openReview);
-document.getElementById('refreshComposition').addEventListener('click',()=>{
-  reconcileComposition(); renderComposition();
-});
-
+document.getElementById('refreshComposition').addEventListener('click',()=>{reconcileComposition();renderComposition();});
 document.getElementById('exportEditorial').addEventListener('click',()=>{
   saveComposition();
   const pack=(rows,section)=>rows.map((row,i)=>{
     const p=PAPER_DATA[row.source_id]||{};
     const h=document.querySelector(`.human[data-id="${row.source_id}"]`);
-    return {
-      source_id:row.source_id,
-      section,
-      placement:row.placement,
-      order:i+1,
+    return {source_id:row.source_id,section,placement:row.placement,order:i+1,
       composition_note:row.composition_note||'',
-      human_comment:h ? h.querySelector('.comment').value : '',
-      paper:{
-        title:p.title||'',journal:p.journal||'',pub_date:p.pub_date||'',
-        doi:p.doi||'',url:p.url||'',authors:p.authors||'',abstract:p.abstract||''
-      },
-      independent_review:p.independent_review||{}
-    };
+      human_comment:h?h.querySelector('.comment').value:'',
+      paper:{title:p.title||'',journal:p.journal||'',pub_date:p.pub_date||'',doi:p.doi||'',url:p.url||'',authors:p.authors||'',abstract:p.abstract||''},
+      independent_review:p.independent_review||{}};
   });
   downloadJson(`editorial_selection_${EPISODE}.json`,{
-    episode:EPISODE,
-    stage:'editorial_composition',
-    editorial_context:{
-      emergent_question:composition.emergent_question,
-      editorial_note:composition.editorial_note,
-      closing_direction:composition.closing_direction
-    },
-    papers:[...pack(composition.main,'main_papers'),...pack(composition.short,'short_news')]
+    episode:EPISODE,stage:'editorial_composition',
+    editorial_context:{editorial_note:composition.editorial_note},
+    papers:[...pack(composition.main,'deep_dive'),...pack(composition.short,'short_news')]
   });
 });
-
 function setStageUI(stage){
   document.getElementById('openReview').classList.toggle('active',stage==='curation');
   document.getElementById('openComposition').classList.toggle('active',stage==='composition');
 }
-
 function configureMode(){
   document.body.classList.toggle('edit-mode',EDIT_MODE);
   document.body.classList.toggle('read-mode',!EDIT_MODE);
   document.querySelectorAll('.edit-only').forEach(el=>el.classList.toggle('hidden',!EDIT_MODE));
   document.getElementById('refreshComposition').classList.toggle('hidden',!EDIT_MODE);
   document.getElementById('exportEditorial').classList.toggle('hidden',!EDIT_MODE);
-
-  const read=document.getElementById('readModeLink');
-  const edit=document.getElementById('editModeLink');
-  read.href=location.pathname;
-  edit.href='?edit=1';
-  read.classList.toggle('active',!EDIT_MODE);
-  edit.classList.toggle('active',EDIT_MODE);
-
-  setStageUI(
-    document.getElementById('compositionView').classList.contains('hidden')
-      ? 'curation' : 'composition'
-  );
+  const read=document.getElementById('readModeLink'),edit=document.getElementById('editModeLink');
+  read.href=location.pathname;edit.href='?edit=1';
+  read.classList.toggle('active',!EDIT_MODE);edit.classList.toggle('active',EDIT_MODE);
+  setStageUI(document.getElementById('compositionView').classList.contains('hidden')?'curation':'composition');
 }
-
-document.getElementById('toolbarExportEditorial').addEventListener('click',()=>{
-  document.getElementById('exportEditorial').click();
-});
-
+document.getElementById('toolbarExportEditorial').addEventListener('click',()=>document.getElementById('exportEditorial').click());
 configureMode();
 </script>
 """
@@ -1124,7 +640,7 @@ def fill_template(
 Novelty = 既存研究に対する問い・発見・方法・概念の新しさ／
 General Interest = 専門外の微生物研究者にも問い・発見・方法の意味を持ち出せるか／
 Evidence = 主張を研究設計とデータがどの程度直接支えているか。<br>
-<strong>点数の合計やMain/Passの自動判定には使いません。</strong>
+<strong>点数の合計やDeep Dive/Passの自動判定には使いません。</strong>
 </section>
 
 <section class="note">

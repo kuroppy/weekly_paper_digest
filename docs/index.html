@@ -37,7 +37,7 @@
     <main>
       <section>
         <div class="issue-grid">
-          <div class="issue-date">2026.10.12</div>
+          <div class="issue-date">2026.10.19</div>
 
           <div class="issue-main">
             <p class="issue-note">
@@ -45,52 +45,50 @@
             </p>
 
             <audio class="issue-audio" controls preload="metadata">
-              <source src="./episodes/2026-10-12/audio.mp3" type="audio/mpeg">
+              <source src="https://github.com/user-attachments/files/33697619/audio.mp3" type="audio/mpeg">
               お使いのブラウザは audio 要素に対応していません。
             </audio>
 
             <blockquote class="episode-quote">
                 <div class="quote-text">
                     <p>
-                      今週は本当に幅広いスケールの研究が揃いましたよね。あの巨大な微生物ゲノムのデータベース構築の話から始まって RNA のシグナルを人工的に DNA へ変換して記録させる最新の合成生物学、さらには 1 万 7000 年前の古代人類の移動を記録し続けてきた腸内細菌の論文までありましたから。
+                      今週目を通した膨大な論文の根底に流れていたのは、環境の凄まじい圧力に対して微生物たちがいかにゲノムをダイナミックに適用させているかという、もう圧倒されるような景色でしたね。
                     <br>
                     </p>
                 </div>
             </blockquote>
 
+            <!-- WPD_PAPERS_START -->
             <div class="deep-dive">
               <div class="section-label">Deep Dive</div>
               <ul class="paper-list">
                 <li>
-                  <a class="paper-title" href="https://doi.org/10.1038/s41586-026-11106-1">
-                    Prehistoric global migration of vanishing gut microbes with humans.
+                  <a class="paper-title" href="https://doi.org/10.1038/s41586-026-11250-8">
+                    Antiviral immunity via telomerase-like reverse transcription in bacteria.
                   </a>
+                  <span class="authors">Tang S, Ramirez JL, He Q, Rodríguez Mestre M, Wiegand T, Zhang DJ, Wang M, Lampe GD, et al.</span>
                   <span class="journal">Nature</span>
                 </li>
                 <li>
-                  <a class="paper-title" href="https://doi.org/10.1038/s41587-026-03334-7">
-                    Detectrons convert transient RNA sequences into stable DNA barcodes for high-throughput analysis of RNA-dependent processes.
+                  <a class="paper-title" href="https://doi.org/10.1038/s41467-026-77678-8">
+                    Mobile genetic elements drive a plasmid fusion and deletion lifecycle shaping evolution and antimicrobial resistance.
                   </a>
-                  <span class="journal">Nature Biotechnology</span>
-                </li>
-                <li>
-                  <a class="paper-title" href="https://doi.org/10.1128/aem.01160-26">
-                    Autoinducer-2 functions as both a quorum-sensing and metabolic signal in Escherichia coli.
-                  </a>
-                  <span class="journal">Applied and environmental microbiology</span>
+                  <span class="authors">Ipoutcha T, Wang Y, Rocha EPC, Penadés JR</span>
+                  <span class="journal">Nature communications</span>
                 </li>
               </ul>
             </div>
+            <!-- WPD_PAPERS_END -->
 
             <div class="editorial">
               <div class="section-label">Editorial</div>
               <ul class="editorial-list">
                 <li>
-                  <a href="./episodes/2026-10-12/wpd_review.html">Paper Review</a>
-                  <span class="description">今週の20報を、どう読み、どう評価したかを見る</span>
+                  <a href="./episodes/2026-10-19/wpd_review.html">Paper Review</a>
+                  <span class="description">今週の25報を、どう読み、どう評価したかを見る</span>
                 </li>
                 <li>
-                  <a href="./editorial_notes/editorial_meeting_notes_2026-10-12.html">Editorial Meeting Note</a>
+                  <a href="./editorial_notes/editorial_meeting_notes_2026-10-19.html">Editorial Meeting Note</a>
                   <span class="description">今週の編集会議と、制作を通して考えたことを読む</span>
                 </li>
               </ul>
@@ -133,5 +131,45 @@
 
     <footer class="site-footer">Weekly Paper Digest © Masaomi Kurokawa</footer>
   </div>
+
+  <!-- GA4: homepage audio playback events -->
+  <script>
+  (() => {
+    const audio = document.querySelector('.issue-audio');
+    if (!audio) return;
+    const milestones = [25, 50, 75];
+    let reached = new Set();
+    let lastSource = '';
+    function context() {
+      const source = audio.querySelector('source');
+      const url = source ? source.getAttribute('src') : audio.getAttribute('src');
+      const date = document.querySelector('.issue-date')?.textContent.trim().replaceAll('.', '-') || '';
+      return { episode_date: date, audio_url: url || '', player_location: 'homepage' };
+    }
+    function send(name, extra = {}) {
+      if (typeof window.gtag !== 'function') return;
+      window.gtag('event', name, { ...context(), ...extra });
+    }
+    audio.addEventListener('play', () => {
+      const source = context().audio_url;
+      if (source !== lastSource) { reached = new Set(); lastSource = source; }
+      send('audio_play');
+    });
+    audio.addEventListener('pause', () => {
+      if (!audio.ended) send('audio_pause', { audio_position_seconds: Math.floor(audio.currentTime) });
+    });
+    audio.addEventListener('ended', () => send('audio_complete'));
+    audio.addEventListener('timeupdate', () => {
+      if (!Number.isFinite(audio.duration) || audio.duration <= 0) return;
+      const percent = (audio.currentTime / audio.duration) * 100;
+      for (const mark of milestones) {
+        if (percent >= mark && !reached.has(mark)) {
+          reached.add(mark);
+          send('audio_progress', { audio_percent: mark });
+        }
+      }
+    });
+  })();
+  </script>
 </body>
 </html>

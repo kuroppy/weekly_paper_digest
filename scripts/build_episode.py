@@ -5,6 +5,7 @@
 Run from any directory:
     python scripts/build_episode.py 2026-10-12
     python scripts/build_episode.py 2026-10-12 --audio audio.m4a
+    python scripts/build_episode.py 2026-10-12 https://example.org/audio.mp3
     python scripts/build_episode.py 2026-10-12 --json /path/to/selection.json
 
 Default input:  work/YYYY-MM-DD/editorial_selection_YYYY-MM-DD.json
@@ -47,7 +48,7 @@ def load_selection(path: Path, episode_date: str) -> dict:
 
 
 def extract_papers(data: dict) -> tuple[list[dict], list[dict]]:
-    sections: dict[str, list[dict]] = {"main_papers": [], "short_news": []}
+    sections: dict[str, list[dict]] = {"deep_dive": [], "short_news": []}
     seen: set[str] = set()
     for i, entry in enumerate(data["papers"], 1):
         if not isinstance(entry, dict):
@@ -79,7 +80,7 @@ def extract_papers(data: dict) -> tuple[list[dict], list[dict]]:
         items.sort(key=lambda p: p["order"])
     if not any(sections.values()):
         raise ValueError("No papers to render")
-    return sections["main_papers"], sections["short_news"]
+    return sections["deep_dive"], sections["short_news"]
 
 
 def paper_card(p: dict) -> str:
@@ -110,16 +111,26 @@ def build_topics(main: list[dict], short: list[dict]) -> str:
     return "\n".join(parts)
 
 
-def build_audio(episode_date: str, filename: str) -> str:
-    if Path(filename).name != filename or filename in ("", ".", ".."):
-        raise ValueError("--audio must be a filename, not a path")
+def build_audio(episode_date: str, audio_source: str) -> str:
+    """Render a player for a local filename or an HTTPS audio URL."""
+    parsed = urlparse(audio_source)
+    if parsed.scheme:
+        if parsed.scheme != "https" or not parsed.netloc or parsed.username or parsed.password:
+            raise ValueError("Audio URL must be an absolute HTTPS URL")
+        filename = Path(parsed.path).name
+        src = audio_source
+    else:
+        if Path(audio_source).name != audio_source or audio_source in ("", ".", ".."):
+            raise ValueError("Audio must be a filename or an HTTPS URL")
+        filename = audio_source
+        src = audio_source
     ext = Path(filename).suffix.lower()
     mime = {".mp3": "audio/mpeg", ".m4a": "audio/mp4", ".mp4": "audio/mp4"}.get(ext)
     if mime is None:
-        raise ValueError("--audio must end in .mp3, .m4a or .mp4")
+        raise ValueError("Audio source must end in .mp3, .m4a or .mp4")
     return (f'<audio id="podcast-player" data-episode="{esc(episode_date)}" '
             f'controls preload="metadata">\n'
-            f'  <source src="{esc(filename)}" type="{mime}">\n'
+            f'  <source src="{esc(src)}" type="{mime}">\n'
             f'</audio>')
 
 
@@ -151,7 +162,8 @@ def build_html(template: str, episode_date: str, main: list[dict],
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("date", help="Episode date, YYYY-MM-DD")
-    parser.add_argument("--audio", default="audio.mp3", help="Audio filename (default: audio.mp3)")
+    parser.add_argument("audio_url", nargs="?", help="Optional HTTPS audio URL or local filename")
+    parser.add_argument("--audio", help="Audio filename or HTTPS URL (default: audio.mp3)")
     parser.add_argument("--json", type=Path, help="Selection JSON path (overrides default)")
     parser.add_argument("--template", type=Path, default=TEMPLATE_PATH,
                         help="HTML template path")
@@ -167,7 +179,10 @@ def main() -> int:
         data = load_selection(source, args.date)
         main_papers, short_news = extract_papers(data)
         template = args.template.read_text(encoding="utf-8")
-        rendered = build_html(template, args.date, main_papers, short_news, args.audio)
+        if args.audio_url and args.audio:
+            raise ValueError("Specify either positional audio URL or --audio, not both")
+        audio_source = args.audio_url or args.audio or "audio.mp3"
+        rendered = build_html(template, args.date, main_papers, short_news, audio_source)
         target.parent.mkdir(parents=True, exist_ok=True)
         target.write_text(rendered, encoding="utf-8")
     except (OSError, ValueError, json.JSONDecodeError) as exc:

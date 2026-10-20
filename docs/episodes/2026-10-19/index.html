@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weekly Paper Digest 2026-10-19</title>
+  <link rel="stylesheet" href="../../assets/style.css">
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N22XGSKTFW"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-N22XGSKTFW');
+  </script>
+
+  <!-- Audio Analytics -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const audio = document.getElementById("podcast-player");
+      if (!audio || typeof gtag !== "function") return;
+
+      const episode = audio.dataset.episode;
+      const reached = new Set();
+      let playedOnce = false;
+
+      audio.addEventListener("play", () => {
+        if (playedOnce) return;
+        playedOnce = true;
+        gtag("event", "podcast_play", {
+          episode,
+          page_path: location.pathname
+        });
+      });
+
+      audio.addEventListener("timeupdate", () => {
+        if (!audio.duration || !isFinite(audio.duration)) return;
+
+        const percent = Math.floor((audio.currentTime / audio.duration) * 100);
+
+        [25, 50, 75, 100].forEach((milestone) => {
+          if (percent >= milestone && !reached.has(milestone)) {
+            reached.add(milestone);
+            gtag("event", "podcast_progress", {
+              episode,
+              page_path: location.pathname,
+              progress_percent: milestone,
+              audio_current_time: Math.round(audio.currentTime),
+              audio_duration: Math.round(audio.duration)
+            });
+          }
+        });
+      });
+    });
+  </script>
+</head>
+
+<body>
+  <div class="container">
+    <nav class="site-nav" aria-label="Site navigation">
+      <a class="site-home-link" href="https://kuroppy.github.io/weekly_paper_digest/">
+        ← Weekly Paper Digest Home
+      </a>
+    </nav>
+
+    <header class="page-header">
+      <h1>Weekly Paper Digest</h1>
+      <p class="page-meta">2026-10-19</p>
+    </header>
+
+    <audio id="podcast-player" data-episode="2026-10-19" controls preload="metadata">
+  <source src="https://github.com/user-attachments/files/33697619/audio.mp3" type="audio/mpeg">
+</audio>
+
+    <h2>Deep Dive</h2><ol><li>Antiviral immunity via telomerase-like reverse transcription in bacteria.</li><li>Mobile genetic elements drive a plasmid fusion and deletion lifecycle shaping evolution and antimicrobial resistance.</li></ol>
+<h2>ShortNews</h2><ol><li>Bacterial inoculation elicits changes to the coral epigenome.</li><li>Diversity of dirammox microorganisms.</li><li>The historical domestication of a Clostridium botulinum strain used for the industrial production of botulinum neurotoxin.</li><li>A high-resolution spatial model of the primate gut microbiome defines niche-specific functions and host-adapted microbial metabolism.</li><li>Fast, flexible gene cluster family delineation with IGUA.</li></ol>
+
+    <hr>
+
+    <section class="paper-list">
+  <h2>Deep Dive</h2>
+<article class="paper-card">
+  <h3>Antiviral immunity via telomerase-like reverse transcription in bacteria.</h3>
+  <p class="journal">Nature</p>
+  <p><a href="https://doi.org/10.1038/s41586-026-11250-8">https://doi.org/10.1038/s41586-026-11250-8</a></p>
+</article>
+<article class="paper-card">
+  <h3>Mobile genetic elements drive a plasmid fusion and deletion lifecycle shaping evolution and antimicrobial resistance.</h3>
+  <p class="journal">Nature communications</p>
+  <p><a href="https://doi.org/10.1038/s41467-026-77678-8">https://doi.org/10.1038/s41467-026-77678-8</a></p>
+</article>
+</section>
+<section class="paper-list">
+  <h2>ShortNews</h2>
+<article class="paper-card">
+  <h3>Bacterial inoculation elicits changes to the coral epigenome.</h3>
+  <p class="journal">Nature communications</p>
+  <p><a href="https://doi.org/10.1038/s41467-026-77646-2">https://doi.org/10.1038/s41467-026-77646-2</a></p>
+</article>
+<article class="paper-card">
+  <h3>Diversity of dirammox microorganisms.</h3>
+  <p class="journal">mBio</p>
+  <p><a href="https://doi.org/10.1128/mbio.01645-26">https://doi.org/10.1128/mbio.01645-26</a></p>
+</article>
+<article class="paper-card">
+  <h3>The historical domestication of a Clostridium botulinum strain used for the industrial production of botulinum neurotoxin.</h3>
+  <p class="journal">Proceedings of the National Academy of Sciences of the United States of America</p>
+  <p><a href="https://doi.org/10.1073/pnas.2605155123">https://doi.org/10.1073/pnas.2605155123</a></p>
+</article>
+<article class="paper-card">
+  <h3>A high-resolution spatial model of the primate gut microbiome defines niche-specific functions and host-adapted microbial metabolism.</h3>
+  <p class="journal">Gut microbes</p>
+  <p><a href="https://doi.org/10.1080/19490976.2026.2748153">https://doi.org/10.1080/19490976.2026.2748153</a></p>
+</article>
+<article class="paper-card">
+  <h3>Fast, flexible gene cluster family delineation with IGUA.</h3>
+  <p class="journal">Nucleic acids research</p>
+  <p><a href="https://doi.org/10.1093/nar/gkag975">https://doi.org/10.1093/nar/gkag975</a></p>
+</article>
+</section>
+
+    <footer class="episode-footer">
+      <p><a href="curation.html">📝 How this episode was curated</a></p>
+      論文のレビューから選定、番組構成まで、このエピソードができるまでの編集過程を公開しています。
+      <p><a href="../../editorial_notes/editorial_meeting_notes_2026-10-19.html">📝 Read the Editorial Note of this episode</a></p>
+      論文を読みながらAIと交わした編集会議の記録です。
+    </footer>
+  </div>
+</body>
+</html>
