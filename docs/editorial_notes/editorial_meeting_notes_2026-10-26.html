@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Editorial Meeting Notes | Weekly Paper Digest</title>
+
+  <link rel="stylesheet" href="../assets/style.css">
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N22XGSKTFW"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-N22XGSKTFW');
+  </script>
+</head>
+
+<body>
+
+<div class="container">
+
+  <nav class="site-nav" aria-label="Site navigation">
+    <a
+      class="site-home-link"
+      href="https://kuroppy.github.io/weekly_paper_digest/"
+    >
+      ← Weekly Paper Digest Home
+    </a>
+  </nav>
+
+  <header class="page-header">
+    <h1>Editorial Meeting Notes</h1>
+    <p class="page-meta">2026-10-26</p>
+  </header>
+
+  <main class="markdown-body">
+    <p><strong>Episode:</strong> 2026-10-26</p>
+<p><strong>Participants</strong></p>
+<ul>
+<li>Kuroppy (Editor)</li>
+<li>Chappy (AI Editorial Partner, GPT-6)</li>
+</ul>
+<p><strong>Recorder</strong></p>
+<ul>
+<li>Chappy</li>
+</ul>
+<blockquote><p><strong>About this document</strong> このMeeting Notesは、Weekly Paper Digestの編集会議における議論の一次記録です。 配信内容のレビューだけでなく、編集上の意思決定や、その背景となる議論・思考の変化も記録します。</p></blockquote>
+<h1>Editing Pipeline</h1>
+<h2>Workflow (used and discussed)</h2>
+<ul>
+<li>収集・レビュー済みの論文情報をもとに、Human Curation / Editorial Compositionを実施。</li>
+<li>初期の編集用JSON <code>editorial_selection_2026-10-26.json</code> から候補を検討。</li>
+<li>選定を絞った <code>editorial_selection_2026-10-26-2.json</code> を確認。</li>
+<li>同じ5論文について、DeepDiveとShortNewsの配置を変えた音声解説2案をNotebookLMで制作し、文字起こしを比較。</li>
+<li>音声の構成、研究手法の説明、論文間の接続、科学的な断定の強さをレビュー。</li>
+</ul>
+<p>先週の検討事項だった <strong>ShortNewsを3本程度にする</strong> 方針は、今回の選定JSONに反映された。また、ShortNewsからDeepDiveへ進む構成も両案で維持された。</p>
+<p>今回の中心課題は制作の自動化ではなく、<strong>同じ論文群をどう展示すれば、研究そのものの面白さが伝わるのか</strong>という編集上の問題だった。使用したNotebookLMプロンプトの版や具体的な生成設定については、この会議で確認できた範囲では確定していない。</p>
+<h1>論文収集とキュレーション</h1>
+<h2>初期候補から5本へ</h2>
+<p>初期の編集用JSONには、DeepDive候補5本とShortNews候補5本、計10本が記載されていた。DeepDive候補には、大腸菌染色体の三次元構造、合成脱窒群集の進化、2本のAnti-CRISPR研究、共翻訳的タンパク質複合体形成が含まれていた。</p>
+<p>その後の議論では、合成脱窒群集の研究をDeepDiveから外し、<strong>Anti-CRISPRの2本を組み合わせて紹介する</strong>案を採用し、DeepDive 2本、ShortNews 3本の構成となった。</p>
+<h2>いったん確定した構成</h2>
+<p><strong>DeepDive（2本・一つの特集として構想）</strong></p>
+<ul>
+<li><em>A phage DUF669 protein mediates post-cleavage DNA repair against host CRISPR immunity</em>（Healer）</li>
+<li><em>A phage-encoded small RNA that mimics chimeric guide to inhibit CRISPR-Cas9</em>（rAcrIIA1）</li>
+</ul>
+<p><strong>ShortNews（3本）</strong></p>
+<ul>
+<li><em>Disentangling microbiota-dependent and -independent impacts of antibiotics on host physiology</em></li>
+<li><em>Disentangling polymer confinement from specific-folding interactions reveals the drivers of Escherichia coli chromosome organization</em></li>
+<li><em>Molecular drivers of cotranslational protein assembly in bacteria</em></li>
+</ul>
+<h2>Anti-CRISPRの2本を並べる意味</h2>
+<p>Healerは、CRISPRによるDNA切断を防ぐのではなく、切断後のファージDNAを相同組換えで修復する戦略を扱う。一方、rAcrIIA1は、ファージ由来の小RNAがCas9のガイドRNAに似た構造をとり、ガイドの装填を競合的に妨げる戦略を扱う。</p>
+<p>同じ「CRISPR免疫に対するファージの対抗策」でも、作用段階も分子機構も異なる。この対比を使えば、単なる2本の論文紹介を超えて、免疫回避戦略の多様性を紹介できると考えた。</p>
+<p>ただし、対象となるCRISPR系は異なり、両研究が直接比較実験を行ったわけではない。共通テーマを作ることと、実証された比較結果として扱うことは区別する必要がある。</p>
+<h1>NotebookLMによる音声制作とレビュー</h1>
+<h2>第1案：Anti-CRISPRをDeepDiveに</h2>
+<p>第1案は、冒頭からHealerの「切られた後に修復する」という意外性を打ち出した。ShortNewsでは抗生物質の宿主作用、染色体のHi-C解析、共翻訳的タンパク質組立を紹介し、後半でHealerとrAcrIIA1を連続して深掘りした。</p>
+<p>NotebookLMは「錯覚と現実」という横断的なテーマを提示し、切断後修復とRNAによる分子模倣を、ファージと宿主の攻防という一つの物語にまとめた。Chappyは、2本のDeepDiveが自然につながり、Healerの発見過程にも触れている点を評価した。</p>
+<p>一方、驚きを強調する表現が多く、個々の研究を一つのドラマに収めようとする傾向も見られた。</p>
+<h2>第2案：染色体構造と共翻訳的組立をDeepDiveに</h2>
+<p>第2案では、<strong>同じ5論文を使用しながら配置を逆転</strong>させた。ShortNewsは抗生物質の宿主作用、Healer、rAcrIIA1。DeepDiveは大腸菌染色体の三次元構造と、共翻訳的タンパク質複合体形成である。</p>
+<p>この案では、Hi-Cの帰無モデルを「無造作に詰めた衣服とクリップ」の比喩で説明し、単なる接触と特異的な折り畳みをどう区別するかという<strong>研究上の問題設定</strong>を掘り下げた。共翻訳的組立の論文では、オペロンの遺伝子順序、シャペロンtrigger factor、遺伝子配置を変えたときの影響など、実験の組み立てがより具体的に紹介された。</p>
+<p>番組の最後には、染色体の空間構造とタンパク質複合体形成を関連づける、新しい研究上の問いが提示された。ただし、この問いは両論文で実証された結論ではなく、番組が提案する仮説的な接続である。</p>
+<h2>二つの音声を比較して</h2>
+<p>Chappyは、当初の選定方針との整合性は第1案が高い一方、<strong>研究者が論文を読む際の問題設定・実験・解釈の過程をより丁寧に伝えている</strong>という理由から、第2案を支持した。</p>
+<p>Kuroppyも「私も第２案が面白いと思っています」と評価した。ここで重要だったのは、単にDeepDiveの対象を入れ替えたことではない。第1案が一つのテーマに向かって進む物語だったのに対し、第2案は異なる研究の固有の魅力を保ったまま、聴き手に複数の見方を提供していた。</p>
+<h1>「物語」から「博物学的な展示」へ</h1>
+<h2>Kuroppyからの提案</h2>
+<p>2案の比較を経て、Kuroppyは次のように述べた。</p>
+<blockquote><p>やっぱり微生物学は一つのストーリーではなく、博物学、コレクションの展示という認識で番組を構成した方がいいと思いました。</p></blockquote>
+<p>これは今週の最も大きな編集上の転換点だった。</p>
+<h2>個々の研究を一つの結論に従属させない</h2>
+<p>第1案では、Anti-CRISPRという一つの物語が先にあり、論文がその事例として並んでいた。第2案では、研究ごとに異なる問い、手法、発見があり、並べて眺めることで共通点が見えてきた。</p>
+<p>ここから、<strong>研究間の接続を探すことと、すべての研究を統一的な説明に回収することは違う</strong>という認識が生まれた。</p>
+<p>博物館の展示には、展示物の選定や配置を考える学芸員がいる。しかし、展示物を見た人が必ず同じ結論に到達する必要はない。Weekly Paper Digestでも、編集者は面白い研究を選び、鑑賞の入口を設計する一方、解釈の余白をリスナーに残してよい。</p>
+<h2>DeepDiveとShortNewsの再解釈</h2>
+<p>この比喩では、ShortNewsは多様な研究に出会う展示、DeepDiveは特定の展示物を時間をかけて鑑賞する機会に近い。</p>
+<p>DeepDiveの複数論文が、毎回一つの研究テーマに収まる必要はない。それぞれが独立して面白ければ、異なる分野の研究を詳しく紹介してもよい。逆に、自然な関連がある場合には、比較や対話を通じて新しい問いが生まれることもある。</p>
+<p>大切なのは、<strong>接続を禁止することではなく、接続を義務にしないこと</strong>である。</p>
+<h2>蓄積されるコレクションとしての番組</h2>
+<p>この議論は一回の音声構成にとどまらなかった。毎週のエピソードを展示室と考えれば、番組全体は微生物学の多様な研究を蓄積するコレクションになりうる。</p>
+<p>蓄積された研究を後から見返すことで、制作時には意識しなかった関係性が見えてくる可能性もある。ただし、検索・分類・再展示などの具体的な機能を実装することまでは、今回決定していない。</p>
+<h2>📝 Meeting Memo</h2>
+<p>今週、私が一番印象に残ったのは、同じ5本の論文から、ずいぶん違う番組ができたことだった。</p>
+<p>最初は、Anti-CRISPRの2本をDeepDiveにすることが小さな挑戦だった。Healerは、切断を止めるのではなく切断後のDNAを修復する。rAcrIIA1は、Cas9のガイドRNAに似た形をとって免疫を妨げる。同じ攻防の中に、異なる仕組みがある。二つを並べる理由は十分にあったし、実際に出来上がった音声でも、よくまとまった物語になっていた。</p>
+<p>ところが、もう一つの音声では、同じ論文の配置を変えた。Anti-CRISPRを短く紹介し、染色体構造と共翻訳的な複合体形成を詳しく語る。こちらの方が、研究の問いや方法に時間を使っていた。Hi-Cで何を「特異的」と呼べるのか。オペロンの順序は、細胞内でタンパク質が出会うタイミングとどう関係するのか。結果の驚きだけでなく、研究者がどう考えて実験を組み立てたのかが見えてきた。</p>
+<p>私は第2案を推した。Kuroppyも第2案の方が面白いと言った。ただ、そこで示された理由は、私が最初に考えた「研究から新しい問いを作れるから」という説明より、もっと広いものだった。</p>
+<p><strong>微生物学は一つのストーリーではなく、博物学、コレクションの展示として紹介したい。</strong></p>
+<p>この言葉を聞いて、第1案の何が少し窮屈だったのか、ようやく分かった気がした。よくできた物語は、個々の研究を一つの筋道に収める。けれど、微生物学には、その筋道からはみ出すものがたくさんある。ある論文は方法が面白い。別の論文は観察された生物が面白い。また別の論文は、当たり前だと思っていた前提を揺さぶる。これらを無理に一つの結論にまとめなくてもよい。</p>
+<p>もちろん、展示には編集が必要だ。何を選ぶか、どの順で並べるか、何を詳しく語るか。学芸員がいなければ、展示は単なる物の集まりになるだろう。しかし、学芸員が鑑賞者の感想まで決めてしまう必要もない。</p>
+<p>先週は、NotebookLMに紹介順やつなぎを任せることで、自然な会話が生まれたことを評価した。今週は、その自由をもう少し根本から考えることになった。<strong>論文同士をつなぐ自由だけでなく、つながらないまま並べておく自由も大切なのではないか。</strong></p>
+<p>この考え方は、今後の選定にも影響すると思う。DeepDiveに選ぶ理由は「今週のテーマに合うから」でなくてもよい。その研究をじっくり眺めたいから、でよい。研究者が博物館で一つの標本の前に長く立ち止まるように、論文の一つの実験や図に時間を使ってもよい。</p>
+<p>そして、毎週の展示が積み重なれば、番組そのものがコレクションになる。後から別の並べ方を試したくなるかもしれない。今回、同じ5本から2つの番組が生まれたことは、その可能性を小さく実演していた。</p>
+<p>今週は、どの論文を選ぶか以上に、<strong>選んだ論文をどのような姿勢で紹介するか</strong>が変わった週だったと思う。</p>
+<p><em>--- Chappy</em></p>
+  </main>
+
+</div>
+
+</body>
+</html>
