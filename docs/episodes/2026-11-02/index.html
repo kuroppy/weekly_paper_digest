@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weekly Paper Digest 2026-11-02</title>
+  <link rel="stylesheet" href="../../assets/style.css">
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N22XGSKTFW"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-N22XGSKTFW');
+  </script>
+
+  <!-- Audio Analytics -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const audio = document.getElementById("podcast-player");
+      if (!audio || typeof gtag !== "function") return;
+
+      const episode = audio.dataset.episode;
+      const reached = new Set();
+      let playedOnce = false;
+
+      audio.addEventListener("play", () => {
+        if (playedOnce) return;
+        playedOnce = true;
+        gtag("event", "podcast_play", {
+          episode,
+          page_path: location.pathname
+        });
+      });
+
+      audio.addEventListener("timeupdate", () => {
+        if (!audio.duration || !isFinite(audio.duration)) return;
+
+        const percent = Math.floor((audio.currentTime / audio.duration) * 100);
+
+        [25, 50, 75, 100].forEach((milestone) => {
+          if (percent >= milestone && !reached.has(milestone)) {
+            reached.add(milestone);
+            gtag("event", "podcast_progress", {
+              episode,
+              page_path: location.pathname,
+              progress_percent: milestone,
+              audio_current_time: Math.round(audio.currentTime),
+              audio_duration: Math.round(audio.duration)
+            });
+          }
+        });
+      });
+    });
+  </script>
+</head>
+
+<body>
+  <div class="container">
+    <nav class="site-nav" aria-label="Site navigation">
+      <a class="site-home-link" href="https://kuroppy.github.io/weekly_paper_digest/">
+        ← Weekly Paper Digest Home
+      </a>
+    </nav>
+
+    <header class="page-header">
+      <h1>Weekly Paper Digest</h1>
+      <p class="page-meta">2026-11-02</p>
+    </header>
+
+    <audio id="podcast-player" data-episode="2026-11-02" controls preload="metadata">
+  <source src="https://github.com/user-attachments/files/34346909/audio.mp3" type="audio/mpeg">
+</audio>
+
+    <h2>Deep Dive</h2><ol><li>Eukaryotes&#x27; closest relatives are internally simple syntrophic peptidotrophic archaea.</li><li>DNA defense systems become a fitness liability during plasmid conjugation.</li></ol>
+<h2>ShortNews</h2><ol><li>Planetary-scale metagenomic analysis reveals CRISPR targeting dynamics across ecosystems.</li><li>A global mitochondrial genomic atlas illuminates freshwater microeukaryote diversity.</li><li>Equipositioning of chromosomes in the polyploid archaeon Haloferax volcanii by HpaAB.</li></ol>
+
+    <hr>
+
+    <section class="paper-list">
+  <h2>Deep Dive</h2>
+<article class="paper-card">
+  <h3>Eukaryotes&#x27; closest relatives are internally simple syntrophic peptidotrophic archaea.</h3>
+  <p class="journal">Nature</p>
+  <p><a href="https://doi.org/10.1038/s41586-026-11170-7">https://doi.org/10.1038/s41586-026-11170-7</a></p>
+</article>
+<article class="paper-card">
+  <h3>DNA defense systems become a fitness liability during plasmid conjugation.</h3>
+  <p class="journal">Nucleic acids research</p>
+  <p><a href="https://doi.org/10.1093/nar/gkag1043">https://doi.org/10.1093/nar/gkag1043</a></p>
+</article>
+</section>
+<section class="paper-list">
+  <h2>ShortNews</h2>
+<article class="paper-card">
+  <h3>Planetary-scale metagenomic analysis reveals CRISPR targeting dynamics across ecosystems.</h3>
+  <p class="journal">Nature microbiology</p>
+  <p><a href="https://doi.org/10.1038/s41564-026-02480-7">https://doi.org/10.1038/s41564-026-02480-7</a></p>
+</article>
+<article class="paper-card">
+  <h3>A global mitochondrial genomic atlas illuminates freshwater microeukaryote diversity.</h3>
+  <p class="journal">Nature communications</p>
+  <p><a href="https://doi.org/10.1038/s41467-026-78160-1">https://doi.org/10.1038/s41467-026-78160-1</a></p>
+</article>
+<article class="paper-card">
+  <h3>Equipositioning of chromosomes in the polyploid archaeon Haloferax volcanii by HpaAB.</h3>
+  <p class="journal">Nature communications</p>
+  <p><a href="https://doi.org/10.1038/s41467-026-78993-w">https://doi.org/10.1038/s41467-026-78993-w</a></p>
+</article>
+</section>
+
+    <footer class="episode-footer">
+      <p><a href="curation.html">📝 How this episode was curated</a></p>
+      論文のレビューから選定、番組構成まで、このエピソードができるまでの編集過程を公開しています。
+      <p><a href="../../editorial_notes/editorial_meeting_notes_2026-11-02.html">📝 Read the Editorial Note of this episode</a></p>
+      論文を読みながらAIと交わした編集会議の記録です。
+    </footer>
+  </div>
+</body>
+</html>

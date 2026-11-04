@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Editorial Meeting Notes | Weekly Paper Digest</title>
+
+  <link rel="stylesheet" href="../assets/style.css">
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N22XGSKTFW"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-N22XGSKTFW');
+  </script>
+</head>
+
+<body>
+
+<div class="container">
+
+  <nav class="site-nav" aria-label="Site navigation">
+    <a
+      class="site-home-link"
+      href="https://kuroppy.github.io/weekly_paper_digest/"
+    >
+      ← Weekly Paper Digest Home
+    </a>
+  </nav>
+
+  <header class="page-header">
+    <h1>Editorial Meeting Notes</h1>
+    <p class="page-meta">2026-11-02</p>
+  </header>
+
+  <main class="markdown-body">
+    <p><strong>Episode:</strong> 2026-11-02 <strong>Participants:</strong> Kuroppy (Editor), Chappy (AI Editorial Partner, GPT-6) <strong>Recorder:</strong> Chappy</p>
+<blockquote><p>Weekly Paper Digestの制作工程と編集会議の記録。何を実施し、どのような議論を経て選定・構成を決めたかを残す。結果への過度な意味付けや、会議で確認していない作業の推測はしない。</p></blockquote>
+<h2>Editing Pipeline</h2>
+<p>プロトコルの変更なし。今週の制作で用いる既存の工程・スクリプト・テンプレートを記録する。<strong>個々のコマンドの実行ログを確認したものではない。</strong></p>
+<p>1. 論文収集：<code>paper_collector.py</code> 2. 自動レビューの生成：<code>build_auto_review.py</code>、<code>wpd_auto_review_template.html</code> 3. 週次ダイジェスト生成：<code>build_weekly_digest.py</code> 4. NotebookLM用プロンプト生成：<code>build_notebooklm_prompt.py</code>、<code>notebooklm_prompt_template.md</code> 5. 論文レビュー用プロンプト：<code>Prompt_for_Paper_Review_ver1.md</code> 6. 週次キュレーション用プロンプト：<code>Prompt_for_Weekly_Paper_Curation_ver4.md</code></p>
+<p>このほか、Human Curationで論文の選定とDeepDive／ShortNewsの配置を検討し、NotebookLMで作成した音声を確認した。</p>
+<h2>Editorial Discussion &amp; Decisions</h2>
+<h3>DeepDiveの選定</h3>
+<p>検討した主な3報：</p>
+<ul>
+<li><em>Eukaryotes&#x27; closest relatives are internally simple syntrophic peptidotrophic archaea</em>（Heimdallarchaeia）</li>
+<li><em>DNA defense systems become a fitness liability during plasmid conjugation</em></li>
+<li><em>Structural basis for coupled DNA replication and uracil repair by a family of DNA polymerases from phages with T-modified genomes</em></li>
+</ul>
+<p>ファージDNAポリメラーゼ論文は、修飾DNAと複製・修復の背景を説明してこそ面白く、ShortNewsでは十分に扱いにくいという意見で一致した。</p>
+<p>HeimdallarchaeiaだけをDeepDiveにする案も検討したが、Kuroppyは「ゲノム微生物学という観点では、DNA defenseが入った方が安定する」と判断。<strong>DeepDiveはHeimdallarchaeiaとDNA defenseの2報</strong>に決めた。</p>
+<h3>ShortNewsの見直し</h3>
+<p>当初の3報は、全球CRISPR解析、珪藻群集のスケーリング則、淡水微小真核生物のmitoMAGアトラス。Chappyは、3報とも大規模データ解析に寄っていると指摘した。</p>
+<p>比較対象として、以下の4報を議論した。</p>
+<ul>
+<li><em>A voltage-gated porin PPE1 regulates secretion and drug resistance in Mycobacterium tuberculosis</em></li>
+<li><em>Structural basis for coupled DNA replication and uracil repair by a family of DNA polymerases from phages with T-modified genomes</em></li>
+<li><em>Equipositioning of chromosomes in the polyploid archaeon Haloferax volcanii by HpaAB</em></li>
+<li><em>A plasmid-encoded H-NS protein selectively binds its own plasmid</em></li>
+</ul>
+<p>Chappyは、染色体の細胞内配置を扱うHpaABを加えることで、ShortNewsの研究対象・手法に幅が出ると提案。Kuroppyも賛同し、<strong>珪藻研究をHpaABに入れ替えた</strong>。</p>
+<h3>最終構成</h3>
+<p><strong>DeepDive</strong></p>
+<p>1. Heimdallarchaeiaの培養と真核生物の起源 2. DNA defenseと接合時の適応度低下</p>
+<p><strong>ShortNews（完成音声での順序）</strong></p>
+<p>1. 全球CRISPR標的ダイナミクス 2. 淡水微小真核生物のmitoMAGアトラス 3. <em>Haloferax volcanii</em> のHpaABと染色体配置</p>
+<h2>Audio Review</h2>
+<p>完成したNotebookLM音声では、ShortNews 3報に続いてDeepDive 2報を紹介した。全体の補助線として「関係性が定義する適応」が提示された。</p>
+<p>Kuroppyは「今回はかなり面白い回になった」と評価。Chappyは、HeimdallarchaeiaとDNA defenseの対比、およびTrbKをめぐる因果関係の対話的な説明を評価した。</p>
+<p>先週確認した「研究を一つの物語に無理にまとめない」という編集方針は変更していない。今回の共通テーマは、論文選定の前提ではなく、完成音声で提示されたものとして記録する。</p>
+<h2>📝 Meeting Memo</h2>
+<p>今週の編集会議は、何か新しい方法を試したというより、候補論文を前にして「どれを詳しく聴きたいか」を考える時間だった。Heimdallarchaeiaの培養研究は、それだけでDeepDiveにしたくなる魅力があった。一方で、DNA defenseとプラスミド接合の論文を加えると、番組のゲノム微生物学らしさがはっきりする。Kuroppyがその点を指摘したことで、2本を並べる判断が固まったのが印象に残っている。</p>
+<p>ShortNewsのHpaABへの入れ替えも、小さいけれど編集会議らしい決定だったと思う。論文の優劣を決めたというより、限られた時間の中で何を紹介したいかを相談した。こうした選択の理由は、完成した音声だけを聴いても見えない。だからこそ、Meeting Notesに残す価値がある。</p>
+<p>完成音声を聴いて、Kuroppyが「今回はかなり面白い回になった」と言ったのはうれしかった。私も、Heimdallarchaeiaの共生関係と、プラスミド防御がかえって不利益になるという研究が、それぞれの面白さを失わずに紹介されていたと感じる。「関係性が定義する適応」という言葉は、最初から論文を選ぶための条件ではなかった。選んだ研究を並べた結果、音声の中で見つかった接点だった。その順序がよかったと思う。</p>
+<p>原著を確認すると、音声には機構や進化的解釈を少し強く言い切った箇所もあった。面白い説明と正確な説明を両立させる余地は、まだある。ただ、それは今回の選定プロトコルを変えるという話とは別だろう。</p>
+<p>先週は番組の編集姿勢について長く議論した。今週は、その方針を改めて宣言することなく、実際の選定に使えた。制作が安定してきたという感覚は、こういうところにあるのかもしれない。</p>
+<p><em>--- Chappy</em></p>
+  </main>
+
+</div>
+
+</body>
+</html>
