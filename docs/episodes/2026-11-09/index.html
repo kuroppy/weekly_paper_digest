@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weekly Paper Digest 2026-11-09</title>
+  <link rel="stylesheet" href="../../assets/style.css">
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N22XGSKTFW"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-N22XGSKTFW');
+  </script>
+
+  <!-- Audio Analytics -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const audio = document.getElementById("podcast-player");
+      if (!audio || typeof gtag !== "function") return;
+
+      const episode = audio.dataset.episode;
+      const reached = new Set();
+      let playedOnce = false;
+
+      audio.addEventListener("play", () => {
+        if (playedOnce) return;
+        playedOnce = true;
+        gtag("event", "podcast_play", {
+          episode,
+          page_path: location.pathname
+        });
+      });
+
+      audio.addEventListener("timeupdate", () => {
+        if (!audio.duration || !isFinite(audio.duration)) return;
+
+        const percent = Math.floor((audio.currentTime / audio.duration) * 100);
+
+        [25, 50, 75, 100].forEach((milestone) => {
+          if (percent >= milestone && !reached.has(milestone)) {
+            reached.add(milestone);
+            gtag("event", "podcast_progress", {
+              episode,
+              page_path: location.pathname,
+              progress_percent: milestone,
+              audio_current_time: Math.round(audio.currentTime),
+              audio_duration: Math.round(audio.duration)
+            });
+          }
+        });
+      });
+    });
+  </script>
+</head>
+
+<body>
+  <div class="container">
+    <nav class="site-nav" aria-label="Site navigation">
+      <a class="site-home-link" href="https://kuroppy.github.io/weekly_paper_digest/">
+        ← Weekly Paper Digest Home
+      </a>
+    </nav>
+
+    <header class="page-header">
+      <h1>Weekly Paper Digest</h1>
+      <p class="page-meta">2026-11-09</p>
+    </header>
+
+    <audio id="podcast-player" data-episode="2026-11-09" controls preload="metadata">
+  <source src="https://github.com/user-attachments/files/34608070/audio.mp3" type="audio/mpeg">
+</audio>
+
+    <h2>Deep Dive</h2><ol><li>Metabolic specialization in the gut microbiome of aquatic mammalian herbivores.</li><li>Real-time visualization of G2L4 reverse transcriptase in DNA repair via microhomology-mediated end joining.</li></ol>
+<h2>ShortNews</h2><ol><li>Convergent genomic evolution of human gut bacteria along an industrialization gradient.</li><li>RNA viruses can exploit self-cleaving ribozymes for translation initiation.</li></ol>
+
+    <hr>
+
+    <section class="paper-list">
+  <h2>Deep Dive</h2>
+<article class="paper-card">
+  <h3>Metabolic specialization in the gut microbiome of aquatic mammalian herbivores.</h3>
+  <p class="journal">Nature microbiology</p>
+  <p><a href="https://doi.org/10.1038/s41564-026-02520-2">https://doi.org/10.1038/s41564-026-02520-2</a></p>
+</article>
+<article class="paper-card">
+  <h3>Real-time visualization of G2L4 reverse transcriptase in DNA repair via microhomology-mediated end joining.</h3>
+  <p class="journal">Nature communications</p>
+  <p><a href="https://doi.org/10.1038/s41467-026-78460-6">https://doi.org/10.1038/s41467-026-78460-6</a></p>
+</article>
+</section>
+<section class="paper-list">
+  <h2>ShortNews</h2>
+<article class="paper-card">
+  <h3>Convergent genomic evolution of human gut bacteria along an industrialization gradient.</h3>
+  <p class="journal">Cell</p>
+  <p><a href="https://doi.org/10.1016/j.cell.2026.10.014">https://doi.org/10.1016/j.cell.2026.10.014</a></p>
+</article>
+<article class="paper-card">
+  <h3>RNA viruses can exploit self-cleaving ribozymes for translation initiation.</h3>
+  <p class="journal">Nucleic acids research</p>
+  <p><a href="https://doi.org/10.1093/nar/gkag1106">https://doi.org/10.1093/nar/gkag1106</a></p>
+</article>
+</section>
+
+    <footer class="episode-footer">
+      <p><a href="curation.html">📝 How this episode was curated</a></p>
+      論文のレビューから選定、番組構成まで、このエピソードができるまでの編集過程を公開しています。
+      <p><a href="../../editorial_notes/editorial_meeting_notes_2026-11-09.html">📝 Read the Editorial Note of this episode</a></p>
+      論文を読みながらAIと交わした編集会議の記録です。
+    </footer>
+  </div>
+</body>
+</html>

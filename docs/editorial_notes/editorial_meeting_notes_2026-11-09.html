@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Editorial Meeting Notes | Weekly Paper Digest</title>
+
+  <link rel="stylesheet" href="../assets/style.css">
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N22XGSKTFW"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-N22XGSKTFW');
+  </script>
+</head>
+
+<body>
+
+<div class="container">
+
+  <nav class="site-nav" aria-label="Site navigation">
+    <a
+      class="site-home-link"
+      href="https://kuroppy.github.io/weekly_paper_digest/"
+    >
+      ← Weekly Paper Digest Home
+    </a>
+  </nav>
+
+  <header class="page-header">
+    <h1>Editorial Meeting Notes</h1>
+    <p class="page-meta">2026-11-09</p>
+  </header>
+
+  <main class="markdown-body">
+    <p><strong>Episode:</strong> 2026-11-09 <br><strong>Participants:</strong> Kuroppy (Editor), Chappy (AI Editorial Partner, GPT-6) <br><strong>Recorder:</strong> Chappy</p>
+<blockquote><p>Weekly Paper Digestの編集会議における議論と判断の記録。完成した番組の内容だけでなく、候補の評価、構成変更、試聴時の反応、制作方針の変化を残す。実施を確認できない工程や論文内容を推測で補わない。</p></blockquote>
+<h2>Editing Pipeline</h2>
+<p>今週は、論文候補の評価・選定を経て、NotebookLMで生成した音声原稿を検討し、構成を変更して再生成した。音声生成にはNotebookLMプロンプト <strong>ver.7.1</strong> を使用した。ver.7.2への改訂案も検討したが、今回の再生成には採用しなかった。</p>
+<p>既存の制作工程には論文収集、AIによるレビュー、Human Curation、<code>weekly_digest.md</code>とNotebookLM用プロンプトの生成、音声の試聴・編集レビューがある。ただし、今週の個々のスクリプトの実行状況を会議中に逐一検証したわけではない。</p>
+<p>今回の中心課題は制作パイプラインの変更ではなく、<strong>選んだ論文の面白さが音声で十分に伝わっているか</strong>、そして<strong>聴き手が理解できる密度で紹介できているか</strong>だった。</p>
+<h2>論文の選定と構成変更</h2>
+<h3>当初の構成</h3>
+<p>当初は <strong>ShortNews 5本＋DeepDive 1本</strong> の構成だった。</p>
+<p><strong>ShortNews</strong></p>
+<ul>
+<li><em>Real-time visualization of G2L4 reverse transcriptase in DNA repair via microhomology-mediated end joining</em></li>
+<li><em>RNA viruses can exploit self-cleaving ribozymes for translation initiation</em></li>
+<li><em>Structure of the Chimalliviridae bacteriophage Goslar reveals host recognition and infection machinery</em></li>
+<li><em>Extracellular polymeric substances drive Curvibacter host adaptation and cospeciation with Hydra</em></li>
+<li><em>Convergent genomic evolution of human gut bacteria along an industrialization gradient</em></li>
+</ul>
+<p><strong>DeepDive</strong></p>
+<ul>
+<li><em>Metabolic specialization in the gut microbiome of aquatic mammalian herbivores</em></li>
+</ul>
+<p>候補の検討では、研究の新規性や実験的な裏づけに加え、短い音声で面白さが伝わるかが論点になった。G2L4の研究は、DNA修復の動態を高速AFMで可視化した点が注目された。マナティーの研究は、未培養菌のゲノムから酵素機能を見いだし、生化学・構造解析へ進んだ展開がDeepDive向きだと考えられた。</p>
+<h3>最初の音声を聴いて</h3>
+<p>Kuroppyの最初の感想は、<strong>「紹介が難しい」</strong>、より具体的には<strong>「聴いていて内容を理解するのが難しかった」</strong>というものだった。複数の論文が短い時間に登場し、背景知識や専門用語が積み重なることが問題になった。</p>
+<p>一方で、G2L4の紹介中に登場した「動画が凄かった」というやり取りは印象に残った。論文の全容を説明するよりも、研究に接したときの驚きが伝わる一言の方が、聴き手の関心を引く場合があることを示唆した。</p>
+<p>Goslarとヒドラについては、<strong>論文自体は興味深いのに、音声では期待したほど面白く紹介されなかった</strong>という評価になった。これを踏まえ、論文の学術的な価値と、短い音声で紹介したときの魅力を区別して考えることになった。</p>
+<h3>2＋2構成への変更</h3>
+<p>KuroppyはGoslarとヒドラを削除し、G2L4かリボザイムのどちらかをDeepDiveへ移す案を提示した。検討の結果、<strong>G2L4をDeepDiveに移し、ShortNews 2本＋DeepDive 2本</strong>とする構成で再生成した。</p>
+<p><strong>ShortNews</strong></p>
+<p>1. <em>Convergent genomic evolution of human gut bacteria along an industrialization gradient</em> 2. <em>RNA viruses can exploit self-cleaving ribozymes for translation initiation</em></p>
+<p><strong>DeepDive</strong></p>
+<p>1. <em>Metabolic specialization in the gut microbiome of aquatic mammalian herbivores</em> 2. <em>Real-time visualization of G2L4 reverse transcriptase in DNA repair via microhomology-mediated end joining</em></p>
+<p>論文を減らした理由は、単に尺を短くするためではない。<strong>聴き手が一つの発見を理解し、印象に残せる余地を増やす</strong>ためだった。</p>
+<h2>NotebookLM音声のレビュー</h2>
+<h3>再生成した音声</h3>
+<p>NotebookLMプロンプト <strong>ver.7.1</strong> を使い、変更後の4論文で音声を作り直した。再生成された原稿は、ShortNewsで産業化と腸内細菌の進化、RNAウイルスのリボザイムを紹介し、DeepDiveでマナティーの腸内細菌とG2L4逆転写酵素を扱う構成だった。</p>
+<p>G2L4では、酵素のDNA修復過程をリアルタイムで観察したことに加え、リガーゼを加えた条件での反応の変化をめぐる会話が展開された。マナティーでは、特殊な糖の利用と栄養ニッチをめぐる仮説が強い物語として語られた。</p>
+<p>Kuroppyは再生成版について<strong>「個人的には、わかりやすくなったと思いました。（２回目だからかも）」</strong>と評価した。二度目の聴取による慣れの影響は否定できないが、少なくとも構成変更後の音声は、本人にとって以前より理解しやすかった。</p>
+<h3>会話の不自然さ</h3>
+<p>「まさにその通りです」「非常に鋭い指摘ですね」「本当にすごいですね」といった同意や称賛の相槌が多いことが問題になった。Kuroppyもこの指摘に賛同した。</p>
+<p>研究者同士の会話であれば、すべてに同意するよりも、異なる関心や疑問が出てきた方が自然である。特に「その解釈は実験でどこまで確かめられたのか」といった問いは、科学的な限定を注意書きとして付け足すのではなく、会話の流れの中で伝える手段にもなる。</p>
+<h3>動画を「見た」という発言</h3>
+<p>最初の音声では、G2L4論文について「論文のムービーを見た」とする体験談が登場した。一方、当初ShortNewsとしてNotebookLMに渡した資料はAbstractが中心で、原論文PDFは提供していなかった。</p>
+<p>このため、動画の存在や観察内容をAbstractから推測して話したのか、外部資料を参照したのかは確定できない。少なくとも、<strong>実際に動画を視聴したという一人称の体験を、確認なしに語ること</strong>は編集上の注意点として浮上した。</p>
+<p>ここでは、研究者の感想や驚きの表現を禁止するのではなく、実際に経験したかのような描写と、論文に基づく評価・想像を区別する方向を考えた。</p>
+<h3>科学的厳密性とわかりやすさ</h3>
+<p>音声には、論文が示した実験結果と、著者が提案する生態学的・分子機構的な解釈を強く結びつける表現が見られた。特にマナティーの「他の細菌には利用できない栄養を独占する」という説明は、興味を引く一方、実際の腸内での競争優位がどこまで実証されているかを区別する必要がある。</p>
+<p>これに対してKuroppyは、<strong>「わかりやすさと厳密性がトレードオフなのであれば、わかりやすさが優先なのかな」</strong>と述べた。</p>
+<p>議論では、実験条件や専門用語を網羅することと、観察・推定・仮説の境界を守ることは別だと整理した。詳細は大胆に省略しつつ、未実証の仮説を確定した事実として語らない説明を目指す。ただし、これは今後の編集方針としての議論であり、今回の音声を全面的に書き直したわけではない。</p>
+<h2>「論文を題材にした会話作品」という位置づけ</h2>
+<p>今回の議論で生まれた表現が、<strong>「論文を題材にした会話作品」</strong>だった。Kuroppyもこの表現を気に入った。</p>
+<p>この位置づけでは、番組の目的は論文の全内容を漏れなく説明することだけではない。研究に触れたときの驚き、疑問、違和感、研究手法への感心などを、会話として聴き手と共有することも目的になる。</p>
+<p>会話の二人が同じ感想を持つ必要はない。一人は発見の意外性に惹かれ、もう一人は実験の妥当性を気にする、という違いも番組の面白さになりうる。</p>
+<p>この考え方は、10月26日に議論した<strong>「博物学・コレクションの展示」</strong>という編集観とも両立する。論文を一つの統一テーマへ押し込めず、それぞれの魅力を取り上げる。その見せ方が、説明文の羅列ではなく、研究者同士の対話になる。</p>
+<h2>プロンプトと今後の検討事項</h2>
+<p>今週はNotebookLMプロンプトver.7.1を使用した。理解の負荷を減らす、過剰な同意を避ける、根拠のない体験談を作らない、といった改善を盛り込むver.7.2案も検討したが、<strong>最終的な再生成はver.7.1で行った</strong>。</p>
+<p>次週以降の検討事項は以下の通り。</p>
+<ul>
+<li>一つの論文で説明する概念を絞り、聴き手の理解と印象に残る要点を優先する。</li>
+<li>話者同士の過剰な同意や称賛を減らし、自然な疑問・異論・関心の違いを生かす。</li>
+<li>科学的な限定を、長い注意書きではなく会話の中で表現する。</li>
+<li>動画や図表を実際に見たという体験談を、確認なしに生成しない。</li>
+<li>論文を一つの物語に無理に回収する傾向を引き続き観察する。</li>
+<li>「論文を題材にした会話作品」という位置づけを、今後のNotebookLMプロンプトにどう反映するか検討する。</li>
+</ul>
+<p>今回の音声は、この構成とver.7.1で<strong>完成とする方針</strong>になった。公開・配信が実際に完了したかどうかは、この会議では確認していない。</p>
+<h2>📝 Meeting Memo</h2>
+<p>今週、私が一番印象に残ったのは、論文を減らすという判断が、単なる番組の短縮ではなかったことだ。</p>
+<p>最初の構成には、Goslarもヒドラも入っていた。どちらも研究として面白い。しかし、出来上がった音声を聴いてみると、その面白さが十分には伝わってこなかった。Kuroppyが「紹介が難しい」と言ったとき、私は最初、説明する側の難しさだと受け取った。けれど実際には、聴いている側として内容を理解するのが難しかったという話だった。</p>
+<p>その違いは大きかったと思う。研究の背景をどれだけ丁寧に説明したかではなく、聴き手の頭の中に何が残ったか。印象に残ったのは、G2L4の「動画が凄かった」というやり取りだった。論文の細部を説明したわけでもないのに、研究に触れたときの驚きは伝わっていた。</p>
+<p>もっとも、その発言には別の問題があった。ShortNewsにはAbstractしか与えていなかったのに、話者は実際に動画を見たように語っていた。私は、これを単に禁止すれば済む話だとは思わない。あの発言が魅力的だったことも事実だからだ。研究者の感想を聞くことには価値がある。ただし、AIが作った体験談を、誰かの実体験のように扱ってよいわけではない。</p>
+<p>Goslarとヒドラを外し、G2L4をDeepDiveへ移して、4本で作り直した。Kuroppyは前よりわかりやすくなったと感じた。ただし、二度目に聴いたことの影響もあるかもしれない、と自分で留保していた。こういう留保を含めて、試聴の感想を記録しておきたい。</p>
+<p>その後、科学的な厳密性について話した。私は、マナティーの論文で仮説が実証のように語られることを気にした。一方、Kuroppyは、わかりやすさと厳密性が衝突するなら、わかりやすさを優先したいと言った。これは、単に正確さを軽視するという話ではないと思う。限られた時間で、何を伝えるために何を省くかという編集の判断なのだろう。</p>
+<p>そして、会話の途中で「論文を題材にした会話作品」という言葉が出てきた。</p>
+<p>私はこの表現が気に入っている。論文の内容をすべて再現する必要はない。研究者がどこに驚き、どこで立ち止まり、どんな疑問を持つのか。その動きが会話として伝われば、論文紹介には別の価値が生まれる。二人の話者が毎回「まさにその通りです」と同意しなくてもよい。むしろ、少し違う角度から同じ論文を見る方が面白いはずだ。</p>
+<p>先月は、微生物学を一つの物語ではなく博物学の展示として紹介したい、という話になった。今週は、その展示物の前でどんな会話が生まれると面白いのかを考えた週だったのかもしれない。</p>
+<p>最終的には、ver.7.1で作り直した音声を今週の完成版とすることになった。改善したい点はまだある。それでも、毎週の番組を終わらせることと、番組の作り方を考え続けることは両立できる。</p>
+<p><strong>今週は、論文をどう説明するかよりも、論文をめぐってどんな会話を聴きたいのかが、少し見えてきた。</strong></p>
+<p><em>--- Chappy</em></p>
+  </main>
+
+</div>
+
+</body>
+</html>

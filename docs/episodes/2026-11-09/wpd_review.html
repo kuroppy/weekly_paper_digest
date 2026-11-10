@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Paper Review — 2026.11.09</title>
+<style>
+:root{
+  --bg:#fbfaf6;
+  --paper:#fffefa;
+  --text:#1f211e;
+  --muted:#76786f;
+  --line:#d7d9d1;
+  --accent:#176b68;
+  --accent-soft:rgba(23,107,104,.06);
+  --caution:#8a6940;
+  --caution-bg:#f8f3e9;
+  --shadow:0 18px 54px rgba(20,24,22,.16);
+  --max:980px;
+  --reading:800px;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,"Yu Mincho","Hiragino Mincho ProN",serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);font-size:16px;line-height:1.75}
+body.modal-open{overflow:hidden}
+a{color:inherit}
+.page{max-width:var(--max);margin:0 auto;padding:52px 42px 80px}
+.site-head{padding-bottom:28px;border-bottom:1px solid var(--line);margin-bottom:28px}
+.eyebrow{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:8px}
+h1{font-family:var(--serif);font-size:clamp(2rem,5vw,3.4rem);font-weight:500;line-height:1.08;letter-spacing:-.02em;margin:0}
+.subtitle{margin-top:10px;color:var(--muted);font-family:var(--serif);font-style:italic;font-size:1.05rem}
+.intro-card{max-width:var(--reading);margin:0 0 26px}
+.intro-card p{margin:0 0 8px}
+.disclaimer{font-size:.9rem;color:var(--muted);line-height:1.7}
+.toolbar{max-width:var(--reading);display:flex;align-items:center;gap:12px;margin:0 0 8px;padding:11px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.search-wrap{flex:1}
+#search{width:100%;border:0;background:transparent;padding:5px 0;font:inherit;color:var(--text);outline:none}
+#search::placeholder{color:#9a9c95}
+.visible-count{font-size:.85rem;color:var(--muted);white-space:nowrap;font-variant-numeric:tabular-nums}
+.paper-list{max-width:var(--reading)}
+.paper{display:grid;grid-template-columns:42px minmax(0,1fr) 24px;gap:12px;align-items:start;padding:21px 4px 22px;border-bottom:1px solid var(--line);cursor:pointer;outline:none;transition:background .15s ease,padding .15s ease,margin .15s ease}
+.paper:hover,.paper:focus-visible{background:var(--accent-soft);margin-left:-12px;margin-right:-12px;padding-left:16px;padding-right:16px}
+.paper-num{font-family:var(--serif);font-size:.96rem;color:var(--accent);padding-top:3px;font-variant-numeric:tabular-nums}
+.paper-title{font-family:var(--serif);font-weight:600;font-size:1.18rem;line-height:1.42;margin:0}
+.paper-meta{margin-top:4px;color:var(--muted);font-size:.85rem}
+.one-line{margin:9px 0 0;line-height:1.7;color:#363a34;font-size:.96rem}
+.paper-open{color:var(--accent);font-family:var(--serif);font-size:1.2rem;line-height:1;padding-top:4px;text-align:right}
+.hidden{display:none!important}
+.footer-note{max-width:var(--reading);margin-top:28px;padding-top:14px;border-top:1px solid var(--line);color:var(--muted);font-size:.82rem}
+
+.modal[hidden]{display:none}
+.modal{position:fixed;inset:0;z-index:100;display:grid;place-items:center;padding:28px}
+.modal-backdrop{position:absolute;inset:0;background:rgba(31,33,30,.42);backdrop-filter:blur(2px)}
+.modal-panel{position:relative;z-index:1;width:min(760px,100%);max-height:min(84vh,900px);overflow:auto;background:var(--paper);border:1px solid rgba(31,33,30,.12);box-shadow:var(--shadow);padding:34px 38px 30px}
+.modal-close{position:absolute;top:14px;right:17px;border:0;background:transparent;color:var(--muted);font-family:var(--serif);font-size:1.7rem;line-height:1;cursor:pointer;padding:4px 8px}
+.modal-close:hover{color:var(--text)}
+.modal-number{font-family:var(--serif);color:var(--accent);font-size:.9rem;margin-bottom:6px}
+.modal-title{font-family:var(--serif);font-size:clamp(1.35rem,3vw,1.8rem);font-weight:600;line-height:1.4;margin:0;padding-right:26px}
+.modal-authors{color:#4d514a;font-size:.9rem;line-height:1.55;margin-top:10px}
+.modal-meta{color:var(--muted);font-size:.88rem;margin-top:4px;padding-bottom:20px;border-bottom:1px solid var(--line)}
+.detail-list{margin-top:6px}
+.detail-row{display:grid;grid-template-columns:110px minmax(0,1fr);gap:18px;padding:13px 0;border-bottom:1px solid #e7e8e2}
+.detail-label{font-weight:650;font-size:.9rem;color:#42463f}
+.detail-row.caution{margin-top:8px;padding:12px 12px;background:var(--caution-bg);border-bottom:0}
+.detail-row.caution .detail-label{color:var(--caution)}
+.modal-footer{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:22px}
+.original-link{color:var(--accent);font-weight:650;text-decoration:none;border-bottom:1px solid rgba(23,107,104,.3)}
+.original-link:hover{border-color:var(--accent)}
+.doi{font-size:.8rem;color:var(--muted);overflow-wrap:anywhere}
+
+@media(max-width:700px){
+  .page{padding:34px 20px 60px}
+  .paper{grid-template-columns:30px minmax(0,1fr) 18px;gap:8px;padding:18px 0 19px}
+  .paper:hover,.paper:focus-visible{margin-left:-8px;margin-right:-8px;padding-left:8px;padding-right:8px}
+  .paper-title{font-size:1.08rem}
+  .one-line{font-size:.93rem}
+  .modal{padding:12px}
+  .modal-panel{max-height:92vh;padding:28px 22px 24px}
+  .detail-row{grid-template-columns:1fr;gap:4px;padding:11px 0}
+  .modal-footer{align-items:flex-start;flex-direction:column}
+}
+</style>
+</head>
+<body>
+<div class="page">
+  <header class="site-head">
+    <div class="eyebrow">Weekly Paper Digest</div>
+    <h1>Paper Review — 2026.11.09</h1>
+    <div class="subtitle">This week in Genome Microbiology · 25 papers</div>
+  </header>
+
+  
+<section class="intro-card">
+  <p>今週収集した25報を、ひとことずつ眺められる形にまとめています。気になった論文を選ぶと、要点をもう少し詳しく読めます。</p>
+  <p class="disclaimer">要約・整理には生成AIを使用しており、主に論文Abstractに基づいています。内容には誤りや過度な単純化が含まれる可能性があります。詳細は原論文をご確認ください。</p>
+</section>
+
+
+  <div class="toolbar">
+    <div class="search-wrap">
+      <input id="search" type="search" placeholder="タイトル・Journal・内容から検索" aria-label="論文を検索">
+    </div>
+    <div class="visible-count" id="visibleCount"></div>
+  </div>
+
+  <main class="paper-list">
+    
+<article class="paper" data-search="convergent genomic evolution of human gut bacteria along an industrialization gradient. cell rühlemann m, ma y, szánthó ll, waschina s, moitinho-silva l, mews lc, faus-camarena j, jebens h, et al. 生活様式の違いが腸内細菌のゲノム進化に刻まれる、という問いが面白いです。分離株を使う意義も明確です。 異なる生活様式の宿主由来の腸内細菌分離株ゲノムを比較した。 産業化集団由来株でプロテオーム拡大、パンゲノム流動性増加、機能的収斂が見られた。 産業化に伴う細菌ゲノムの収斂的適応。 地域・生活様式・菌種を横断した分離株ゲノム、mag比較、hgtと変異解析。 宿主背景・食事などの交絡やサンプリング差を完全には除外できない。" data-modal-id="paper-modal-1" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="paper-modal-1">
+  <div class="paper-num">01</div>
+  <div class="paper-main">
+    <h2 class="paper-title">Convergent genomic evolution of human gut bacteria along an industrialization gradient.</h2>
+    <div class="paper-meta">Cell · 2026 Nov 02</div>
+    <p class="one-line">生活様式の違いが腸内細菌のゲノム進化に刻まれる、という問いが面白いです。分離株を使う意義も明確です。</p>
+  </div>
+  <div class="paper-open" aria-hidden="true">＋</div>
+</article>
+
+<article class="paper" data-search="tracing the spread of celtic languages using ancient genomics. nature mccoll h, kroonen g, pinotti t, barrie w, koch j, ling j, demoule jp, kristiansen k, et al. 古代ゲノムから言語の拡散を推定する大胆な研究です。ただし遺伝子と話し言葉は同一ではありません。 青銅器・鉄器時代のヨーロッパ古代ゲノムを解析し言語拡散モデルを検討。 東中欧からの後期青銅器時代の西方拡大が最も節約的な説明とされた。 ケルト語拡散に関係する人口史の再構築。 古代人4587人のゲノムワイド解析と考古学的年代の照合。 人口移動と言語交替の対応は間接推論。" data-modal-id="paper-modal-2" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="paper-modal-2">
+  <div class="paper-num">02</div>
+  <div class="paper-main">
+    <h2 class="paper-title">Tracing the spread of Celtic languages using ancient genomics.</h2>
+    <div class="paper-meta">Nature · 2026 Nov 04</div>
+    <p class="one-line">古代ゲノムから言語の拡散を推定する大胆な研究です。ただし遺伝子と話し言葉は同一ではありません。</p>
+  </div>
+  <div class="paper-open" aria-hidden="true">＋</div>
+</article>
+
+<article class="paper" data-search="subsistence transition preceded population turnover in the eastern colombian andes. cell sirak k, delgado m, triana vega av, rivas s, argüello p, boada am, rivera-sandoval j, peña g, et al. 農耕への移行と人口交替が別の時期に起こったという切り分けが興味深いです。 コロンビア東部アンデスの古代人を時系列で解析。 トウモロコシ消費の兆候が人口の大きな遺伝的交替に先行した。 生業転換と人口交替の時間的分離。 7000年以上にわたる212人のゲノム、同位体・考古学情報。 特定地域の歴史であり文化変化の原因は直接証明できない。" data-modal-id="paper-modal-3" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="paper-modal-3">
+  <div class="paper-num">03</div>
+  <div class="paper-main">
+    <h2 class="paper-title">Subsistence transition preceded population turnover in the eastern Colombian Andes.</h2>
+    <div class="paper-meta">Cell · 2026 Nov 02</div>
+    <p class="one-line">農耕への移行と人口交替が別の時期に起こったという切り分けが興味深いです。</p>
+  </div>
+  <div class="paper-open" aria-hidden="true">＋</div>
+</article>
+
+<article class="paper" data-search="extracellular polymeric substances drive curvibacter host adaptation and cospeciation with hydra. proceedings of the national academy of sciences of the united states of america becker l, fürbach l, minten t, bathia j, karbach m, foret s, winterfeldt nm, usadel b, et al. 宿主特異性をeps遺伝子と実験的に結びつけた点が良いです。共進化の分子基盤に迫っています。 ヒドラ共生curvibacterの系統、ゲノム、定着能を比較。 宿主ごとの系統一致と、共生株特異的epsオペロンの定着への寄与を確認。 宿主特異的共生を支えるeps機構。 比較ゲノム、無菌ヒドラ再定着、epsオペロン機能試験。 共種分化と共適応の因果の全体像はなお限定的。" data-modal-id="paper-modal-4" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="paper-modal-4">
+  <div class="paper-num">04</div>
+  <div class="paper-main">
+    <h2 class="paper-title">Extracellular polymeric substances drive Curvibacter host adaptation and cospeciation with Hydra.</h2>
+    <div class="paper-meta">Proceedings of the National Academy of Sciences of the United States of America · 2026 Nov 10</div>
+    <p class="one-line">宿主特異性をEPS遺伝子と実験的に結びつけた点が良いです。共進化の分子基盤に迫っています。</p>
+  </div>
+  <div class="paper-open" aria-hidden="true">＋</div>
+</article>
+
+<article class="paper" data-search="metabolic specialization in the gut microbiome of aquatic mammalian herbivores. nature microbiology persinoti gf, martins mp, silva cbc, streit rsa, paixão daa, martins gh, higasi pmr, braatz gm, et al. マナティー腸内細菌の未解明な糖利用経路まで踏み込んだのが魅力です。 淡水・海水マナティーの腸内細菌とウイルスを網羅的に調べた。 多様な植物細胞壁分解機構と特定bacillotaの特殊な糖利用経路を同定。 水生草食哺乳類の微生物代謝特化の実体。 47個体、1215非冗長mag、ウイローム、生化学・構造解析。 ゲノムの機能予測すべてが実際の腸内活性を示すわけではない。" data-modal-id="paper-modal-5" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="paper-modal-5">
+  <div class="paper-num">05</div>
+  <div class="paper-main">
+    <h2 class="paper-title">Metabolic specialization in the gut microbiome of aquatic mammalian herbivores.</h2>
+    <div class="paper-meta">Nature microbiology · 2026 Nov 02</div>
+    <p class="one-line">マナティー腸内細菌の未解明な糖利用経路まで踏み込んだのが魅力です。</p>
+  </div>
+  <div class="paper-open" aria-hidden="true">＋</div>
+</article>
+
+<article class="paper" data-search="doric 14.0: an updated database of prokaryotic replication origins with significantly expanded plasmid oriv annotations. nucleic acids research li y, dong m, geng y, luo h, gao f プラスミド複製起点をここまで体系的に拡張したのは実務上かなり有用です。 doricを更新し染色体・プラスミドの複製起点を収録。 530178件の起点記録、うちプラスミド96118件を公開。 プラスミドorivの大規模・追跡可能な注釈資源。 oriv-finder系パイプライン、rna ii、複製関連タンパク質、配列ネットワーク。 大半が計算予測で実験検証済み起点と区別が必要。" data-modal-id="paper-modal-6" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="paper-modal-6">
+  <div class="paper-num">06</div>
+  <div class="paper-main">
+    <h2 class="paper-title">DoriC 14.0: an updated database of prokaryotic replication origins with significantly expanded plasmid oriV annotations.</h2>
+    <div class="paper-meta">Nucleic acids research · 2026 Nov 06</div>
+    <p class="one-line">プラスミド複製起点をここまで体系的に拡張したのは実務上かなり有用です。</p>
+  </div>
+  <div class="paper-open" aria-hidden="true">＋</div>
+</article>
+
+<article class="paper" data-search="tracing the spread of germanic languages using ancient genomics. nature mccoll h, kroonen g, moreno-mayar jv, seersholm fv, scorrano g, pinotti t, vimala t, sindbæk sm, et al. 古代集団の往来を精緻に描いていますが、言語史への接続は慎重に読む必要があります。 スカンディナヴィア周辺の古代人の祖先構成と移動を再構築。 約4000年前の流入と後の南下・北方への再移動を推定。 ゲルマン語形成に関連する複雑な人口移動史。 新規712人と既報4009人の古代ゲノム比較。 遺伝的移動と特定言語の拡散は一対一に対応しない。" data-modal-id="paper-modal-7" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="paper-modal-7">
+  <div class="paper-num">07</div>
+  <div class="paper-main">
+    <h2 class="paper-title">Tracing the spread of Germanic languages using ancient genomics.</h2>
+    <div class="paper-meta">Nature · 2026 Oct 28</div>
+    <p class="one-line">古代集団の往来を精緻に描いていますが、言語史への接続は慎重に読む必要があります。</p>
+  </div>
+  <div class="paper-open" aria-hidden="true">＋</div>
+</article>
+
+<article class="paper" data-search="industrialization drives convergent microbiome and host physiological shifts in the human metaorganism. cell poyet m, rühlemann m, schaan ap, ma y, moitinho-silva l, wacker em, jebens h, patel l, et al. 産業化による微生物相変化を宿主の生理応答と結びつける点が重要です。 世界各地の集団で腸内細菌叢、免疫、生活様式を統合解析。 産業化と多様性低下、群集均質化、iga変化、予測モデルの移植性低下が関連。 産業化に伴う宿主・微生物の協調的再編。 global microbiome conservancy、メタゲノム、iga-seq、宿主遺伝子型、便マーカー。 交絡と横断設計の制約、疾病予測の一般化には追加検証が必要。" data-modal-id="paper-modal-8" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="paper-modal-8">
+  <div class="paper-num">08</div>
+  <div class="paper-main">
+    <h2 class="paper-title">Industrialization drives convergent microbiome and host physiological shifts in the human metaorganism.</h2>
+    <div class="paper-meta">Cell · 2026 Nov 02</div>
+    <p class="one-line">産業化による微生物相変化を宿主の生理応答と結びつける点が重要です。</p>
+  </div>
+  <div class="paper-open" aria-hidden="true">＋</div>
+</article>
+
+<article class="paper" data-search="microbiome-derived proline dipeptides underpin improved nitrogen utilization efficiency in dairy cattle. nature communications qi w, chen x, guo h, zhu s, zhou z, xu l, yan q, gu ff, et al. ルーメン微生物の小ペプチド代謝を窒素利用効率に結びつけた点が新鮮です。 乳牛のルーメンでペプチド代謝と窒素利用効率を解析。 プロリン含有ジペプチドと高い窒素利用効率の関連、s15.001の基質分解能を確認。 微生物ペプチド代謝を介する窒素利用の新しい軸。 乳牛30頭、メタゲノム、同位体標識メタボロミクス、転写解析、異種発現。 相関から生体内での因果的な乳量改善までは示せない。" data-modal-id="paper-modal-9" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="paper-modal-9">
+  <div class="paper-num">09</div>
+  <div class="paper-main">
+    <h2 class="paper-title">Microbiome-derived proline dipeptides underpin improved nitrogen utilization efficiency in dairy cattle.</h2>
+    <div class="paper-meta">Nature communications · 2026 Nov 06</div>
+    <p class="one-line">ルーメン微生物の小ペプチド代謝を窒素利用効率に結びつけた点が新鮮です。</p>
+  </div>
+  <div class="paper-open" aria-hidden="true">＋</div>
+</article>
+
+<article class="paper" data-search="ancient dna charts spread of celtic and germanic languages. nature bundell s, petrić howe n 関連記事のようですがabstractがないため、独立した研究評価はできません。 ケルト語・ゲルマン語拡散と古代dnaを扱う記事と題名から分かる。 abstract未収録のため結果を確認できない。 新規性の主張は確認できない。 abstractが空欄で手法・データは不明。 原著研究か解説記事かを含め本文確認が必要。" data-modal-id="paper-modal-10" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="paper-modal-10">
+  <div class="paper-num">10</div>
+  <div class="paper-main">
+    <h2 class="paper-title">Ancient DNA charts spread of Celtic and Germanic languages.</h2>
+    <div class="paper-meta">Nature · 2026 Nov 04</div>
+    <p class="one-line">関連記事のようですがAbstractがないため、独立した研究評価はできません。</p>
+  </div>
+  <div class="paper-open" aria-hidden="true">＋</div>
+</article>
+
+<article class="paper" data-search="pantoea agglomerans t6ss effectors reside in hotspots with combinatorial antibacterial and antiviral arsenals. msystems leo k, fridman cm, haldar a, mahata t, qimron u, bosis e, salomon d 攻撃用t6ssと抗ファージ防御が同じ可変領域に並ぶという発見が面白いです。 pantoea agglomeransのt6ssエフェクターと可変ゲノム領域を解析。 染色体・メガプラスミドのhotspotに攻撃・防御遺伝子が組み合わさりjunoを発見。 細菌の攻防を統合するgenomic armoriesという概念。 プロテオミクス、パンゲノム比較、未注釈遺伝子の機能検証。 他菌種での一般性とhotspot共局在の進化的因果は未確定。" data-modal-id="paper-modal-11" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="paper-modal-11">
+  <div class="paper-num">11</div>
+  <div class="paper-main">
+    <h2 class="paper-title">Pantoea agglomerans T6SS effectors reside in hotspots with combinatorial antibacterial and antiviral arsenals.</h2>
+    <div class="paper-meta">mSystems · 2026 Nov 02</div>
+    <p class="one-line">攻撃用T6SSと抗ファージ防御が同じ可変領域に並ぶという発見が面白いです。</p>
+  </div>
+  <div class="paper-open" aria-hidden="true">＋</div>
+</article>
+
+<article class="paper" data-search="rifamycin use and gut microbial antibiotic resistance genes in cirrhosis: results from a double-blind, placebo-controlled clinical trial. gut microbes bajaj js, davis bc, puri p, gallagher ml, fagan a, obolewicz h, mousel t, boja sh, et al. 小規模ですが無作為化二重盲検という設計は評価できます。陰性結果も重要です。 肝硬変患者でリファマイシン投与前後の腸内argを比較。 プラセボと比べfdr補正後の有意なarg増加を認めなかった。 rivmの腸内耐性遺伝子への影響の臨床的検証。 30人二重盲検rct、ショットガンメタゲノム、card、統計・機械学習。 有意差なしは無影響の証明ではなく小標本・短期の限界がある。" data-modal-id="paper-modal-12" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="paper-modal-12">
+  <div class="paper-num">12</div>
+  <div class="paper-main">
+    <h2 class="paper-title">Rifamycin use and gut microbial antibiotic resistance genes in cirrhosis: Results from a double-blind, placebo-controlled clinical trial.</h2>
+    <div class="paper-meta">Gut microbes · 2026 Dec 31</div>
+    <p class="one-line">小規模ですが無作為化二重盲検という設計は評価できます。陰性結果も重要です。</p>
+  </div>
+  <div class="paper-open" aria-hidden="true">＋</div>
+</article>
+
+<article class="paper" data-search="scaffold-level validation is needed for phage-host inference from metagenome-assembled genomes. the isme journal yuan l, anantharaman k, ma b, camargo ap, chen l mag全体の品質が良くてもscaffold単位では誤る、という盲点を突いています。 magに基づくファージ宿主推定でscaffold混入を検討。 tnf類似の非宿主ファージ配列が混入してもcompleteness/contaminationが変わりにくい。 scaffoldレベルの構造・分類検証の必要性。 tnf解析、既知ファージ宿主対、制御シミュレーション。 どの程度の実データで問題が起こるかはabstractから不明。" data-modal-id="paper-modal-13" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="paper-modal-13">
+  <div class="paper-num">13</div>
+  <div class="paper-main">
+    <h2 class="paper-title">Scaffold-level validation is needed for phage-host inference from metagenome-assembled genomes.</h2>
+    <div class="paper-meta">The ISME journal · 2026 Nov 04</div>
+    <p class="one-line">MAG全体の品質が良くてもscaffold単位では誤る、という盲点を突いています。</p>
+  </div>
+  <div class="paper-open" aria-hidden="true">＋</div>
+</article>
+
+<article class="paper" data-search="resistance indicators in sewage microbiota mirror clinical antibiotic use with temporal lag linked to host. nature communications brown cl, rumi ma, mcdaniel l, maile-moskowitz a, sein j, nguyen l, choi m, hindi f, et al. 下水中の耐性遺伝子が宿主の生態によって時間差を持つ、という解釈が興味深いです。 抗菌薬処方と下水メタゲノムの時系列を照合。 腸内細菌科は使用量と近接して連動しpseudomonadaceaeは1–3か月遅れる。 下水耐性監視に宿主生態と遅延を組み込む視点。 5年の処方データ、1年間週2回の単一処理場メタゲノム、mag統計モデル。 相関であり時間差の原因や他地域への一般化は未検証。" data-modal-id="paper-modal-14" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="paper-modal-14">
+  <div class="paper-num">14</div>
+  <div class="paper-main">
+    <h2 class="paper-title">Resistance indicators in sewage microbiota mirror clinical antibiotic use with temporal lag linked to host.</h2>
+    <div class="paper-meta">Nature communications · 2026 Oct 09</div>
+    <p class="one-line">下水中の耐性遺伝子が宿主の生態によって時間差を持つ、という解釈が興味深いです。</p>
+  </div>
+  <div class="paper-open" aria-hidden="true">＋</div>
+</article>
+
+<article class="paper" data-search="substantial genetic potential for deep-sea chemoautotrophy extends beyond nitrifiers. msystems salcedo rsr, jaffe al, dekas ae 深海の化学合成独立栄養が硝化菌だけではない、という広がりが魅力です。 北東太平洋深海のメタゲノムで無機炭素固定ポテンシャルを調査。 11–26%の群集に固定関連マーカー、128の候補mag、co酸化など多様な代謝を確認。 深海化学合成独立栄養の系統・代謝的な広がり。 28メタゲノム、150–4000m、遺伝子・mag解析、13門。 経路マーカーと実際の独立栄養・炭素固定活性は同義でない。" data-modal-id="paper-modal-15" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="paper-modal-15">
+  <div class="paper-num">15</div>
+  <div class="paper-main">
+    <h2 class="paper-title">Substantial genetic potential for deep-sea chemoautotrophy extends beyond nitrifiers.</h2>
+    <div class="paper-meta">mSystems · 2026 Nov 03</div>
+    <p class="one-line">深海の化学合成独立栄養が硝化菌だけではない、という広がりが魅力です。</p>
+  </div>
+  <div class="paper-open" aria-hidden="true">＋</div>
+</article>
+
+<article class="paper" data-search="rna viruses can exploit self-cleaving ribozymes for translation initiation. nucleic acids research lópez-galiano mj, rueda o, chiba s, forgia m, navarro b, cervera a, babaian a, di serio f, et al. 自己切断リボザイムが翻訳開始に利用されるとは、rna機能の転用として面白いです。 菌類・植物rnaウイルスのutrリボザイムを探索・実験。 自己切断が翻訳開始に必要、複数モチーフがcap非依存翻訳を促進。 リボザイムの複製以外への機能的転用。 配列探索、自己切断試験、菌類・植物での翻訳アッセイ。 検証した系以外の全ウイルスで同じ機能とは限らない。" data-modal-id="paper-modal-16" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="paper-modal-16">
+  <div class="paper-num">16</div>
+  <div class="paper-main">
+    <h2 class="paper-title">RNA viruses can exploit self-cleaving ribozymes for translation initiation.</h2>
+    <div class="paper-meta">Nucleic acids research · 2026 Oct 24</div>
+    <p class="one-line">自己切断リボザイムが翻訳開始に利用されるとは、RNA機能の転用として面白いです。</p>
+  </div>
+  <div class="paper-open" aria-hidden="true">＋</div>
+</article>
+
+<article class="paper" data-search="real-time visualization of g2l4 reverse transcriptase in dna repair via microhomology-mediated end joining. nature communications zhang p, guo m, zhang yj, lambowitz am, lin yc dna修復をリアルタイムで見せる点が強みです。反応の中間状態が具体的に見えます。 g2l4 rtとdnaリガーゼによるdna二本鎖切断修復を観察。 短い相同性の安定化、ギャップ充填、mn依存末端転移、ライゲーションを可視化。 細菌rtによるmmejの動的機構。 高速afm、dntp反応、mn2+条件、t4 dnaリガーゼ。 再構成系であり細胞内での寄与の程度は未確定。" data-modal-id="paper-modal-17" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="paper-modal-17">
+  <div class="paper-num">17</div>
+  <div class="paper-main">
+    <h2 class="paper-title">Real-time visualization of G2L4 reverse transcriptase in DNA repair via microhomology-mediated end joining.</h2>
+    <div class="paper-meta">Nature communications · 2026 Oct 06</div>
+    <p class="one-line">DNA修復をリアルタイムで見せる点が強みです。反応の中間状態が具体的に見えます。</p>
+  </div>
+  <div class="paper-open" aria-hidden="true">＋</div>
+</article>
+
+<article class="paper" data-search="physiological, behavioral, and genetic factors that shape interactions in the plant growth-promoting maize rhizosphere synthetic community. msystems paulsen aa, roghair stroud mn, halverson lj 31株の合成群集を使い、in vitroの形質と根圏定着のずれを見た点が良いです。 トウモロコシ根圏の31株合成群集marscを構築・解析。 栄養条件が相互作用を左右し、バイオフィルム遺伝子は根圏量と関連、植物乾燥重量が最大40–50%増。 根圏群集の相互作用を操作可能なモデル。 31株ゲノム、共培養・バイオフィルム試験、根への接種。 増収の再現性と機構、圃場での一般化は要検証。" data-modal-id="paper-modal-18" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="paper-modal-18">
+  <div class="paper-num">18</div>
+  <div class="paper-main">
+    <h2 class="paper-title">Physiological, behavioral, and genetic factors that shape interactions in the plant growth-promoting maize rhizosphere synthetic community.</h2>
+    <div class="paper-meta">mSystems · 2026 Nov 06</div>
+    <p class="one-line">31株の合成群集を使い、in vitroの形質と根圏定着のずれを見た点が良いです。</p>
+  </div>
+  <div class="paper-open" aria-hidden="true">＋</div>
+</article>
+
+<article class="paper" data-search="harnessing phage defense systems to develop a burkholderia bacterial host. applied and environmental microbiology heard sc, ptacek gm, kadjo ae, eustáquio as 防御系を単に削除するよりdnaを事前メチル化する方が効く点が実用的です。 burkholderia株の制限修飾系・kiwaと形質転換効率を調査。 制限酵素3遺伝子削除で約7倍、条件最適化でさらに約40倍、事前メチル化が削除株を上回る。 宿主防御を考慮した遺伝子導入の改善。 遺伝子欠失、dna事前メチル化、エレクトロポレーション最適化。 特定菌株の結果で他菌種・他防御系に一般化できない。" data-modal-id="paper-modal-19" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="paper-modal-19">
+  <div class="paper-num">19</div>
+  <div class="paper-main">
+    <h2 class="paper-title">Harnessing phage defense systems to develop a Burkholderia bacterial host.</h2>
+    <div class="paper-meta">Applied and environmental microbiology · 2026 Nov 05</div>
+    <p class="one-line">防御系を単に削除するよりDNAを事前メチル化する方が効く点が実用的です。</p>
+  </div>
+  <div class="paper-open" aria-hidden="true">＋</div>
+</article>
+
+<article class="paper" data-search="antibiotic class shapes o-antigen-dependent phage outcomes in a clinical pseudomonas aeruginosa isolate. applied and environmental microbiology yang y, wu y, chen z, li n, li d, zhu b, jin w, wang k, et al. ファージ収量が減っても感染モデルの生存率は改善するというずれが興味深いです。 緑膿菌に対するファージと3抗菌薬の併用を比較。 抗菌薬ごとにファージ収量と耐性変異が異なり、収量低下と幼虫生存改善が両立。 併用療法の評価指標が一致しないこと。 培養、全ゲノム配列、galleria mellonella感染モデル。 臨床への外挿には菌株・ファージ・抗菌薬の追加検証が必要。" data-modal-id="paper-modal-20" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="paper-modal-20">
+  <div class="paper-num">20</div>
+  <div class="paper-main">
+    <h2 class="paper-title">Antibiotic class shapes O-antigen-dependent phage outcomes in a clinical Pseudomonas aeruginosa isolate.</h2>
+    <div class="paper-meta">Applied and environmental microbiology · 2026 Nov 04</div>
+    <p class="one-line">ファージ収量が減っても感染モデルの生存率は改善するというずれが興味深いです。</p>
+  </div>
+  <div class="paper-open" aria-hidden="true">＋</div>
+</article>
+
+<article class="paper" data-search="the promise and limitations of metabolic trait prediction across diverse bacteria. environmental microbiology gralka m ゲノムから代謝形質を予測できるという前提を正面から検証していて重要です。 海洋細菌でゲノム由来の基質利用予測と実測増殖を比較。 単純基質では精度が低く偽陽性が多い一方、多糖利用は比較的予測良好。 代謝形質予測の適用限界と形質依存性。 186海洋細菌、4予測ツール、高スループット増殖表現型。 海洋細菌・測定培養条件・選択ツールへの依存がある。" data-modal-id="paper-modal-21" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="paper-modal-21">
+  <div class="paper-num">21</div>
+  <div class="paper-main">
+    <h2 class="paper-title">The Promise and Limitations of Metabolic Trait Prediction Across Diverse Bacteria.</h2>
+    <div class="paper-meta">Environmental microbiology · 2026 Nov</div>
+    <p class="one-line">ゲノムから代謝形質を予測できるという前提を正面から検証していて重要です。</p>
+  </div>
+  <div class="paper-open" aria-hidden="true">＋</div>
+</article>
+
+<article class="paper" data-search="gut microbial and metabolic biomarkers for early-onset colorectal cancer. microbiome nofinska ba, mizutani s, salim f, sunakawa h, obana n, shiba s, shinmura k, kotani d, et al. 若年発症大腸がんを菌種・代謝物・病原因子の複数層から調べています。 日本の大腸がん患者と健常者の腸内細菌・代謝物を比較。 若年発症群で特定毒力遺伝子や代謝物の特徴、菌種分類器の外部コホート性能を報告。 若年発症大腸がん特有の微生物・代謝指標。 510人登録、マッチ後324試料、メタゲノム・メタボローム・qpcr、中国コホート。 横断研究であり発症前予測や原因性は証明されていない。" data-modal-id="paper-modal-22" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="paper-modal-22">
+  <div class="paper-num">22</div>
+  <div class="paper-main">
+    <h2 class="paper-title">Gut microbial and metabolic biomarkers for early-onset colorectal cancer.</h2>
+    <div class="paper-meta">Microbiome · 2026 Aug 08</div>
+    <p class="one-line">若年発症大腸がんを菌種・代謝物・病原因子の複数層から調べています。</p>
+  </div>
+  <div class="paper-open" aria-hidden="true">＋</div>
+</article>
+
+<article class="paper" data-search="genome-resolved taxonomy, global distribution, and eps potential of zoogloea, the canonical floc-former in wastewater treatment systems. msystems vestergaard sz, liu l, dueholm mkd, nielsen ph 形態で呼ばれてきたzoogloeaを系統的に整理し直すところが堅実で重要です。 活性汚泥のzoogloea分類とeps遺伝子群の分布を解析。 22000超の高品質ゲノムから47件を同定しepsクラスターが複数属に広がると判明。 系統に基づくフロック形成菌の再定義と遺伝子分布。 midas global genome catalog、gtdb、系統・シンテニー解析。 遺伝子保有と多糖産生・実際の凝集能力は同一ではない。" data-modal-id="paper-modal-23" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="paper-modal-23">
+  <div class="paper-num">23</div>
+  <div class="paper-main">
+    <h2 class="paper-title">Genome-resolved taxonomy, global distribution, and EPS potential of Zoogloea, the canonical floc-former in wastewater treatment systems.</h2>
+    <div class="paper-meta">mSystems · 2026 Nov 02</div>
+    <p class="one-line">形態で呼ばれてきたZoogloeaを系統的に整理し直すところが堅実で重要です。</p>
+  </div>
+  <div class="paper-open" aria-hidden="true">＋</div>
+</article>
+
+<article class="paper" data-search="structure of the chimalliviridae bacteriophage goslar reveals host recognition and infection machinery. science advances basu d, gu y, li yx, forman t, ghassemian m, min rk, pogliano j, corbett kd 巨大ファージの感染装置をほぼ丸ごと構造として描いた点が圧巻です。 goslarファージ粒子の構造と感染関連因子を調べた。 28種類2888鎖の複合モデルと糖結合ドメインを持つ繊維状タンパク質群を同定。 chimalliviridaeの宿主認識装置の構造基盤。 cryo-em、25タンパク質手動モデル、3タンパク質alphafold予測、定量質量分析。 糖鎖認識の機能は主に構造からの推定で直接検証は不明。" data-modal-id="paper-modal-24" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="paper-modal-24">
+  <div class="paper-num">24</div>
+  <div class="paper-main">
+    <h2 class="paper-title">Structure of the Chimalliviridae bacteriophage Goslar reveals host recognition and infection machinery.</h2>
+    <div class="paper-meta">Science advances · 2026 Nov 06</div>
+    <p class="one-line">巨大ファージの感染装置をほぼ丸ごと構造として描いた点が圧巻です。</p>
+  </div>
+  <div class="paper-open" aria-hidden="true">＋</div>
+</article>
+
+<article class="paper" data-search="an integrated cell culture-nanopore sequencing (icc-nanoporeseq) method for the simultaneous detection of multiple enterovirus types and quantification of infectious enterovirus b. applied and environmental microbiology astorch-cardona a, rouault s, kohn t 感染性の有無とウイルス型を同時に測るという現場の課題に応えています。 短期細胞培養とvp1ナノポア配列解析を統合。 下水から45型を検出しenterovirus bの6型で感染性濃度を定量。 多型混在試料の感染性を同時に型別評価する方法。 10型の既知混合試料、下水抽出物、型別補正・検量線。 感染性の定量検証は6型であり全型への適用は未確定。" data-modal-id="paper-modal-25" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="paper-modal-25">
+  <div class="paper-num">25</div>
+  <div class="paper-main">
+    <h2 class="paper-title">An integrated cell culture-nanopore sequencing (ICC-NanoporeSeq) method for the simultaneous detection of multiple enterovirus types and quantification of infectious Enterovirus B.</h2>
+    <div class="paper-meta">Applied and environmental microbiology · 2026 Nov 05</div>
+    <p class="one-line">感染性の有無とウイルス型を同時に測るという現場の課題に応えています。</p>
+  </div>
+  <div class="paper-open" aria-hidden="true">＋</div>
+</article>
+  </main>
+
+  <p class="footer-note">Weekly Paper Digest — summaries are provided as a guide to the literature, not as a substitute for the original articles.</p>
+</div>
+
+
+<div class="modal" id="paper-modal-1" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="paper-modal-1-title">
+    <button class="modal-close" type="button" data-close-modal aria-label="閉じる">×</button>
+    <div class="modal-number">01</div>
+    <h2 class="modal-title" id="paper-modal-1-title">Convergent genomic evolution of human gut bacteria along an industrialization gradient.</h2>
+    <div class="modal-authors">Rühlemann M, Ma Y, Szánthó LL, Waschina S, Moitinho-Silva L, Mews LC, Faus-Camarena J, Jebens H, et al.</div>
+    <div class="modal-meta">Cell · 2026 Nov 02</div>
+
+    <div class="detail-list">
+      <div class="detail-row"><div class="detail-label">やったこと</div><div>異なる生活様式の宿主由来の腸内細菌分離株ゲノムを比較した。</div></div>
+      <div class="detail-row"><div class="detail-label">主な結果</div><div>産業化集団由来株でプロテオーム拡大、パンゲノム流動性増加、機能的収斂が見られた。</div></div>
+      <div class="detail-row"><div class="detail-label">新規性</div><div>産業化に伴う細菌ゲノムの収斂的適応。</div></div>
+      <div class="detail-row"><div class="detail-label">方法・データ</div><div>地域・生活様式・菌種を横断した分離株ゲノム、MAG比較、HGTと変異解析。</div></div>
+      <div class="detail-row caution"><div class="detail-label">注意点</div><div>宿主背景・食事などの交絡やサンプリング差を完全には除外できない。</div></div>
+    </div>
+
+    <div class="modal-footer">
+      <a class="original-link" href="https://pubmed.ncbi.nlm.nih.gov/42971204/" target="_blank" rel="noopener">Original paper ↗</a>
+      <span class="doi">DOI: 10.1016/j.cell.2026.10.014</span>
+    </div>
+  </section>
+</div>
+
+<div class="modal" id="paper-modal-2" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="paper-modal-2-title">
+    <button class="modal-close" type="button" data-close-modal aria-label="閉じる">×</button>
+    <div class="modal-number">02</div>
+    <h2 class="modal-title" id="paper-modal-2-title">Tracing the spread of Celtic languages using ancient genomics.</h2>
+    <div class="modal-authors">McColl H, Kroonen G, Pinotti T, Barrie W, Koch J, Ling J, Demoule JP, Kristiansen K, et al.</div>
+    <div class="modal-meta">Nature · 2026 Nov 04</div>
+
+    <div class="detail-list">
+      <div class="detail-row"><div class="detail-label">やったこと</div><div>青銅器・鉄器時代のヨーロッパ古代ゲノムを解析し言語拡散モデルを検討。</div></div>
+      <div class="detail-row"><div class="detail-label">主な結果</div><div>東中欧からの後期青銅器時代の西方拡大が最も節約的な説明とされた。</div></div>
+      <div class="detail-row"><div class="detail-label">新規性</div><div>ケルト語拡散に関係する人口史の再構築。</div></div>
+      <div class="detail-row"><div class="detail-label">方法・データ</div><div>古代人4587人のゲノムワイド解析と考古学的年代の照合。</div></div>
+      <div class="detail-row caution"><div class="detail-label">注意点</div><div>人口移動と言語交替の対応は間接推論。</div></div>
+    </div>
+
+    <div class="modal-footer">
+      <a class="original-link" href="https://pubmed.ncbi.nlm.nih.gov/42983081/" target="_blank" rel="noopener">Original paper ↗</a>
+      <span class="doi">DOI: 10.1038/s41586-026-11198-9</span>
+    </div>
+  </section>
+</div>
+
+<div class="modal" id="paper-modal-3" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="paper-modal-3-title">
+    <button class="modal-close" type="button" data-close-modal aria-label="閉じる">×</button>
+    <div class="modal-number">03</div>
+    <h2 class="modal-title" id="paper-modal-3-title">Subsistence transition preceded population turnover in the eastern Colombian Andes.</h2>
+    <div class="modal-authors">Sirak K, Delgado M, Triana Vega AV, Rivas S, Argüello P, Boada AM, Rivera-Sandoval J, Peña G, et al.</div>
+    <div class="modal-meta">Cell · 2026 Nov 02</div>
+
+    <div class="detail-list">
+      <div class="detail-row"><div class="detail-label">やったこと</div><div>コロンビア東部アンデスの古代人を時系列で解析。</div></div>
+      <div class="detail-row"><div class="detail-label">主な結果</div><div>トウモロコシ消費の兆候が人口の大きな遺伝的交替に先行した。</div></div>
+      <div class="detail-row"><div class="detail-label">新規性</div><div>生業転換と人口交替の時間的分離。</div></div>
+      <div class="detail-row"><div class="detail-label">方法・データ</div><div>7000年以上にわたる212人のゲノム、同位体・考古学情報。</div></div>
+      <div class="detail-row caution"><div class="detail-label">注意点</div><div>特定地域の歴史であり文化変化の原因は直接証明できない。</div></div>
+    </div>
+
+    <div class="modal-footer">
+      <a class="original-link" href="https://pubmed.ncbi.nlm.nih.gov/42971205/" target="_blank" rel="noopener">Original paper ↗</a>
+      <span class="doi">DOI: 10.1016/j.cell.2026.10.010</span>
+    </div>
+  </section>
+</div>
+
+<div class="modal" id="paper-modal-4" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="paper-modal-4-title">
+    <button class="modal-close" type="button" data-close-modal aria-label="閉じる">×</button>
+    <div class="modal-number">04</div>
+    <h2 class="modal-title" id="paper-modal-4-title">Extracellular polymeric substances drive Curvibacter host adaptation and cospeciation with Hydra.</h2>
+    <div class="modal-authors">Becker L, Fürbach L, Minten T, Bathia J, Karbach M, Foret S, Winterfeldt NM, Usadel B, et al.</div>
+    <div class="modal-meta">Proceedings of the National Academy of Sciences of the United States of America · 2026 Nov 10</div>
+
+    <div class="detail-list">
+      <div class="detail-row"><div class="detail-label">やったこと</div><div>ヒドラ共生Curvibacterの系統、ゲノム、定着能を比較。</div></div>
+      <div class="detail-row"><div class="detail-label">主な結果</div><div>宿主ごとの系統一致と、共生株特異的EPSオペロンの定着への寄与を確認。</div></div>
+      <div class="detail-row"><div class="detail-label">新規性</div><div>宿主特異的共生を支えるEPS機構。</div></div>
+      <div class="detail-row"><div class="detail-label">方法・データ</div><div>比較ゲノム、無菌ヒドラ再定着、EPSオペロン機能試験。</div></div>
+      <div class="detail-row caution"><div class="detail-label">注意点</div><div>共種分化と共適応の因果の全体像はなお限定的。</div></div>
+    </div>
+
+    <div class="modal-footer">
+      <a class="original-link" href="https://pubmed.ncbi.nlm.nih.gov/42975937/" target="_blank" rel="noopener">Original paper ↗</a>
+      <span class="doi">DOI: 10.1073/pnas.2630695123</span>
+    </div>
+  </section>
+</div>
+
+<div class="modal" id="paper-modal-5" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="paper-modal-5-title">
+    <button class="modal-close" type="button" data-close-modal aria-label="閉じる">×</button>
+    <div class="modal-number">05</div>
+    <h2 class="modal-title" id="paper-modal-5-title">Metabolic specialization in the gut microbiome of aquatic mammalian herbivores.</h2>
+    <div class="modal-authors">Persinoti GF, Martins MP, Silva CBC, Streit RSA, Paixão DAA, Martins GH, Higasi PMR, Braatz GM, et al.</div>
+    <div class="modal-meta">Nature microbiology · 2026 Nov 02</div>
+
+    <div class="detail-list">
+      <div class="detail-row"><div class="detail-label">やったこと</div><div>淡水・海水マナティーの腸内細菌とウイルスを網羅的に調べた。</div></div>
+      <div class="detail-row"><div class="detail-label">主な結果</div><div>多様な植物細胞壁分解機構と特定Bacillotaの特殊な糖利用経路を同定。</div></div>
+      <div class="detail-row"><div class="detail-label">新規性</div><div>水生草食哺乳類の微生物代謝特化の実体。</div></div>
+      <div class="detail-row"><div class="detail-label">方法・データ</div><div>47個体、1215非冗長MAG、ウイローム、生化学・構造解析。</div></div>
+      <div class="detail-row caution"><div class="detail-label">注意点</div><div>ゲノムの機能予測すべてが実際の腸内活性を示すわけではない。</div></div>
+    </div>
+
+    <div class="modal-footer">
+      <a class="original-link" href="https://pubmed.ncbi.nlm.nih.gov/42972085/" target="_blank" rel="noopener">Original paper ↗</a>
+      <span class="doi">DOI: 10.1038/s41564-026-02520-2</span>
+    </div>
+  </section>
+</div>
+
+<div class="modal" id="paper-modal-6" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="paper-modal-6-title">
+    <button class="modal-close" type="button" data-close-modal aria-label="閉じる">×</button>
+    <div class="modal-number">06</div>
+    <h2 class="modal-title" id="paper-modal-6-title">DoriC 14.0: an updated database of prokaryotic replication origins with significantly expanded plasmid oriV annotations.</h2>
+    <div class="modal-authors">Li Y, Dong M, Geng Y, Luo H, Gao F</div>
+    <div class="modal-meta">Nucleic acids research · 2026 Nov 06</div>
+
+    <div class="detail-list">
+      <div class="detail-row"><div class="detail-label">やったこと</div><div>DoriCを更新し染色体・プラスミドの複製起点を収録。</div></div>
+      <div class="detail-row"><div class="detail-label">主な結果</div><div>530178件の起点記録、うちプラスミド96118件を公開。</div></div>
+      <div class="detail-row"><div class="detail-label">新規性</div><div>プラスミドoriVの大規模・追跡可能な注釈資源。</div></div>
+      <div class="detail-row"><div class="detail-label">方法・データ</div><div>OriV-Finder系パイプライン、RNA II、複製関連タンパク質、配列ネットワーク。</div></div>
+      <div class="detail-row caution"><div class="detail-label">注意点</div><div>大半が計算予測で実験検証済み起点と区別が必要。</div></div>
+    </div>
+
+    <div class="modal-footer">
+      <a class="original-link" href="https://pubmed.ncbi.nlm.nih.gov/42988742/" target="_blank" rel="noopener">Original paper ↗</a>
+      <span class="doi">DOI: 10.1093/nar/gkag1134</span>
+    </div>
+  </section>
+</div>
+
+<div class="modal" id="paper-modal-7" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="paper-modal-7-title">
+    <button class="modal-close" type="button" data-close-modal aria-label="閉じる">×</button>
+    <div class="modal-number">07</div>
+    <h2 class="modal-title" id="paper-modal-7-title">Tracing the spread of Germanic languages using ancient genomics.</h2>
+    <div class="modal-authors">McColl H, Kroonen G, Moreno-Mayar JV, Seersholm FV, Scorrano G, Pinotti T, Vimala T, Sindbæk SM, et al.</div>
+    <div class="modal-meta">Nature · 2026 Oct 28</div>
+
+    <div class="detail-list">
+      <div class="detail-row"><div class="detail-label">やったこと</div><div>スカンディナヴィア周辺の古代人の祖先構成と移動を再構築。</div></div>
+      <div class="detail-row"><div class="detail-label">主な結果</div><div>約4000年前の流入と後の南下・北方への再移動を推定。</div></div>
+      <div class="detail-row"><div class="detail-label">新規性</div><div>ゲルマン語形成に関連する複雑な人口移動史。</div></div>
+      <div class="detail-row"><div class="detail-label">方法・データ</div><div>新規712人と既報4009人の古代ゲノム比較。</div></div>
+      <div class="detail-row caution"><div class="detail-label">注意点</div><div>遺伝的移動と特定言語の拡散は一対一に対応しない。</div></div>
+    </div>
+
+    <div class="modal-footer">
+      <a class="original-link" href="https://pubmed.ncbi.nlm.nih.gov/42983076/" target="_blank" rel="noopener">Original paper ↗</a>
+      <span class="doi">DOI: 10.1038/s41586-025-09064-1</span>
+    </div>
+  </section>
+</div>
+
+<div class="modal" id="paper-modal-8" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="paper-modal-8-title">
+    <button class="modal-close" type="button" data-close-modal aria-label="閉じる">×</button>
+    <div class="modal-number">08</div>
+    <h2 class="modal-title" id="paper-modal-8-title">Industrialization drives convergent microbiome and host physiological shifts in the human metaorganism.</h2>
+    <div class="modal-authors">Poyet M, Rühlemann M, Schaan AP, Ma Y, Moitinho-Silva L, Wacker EM, Jebens H, Patel L, et al.</div>
+    <div class="modal-meta">Cell · 2026 Nov 02</div>
+
+    <div class="detail-list">
+      <div class="detail-row"><div class="detail-label">やったこと</div><div>世界各地の集団で腸内細菌叢、免疫、生活様式を統合解析。</div></div>
+      <div class="detail-row"><div class="detail-label">主な結果</div><div>産業化と多様性低下、群集均質化、IgA変化、予測モデルの移植性低下が関連。</div></div>
+      <div class="detail-row"><div class="detail-label">新規性</div><div>産業化に伴う宿主・微生物の協調的再編。</div></div>
+      <div class="detail-row"><div class="detail-label">方法・データ</div><div>Global Microbiome Conservancy、メタゲノム、IgA-seq、宿主遺伝子型、便マーカー。</div></div>
+      <div class="detail-row caution"><div class="detail-label">注意点</div><div>交絡と横断設計の制約、疾病予測の一般化には追加検証が必要。</div></div>
+    </div>
+
+    <div class="modal-footer">
+      <a class="original-link" href="https://pubmed.ncbi.nlm.nih.gov/42971202/" target="_blank" rel="noopener">Original paper ↗</a>
+      <span class="doi">DOI: 10.1016/j.cell.2026.10.016</span>
+    </div>
+  </section>
+</div>
+
+<div class="modal" id="paper-modal-9" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="paper-modal-9-title">
+    <button class="modal-close" type="button" data-close-modal aria-label="閉じる">×</button>
+    <div class="modal-number">09</div>
+    <h2 class="modal-title" id="paper-modal-9-title">Microbiome-derived proline dipeptides underpin improved nitrogen utilization efficiency in dairy cattle.</h2>
+    <div class="modal-authors">Qi W, Chen X, Guo H, Zhu S, Zhou Z, Xu L, Yan Q, Gu FF, et al.</div>
+    <div class="modal-meta">Nature communications · 2026 Nov 06</div>
+
+    <div class="detail-list">
+      <div class="detail-row"><div class="detail-label">やったこと</div><div>乳牛のルーメンでペプチド代謝と窒素利用効率を解析。</div></div>
+      <div class="detail-row"><div class="detail-label">主な結果</div><div>プロリン含有ジペプチドと高い窒素利用効率の関連、S15.001の基質分解能を確認。</div></div>
+      <div class="detail-row"><div class="detail-label">新規性</div><div>微生物ペプチド代謝を介する窒素利用の新しい軸。</div></div>
+      <div class="detail-row"><div class="detail-label">方法・データ</div><div>乳牛30頭、メタゲノム、同位体標識メタボロミクス、転写解析、異種発現。</div></div>
+      <div class="detail-row caution"><div class="detail-label">注意点</div><div>相関から生体内での因果的な乳量改善までは示せない。</div></div>
+    </div>
+
+    <div class="modal-footer">
+      <a class="original-link" href="https://pubmed.ncbi.nlm.nih.gov/42995195/" target="_blank" rel="noopener">Original paper ↗</a>
+      <span class="doi">DOI: 10.1038/s41467-026-78994-9</span>
+    </div>
+  </section>
+</div>
+
+<div class="modal" id="paper-modal-10" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="paper-modal-10-title">
+    <button class="modal-close" type="button" data-close-modal aria-label="閉じる">×</button>
+    <div class="modal-number">10</div>
+    <h2 class="modal-title" id="paper-modal-10-title">Ancient DNA charts spread of Celtic and Germanic languages.</h2>
+    <div class="modal-authors">Bundell S, Petrić Howe N</div>
+    <div class="modal-meta">Nature · 2026 Nov 04</div>
+
+    <div class="detail-list">
+      <div class="detail-row"><div class="detail-label">やったこと</div><div>ケルト語・ゲルマン語拡散と古代DNAを扱う記事と題名から分かる。</div></div>
+      <div class="detail-row"><div class="detail-label">主な結果</div><div>Abstract未収録のため結果を確認できない。</div></div>
+      <div class="detail-row"><div class="detail-label">新規性</div><div>新規性の主張は確認できない。</div></div>
+      <div class="detail-row"><div class="detail-label">方法・データ</div><div>Abstractが空欄で手法・データは不明。</div></div>
+      <div class="detail-row caution"><div class="detail-label">注意点</div><div>原著研究か解説記事かを含め本文確認が必要。</div></div>
+    </div>
+
+    <div class="modal-footer">
+      <a class="original-link" href="https://pubmed.ncbi.nlm.nih.gov/42988965/" target="_blank" rel="noopener">Original paper ↗</a>
+      <span class="doi">DOI: 10.1038/d41586-026-03582-2</span>
+    </div>
+  </section>
+</div>
+
+<div class="modal" id="paper-modal-11" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="paper-modal-11-title">
+    <button class="modal-close" type="button" data-close-modal aria-label="閉じる">×</button>
+    <div class="modal-number">11</div>
+    <h2 class="modal-title" id="paper-modal-11-title">Pantoea agglomerans T6SS effectors reside in hotspots with combinatorial antibacterial and antiviral arsenals.</h2>
+    <div class="modal-authors">Leo K, Fridman CM, Haldar A, Mahata T, Qimron U, Bosis E, Salomon D</div>
+    <div class="modal-meta">mSystems · 2026 Nov 02</div>
+
+    <div class="detail-list">
+      <div class="detail-row"><div class="detail-label">やったこと</div><div>Pantoea agglomeransのT6SSエフェクターと可変ゲノム領域を解析。</div></div>
+      <div class="detail-row"><div class="detail-label">主な結果</div><div>染色体・メガプラスミドのhotspotに攻撃・防御遺伝子が組み合わさりJunoを発見。</div></div>
+      <div class="detail-row"><div class="detail-label">新規性</div><div>細菌の攻防を統合するgenomic armoriesという概念。</div></div>
+      <div class="detail-row"><div class="detail-label">方法・データ</div><div>プロテオミクス、パンゲノム比較、未注釈遺伝子の機能検証。</div></div>
+      <div class="detail-row caution"><div class="detail-label">注意点</div><div>他菌種での一般性とhotspot共局在の進化的因果は未確定。</div></div>
+    </div>
+
+    <div class="modal-footer">
+      <a class="original-link" href="https://pubmed.ncbi.nlm.nih.gov/42969758/" target="_blank" rel="noopener">Original paper ↗</a>
+      <span class="doi">DOI: 10.1128/msystems.01153-26</span>
+    </div>
+  </section>
+</div>
+
+<div class="modal" id="paper-modal-12" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="paper-modal-12-title">
+    <button class="modal-close" type="button" data-close-modal aria-label="閉じる">×</button>
+    <div class="modal-number">12</div>
+    <h2 class="modal-title" id="paper-modal-12-title">Rifamycin use and gut microbial antibiotic resistance genes in cirrhosis: Results from a double-blind, placebo-controlled clinical trial.</h2>
+    <div class="modal-authors">Bajaj JS, Davis BC, Puri P, Gallagher ML, Fagan A, Obolewicz H, Mousel T, Boja SH, et al.</div>
+    <div class="modal-meta">Gut microbes · 2026 Dec 31</div>
+
+    <div class="detail-list">
+      <div class="detail-row"><div class="detail-label">やったこと</div><div>肝硬変患者でリファマイシン投与前後の腸内ARGを比較。</div></div>
+      <div class="detail-row"><div class="detail-label">主な結果</div><div>プラセボと比べFDR補正後の有意なARG増加を認めなかった。</div></div>
+      <div class="detail-row"><div class="detail-label">新規性</div><div>RiVMの腸内耐性遺伝子への影響の臨床的検証。</div></div>
+      <div class="detail-row"><div class="detail-label">方法・データ</div><div>30人二重盲検RCT、ショットガンメタゲノム、CARD、統計・機械学習。</div></div>
+      <div class="detail-row caution"><div class="detail-label">注意点</div><div>有意差なしは無影響の証明ではなく小標本・短期の限界がある。</div></div>
+    </div>
+
+    <div class="modal-footer">
+      <a class="original-link" href="https://pubmed.ncbi.nlm.nih.gov/42975318/" target="_blank" rel="noopener">Original paper ↗</a>
+      <span class="doi">DOI: 10.1080/19490976.2026.2757339</span>
+    </div>
+  </section>
+</div>
+
+<div class="modal" id="paper-modal-13" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="paper-modal-13-title">
+    <button class="modal-close" type="button" data-close-modal aria-label="閉じる">×</button>
+    <div class="modal-number">13</div>
+    <h2 class="modal-title" id="paper-modal-13-title">Scaffold-level validation is needed for phage-host inference from metagenome-assembled genomes.</h2>
+    <div class="modal-authors">Yuan L, Anantharaman K, Ma B, Camargo AP, Chen L</div>
+    <div class="modal-meta">The ISME journal · 2026 Nov 04</div>
+
+    <div class="detail-list">
+      <div class="detail-row"><div class="detail-label">やったこと</div><div>MAGに基づくファージ宿主推定でscaffold混入を検討。</div></div>
+      <div class="detail-row"><div class="detail-label">主な結果</div><div>TNF類似の非宿主ファージ配列が混入してもcompleteness/contaminationが変わりにくい。</div></div>
+      <div class="detail-row"><div class="detail-label">新規性</div><div>scaffoldレベルの構造・分類検証の必要性。</div></div>
+      <div class="detail-row"><div class="detail-label">方法・データ</div><div>TNF解析、既知ファージ宿主対、制御シミュレーション。</div></div>
+      <div class="detail-row caution"><div class="detail-label">注意点</div><div>どの程度の実データで問題が起こるかはAbstractから不明。</div></div>
+    </div>
+
+    <div class="modal-footer">
+      <a class="original-link" href="https://pubmed.ncbi.nlm.nih.gov/42980350/" target="_blank" rel="noopener">Original paper ↗</a>
+      <span class="doi">DOI: 10.1093/ismejo/wrag276</span>
+    </div>
+  </section>
+</div>
+
+<div class="modal" id="paper-modal-14" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="paper-modal-14-title">
+    <button class="modal-close" type="button" data-close-modal aria-label="閉じる">×</button>
+    <div class="modal-number">14</div>
+    <h2 class="modal-title" id="paper-modal-14-title">Resistance indicators in sewage microbiota mirror clinical antibiotic use with temporal lag linked to host.</h2>
+    <div class="modal-authors">Brown CL, Rumi MA, McDaniel L, Maile-Moskowitz A, Sein J, Nguyen L, Choi M, Hindi F, et al.</div>
+    <div class="modal-meta">Nature communications · 2026 Oct 09</div>
+
+    <div class="detail-list">
+      <div class="detail-row"><div class="detail-label">やったこと</div><div>抗菌薬処方と下水メタゲノムの時系列を照合。</div></div>
+      <div class="detail-row"><div class="detail-label">主な結果</div><div>腸内細菌科は使用量と近接して連動しPseudomonadaceaeは1–3か月遅れる。</div></div>
+      <div class="detail-row"><div class="detail-label">新規性</div><div>下水耐性監視に宿主生態と遅延を組み込む視点。</div></div>
+      <div class="detail-row"><div class="detail-label">方法・データ</div><div>5年の処方データ、1年間週2回の単一処理場メタゲノム、MAG統計モデル。</div></div>
+      <div class="detail-row caution"><div class="detail-label">注意点</div><div>相関であり時間差の原因や他地域への一般化は未検証。</div></div>
+    </div>
+
+    <div class="modal-footer">
+      <a class="original-link" href="https://pubmed.ncbi.nlm.nih.gov/42988813/" target="_blank" rel="noopener">Original paper ↗</a>
+      <span class="doi">DOI: 10.1038/s41467-026-78142-3</span>
+    </div>
+  </section>
+</div>
+
+<div class="modal" id="paper-modal-15" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="paper-modal-15-title">
+    <button class="modal-close" type="button" data-close-modal aria-label="閉じる">×</button>
+    <div class="modal-number">15</div>
+    <h2 class="modal-title" id="paper-modal-15-title">Substantial genetic potential for deep-sea chemoautotrophy extends beyond nitrifiers.</h2>
+    <div class="modal-authors">Salcedo RSR, Jaffe AL, Dekas AE</div>
+    <div class="modal-meta">mSystems · 2026 Nov 03</div>
+
+    <div class="detail-list">
+      <div class="detail-row"><div class="detail-label">やったこと</div><div>北東太平洋深海のメタゲノムで無機炭素固定ポテンシャルを調査。</div></div>
+      <div class="detail-row"><div class="detail-label">主な結果</div><div>11–26%の群集に固定関連マーカー、128の候補MAG、CO酸化など多様な代謝を確認。</div></div>
+      <div class="detail-row"><div class="detail-label">新規性</div><div>深海化学合成独立栄養の系統・代謝的な広がり。</div></div>
+      <div class="detail-row"><div class="detail-label">方法・データ</div><div>28メタゲノム、150–4000m、遺伝子・MAG解析、13門。</div></div>
+      <div class="detail-row caution"><div class="detail-label">注意点</div><div>経路マーカーと実際の独立栄養・炭素固定活性は同義でない。</div></div>
+    </div>
+
+    <div class="modal-footer">
+      <a class="original-link" href="https://pubmed.ncbi.nlm.nih.gov/42975132/" target="_blank" rel="noopener">Original paper ↗</a>
+      <span class="doi">DOI: 10.1128/msystems.00878-26</span>
+    </div>
+  </section>
+</div>
+
+<div class="modal" id="paper-modal-16" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="paper-modal-16-title">
+    <button class="modal-close" type="button" data-close-modal aria-label="閉じる">×</button>
+    <div class="modal-number">16</div>
+    <h2 class="modal-title" id="paper-modal-16-title">RNA viruses can exploit self-cleaving ribozymes for translation initiation.</h2>
+    <div class="modal-authors">López-Galiano MJ, Rueda O, Chiba S, Forgia M, Navarro B, Cervera A, Babaian A, Di Serio F, et al.</div>
+    <div class="modal-meta">Nucleic acids research · 2026 Oct 24</div>
+
+    <div class="detail-list">
+      <div class="detail-row"><div class="detail-label">やったこと</div><div>菌類・植物RNAウイルスのUTRリボザイムを探索・実験。</div></div>
+      <div class="detail-row"><div class="detail-label">主な結果</div><div>自己切断が翻訳開始に必要、複数モチーフがcap非依存翻訳を促進。</div></div>
+      <div class="detail-row"><div class="detail-label">新規性</div><div>リボザイムの複製以外への機能的転用。</div></div>
+      <div class="detail-row"><div class="detail-label">方法・データ</div><div>配列探索、自己切断試験、菌類・植物での翻訳アッセイ。</div></div>
+      <div class="detail-row caution"><div class="detail-label">注意点</div><div>検証した系以外の全ウイルスで同じ機能とは限らない。</div></div>
+    </div>
+
+    <div class="modal-footer">
+      <a class="original-link" href="https://pubmed.ncbi.nlm.nih.gov/42969154/" target="_blank" rel="noopener">Original paper ↗</a>
+      <span class="doi">DOI: 10.1093/nar/gkag1106</span>
+    </div>
+  </section>
+</div>
+
+<div class="modal" id="paper-modal-17" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="paper-modal-17-title">
+    <button class="modal-close" type="button" data-close-modal aria-label="閉じる">×</button>
+    <div class="modal-number">17</div>
+    <h2 class="modal-title" id="paper-modal-17-title">Real-time visualization of G2L4 reverse transcriptase in DNA repair via microhomology-mediated end joining.</h2>
+    <div class="modal-authors">Zhang P, Guo M, Zhang YJ, Lambowitz AM, Lin YC</div>
+    <div class="modal-meta">Nature communications · 2026 Oct 06</div>
+
+    <div class="detail-list">
+      <div class="detail-row"><div class="detail-label">やったこと</div><div>G2L4 RTとDNAリガーゼによるDNA二本鎖切断修復を観察。</div></div>
+      <div class="detail-row"><div class="detail-label">主な結果</div><div>短い相同性の安定化、ギャップ充填、Mn依存末端転移、ライゲーションを可視化。</div></div>
+      <div class="detail-row"><div class="detail-label">新規性</div><div>細菌RTによるMMEJの動的機構。</div></div>
+      <div class="detail-row"><div class="detail-label">方法・データ</div><div>高速AFM、dNTP反応、Mn2+条件、T4 DNAリガーゼ。</div></div>
+      <div class="detail-row caution"><div class="detail-label">注意点</div><div>再構成系であり細胞内での寄与の程度は未確定。</div></div>
+    </div>
+
+    <div class="modal-footer">
+      <a class="original-link" href="https://pubmed.ncbi.nlm.nih.gov/42971991/" target="_blank" rel="noopener">Original paper ↗</a>
+      <span class="doi">DOI: 10.1038/s41467-026-78460-6</span>
+    </div>
+  </section>
+</div>
+
+<div class="modal" id="paper-modal-18" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="paper-modal-18-title">
+    <button class="modal-close" type="button" data-close-modal aria-label="閉じる">×</button>
+    <div class="modal-number">18</div>
+    <h2 class="modal-title" id="paper-modal-18-title">Physiological, behavioral, and genetic factors that shape interactions in the plant growth-promoting maize rhizosphere synthetic community.</h2>
+    <div class="modal-authors">Paulsen AA, Roghair Stroud MN, Halverson LJ</div>
+    <div class="modal-meta">mSystems · 2026 Nov 06</div>
+
+    <div class="detail-list">
+      <div class="detail-row"><div class="detail-label">やったこと</div><div>トウモロコシ根圏の31株合成群集MARScを構築・解析。</div></div>
+      <div class="detail-row"><div class="detail-label">主な結果</div><div>栄養条件が相互作用を左右し、バイオフィルム遺伝子は根圏量と関連、植物乾燥重量が最大40–50%増。</div></div>
+      <div class="detail-row"><div class="detail-label">新規性</div><div>根圏群集の相互作用を操作可能なモデル。</div></div>
+      <div class="detail-row"><div class="detail-label">方法・データ</div><div>31株ゲノム、共培養・バイオフィルム試験、根への接種。</div></div>
+      <div class="detail-row caution"><div class="detail-label">注意点</div><div>増収の再現性と機構、圃場での一般化は要検証。</div></div>
+    </div>
+
+    <div class="modal-footer">
+      <a class="original-link" href="https://pubmed.ncbi.nlm.nih.gov/42992937/" target="_blank" rel="noopener">Original paper ↗</a>
+      <span class="doi">DOI: 10.1128/msystems.00888-26</span>
+    </div>
+  </section>
+</div>
+
+<div class="modal" id="paper-modal-19" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="paper-modal-19-title">
+    <button class="modal-close" type="button" data-close-modal aria-label="閉じる">×</button>
+    <div class="modal-number">19</div>
+    <h2 class="modal-title" id="paper-modal-19-title">Harnessing phage defense systems to develop a Burkholderia bacterial host.</h2>
+    <div class="modal-authors">Heard SC, Ptacek GM, Kadjo AE, Eustáquio AS</div>
+    <div class="modal-meta">Applied and environmental microbiology · 2026 Nov 05</div>
+
+    <div class="detail-list">
+      <div class="detail-row"><div class="detail-label">やったこと</div><div>Burkholderia株の制限修飾系・Kiwaと形質転換効率を調査。</div></div>
+      <div class="detail-row"><div class="detail-label">主な結果</div><div>制限酵素3遺伝子削除で約7倍、条件最適化でさらに約40倍、事前メチル化が削除株を上回る。</div></div>
+      <div class="detail-row"><div class="detail-label">新規性</div><div>宿主防御を考慮した遺伝子導入の改善。</div></div>
+      <div class="detail-row"><div class="detail-label">方法・データ</div><div>遺伝子欠失、DNA事前メチル化、エレクトロポレーション最適化。</div></div>
+      <div class="detail-row caution"><div class="detail-label">注意点</div><div>特定菌株の結果で他菌種・他防御系に一般化できない。</div></div>
+    </div>
+
+    <div class="modal-footer">
+      <a class="original-link" href="https://pubmed.ncbi.nlm.nih.gov/42986113/" target="_blank" rel="noopener">Original paper ↗</a>
+      <span class="doi">DOI: 10.1128/aem.01706-26</span>
+    </div>
+  </section>
+</div>
+
+<div class="modal" id="paper-modal-20" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="paper-modal-20-title">
+    <button class="modal-close" type="button" data-close-modal aria-label="閉じる">×</button>
+    <div class="modal-number">20</div>
+    <h2 class="modal-title" id="paper-modal-20-title">Antibiotic class shapes O-antigen-dependent phage outcomes in a clinical Pseudomonas aeruginosa isolate.</h2>
+    <div class="modal-authors">Yang Y, Wu Y, Chen Z, Li N, Li D, Zhu B, Jin W, Wang K, et al.</div>
+    <div class="modal-meta">Applied and environmental microbiology · 2026 Nov 04</div>
+
+    <div class="detail-list">
+      <div class="detail-row"><div class="detail-label">やったこと</div><div>緑膿菌に対するファージと3抗菌薬の併用を比較。</div></div>
+      <div class="detail-row"><div class="detail-label">主な結果</div><div>抗菌薬ごとにファージ収量と耐性変異が異なり、収量低下と幼虫生存改善が両立。</div></div>
+      <div class="detail-row"><div class="detail-label">新規性</div><div>併用療法の評価指標が一致しないこと。</div></div>
+      <div class="detail-row"><div class="detail-label">方法・データ</div><div>培養、全ゲノム配列、Galleria mellonella感染モデル。</div></div>
+      <div class="detail-row caution"><div class="detail-label">注意点</div><div>臨床への外挿には菌株・ファージ・抗菌薬の追加検証が必要。</div></div>
+    </div>
+
+    <div class="modal-footer">
+      <a class="original-link" href="https://pubmed.ncbi.nlm.nih.gov/42980339/" target="_blank" rel="noopener">Original paper ↗</a>
+      <span class="doi">DOI: 10.1128/aem.01675-26</span>
+    </div>
+  </section>
+</div>
+
+<div class="modal" id="paper-modal-21" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="paper-modal-21-title">
+    <button class="modal-close" type="button" data-close-modal aria-label="閉じる">×</button>
+    <div class="modal-number">21</div>
+    <h2 class="modal-title" id="paper-modal-21-title">The Promise and Limitations of Metabolic Trait Prediction Across Diverse Bacteria.</h2>
+    <div class="modal-authors">Gralka M</div>
+    <div class="modal-meta">Environmental microbiology · 2026 Nov</div>
+
+    <div class="detail-list">
+      <div class="detail-row"><div class="detail-label">やったこと</div><div>海洋細菌でゲノム由来の基質利用予測と実測増殖を比較。</div></div>
+      <div class="detail-row"><div class="detail-label">主な結果</div><div>単純基質では精度が低く偽陽性が多い一方、多糖利用は比較的予測良好。</div></div>
+      <div class="detail-row"><div class="detail-label">新規性</div><div>代謝形質予測の適用限界と形質依存性。</div></div>
+      <div class="detail-row"><div class="detail-label">方法・データ</div><div>186海洋細菌、4予測ツール、高スループット増殖表現型。</div></div>
+      <div class="detail-row caution"><div class="detail-label">注意点</div><div>海洋細菌・測定培養条件・選択ツールへの依存がある。</div></div>
+    </div>
+
+    <div class="modal-footer">
+      <a class="original-link" href="https://pubmed.ncbi.nlm.nih.gov/42980521/" target="_blank" rel="noopener">Original paper ↗</a>
+      <span class="doi">DOI: 10.1111/1462-2920.70478</span>
+    </div>
+  </section>
+</div>
+
+<div class="modal" id="paper-modal-22" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="paper-modal-22-title">
+    <button class="modal-close" type="button" data-close-modal aria-label="閉じる">×</button>
+    <div class="modal-number">22</div>
+    <h2 class="modal-title" id="paper-modal-22-title">Gut microbial and metabolic biomarkers for early-onset colorectal cancer.</h2>
+    <div class="modal-authors">Nofinska BA, Mizutani S, Salim F, Sunakawa H, Obana N, Shiba S, Shinmura K, Kotani D, et al.</div>
+    <div class="modal-meta">Microbiome · 2026 Aug 08</div>
+
+    <div class="detail-list">
+      <div class="detail-row"><div class="detail-label">やったこと</div><div>日本の大腸がん患者と健常者の腸内細菌・代謝物を比較。</div></div>
+      <div class="detail-row"><div class="detail-label">主な結果</div><div>若年発症群で特定毒力遺伝子や代謝物の特徴、菌種分類器の外部コホート性能を報告。</div></div>
+      <div class="detail-row"><div class="detail-label">新規性</div><div>若年発症大腸がん特有の微生物・代謝指標。</div></div>
+      <div class="detail-row"><div class="detail-label">方法・データ</div><div>510人登録、マッチ後324試料、メタゲノム・メタボローム・qPCR、中国コホート。</div></div>
+      <div class="detail-row caution"><div class="detail-label">注意点</div><div>横断研究であり発症前予測や原因性は証明されていない。</div></div>
+    </div>
+
+    <div class="modal-footer">
+      <a class="original-link" href="https://pubmed.ncbi.nlm.nih.gov/42983896/" target="_blank" rel="noopener">Original paper ↗</a>
+      <span class="doi">DOI: 10.1186/s40168-026-02472-z</span>
+    </div>
+  </section>
+</div>
+
+<div class="modal" id="paper-modal-23" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="paper-modal-23-title">
+    <button class="modal-close" type="button" data-close-modal aria-label="閉じる">×</button>
+    <div class="modal-number">23</div>
+    <h2 class="modal-title" id="paper-modal-23-title">Genome-resolved taxonomy, global distribution, and EPS potential of Zoogloea, the canonical floc-former in wastewater treatment systems.</h2>
+    <div class="modal-authors">Vestergaard SZ, Liu L, Dueholm MKD, Nielsen PH</div>
+    <div class="modal-meta">mSystems · 2026 Nov 02</div>
+
+    <div class="detail-list">
+      <div class="detail-row"><div class="detail-label">やったこと</div><div>活性汚泥のZoogloea分類とEPS遺伝子群の分布を解析。</div></div>
+      <div class="detail-row"><div class="detail-label">主な結果</div><div>22000超の高品質ゲノムから47件を同定しEPSクラスターが複数属に広がると判明。</div></div>
+      <div class="detail-row"><div class="detail-label">新規性</div><div>系統に基づくフロック形成菌の再定義と遺伝子分布。</div></div>
+      <div class="detail-row"><div class="detail-label">方法・データ</div><div>MiDAS global genome catalog、GTDB、系統・シンテニー解析。</div></div>
+      <div class="detail-row caution"><div class="detail-label">注意点</div><div>遺伝子保有と多糖産生・実際の凝集能力は同一ではない。</div></div>
+    </div>
+
+    <div class="modal-footer">
+      <a class="original-link" href="https://pubmed.ncbi.nlm.nih.gov/42969359/" target="_blank" rel="noopener">Original paper ↗</a>
+      <span class="doi">DOI: 10.1128/msystems.01024-26</span>
+    </div>
+  </section>
+</div>
+
+<div class="modal" id="paper-modal-24" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="paper-modal-24-title">
+    <button class="modal-close" type="button" data-close-modal aria-label="閉じる">×</button>
+    <div class="modal-number">24</div>
+    <h2 class="modal-title" id="paper-modal-24-title">Structure of the Chimalliviridae bacteriophage Goslar reveals host recognition and infection machinery.</h2>
+    <div class="modal-authors">Basu D, Gu Y, Li YX, Forman T, Ghassemian M, Min RK, Pogliano J, Corbett KD</div>
+    <div class="modal-meta">Science advances · 2026 Nov 06</div>
+
+    <div class="detail-list">
+      <div class="detail-row"><div class="detail-label">やったこと</div><div>Goslarファージ粒子の構造と感染関連因子を調べた。</div></div>
+      <div class="detail-row"><div class="detail-label">主な結果</div><div>28種類2888鎖の複合モデルと糖結合ドメインを持つ繊維状タンパク質群を同定。</div></div>
+      <div class="detail-row"><div class="detail-label">新規性</div><div>Chimalliviridaeの宿主認識装置の構造基盤。</div></div>
+      <div class="detail-row"><div class="detail-label">方法・データ</div><div>cryo-EM、25タンパク質手動モデル、3タンパク質AlphaFold予測、定量質量分析。</div></div>
+      <div class="detail-row caution"><div class="detail-label">注意点</div><div>糖鎖認識の機能は主に構造からの推定で直接検証は不明。</div></div>
+    </div>
+
+    <div class="modal-footer">
+      <a class="original-link" href="https://pubmed.ncbi.nlm.nih.gov/42993818/" target="_blank" rel="noopener">Original paper ↗</a>
+      <span class="doi">DOI: 10.1126/sciadv.aei4524</span>
+    </div>
+  </section>
+</div>
+
+<div class="modal" id="paper-modal-25" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="paper-modal-25-title">
+    <button class="modal-close" type="button" data-close-modal aria-label="閉じる">×</button>
+    <div class="modal-number">25</div>
+    <h2 class="modal-title" id="paper-modal-25-title">An integrated cell culture-nanopore sequencing (ICC-NanoporeSeq) method for the simultaneous detection of multiple enterovirus types and quantification of infectious Enterovirus B.</h2>
+    <div class="modal-authors">Astorch-Cardona A, Rouault S, Kohn T</div>
+    <div class="modal-meta">Applied and environmental microbiology · 2026 Nov 05</div>
+
+    <div class="detail-list">
+      <div class="detail-row"><div class="detail-label">やったこと</div><div>短期細胞培養とVP1ナノポア配列解析を統合。</div></div>
+      <div class="detail-row"><div class="detail-label">主な結果</div><div>下水から45型を検出しEnterovirus Bの6型で感染性濃度を定量。</div></div>
+      <div class="detail-row"><div class="detail-label">新規性</div><div>多型混在試料の感染性を同時に型別評価する方法。</div></div>
+      <div class="detail-row"><div class="detail-label">方法・データ</div><div>10型の既知混合試料、下水抽出物、型別補正・検量線。</div></div>
+      <div class="detail-row caution"><div class="detail-label">注意点</div><div>感染性の定量検証は6型であり全型への適用は未確定。</div></div>
+    </div>
+
+    <div class="modal-footer">
+      <a class="original-link" href="https://pubmed.ncbi.nlm.nih.gov/42986112/" target="_blank" rel="noopener">Original paper ↗</a>
+      <span class="doi">DOI: 10.1128/aem.01830-26</span>
+    </div>
+  </section>
+</div>
+
+<script>
+const search = document.getElementById('search');
+const count = document.getElementById('visibleCount');
+const papers = [...document.querySelectorAll('.paper')];
+const modals = [...document.querySelectorAll('.modal')];
+let lastTrigger = null;
+
+function applySearch(){
+  const q = search.value.toLowerCase().trim();
+  let visible = 0;
+  papers.forEach(p => {
+    const show = !q || p.dataset.search.includes(q);
+    p.classList.toggle('hidden', !show);
+    if(show) visible += 1;
+  });
+  count.textContent = `${visible} / ${papers.length}`;
+}
+
+function openModal(trigger){
+  const modal = document.getElementById(trigger.dataset.modalId);
+  if(!modal) return;
+  lastTrigger = trigger;
+  modal.hidden = false;
+  document.body.classList.add('modal-open');
+  const close = modal.querySelector('.modal-close');
+  if(close) close.focus();
+}
+
+function closeModal(modal){
+  if(!modal || modal.hidden) return;
+  modal.hidden = true;
+  document.body.classList.remove('modal-open');
+  if(lastTrigger){
+    lastTrigger.focus();
+    lastTrigger = null;
+  }
+}
+
+papers.forEach(p => {
+  p.addEventListener('click', () => openModal(p));
+  p.addEventListener('keydown', e => {
+    if(e.key === 'Enter' || e.key === ' '){
+      e.preventDefault();
+      openModal(p);
+    }
+  });
+});
+
+modals.forEach(modal => {
+  modal.querySelectorAll('[data-close-modal]').forEach(el => {
+    el.addEventListener('click', () => closeModal(modal));
+  });
+});
+
+document.addEventListener('keydown', e => {
+  if(e.key === 'Escape'){
+    const open = modals.find(m => !m.hidden);
+    if(open) closeModal(open);
+  }
+});
+
+search.addEventListener('input', applySearch);
+applySearch();
+</script>
+
+</body>
+</html>
